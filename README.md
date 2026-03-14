@@ -1,6 +1,6 @@
 # C++ Systems Architecture: 100-Day Engineering Challenge
 
-[![C++ CI](https://github.com/SpireLab/cpp-systems-architecture/actions/workflows/cpp-ci.yml/badge.svg)](https://github.com/SpireLab/cpp-systems-architecture/actions)
+[![C++ CI](https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-ci.yml/badge.svg)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions)
 ![C++ Standard](https://img.shields.io/badge/c++-17%20%7C%2020%20%7C%2023-blue)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -77,7 +77,7 @@ Detailed reflections, code explanations, memory diagrams, and lessons learned ar
 ## Setup (MSYS2 / MinGW / UCRT64 recommended on Windows)
 # Clone the repository
 ```bash
-git clone https://github.com/SpireLab/cpp-systems-architecture.git
+git clone https://github.com/OdeToTheWind/cpp-systems-architecture.git
 cd cpp-systems-architecture
 
 # (Optional but recommended) Update MSYS2 packages
