@@ -1,0 +1,41 @@
+# Build artifacts
+build/
+bin/
+out/
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.pdb
+*.ilk
+*.exp
+
+# CMake generated
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+CPack*
+
+# MSYS2 / MinGW temp files
+*.stackdump
+*.d
+*.orig
+*.rej
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs & temp
+*.log
+*.tmp
