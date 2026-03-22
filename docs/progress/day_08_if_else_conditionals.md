@@ -1,6 +1,6 @@
 # Day 08 – Conditional Statements (if / else / else if)
 
-**Date:** March 27, 2026  
+**Date:** March 21, 2026  
 **Status:** Completed
 
 ## Goals
@@ -43,10 +43,11 @@ Test file: `tests/test_day_08.cpp`
 
 ## Next Day Preview (Day 09)
 
-More control flow:
-- `switch` statement
-- `break`, `continue`, `goto` (avoid last one)
-- Ternary operator `?:`
-- First loop constructs (`while`, `do-while`)
+Logical Operators (`&&`, `||`, `!`):
+- AND (`&&`): Ensuring multiple conditions are true (e.g., driving eligibility)
+- OR (`||`): Checking if at least one condition is met (e.g., discount rules)
+- NOT (`!`): Reversing logic (e.g., checking for missing requirements)
+- Controlling evaluation order using parentheses
+- Understanding short-circuit evaluation to prevent unnecessary checks
 
 Decision making is where programs start to become "smart" — great milestone!
