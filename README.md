@@ -35,6 +35,7 @@ cpp-systems-architecture/
 │       ├── day_03_prints.md
 │       ├── day_04_variable_names.md
 │       ├── day_05_maths_operations.md
+│       ├── day_06_data_types.md
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -46,14 +47,17 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_04_variable_names/
 │   │   └── main.cpp
-│   └── day_05_maths_operations/
+│   ├── day_05_maths_operations/
+│   │   └── main.cpp
+│   └── day_06_data_types/
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
 │   ├── test_day_02.cpp
 │   ├── test_day_03.cpp
 │   ├── test_day_04.cpp
-│   └── test_day_05.cpp
+│   ├── test_day_05.cpp
+│   └── test_day_06.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
@@ -74,8 +78,11 @@ cpp-systems-architecture/
 | Day | Topic | Status | Key Focus / Deliverables |
 |-----|-------|--------|--------------------------|
 | 01 | Variables, Types & Basic I/O | ✅ Completed | Fundamental types, initialization, cin/cout/getline, mini calculator |
-| 02 | String Manipulation (std::string) | ⏳ In Progress | length/size, substr, find, concatenation, formatting, input cleaning |
-| 03 | Control Flow & Functions | ⏳ Planning | if/switch/loops, functions, pass-by-value/reference |
+| 02 | String Manipulation (std::string) | ✅ Completed | length/size, substr, find, concatenation, formatting, input cleaning |
+| 03 | Input and Print Functions (cin / cout) | ✅ Completed | Console I/O patterns, buffer cleaning, getline, conditional formatting |
+| 04 | Variable Naming Rules & Conventions | ✅ Completed | Naming rules, snake_case/camelCase, intention-revealing names, anti-patterns |
+| 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, increment/decrement, <cmath> functions |
+| 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, type aliases |
 
 Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
 
