@@ -37,6 +37,7 @@ cpp-systems-architecture/
 │       ├── day_05_maths_operations.md
 │       ├── day_06_data_types.md
 │       ├── day_07_convert_types_casting.md
+│       ├── day_08_if_else_conditionals.md
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -52,7 +53,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_06_data_types/
 │   │   └── main.cpp
-│   └── day_07_convert_types_casting/
+│   ├── day_07_convert_types_casting/
+│   │   └── main.cpp
+│   └── day_08_if_else_conditionals/
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
@@ -61,7 +64,8 @@ cpp-systems-architecture/
 │   ├── test_day_04.cpp
 │   ├── test_day_05.cpp
 │   ├── test_day_06.cpp
-│   └── test_day_07.cpp
+│   ├── test_day_07.cpp
+│   └── test_day_08.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
