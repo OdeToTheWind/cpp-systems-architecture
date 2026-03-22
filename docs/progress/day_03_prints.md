@@ -1,6 +1,6 @@
 # Day 03 – Input and Print Functions (cin / cout)
 
-**Date:** March 22, 2026  
+**Date:** March 16, 2026  
 **Status:** Completed
 
 ## Goals

@@ -1,6 +1,6 @@
 # Day 04 – Variable Naming Rules & Conventions
 
-**Date:** March 23, 2026  
+**Date:** March 17, 2026  
 **Status:** Completed
 
 ## Goals

@@ -1,6 +1,6 @@
 # Day 02 – String Manipulation (std::string)
 
-**Date:** March 15–21, 2026  
+**Date:** March 15, 2026  
 **Status:** Completed
 
 ## Goals

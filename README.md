@@ -33,6 +33,8 @@ cpp-systems-architecture/
 │       ├── day_01_memory.md
 │       ├── day_02_strings.md
 │       ├── day_03_prints.md
+│       ├── day_04_variable_names.md
+│       ├── day_05_maths_operations.md
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -40,12 +42,18 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_02_strings/
 │   │   └── main.cpp
-│   └── day_03_print/
+│   ├── day_03_prints/
+│   │   └── main.cpp
+│   ├── day_04_variable_names/
+│   │   └── main.cpp
+│   └── day_05_maths_operations/
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
 │   ├── test_day_02.cpp
-│   └── test_day_03.cpp
+│   ├── test_day_03.cpp
+│   ├── test_day_04.cpp
+│   └── test_day_05.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
