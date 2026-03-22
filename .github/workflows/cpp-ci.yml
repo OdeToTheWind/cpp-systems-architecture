@@ -14,6 +14,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    # Cache pacman packages → huge speedup on repeat runs
+    - name: Cache MSYS2 pacman packages
+      uses: actions/cache@v4
+      id: cache-pacman
+      with:
+        path: C:\msys64\var\cache\pacman\pkg
+        key: msys2-ucrt64-pkgs-v1-${{ hashFiles('.github/workflows/cpp-ci.yml') }}
+        restore-keys: msys2-ucrt64-pkgs-v1-
+
     - name: Setup MSYS2
       uses: msys2/setup-msys2@v2
       with:
@@ -28,13 +37,10 @@ jobs:
 
     - name: Build project
       shell: msys2 {0}
-      run: |
-        ./procpp.sh
+      run: ./procpp.sh
 
-    # Optional: Run a smoke test on the built executable
-    - name: Test Day 2 executable
+    # Optional: quick verification
+    - name: Check built executables
       shell: msys2 {0}
       run: |
-        ./build/day_02_strings.exe < /dev/null   # or pipe some input if needed
-
-    # Optional later: add ctest -V when you have tests integrated
+        ls -l build/day_*.exe || echo "No exes found - build may have issues"

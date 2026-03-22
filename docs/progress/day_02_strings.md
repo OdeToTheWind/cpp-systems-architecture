@@ -1,38 +1,32 @@
-// tests/test_day_02.cpp
-#include <cassert>
-#include <string>
-#include "../src/day_02_strings/main.cpp"   // include the source (for isPalindrome)
+# Day 02 – String Manipulation (std::string)
 
-// Only the testable function is exposed — in real projects we'd move it to .hpp
-// For learning phase this is acceptable
+**Date:** March 15–21, 2026  
+**Status:** Completed
 
-int main() {
-    // Test 1: Basic palindrome
-    assert(isPalindrome("radar") == true);
-    assert(isPalindrome("A man a plan a canal Panama") == true);
+## Goals
+- Master `std::string` member functions
+- Case-insensitive palindrome checker
+- String mutation and immutability patterns
 
-    // Test 2: Case insensitive + non-letters ignored
-    assert(isPalindrome("Able was I ere I saw Elba") == true);
-    assert(isPalindrome("No 'x' in Nixon") == true);
+## What I Learned
 
-    // Test 3: Not palindrome
-    assert(isPalindrome("hello") == false);
-    assert(isPalindrome("A man a plan a canal") == false);
+- `.length()`, `.empty()`, `.front()`, `.back()`, `.find()`, `.substr()`
+- `std::getline` vs `cin >>`
+- `std::reverse`, `std::tolower`, `std::isalpha`
+- Safe casting for `tolower`/`isalpha`
+- Extracting testable logic to header (`string_utils.hpp`)
 
-    // Test 4: Empty / single char / only non-letters
-    assert(isPalindrome("") == true);                // empty is palindrome by convention
-    assert(isPalindrome("a") == true);
-    assert(isPalindrome("!!! 123 !!!") == true);     // no letters → palindrome
-    assert(isPalindrome("ab ba") == true);           // spaces ignored
+## Code Highlights
 
-    // Test 5: Mutation example (we test logic manually here)
-    std::string s = "banana Apple";
-    std::string expected = "b@n@n@ @pple";
-    for (char& c : s) {
-        if (c == 'a' || c == 'A') c = '@';
-    }
-    assert(s == expected);
+- `src/day_02_strings/main.cpp` → interactive demo
+- `src/day_02_strings/string_utils.hpp` → `isPalindrome`
+- `tests/test_day_02.cpp` → assert-based tests
 
-    std::cout << "All Day 02 string tests passed!\n";
-    return 0;
-}
+## Challenges Fixed
+- Missing `<algorithm>` include
+- Unsafe `tolower` usage → fixed with `static_cast<unsigned char>`
+- `getline` after `>>` issue (not in day 2 but learned nearby)
+- Test file compilation error → solved by moving function to header
+
+## Notes
+CI (GitHub Actions) turned green after MSYS2 setup + caching!

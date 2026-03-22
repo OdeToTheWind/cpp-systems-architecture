@@ -1,6 +1,6 @@
 # C++ Systems Architecture: 100-Day Engineering Challenge
 
-[![C++ CI](https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-ci.yml/badge.svg)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions)
+[![C++ CI (MinGW / Ninja)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-ci.yml/badge.svg)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions)
 ![C++ Standard](https://img.shields.io/badge/c++-17%20%7C%2020%20%7C%2023-blue)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -30,17 +30,22 @@ cpp-systems-architecture/
 ├── cmake/                  # Custom CMake modules & helpers
 ├── docs/                   # Architecture notes, memory layouts, design decisions
 │   └── progress/
+│       ├── day_01_memory.md
+│       ├── day_02_strings.md
+│       ├── day_03_prints.md
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
 │   ├── day_01_memory/
-│   │   ├── main.cpp
-│   │   └── utils.cpp
-│   └── day_02_pointers/
-│       └── ...
+│   │   └── main.cpp
+│   ├── day_02_strings/
+│   │   └── main.cpp
+│   └── day_03_print/
+│       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
-│   └── test_day_02.cpp
+│   ├── test_day_02.cpp
+│   └── test_day_03.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
