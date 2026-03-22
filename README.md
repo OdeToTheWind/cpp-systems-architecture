@@ -36,6 +36,7 @@ cpp-systems-architecture/
 │       ├── day_04_variable_names.md
 │       ├── day_05_maths_operations.md
 │       ├── day_06_data_types.md
+│       ├── day_07_convert_types_casting.md
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -49,7 +50,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_05_maths_operations/
 │   │   └── main.cpp
-│   └── day_06_data_types/
+│   ├── day_06_data_types/
+│   │   └── main.cpp
+│   └── day_07_convert_types_casting/
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
@@ -57,7 +60,8 @@ cpp-systems-architecture/
 │   ├── test_day_03.cpp
 │   ├── test_day_04.cpp
 │   ├── test_day_05.cpp
-│   └── test_day_06.cpp
+│   ├── test_day_06.cpp
+│   └── test_day_07.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
@@ -83,6 +87,7 @@ cpp-systems-architecture/
 | 04 | Variable Naming Rules & Conventions | ✅ Completed | Naming rules, snake_case/camelCase, intention-revealing names, anti-patterns |
 | 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, increment/decrement, <cmath> functions |
 | 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, type aliases |
+| 07 | Type Conversion & Casting | ✅ Completed | Implicit conversions, C-style vs modern casts, static_cast, dynamic_cast, const_cast, reinterpret_cast |
 
 Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
 
@@ -131,7 +136,7 @@ This is a personal challenge repository. Issues, suggestions, and constructive d
 ### License
 MIT License – see the LICENSE file for details.
 
-```bash
+<!--
 
 ### Quick Notes on Improvements & Choices
 
@@ -155,4 +160,5 @@ If you want:
 Just let me know — happy to refine further.
 
 Good luck with Day 2 and the rest of the challenge! Keep the momentum.
-```
+
+-->

@@ -45,10 +45,10 @@ Test file: `tests/test_day_05.cpp`
 
 ## Next Day Preview (Day 06)
 
-Relational & logical operators + first conditionals
-- `== != < > <= >=`
-- `&& || !`
-- `if`, `else if`, `else`
-- First real decision-making programs
+Data types in C++:
+- Fundamental (built-in) data types (`int`, `float`, `double`, `bool`, `char`, etc.)
+- Type modifiers (`signed`, `unsigned`, `short`, `long`, `long long`)
+- Type sizes, ranges, and platform dependencies using `<cstdint>` and `<limits>`
+- Type aliases (`using` / `typedef`) for clarity and code safety
 
 Great step forward — interactive math makes concepts stick better!

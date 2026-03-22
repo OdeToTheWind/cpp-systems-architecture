@@ -43,10 +43,10 @@ Test file: `tests/test_day_03.cpp`
 
 ## Next Day Preview (Day 04)
 
-Control flow basics:
-- `if`, `else if`, `else`
-- `switch` statement
-- Comparison & logical operators
-- Simple decision programs (grading system, simple menu, etc.)
+Variable naming rules & conventions:
+- C++ naming rules (what is allowed vs. what is good)
+- Professional conventions (snake_case + camelCase patterns)
+- Intention-revealing names
+- Avoiding anti-patterns that hurt readability
 
 Consistency beats intensity — keep going strong!

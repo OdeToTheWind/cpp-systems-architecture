@@ -1,6 +1,6 @@
 # Day 06 – Data Types in C++
 
-**Date:** March 25, 2026  
+**Date:** March 19, 2026  
 **Status:** Completed
 
 ## Goals
@@ -59,10 +59,10 @@ Test file: `tests/test_day_06.cpp`
 
 ## Next Day Preview (Day 07)
 
-Relational & logical operators + first control flow
-- Comparison: `== != < > <= >=`
-- Logical: `&& || !`
-- `if`, `else if`, `else`
-- First real conditional programs (grading, simple decisions)
+Type conversion and casting in C++:
+- Implicit (automatic) type conversion rules
+- Explicit type casting: C-style vs modern C++ casts
+- `static_cast`, `dynamic_cast`, `const_cast`, `reinterpret_cast`
+- Common conversion pitfalls (loss of precision, narrowing, undefined behavior)
 
 Understanding data types deeply prevents many bugs — excellent choice for Day 6.
