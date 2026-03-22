@@ -96,6 +96,9 @@ cpp-systems-architecture/
 | 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, increment/decrement, <cmath> functions |
 | 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, type aliases |
 | 07 | Type Conversion & Casting | ✅ Completed | Implicit conversions, C-style vs modern casts, static_cast, dynamic_cast, const_cast, reinterpret_cast |
+| 08 | Conditional Statements (if / else) | ✅ Completed | if/else if chains, early input validation, keeping nesting shallow |
+| 09 | Logical Operators | ✅ Completed | (&&, 		, !) |
+| 10 | Randomization (<random>) | ⏳ Planned | std::mt19937 engine, std::random_device, uniform distributions vs legacy rand() |
 
 Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
 
