@@ -42,6 +42,7 @@ cpp-systems-architecture/
 │       ├── day_10_randomisation.md 
 │       ├── day_11_error_handling.md 
 │       ├── day_12_functions.md 
+│       ├── day_13_for_loops.md 
 │       └── day_XX_*.md
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -67,7 +68,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_11_error_handling/
 │   │   └── main.cpp
-│   └── day_12_functions/  
+│   ├── day_12_functions/
+│   │   └── main.cpp
+│   └── day_13_for_loops/    For Loops
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests
 │   ├── test_day_01.cpp
@@ -81,7 +84,8 @@ cpp-systems-architecture/
 │   ├── test_day_09.cpp
 │   ├── test_day_10.cpp
 │   ├── test_day_11.cpp
-│   └── test_day_12.cpp
+│   ├── test_day_12.cpp
+│   └── test_day_13.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
