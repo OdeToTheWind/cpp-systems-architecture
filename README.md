@@ -46,6 +46,7 @@ cpp-systems-architecture/
 │       ├── day_14_code_block_indentation.md 
 │       ├── day_15_while_loops.md 
 │       ├── day_16_flowchart_programming.md 
+│       ├── day_17_maps_vectors.md 
 │       └── day_XX_*.md      Flowchart Programming
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -79,7 +80,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_15_while_loops/
 │   │   └── main.cpp
-│   └── day_16_flowchart_programming/    
+│   ├── day_16_flowchart_programming/
+│   │   └── main.cpp
+│   └── day_17_maps_vectors/   
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests       
 │   ├── test_day_01.cpp
@@ -97,7 +100,8 @@ cpp-systems-architecture/
 │   ├── test_day_13.cpp
 │   ├── test_day_14.cpp
 │   ├── test_day_15.cpp
-│   └── test_day_16.cpp
+│   ├── test_day_16.cpp
+│   └── test_day_17.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
