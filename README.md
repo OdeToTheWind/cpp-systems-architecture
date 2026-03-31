@@ -43,7 +43,8 @@ cpp-systems-architecture/
 │       ├── day_11_error_handling.md 
 │       ├── day_12_functions.md 
 │       ├── day_13_for_loops.md 
-│       └── day_XX_*.md
+│       ├── day_14_code_block_indentation.md 
+│       └── day_XX_*.md   
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
 │   ├── day_01_memory/
@@ -70,9 +71,11 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_12_functions/
 │   │   └── main.cpp
-│   └── day_13_for_loops/    For Loops
+│   ├── day_13_for_loops/
+│   │   └── main.cpp
+│   └── day_14_code_block_indentation/    
 │       └── main.cpp
-├── tests/                  # Unit & integration tests
+├── tests/                  # Unit & integration tests     
 │   ├── test_day_01.cpp
 │   ├── test_day_02.cpp
 │   ├── test_day_03.cpp
@@ -85,7 +88,8 @@ cpp-systems-architecture/
 │   ├── test_day_10.cpp
 │   ├── test_day_11.cpp
 │   ├── test_day_12.cpp
-│   └── test_day_13.cpp
+│   ├── test_day_13.cpp
+│   └── test_day_14.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
