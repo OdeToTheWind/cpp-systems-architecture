@@ -48,6 +48,7 @@ cpp-systems-architecture/
 │       ├── day_16_flowchart_programming.md 
 │       ├── day_17_maps_vectors.md   
 │       ├── day_18_positional_keyword_arguments.md  
+│       ├── day_19_pointer_references.md  
 │       └── day_XX_*.md      Flowchart Programming
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -85,7 +86,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_17_maps_vectors/
 │   │   └── main.cpp
-│   └── day_18_positional_keyword_arguments/       
+│   ├── day_18_positional_keyword_arguments/
+│   │   └── main.cpp
+│   └── day_19_pointer_references/       
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests       
 │   ├── test_day_01.cpp
@@ -105,7 +108,8 @@ cpp-systems-architecture/
 │   ├── test_day_15.cpp
 │   ├── test_day_16.cpp
 │   ├── test_day_17.cpp
-│   └── test_day_18.cpp
+│   ├── test_day_18.cpp
+│   └── test_day_19.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
@@ -120,21 +124,79 @@ cpp-systems-architecture/
 - **Code Quality** — Strict warnings (-Wall -Wextra -Wpedantic -Wshadow -Wconversion), zero UB focus
 - **Systems Thinking** — Emphasis on memory layout, pointers/references, performance, concurrency later
 
-
 ### Daily Progress
 
 | Day | Topic | Status | Key Focus / Deliverables |
 |-----|-------|--------|--------------------------|
-| 01 | Variables, Types & Basic I/O | ✅ Completed | Fundamental types, initialization, cin/cout/getline, mini calculator |
-| 02 | String Manipulation (std::string) | ✅ Completed | length/size, substr, find, concatenation, formatting, input cleaning |
-| 03 | Input and Print Functions (cin / cout) | ✅ Completed | Console I/O patterns, buffer cleaning, getline, conditional formatting |
-| 04 | Variable Naming Rules & Conventions | ✅ Completed | Naming rules, snake_case/camelCase, intention-revealing names, anti-patterns |
-| 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, increment/decrement, <cmath> functions |
-| 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, type aliases |
-| 07 | Type Conversion & Casting | ✅ Completed | Implicit conversions, C-style vs modern casts, static_cast, dynamic_cast, const_cast, reinterpret_cast |
-| 08 | Conditional Statements (if / else) | ✅ Completed | if/else if chains, early input validation, keeping nesting shallow |
-| 09 | Logical Operators | ✅ Completed | (&&, 		, !) |
-| 10 | Randomization (<random>) | ⏳ Planned | std::mt19937 engine, std::random_device, uniform distributions vs legacy rand() |
+| 01 | Variables, Types & Basic I/O | ✅ Completed | Fundamental types, initialization, `cin`/`cout`/`getline`, mini calculator |
+| 02 | String Manipulation (`std::string`) | ✅ Completed | `length`, `substr`, `find`, concatenation, formatting, input cleaning |
+| 03 | Input and Print Functions (`cin`/`cout`) | ✅ Completed | Console I/O patterns, buffer cleaning, formatted output |
+| 04 | Variable Naming Rules & Conventions | ✅ Completed | snake_case, intention-revealing names, anti-patterns |
+| 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, `<cmath>` functions |
+| 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, fixed-width integers |
+| 07 | Type Conversion & Casting | ✅ Completed | Implicit vs explicit, `static_cast`, `dynamic_cast`, narrowing |
+| 08 | Conditional Statements (`if`/`else if`/`else`) | ✅ Completed | Decision making, input validation, early returns |
+| 09 | Logical Operators (`&&`, `\|\|`, `!`) | ✅ Completed | Combining conditions, short-circuiting, De Morgan's laws |
+| 10 | Randomisation (`<random>`) | ✅ Completed | `std::mt19937`, uniform distributions, modern RNG |
+| 11 | Error Handling (`try`/`catch`/`throw`) | ✅ Completed | Exception handling, `std::runtime_error`, input validation |
+| 12 | Functions | ✅ Completed | Declaration, parameters, return values, overloading |
+| 13 | For Loops | ✅ Completed | Traditional and range-based for loops, nested loops |
+| 14 | Code Blocks and Indentation | ✅ Completed | Scoping, consistent style, readability best practices |
+| 15 | While and Do-While Loops | ✅ Completed | Pre-test vs post-test loops, menu systems |
+| 16 | Flowchart Programming | ✅ Completed | Translating logic flow into clean C++ code |
+| 17 | Vectors and Maps | ✅ Completed | Dynamic lists (`std::vector`) and dictionaries (`std::map`) |
+| 18 | Positional & Keyword Arguments | ✅ Completed | Default arguments, function overloading, Named Parameter Idiom |
+| 19 | Pointers and References | ✅ Completed | Raw pointers, references, pass-by-value vs pass-by-reference |
+| 20 | Returning Functions (`std::function`) | ⏳ Planned | Function pointers, `std::function`, callbacks |
+| 21 | Return vs Print | ⏳ Planned | Function design, side effects vs pure functions |
+| 22 | Documentation (Doxygen style) | ⏳ Planned | Comments vs docstrings, generating documentation |
+| 23 | Scope and Local/Global Variables | ⏳ Planned | Variable lifetime, shadowing, namespace usage |
+| 24 | Debugging Techniques | ⏳ Planned | GDB basics, debugging strategies |
+
+### Intermediate Projects (Section 2)
+
+| Day | Topic | Status | Key Focus / Deliverables |
+|-----|-------|--------|--------------------------|
+| 25 | Local Development Environment Setup | ⏳ Planned | IDE/Compiler setup, CMake best practices |
+| 26 | IDE Tips and Tricks | ⏳ Planned | Advanced editor features, debugging in IDE |
+| 27 | Object-Oriented Programming Basics | ⏳ Planned | OOP principles in C++ |
+| 28 | Creating Classes | ⏳ Planned | Class definition, encapsulation |
+| 29 | Using External Libraries | ⏳ Planned | Header-only vs linking, vcpkg/Conan |
+| 30 | Getters and Setters | ⏳ Planned | Accessors and mutators |
+| 31 | C++ Methods | ⏳ Planned | Member functions, const methods |
+| 32 | Constructors and Initializers | ⏳ Planned | Default, parameterized, copy constructors |
+| 33 | Namespaces | ⏳ Planned | Namespace aliasing and organization |
+| 34 | Optional, Required & Default Parameters | ⏳ Planned | Advanced parameter handling |
+| 35 | Event Listeners & Callbacks | ⏳ Planned | Observer pattern basics |
+| 36 | Instances and State | ⏳ Planned | Object state management |
+| 37 | Graphics with SFML or Raylib | ⏳ Planned | Basic graphics programming |
+| 38 | Game Development with OOP | ⏳ Planned | Simple game architecture |
+| 39 | Inheritance | ⏳ Planned | Base and derived classes |
+| 40 | Iterators | ⏳ Planned | STL iterators and ranges |
+| 41 | File I/O (`fstream`) | ⏳ Planned | Reading/writing text and binary files |
+| 42 | Working with Directories | ⏳ Planned | Filesystem library (`std::filesystem`) |
+| 43 | Reading/Writing CSV | ⏳ Planned | CSV parsing and generation |
+| 44 | Data Frameworks (Eigen / Dlib) | ⏳ Planned | Introduction to numerical libraries |
+| 45 | Vector/Map Transformations | ⏳ Planned | STL algorithms on containers |
+| 46 | Variadic Templates | ⏳ Planned | Packing/unpacking arguments |
+| 47 | Desktop GUI with Qt / wxWidgets | ⏳ Planned | Basic GUI application |
+| 48 | Static vs Dynamic Typing | ⏳ Planned | Type safety in C++ |
+| 49 | Advanced Error Handling | ⏳ Planned | Custom exceptions, error codes |
+| 50 | Try / Catch / Throw Deep Dive | ⏳ Planned | Exception safety, RAII |
+| 51 | Working with JSON (`nlohmann/json`) | ⏳ Planned | JSON serialization/deserialization |
+| 52 | Local Persistence | ⏳ Planned | Saving/loading application state |
+| 53 | Sending Email (libcurl) | ⏳ Planned | Network integration |
+| 54 | Date and Time (`<chrono>`) | ⏳ Planned | Modern time handling |
+| 55 | Hosting C++ Online (WebAssembly / CGI) | ⏳ Planned | Deploying C++ code |
+| 56 | APIs & HTTP Requests | ⏳ Planned | Making HTTP calls |
+| 57 | Sending Parameters with Requests | ⏳ Planned | REST API consumption |
+| 58 | APIs with Authentication | ⏳ Planned | Token-based authentication |
+| 59 | Web Scraping | ⏳ Planned | Parsing HTML with Gumbo |
+| 60 | Browser Automation | ⏳ Planned | WebDriver bindings |
+| 61 | Web Development with Crow / Pistache | ⏳ Planned | Lightweight web frameworks |
+| 62 | Command Line Tools | ⏳ Planned | Building CLI applications |
+| 63 | C++ Templates & Design Patterns | ⏳ Planned | Generic programming |
+| 64 | Advanced STL & Algorithms | ⏳ Planned | `std::sort`, `std::find`, ranges |
 
 Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
 
