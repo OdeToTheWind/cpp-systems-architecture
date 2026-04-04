@@ -50,6 +50,9 @@ cpp-systems-architecture/
 │       ├── day_18_positional_keyword_arguments.md  
 │       ├── day_19_pointer_references.md   
 │       ├── day_20_returning_functions.md  
+│       ├── day_21_return_vs_print.md  
+│       ├── day_22_docs_strings_comments.md  
+│       ├── day_23_scope_local_global_variables.md  
 │       └── day_XX_*.md      Flowchart Programming
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -91,7 +94,13 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_19_pointer_references/
 │   │   └── main.cpp
-│   └── day_20_returning_functions/       
+│   ├── day_20_returning_functions/
+│   │   └── main.cpp
+│   ├── day_21_return_vs_print/
+│   │   └── main.cpp
+│   ├── day_22_docs_strings_comments/
+│   │   └── main.cpp
+│   └── day_23_scope_local_global_variables/       Return vs. Print || Doc Strings vs. Comments (Doxygen style) || Scope and Local/Global Variables
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests       
 │   ├── test_day_01.cpp
@@ -113,7 +122,10 @@ cpp-systems-architecture/
 │   ├── test_day_17.cpp
 │   ├── test_day_18.cpp
 │   ├── test_day_19.cpp
-│   └── test_day_20.cpp
+│   ├── test_day_20.cpp
+│   ├── test_day_21.cpp
+│   ├── test_day_22.cpp
+│   └── test_day_23.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
