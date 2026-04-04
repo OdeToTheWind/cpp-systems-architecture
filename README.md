@@ -48,7 +48,8 @@ cpp-systems-architecture/
 │       ├── day_16_flowchart_programming.md 
 │       ├── day_17_maps_vectors.md   
 │       ├── day_18_positional_keyword_arguments.md  
-│       ├── day_19_pointer_references.md  
+│       ├── day_19_pointer_references.md   
+│       ├── day_20_returning_functions.md  
 │       └── day_XX_*.md      Flowchart Programming
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
@@ -88,7 +89,9 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_18_positional_keyword_arguments/
 │   │   └── main.cpp
-│   └── day_19_pointer_references/       
+│   ├── day_19_pointer_references/
+│   │   └── main.cpp
+│   └── day_20_returning_functions/       
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests       
 │   ├── test_day_01.cpp
@@ -109,7 +112,8 @@ cpp-systems-architecture/
 │   ├── test_day_16.cpp
 │   ├── test_day_17.cpp
 │   ├── test_day_18.cpp
-│   └── test_day_19.cpp
+│   ├── test_day_19.cpp
+│   └── test_day_20.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
@@ -147,7 +151,7 @@ cpp-systems-architecture/
 | 17 | Vectors and Maps | ✅ Completed | Dynamic lists (`std::vector`) and dictionaries (`std::map`) |
 | 18 | Positional & Keyword Arguments | ✅ Completed | Default arguments, function overloading, Named Parameter Idiom |
 | 19 | Pointers and References | ✅ Completed | Raw pointers, references, pass-by-value vs pass-by-reference |
-| 20 | Returning Functions (`std::function`) | ⏳ Planned | Function pointers, `std::function`, callbacks |
+| 20 | Returning Functions (`std::function`) | ✅ Completed | Function pointers, `std::function`, callbacks |
 | 21 | Return vs Print | ⏳ Planned | Function design, side effects vs pure functions |
 | 22 | Documentation (Doxygen style) | ⏳ Planned | Comments vs docstrings, generating documentation |
 | 23 | Scope and Local/Global Variables | ⏳ Planned | Variable lifetime, shadowing, namespace usage |
