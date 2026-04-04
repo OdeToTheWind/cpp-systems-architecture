@@ -164,9 +164,9 @@ cpp-systems-architecture/
 | 18 | Positional & Keyword Arguments | ✅ Completed | Default arguments, function overloading, Named Parameter Idiom |
 | 19 | Pointers and References | ✅ Completed | Raw pointers, references, pass-by-value vs pass-by-reference |
 | 20 | Returning Functions (`std::function`) | ✅ Completed | Function pointers, `std::function`, callbacks |
-| 21 | Return vs Print | ⏳ Planned | Function design, side effects vs pure functions |
-| 22 | Documentation (Doxygen style) | ⏳ Planned | Comments vs docstrings, generating documentation |
-| 23 | Scope and Local/Global Variables | ⏳ Planned | Variable lifetime, shadowing, namespace usage |
+| 21 | Return vs Print | ✅ Completed | Function design, side effects vs pure functions |
+| 22 | Documentation (Doxygen style) | ✅ Completed | Comments vs docstrings, generating documentation |
+| 23 | Scope and Local/Global Variables | ✅ Completed | Variable lifetime, shadowing, namespace usage |
 | 24 | Debugging Techniques | ⏳ Planned | GDB basics, debugging strategies |
 
 ### Intermediate Projects (Section 2)
