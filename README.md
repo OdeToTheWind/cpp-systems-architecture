@@ -53,7 +53,13 @@ cpp-systems-architecture/
 │       ├── day_21_return_vs_print.md  
 │       ├── day_22_docs_strings_comments.md  
 │       ├── day_23_scope_local_global_variables.md  
-│       └── day_XX_*.md      Flowchart Programming
+│       ├── day_24_debugging_technique.md  
+│       ├── day_25_dev_env_setup_local.md  
+│       ├── day_26_ide_tips_tricks.md  
+│       ├── day_27_oop_basics.md  
+│       ├── day_28_classes.md  
+│       ├── day_29_external_libraries.md  
+│       └── day_XX_*.md      
 ├── include/                # Public headers (.hpp)
 ├── src/                    # Implementation code – one folder per day/topic
 │   ├── day_01_memory/
@@ -100,7 +106,19 @@ cpp-systems-architecture/
 │   │   └── main.cpp
 │   ├── day_22_docs_strings_comments/
 │   │   └── main.cpp
-│   └── day_23_scope_local_global_variables/       Return vs. Print || Doc Strings vs. Comments (Doxygen style) || Scope and Local/Global Variables
+│   ├── day_23_scope_local_global_variables/
+│   │   └── main.cpp
+│   ├── day_24_debugging_technique/
+│   │   └── main.cpp
+│   ├── day_25_dev_env_setup_local/
+│   │   └── main.cpp
+│   ├── day_26_ide_tips_tricks/
+│   │   └── main.cpp
+│   ├── day_27_oop_basics/
+│   │   └── main.cpp
+│   ├── day_28_classes/
+│   │   └── main.cpp
+│   └── day_29_external_libraries/ 
 │       └── main.cpp
 ├── tests/                  # Unit & integration tests       
 │   ├── test_day_01.cpp
@@ -125,12 +143,19 @@ cpp-systems-architecture/
 │   ├── test_day_20.cpp
 │   ├── test_day_21.cpp
 │   ├── test_day_22.cpp
-│   └── test_day_23.cpp
+│   ├── test_day_23.cpp
+│   ├── test_day_24.cpp
+│   ├── test_day_25.cpp
+│   ├── test_day_26.cpp
+│   ├── test_day_27.cpp
+│   ├── test_day_28.cpp
+│   └── test_day_29.cpp
 ├── CMakeLists.txt          # Root build configuration
 ├── procpp.sh               # Convenience script to build/run
 ├── README.md
 └── .gitignore
 ```
+
 ### Key Engineering Practices
 
 - **Modern C++** — C++17 as baseline, moving toward C++20/23 (concepts, ranges, modules where supported)
