@@ -239,6 +239,52 @@ cpp-systems-architecture/
 | 63 | C++ Templates & Design Patterns | ⏳ Planned | Generic programming |
 | 64 | Advanced STL & Algorithms | ⏳ Planned | `std::sort`, `std::find`, ranges |
 
+### Advanced C++ Projects
+
+| Day | Topic | Status | Key Focus / Deliverables |
+|-----|-------|--------|--------------------------|
+| 65 | Build Your Own REST API with C++ | ⏳ Planned | Crow / Pistache framework, routes, JSON responses, basic auth |
+| 66 | Build Your Own Blog | ⏳ Planned | Full CRUD blog with SQLite backend and simple templating |
+| 67 | Databases with SQLite (C++ Wrapper) | ⏳ Planned | SQLite3 C++ wrapper, prepared statements, basic CRUD |
+| 68 | Dataframe Inspection | ⏳ Planned | Load CSV into tabular structure, print schema & sample rows |
+| 69 | Data Cleaning | ⏳ Planned | Handle missing values, duplicates, type conversion |
+| 70 | Sorting Values in Dataframes | ⏳ Planned | Multi-column sorting, custom comparators |
+| 71 | Arithmetic Operations with C++ Math Libraries | ⏳ Planned | Eigen / Armadillo vector & matrix arithmetic |
+| 72 | Relational Database Schemas | ⏳ Planned | Design tables, foreign keys, joins with SQLite |
+| 73 | Descriptive Statistics | ⏳ Planned | Mean, median, std-dev, quantiles using modern C++ |
+| 74 | Creating Charts with C++ Graphics Libraries | ⏳ Planned | Plot data using matplotlib-cpp or matplotplusplus |
+| 75 | Using Jupyter with C++ Kernel (xeus-cling) | ⏳ Planned | Interactive C++ notebooks, live coding & visualization |
+| 76 | HTML Markdown | ⏳ Planned | Convert Markdown → HTML, basic static site generation |
+| 77 | Creating NumPy NDArrays (Armadillo / xtensor) | ⏳ Planned | Multi-dimensional arrays, broadcasting, slicing |
+| 78 | Matrix Multiplication | ⏳ Planned | Efficient matrix multiplication with Eigen / Armadillo |
+| 79 | Running Regressions with C++ ML Libraries | ⏳ Planned | Linear regression using mlpack or dlib |
+| 80 | Multi-Variable Regression | ⏳ Planned | Multiple linear regression, feature scaling, evaluation |
+
+### Professional Portfolio Building – Independent Assignments
+
+| Day | Topic | Status | Key Focus / Deliverables |
+|-----|-------|--------|--------------------------|
+| 81 | Text to Morse Code Converter | ⏳ Planned | String processing, encoding/decoding, console + file I/O |
+| 82 | Portfolio Website (WebAssembly / Emscripten) | ⏳ Planned | Compile C++ to WASM, interactive personal portfolio site |
+| 83 | Tic Tac Toe Game | ⏳ Planned | Game logic, win detection, console or simple GUI version |
+| 84 | Image Watermarking App (OpenCV) | ⏳ Planned | Load image, overlay text/logo, save result using OpenCV |
+| 85 | Typing Speed Test | ⏳ Planned | Timer, WPM calculation, accuracy tracking, interactive UI |
+| 86 | Breakout Game (SDL2) | ⏳ Planned | 2D game loop, collision detection, score system with SDL2 |
+| 87 | Cafe and Wifi Website | ⏳ Planned | Static + dynamic site with C++ backend (Crow/Pistache) |
+| 88 | Todo List Website | ⏳ Planned | Full CRUD todo app with SQLite + REST API + frontend |
+| 89 | Disappearing Text Writing App | ⏳ Planned | Timed text disappearance, focus training, local storage |
+| 90 | Image Color Palette Generator | ⏳ Planned | Extract dominant colors from image using OpenCV / k-means |
+| 91 | Custom Web Scraper | ⏳ Planned | Robust scraper with libcurl + Gumbo, data export to CSV/JSON |
+| 92 | Automating the Google Dinosaur Game | ⏳ Planned | Computer vision + input simulation to play the Chrome game |
+| 93 | Space Invaders Game | ⏳ Planned | Classic arcade game using SDL2 or SFML, complete game loop |
+| 94 | Custom API Driven Website | ⏳ Planned | Frontend + C++ REST API backend with authentication |
+| 95 | An Online Shop | ⏳ Planned | Product catalog, cart, checkout simulation, SQLite backend |
+| 96 | Custom Browser Automation | ⏳ Planned | Automate browser actions using WebDriver C++ bindings |
+| 97 | Analyse and Visualise the Space Race | ⏳ Planned | Data analysis + charts of historical space race data |
+| 98 | Analyse Deaths Involving the Police in the US | ⏳ Planned | Statistical analysis, data cleaning, visualization of dataset |
+| 99 | Predict Earnings using Multivariable Regression | ⏳ Planned | Feature engineering, multi-variable regression, model evaluation |
+| 100 | Capstone Project – Full-Stack C++ Portfolio App | ⏳ Planned | Combine everything: WebAssembly frontend + C++ backend + DB + ML + deployment |
+
 Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
 
 ### Getting Started
