@@ -1,0 +1,37 @@
+{
+  "day": 31,
+  "mcq": [
+    {
+      "question": "Why can `RoastBatch::is_known_bean` be called without any `RoastBatch` object?",
+      "options": {
+        "A": "It is a static member function, so it has no `this` pointer and belongs to the class",
+        "B": "It is declared `const`",
+        "C": "It is defined inside the class body",
+        "D": "Because it returns `bool`"
+      },
+      "answer": "A",
+      "explanation": "Static member functions are called as `RoastBatch::is_known_bean(...)`. They cannot access non-static members because there is no object."
+    },
+    {
+      "question": "What must `add_beans` return for `batch.add_beans(500).set_roast(Roast::dark)` to modify `batch` itself?",
+      "options": {
+        "A": "`RoastBatch` by value",
+        "B": "`void`",
+        "C": "`const RoastBatch&`",
+        "D": "`RoastBatch&` – a reference to `*this`"
+      },
+      "answer": "D",
+      "explanation": "Returning a non-const reference lets the next call act on the same object. Returning by value would chain on a temporary copy, and const would forbid the mutator."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Static data such as a global batch counter is shared by every object and every thread. What problems could appear if two threads create batches at the same time, and how would you fix them?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `RoastBatch::heaviest(const std::vector<RoastBatch>&)`, a static function returning the batch with the most green beans, then implement it."
+    }
+  ]
+}

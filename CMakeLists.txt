@@ -64,7 +64,9 @@ enable_testing()
 #   day_XX_<topic>_lib   the lesson (INTERFACE when header-only, STATIC when it has .cpp files)
 #   day_XX_<topic>       the demo executable built from main.cpp
 #   test_day_XX          the unit tests from tests/test_day_XX.cpp, registered with CTest
-# A day may add extra targets in an optional src/day_XX_<topic>/day.cmake file.
+# A day may define extra targets first in an optional src/day_XX_<topic>/day.cmake file. It can set
+#   DAY_SKIP_DIRS       folders whose .cpp files belong to its own targets, not to the lesson
+#   DAY_LINK_LIBRARIES  targets the lesson links against
 file(GLOB DAY_DIRS LIST_DIRECTORIES true CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/day_*")
 list(SORT DAY_DIRS)
 set(CPPM_DAY_COUNT 0)
@@ -78,15 +80,24 @@ foreach(DAY_DIR IN LISTS DAY_DIRS)
     set(DAY_NUMBER "${CMAKE_MATCH_1}")
     set(DAY_LIB "${DAY_NAME}_lib")
 
+    set(DAY_SKIP_DIRS "")
+    set(DAY_LINK_LIBRARIES "")
+    if(EXISTS "${DAY_DIR}/day.cmake")
+        include("${DAY_DIR}/day.cmake")
+    endif()
+
     file(GLOB_RECURSE LESSON_SOURCES CONFIGURE_DEPENDS "${DAY_DIR}/*.cpp")
     list(REMOVE_ITEM LESSON_SOURCES "${DAY_DIR}/main.cpp")
+    foreach(SKIP_DIR IN LISTS DAY_SKIP_DIRS)
+        list(FILTER LESSON_SOURCES EXCLUDE REGEX "^${SKIP_DIR}/")
+    endforeach()
     if(LESSON_SOURCES)
         add_library(${DAY_LIB} STATIC ${LESSON_SOURCES})
-        target_link_libraries(${DAY_LIB} PUBLIC cppm_settings)
+        target_link_libraries(${DAY_LIB} PUBLIC cppm_settings ${DAY_LINK_LIBRARIES})
         target_include_directories(${DAY_LIB} PUBLIC "${DAY_DIR}")
     else()
         add_library(${DAY_LIB} INTERFACE)
-        target_link_libraries(${DAY_LIB} INTERFACE cppm_settings)
+        target_link_libraries(${DAY_LIB} INTERFACE cppm_settings ${DAY_LINK_LIBRARIES})
         target_include_directories(${DAY_LIB} INTERFACE "${DAY_DIR}")
     endif()
 
@@ -101,9 +112,6 @@ foreach(DAY_DIR IN LISTS DAY_DIRS)
         set_tests_properties(test_day_${DAY_NUMBER} PROPERTIES LABELS "day" TIMEOUT 120)
     endif()
 
-    if(EXISTS "${DAY_DIR}/day.cmake")
-        include("${DAY_DIR}/day.cmake")
-    endif()
     math(EXPR CPPM_DAY_COUNT "${CPPM_DAY_COUNT} + 1")
 endforeach()
 

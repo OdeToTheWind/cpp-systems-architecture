@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-12",
+  "learnings": [
+    "Getters are `const` member functions, so they can be called on const objects and promise not to change anything.",
+    "A setter is the single place where validation happens; if it throws before changing a member, a refused value leaves the object untouched.",
+    "Storing one canonical unit inside the class (tenths of a degree) and converting in the getters keeps the interface flexible and the data exact.",
+    "A second setter in another unit should convert and delegate, so the rules exist in exactly one function."
+  ],
+  "pitfalls": [
+    "Storing the temperature as a `double` made 25.3 come back as 25.299999; whole tenths stored in an `int` round-trip exactly.",
+    "A NaN temperature passed the range check because every comparison with NaN is false; `std::isfinite` is checked first.",
+    "The Fahrenheit setter had its own copy of the limits, which drifted out of sync; it now converts and calls the Celsius setter."
+  ],
+  "next": "Day 31 looks at the different kinds of member functions: const, static and chainable."
+}

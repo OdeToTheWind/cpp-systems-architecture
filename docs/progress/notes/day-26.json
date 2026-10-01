@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-08",
+  "learnings": [
+    "IDE refactorings work on *tokens*, not raw text: a rename changes identifiers and leaves strings, comments and longer names alone.",
+    "Go to definition, find all references and rename symbol have shortcuts in every IDE – learning those three saves more time than any other habit.",
+    "Live templates (snippets) expand a short abbreviation into a correct skeleton, so loops and guards are never typed from scratch.",
+    "A tokenizer only needs a handful of rules – identifiers, numbers, literals, comments and symbols – to support all of these features."
+  ],
+  "pitfalls": [
+    "A text search-and-replace renamed `total` inside `total_count` and inside a string; the token-aware rename fixed both.",
+    "The tokenizer treated `9lives` as an identifier at first; a name starting with a digit is a number token, so the rename now rejects it.",
+    "Shortcut tables copied from a blog mixed up macOS and Windows keys; the cheat-sheet now stores the OS explicitly."
+  ],
+  "next": "Day 27 starts object-oriented design: interfaces, encapsulation and polymorphism."
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-11",
+  "learnings": [
+    "A header-only library is used by including it; a compiled library also needs its object code linked into the program.",
+    "In CMake, `target_link_libraries(app PRIVATE textkit)` links the library and also hands over its include directories and other usage requirements.",
+    "`find_package` uses a library already installed on the system, while `FetchContent` downloads and builds it during configuration.",
+    "Version checks belong at both levels: `static_assert` on the header macros at compile time, and the linked library's `version()` at run time."
+  ],
+  "pitfalls": [
+    "Defining a non-inline function in a header caused 'multiple definition' link errors; header-only functions must be `inline`.",
+    "Members named `major` and `minor` clashed with macros from a system header; they are now `major_version` and `minor_version`.",
+    "Comparing versions as strings ranked 1.10.0 below 1.9.9; the `Version` struct compares numbers with a defaulted `<=>`."
+  ],
+  "next": "Day 30 controls access to an object's data with getters and setters."
+}

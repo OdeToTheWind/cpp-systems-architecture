@@ -1,0 +1,37 @@
+{
+  "day": 29,
+  "mcq": [
+    {
+      "question": "What is the essential difference between textkit's `case.hpp` and `stats.hpp`?",
+      "options": {
+        "A": "`case.hpp` is C code and `stats.hpp` is C++",
+        "B": "`stats.hpp` functions are faster because they are compiled",
+        "C": "Only `case.hpp` can be included from several files",
+        "D": "`case.hpp` defines its functions inline in the header, while `stats.hpp` only declares functions whose code is in a compiled library that must be linked"
+      },
+      "answer": "D",
+      "explanation": "Header-only code is compiled into every translation unit that includes it. A compiled library is built once and linked; forgetting to link it gives 'undefined reference' errors."
+    },
+    {
+      "question": "Does version `1.10.0` satisfy the requirement `^1.9.0`?",
+      "options": {
+        "A": "Yes: same major version 1, and 1.10.0 is newer than 1.9.0",
+        "B": "No: 1.10 is smaller than 1.9 when compared as text",
+        "C": "No: `^` requires exactly 1.9.0",
+        "D": "Only if the patch number is also 9"
+      },
+      "answer": "A",
+      "explanation": "Version parts compare as numbers, so 10 > 9. A caret requirement accepts any version with the same major number that is at least the given one."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Vendoring a library (copying its source into your repository), using a package manager such as vcpkg, and FetchContent each have trade-offs. Which would you choose for a team project and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `~1.4.0` requirement (same major and minor, any newer patch), then add it to `satisfies`."
+    }
+  ]
+}

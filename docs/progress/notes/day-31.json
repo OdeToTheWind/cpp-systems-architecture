@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-13",
+  "learnings": [
+    "Static data members belong to the class, not to an object – one batch counter is shared by every `RoastBatch`.",
+    "Static member functions have no `this`, so they can answer class-wide questions (`is_known_bean`) or act as named factories (`parse`).",
+    "A mutator that returns `*this` by reference allows chaining: `batch.add_beans(1000).set_roast(Roast::dark)`.",
+    "`inline static` data members (C++17) can be defined inside the class, without a separate definition in a .cpp file."
+  ],
+  "pitfalls": [
+    "A setter returned `RoastBatch` by value, so the chained call modified a temporary copy; it now returns `RoastBatch&`.",
+    "Calling `weight_loss_percent()` on a const batch failed to compile until the function was marked `const`.",
+    "`same_origin_as(*this)` reported a batch as a duplicate of itself; comparing `this` with `&other` excludes it."
+  ],
+  "next": "Day 32 studies the constructors that create these objects."
+}

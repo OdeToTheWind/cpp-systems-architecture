@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 24 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 190 `TEST_CASE`s across 24 test executables.
-- **Deliverables mapped to code:** 135 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 4,098 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 48 multiple-choice questions with explanations, plus 48 open bonus questions (24 hands-on, test-first tasks).
+- **Curriculum completion:** 32 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 250 `TEST_CASE`s across 32 test executables.
+- **Deliverables mapped to code:** 182 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 5,535 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 64 multiple-choice questions with explanations, plus 64 open bonus questions (32 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -46,14 +46,14 @@
 | 22 | Documentation vs Comments | 🟢 | A *kitchen unit-conversion library* that is documented the professional way – Doxygen comments describe what each function promises, ordinary comments explain why – plus a small documentation auditor that checks a header for undocumented functions. | [code](src/day_22_documentation/lesson.hpp) · [tests](tests/test_day_22.cpp) · [notes](docs/progress/day-22-reflection.md) |
 | 23 | Scope, Lifetime & Global Variables | 🟢 | A *deli-counter ticket dispenser*. Shop-wide settings live in a namespace, the ticket counter is a function-local static that survives between calls, helper code is hidden with internal linkage, and a lifetime log shows exactly when each object is born and destroyed. | [code](src/day_23_scope_lifetime/lesson.hpp) · [tests](tests/test_day_23.cpp) · [notes](docs/progress/day-23-reflection.md) |
 | 24 | Debugging Techniques | 🟢 | A *library late-fee calculator* that shipped with a real bug: some borrowers were charged for the grace day. The bug is reproduced with a minimal failing case, traced with debug output on std::cerr, cornered by bisecting the inputs, and fixed – with assertions guarding the invariants so it cannot come back. | [code](src/day_24_debugging/lesson.hpp) · [tests](tests/test_day_24.cpp) · [notes](docs/progress/day-24-reflection.md) |
-| 25 | Local Development Environment Setup | 🟡 | _planned_ | – |
-| 26 | IDE Tips and Tricks | 🟡 | _planned_ | – |
-| 27 | Object-Oriented Programming Basics | 🟡 | _planned_ | – |
-| 28 | Creating Classes | 🟡 | _planned_ | – |
-| 29 | Using External Libraries | 🟡 | _planned_ | – |
-| 30 | Getters and Setters | 🟡 | _planned_ | – |
-| 31 | Member Functions | 🟡 | _planned_ | – |
-| 32 | Constructors and Initialiser Lists | 🟡 | _planned_ | – |
+| 25 | Local Development Environment Setup | 🟡 | A *project doctor* that examines a C++ checkout – this repository by default – and reports whether the local setup follows best practice: a CMake build, presets for development and sanitizers, strict warnings, a formatter configuration, an ignored build folder, and a modern compiler and language standard. | [code](src/day_25_dev_environment/lesson.hpp) · [tests](tests/test_day_25.cpp) · [notes](docs/progress/day-25-reflection.md) |
+| 26 | IDE Tips and Tricks | 🟡 | A *pocket IDE coach*: a searchable shortcut cheat-sheet for VS Code, CLion and Visual Studio on each operating system, a live-template expander, and the refactorings an IDE performs – find references, go to definition and a token-aware rename that never touches strings, comments or longer names that merely contain the old one. | [code](src/day_26_ide_tips/lesson.hpp) · [tests](tests/test_day_26.cpp) · [notes](docs/progress/day-26-reflection.md) |
+| 27 | Object-Oriented Programming Basics | 🟡 | A *museum ticket kiosk payment gateway*. Cards, prepaid wallets and gift vouchers are very different, yet the kiosk charges all of them through one abstract interface – and a card number never leaves its object except as `**** 1111`. | [code](src/day_27_oop_basics/lesson.hpp) · [tests](tests/test_day_27.cpp) · [notes](docs/progress/day-27-reflection.md) |
+| 28 | Creating Classes | 🟡 | A *gym class booking system*. A `FitnessClass` object guards its own rules – never more attendees than places, nobody booked twice, the waiting list promoted in order – so no caller can ever put it into an invalid state. | [code](src/day_28_classes/lesson.hpp) · [tests](tests/test_day_28.cpp) · [notes](docs/progress/day-28-reflection.md) |
+| 29 | Using External Libraries | 🟡 | A *newsletter editor's text toolkit* built on a library called textkit, which ships in two flavours exactly like real dependencies do: a header-only part (just include it) and a compiled static library (CMake target `textkit`, linked by this lesson). A dependency checker reads a manifest, compares semantic versions and prints the CMake you would write to get each library with find_package or FetchContent. | [code](src/day_29_external_libraries/lesson.hpp) · [tests](tests/test_day_29.cpp) · [notes](docs/progress/day-29-reflection.md) |
+| 30 | Getters and Setters | 🟡 | An *aquarium controller*. The keeper can read and set the water temperature in Celsius or Fahrenheit and adjust the pH and lighting, but the controller refuses any value that would harm the fish – and stores temperatures in one exact internal unit. | [code](src/day_30_getters_setters/lesson.hpp) · [tests](tests/test_day_30.cpp) · [notes](docs/progress/day-30-reflection.md) |
+| 31 | Member Functions | 🟡 | A *coffee-roastery batch tracker*. Each roast batch has methods that change it (and return `*this` so they chain), const methods that only read it, and static members that belong to the roastery as a whole: the batch-number counter and the list of beans it buys. | [code](src/day_31_member_functions/lesson.hpp) · [tests](tests/test_day_31.cpp) · [notes](docs/progress/day-31-reflection.md) |
+| 32 | Constructors and Initialiser Lists | 🟡 | A *car-rental reservation desk*. Every way of creating a reservation – a blank walk-in form, a full booking, a booking for "N days from a start day", or a copy of last year's booking – goes through a constructor that guarantees a valid object from the very first moment it exists. | [code](src/day_32_constructors/lesson.hpp) · [tests](tests/test_day_32.cpp) · [notes](docs/progress/day-32-reflection.md) |
 | 33 | Namespaces | 🟡 | _planned_ | – |
 | 34 | Optional, Required & Default Parameters | 🟡 | _planned_ | – |
 | 35 | Event Listeners & Callbacks | 🟡 | _planned_ | – |

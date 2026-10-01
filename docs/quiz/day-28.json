@@ -1,0 +1,37 @@
+{
+  "day": 28,
+  "mcq": [
+    {
+      "question": "What does marking `TimeSlot(int)` as `explicit` prevent?",
+      "options": {
+        "A": "Creating a `TimeSlot` from an `int` at all",
+        "B": "Copying `TimeSlot` objects",
+        "C": "Implicit conversions such as `TimeSlot slot = 1080;` or passing `1080` where a `TimeSlot` is expected",
+        "D": "Using `TimeSlot` in a `constexpr` context"
+      },
+      "answer": "C",
+      "explanation": "An explicit constructor can still be called directly, `TimeSlot slot(1080)`, but the compiler will not use it silently to convert an `int`."
+    },
+    {
+      "question": "Which statement best describes a class invariant?",
+      "options": {
+        "A": "A condition that holds for every object whenever no member function is running",
+        "B": "A member variable that can never change",
+        "C": "A static member shared by all objects",
+        "D": "A function that must be called before any other"
+      },
+      "answer": "A",
+      "explanation": "The constructor establishes the invariant and every public member function preserves it. That is why data members are private."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`FitnessClass::attendees()` returns a const reference to the internal vector. What could go wrong if a caller keeps that reference while calling `book()`?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `FitnessClass::move_up(member)` that lets a waiting member swap places with the person ahead of them, then implement it so `invariant_holds()` stays true."
+    }
+  ]
+}

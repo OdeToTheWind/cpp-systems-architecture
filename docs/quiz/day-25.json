@@ -1,0 +1,37 @@
+{
+  "day": 25,
+  "mcq": [
+    {
+      "question": "What does `cmake --preset dev` do in this repository?",
+      "options": {
+        "A": "Downloads the development dependencies",
+        "B": "Builds and runs every test",
+        "C": "Switches the compiler to debug mode only for the current file",
+        "D": "Configures the build with the settings stored under the `dev` name in CMakePresets.json"
+      },
+      "answer": "D",
+      "explanation": "Presets store a configure command's binary directory, generator and cache variables under a name, so every developer and CI job uses the same configuration."
+    },
+    {
+      "question": "Which kind of bug is AddressSanitizer designed to catch at run time?",
+      "options": {
+        "A": "Reading or writing memory outside an allocation, or after it has been freed",
+        "B": "Spelling mistakes in identifiers",
+        "C": "Missing semicolons",
+        "D": "Functions that are never called"
+      },
+      "answer": "A",
+      "explanation": "ASan instruments every memory access and reports out-of-bounds, use-after-free and similar errors the moment they happen, often in code that passes ordinary tests."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a learning project treat warnings as errors from day one? Discuss the effect on beginners and on the quality of the code."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `check_compile_commands(root)` rule that warns when `build/compile_commands.json` is missing (tools such as clangd need it), then add the check to `diagnose`."
+    }
+  ]
+}

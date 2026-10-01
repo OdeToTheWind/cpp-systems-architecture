@@ -1,0 +1,37 @@
+{
+  "day": 32,
+  "mcq": [
+    {
+      "question": "In what order are a class's members initialised?",
+      "options": {
+        "A": "In the order they are declared in the class, regardless of the order in the initialiser list",
+        "B": "In the order they appear in the initialiser list",
+        "C": "Alphabetically",
+        "D": "In reverse declaration order"
+      },
+      "answer": "A",
+      "explanation": "Declaration order always wins. If the initialiser list is written in a different order, `-Wreorder` warns, because one member may be initialised from another that is not yet ready."
+    },
+    {
+      "question": "Why must `confirmation_` (a `const int` member) be set in the initialiser list rather than in the constructor body?",
+      "options": {
+        "A": "Because the constructor body runs after the destructor",
+        "B": "The constructor body cannot use static members",
+        "C": "A const member must be initialised when it is created; it cannot be assigned afterwards",
+        "D": "Const members are always zero-initialised"
+      },
+      "answer": "C",
+      "explanation": "By the time the constructor body runs, every member already exists. Assignment to a const member is not allowed, so it can only be given its value in the initialiser list."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The copy constructor here gives copies a new confirmation number. Is it surprising that a 'copy' is not equal to its original? When would a named function such as `rebook()` be clearer than a copy constructor?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a constructor taking a `WalkInForm` directly (`Reservation(const WalkInForm&)`), make it delegate to the main constructor, and check that validation still happens."
+    }
+  ]
+}

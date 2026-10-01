@@ -1,0 +1,37 @@
+{
+  "day": 27,
+  "mcq": [
+    {
+      "question": "What makes `PaymentMethod` an abstract class?",
+      "options": {
+        "A": "Its constructor is protected",
+        "B": "It declares at least one pure virtual function (`= 0`)",
+        "C": "It has a virtual destructor",
+        "D": "It has no data members"
+      },
+      "answer": "B",
+      "explanation": "A class with a pure virtual function cannot be instantiated; only derived classes that override every pure virtual function can be."
+    },
+    {
+      "question": "Why does `PaymentMethod` need a virtual destructor?",
+      "options": {
+        "A": "So that deleting a derived object through a base-class pointer runs the derived destructor",
+        "B": "Pure virtual functions require it",
+        "C": "Otherwise derived classes cannot be copied",
+        "D": "To make the class abstract"
+      },
+      "answer": "A",
+      "explanation": "Without a virtual destructor, `delete base_ptr` only runs the base destructor and the behaviour is undefined. `unique_ptr<PaymentMethod>` relies on this."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The gateway never needs to know which kind of payment it is charging. What would change if a new requirement said 'vouchers may never pay for more than one ticket'? Where should that rule live?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `GiftCardPayment` with a balance that can be split over several purchases, then implement it without changing `Gateway`."
+    }
+  ]
+}

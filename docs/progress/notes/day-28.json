@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-10",
+  "learnings": [
+    "A class invariant is a rule that is true for every object between public calls; the constructor establishes it and every member function preserves it.",
+    "`explicit` on single-argument constructors stops surprising implicit conversions such as `TimeSlot slot = 1080;`.",
+    "Overloading `operator<<` as a non-member that returns the stream makes objects printable and chainable with `<<`.",
+    "`= default` comparison operators (C++20) compare members in order and need no hand-written code."
+  ],
+  "pitfalls": [
+    "Leaving the waiting list did not free a place, but the first version promoted someone anyway; `cancel` now distinguishes the two lists.",
+    "`operator<<` changed the stream's fill character to `0` and left it that way; it now restores the previous fill.",
+    "Public vectors let a caller push a twelfth attendee into an eleven-place class; the members are private and exposed as const references."
+  ],
+  "next": "Day 29 packages code as a library and uses it the way third-party libraries are used."
+}

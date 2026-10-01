@@ -67,14 +67,14 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 
 | Day | Topic | Key Learnings / Deliverables | Level | Status |
 |----:|-------|------------------------------|-------|--------|
-| 25 | Local Development Environment Setup | Compilers, CMake presets, warnings as errors, sanitizers, a reproducible project layout | Intermediate | Planned |
-| 26 | IDE Tips and Tricks | Navigation and refactoring workflows, keyboard shortcuts, token-aware rename, code templates | Intermediate | Planned |
-| 27 | Object-Oriented Programming Basics | Encapsulation, abstraction with pure virtual interfaces, polymorphism, information hiding | Intermediate | Planned |
-| 28 | Creating Classes | Class definitions, constructors, member functions, invariants, explicit constructors, operator<< | Intermediate | Planned |
-| 29 | Using External Libraries | Header-only vs compiled libraries, linking a static library, find_package and FetchContent, version checks | Intermediate | Planned |
-| 30 | Getters and Setters | Accessors and mutators, validation in setters, unit conversion behind an interface | Intermediate | Planned |
-| 31 | Member Functions | Const member functions, static member functions, static data, this, method chaining | Intermediate | Planned |
-| 32 | Constructors and Initialiser Lists | Default, parameterised, delegating and copy constructors, member initialiser lists, validation at construction | Intermediate | Planned |
+| 25 | Local Development Environment Setup | Compilers, CMake presets, warnings as errors, sanitizers, a reproducible project layout | Intermediate | Covered |
+| 26 | IDE Tips and Tricks | Navigation and refactoring workflows, keyboard shortcuts, token-aware rename, code templates | Intermediate | Covered |
+| 27 | Object-Oriented Programming Basics | Encapsulation, abstraction with pure virtual interfaces, polymorphism, information hiding | Intermediate | Covered |
+| 28 | Creating Classes | Class definitions, constructors, member functions, invariants, explicit constructors, operator<< | Intermediate | Covered |
+| 29 | Using External Libraries | Header-only vs compiled libraries, linking a static library, find_package and FetchContent, version checks | Intermediate | Covered |
+| 30 | Getters and Setters | Accessors and mutators, validation in setters, unit conversion behind an interface | Intermediate | Covered |
+| 31 | Member Functions | Const member functions, static member functions, static data, this, method chaining | Intermediate | Covered |
+| 32 | Constructors and Initialiser Lists | Default, parameterised, delegating and copy constructors, member initialiser lists, validation at construction | Intermediate | Covered |
 | 33 | Namespaces | Nested and inline namespaces, namespace aliases, anonymous namespaces, using-declarations vs using-directives | Intermediate | Planned |
 | 34 | Optional, Required & Default Parameters | std::optional parameters, overload sets, builder objects, parameter ordering rules | Intermediate | Planned |
 | 35 | Event Listeners & Callbacks | Observer pattern, subscription handles, unsubscribing safely, std::function listeners | Intermediate | Planned |

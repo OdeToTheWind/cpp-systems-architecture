@@ -1,0 +1,37 @@
+{
+  "day": 30,
+  "mcq": [
+    {
+      "question": "Why are the aquarium's getters declared `const`?",
+      "options": {
+        "A": "So that they return constant values only",
+        "B": "Because const functions run faster",
+        "C": "To stop subclasses from overriding them",
+        "D": "So they can be called on const controllers and promise not to modify the object"
+      },
+      "answer": "D",
+      "explanation": "A const member function receives a pointer-to-const `this`. It can be called on const objects and the compiler rejects any attempt to change a member inside it."
+    },
+    {
+      "question": "`set_temperature_f` converts to Celsius and calls `set_temperature_c`. What is the main benefit?",
+      "options": {
+        "A": "Fahrenheit values are stored more precisely",
+        "B": "It avoids floating-point arithmetic",
+        "C": "It makes the class abstract",
+        "D": "The safety limits and logging live in one function, so the two setters can never disagree"
+      },
+      "answer": "D",
+      "explanation": "Duplicated validation drifts apart over time. Delegating to one authoritative setter keeps a single source of truth for the rules."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Some style guides discourage trivial getters and setters for every field. When does a plain struct with public members communicate intent better than a class with accessors?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `set_target_range(min_c, max_c)` setter that changes the allowed limits but refuses ranges narrower than 2 degrees, then implement it."
+    }
+  ]
+}

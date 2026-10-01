@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-14",
+  "learnings": [
+    "The member initialiser list initialises members directly; const members and references can only be initialised there.",
+    "Members are always initialised in declaration order, not in the order of the initialiser list – `-Wreorder` warns when the two differ.",
+    "A delegating constructor forwards to another constructor of the same class, so the validation lives in one place.",
+    "A user-written copy constructor can give copies different meaning – here a copy is a new booking with a new confirmation number."
+  ],
+  "pitfalls": [
+    "Assigning members in the constructor body default-constructed them first and failed outright for the const confirmation number.",
+    "A copied reservation kept the original's confirmation number, so two bookings shared one; the copy constructor now issues a new one.",
+    "`Reservation(name, car, 10, 3)` picked the wrong overload until the 'N days' constructor took an `unsigned` day count."
+  ],
+  "next": "Day 33 organises the growing code base into namespaces."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 26,
+  "mcq": [
+    {
+      "question": "Why must a rename refactoring work on tokens instead of plain text?",
+      "options": {
+        "A": "So that strings, comments and longer identifiers containing the old name are left unchanged",
+        "B": "Because text replacement is slower",
+        "C": "Because compilers cannot read renamed files",
+        "D": "Because identifiers are case-insensitive in C++"
+      },
+      "answer": "A",
+      "explanation": "A text replace of `total` also changes `total_count` and the word inside `\"total\"`. Only whole identifier tokens that refer to the symbol should change."
+    },
+    {
+      "question": "Which CLion shortcut finds all references to a symbol on Windows, according to the cheat-sheet?",
+      "options": {
+        "A": "Alt+F7",
+        "B": "Shift+F6",
+        "C": "Ctrl+B",
+        "D": "Ctrl+F8"
+      },
+      "answer": "A",
+      "explanation": "In CLion's default Windows keymap, Alt+F7 is Find Usages. Shift+F6 renames, Ctrl+B goes to the declaration and Ctrl+F8 toggles a breakpoint."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A real IDE uses a full C++ front end (clangd) to resolve which declaration each name refers to. Give an example where the token-based rename in this lesson would still rename the wrong thing."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `find_references` ignores a name inside a raw string literal `R\"(total)\"`, then extend the tokenizer to handle raw strings."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-09",
+  "learnings": [
+    "An abstract class made of pure virtual functions describes *what* every implementation can do and nothing about *how*.",
+    "Polymorphism lets the gateway call `method.charge(cents)` once and get card, wallet or voucher behaviour through virtual dispatch.",
+    "Information hiding means private data with no getter at all when the data must never leave the object – the card number only appears masked.",
+    "A base class used through pointers needs a virtual destructor, or deleting a derived object through the base is undefined behaviour."
+  ],
+  "pitfalls": [
+    "Copying a `CardPayment` into a `PaymentMethod` variable sliced it into the base type; methods are now passed by reference and stored as `unique_ptr<PaymentMethod>`.",
+    "A debug print of the whole card object leaked the number into logs; the number has no accessor now, only `describe()`.",
+    "A typo in a card number was accepted until the Luhn check moved into the constructor."
+  ],
+  "next": "Day 28 designs a class around an invariant that no caller can break."
+}
