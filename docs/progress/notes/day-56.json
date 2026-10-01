@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-08",
+  "learnings": [
+    "`argv[0]` is the program name; the real arguments are `argv[1]` to `argv[argc - 1]`, easiest to handle as a `std::vector<std::string>`.",
+    "Conventional CLIs accept combined short flags (`-in`), options with separate or attached values (`-m 5`, `--max=5`) and `--` to end option parsing.",
+    "Exit codes are the CLI's return value to scripts – grep's convention is 0 for a match, 1 for none and 2 for errors.",
+    "Usage errors go to standard error with a short usage message, so they never pollute output that is piped into another program."
+  ],
+  "pitfalls": [
+    "A pattern that started with '-' was taken as an unknown flag until `--` was supported.",
+    "`-m` as the last argument read past the end of the vector; the parser now checks that a value follows.",
+    "A missing file stopped the whole search; other files are now still searched and the exit code reports the error."
+  ],
+  "next": "Day 57 moves from local tools to web APIs: REST and JSON."
+}

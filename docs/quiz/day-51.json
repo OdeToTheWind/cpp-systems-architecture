@@ -1,0 +1,37 @@
+{
+  "day": 51,
+  "mcq": [
+    {
+      "question": "How does a recursive-descent parser handle a JSON array inside an object?",
+      "options": {
+        "A": "The object rule calls the value rule for each member, which calls the array rule when it sees '['",
+        "B": "It first finds the matching ']' with a regular expression",
+        "C": "It parses arrays in a second pass",
+        "D": "It converts the text to XML first"
+      },
+      "answer": "A",
+      "explanation": "Each grammar rule is a function, and rules call each other as the grammar nests. The call stack mirrors the nesting of the document."
+    },
+    {
+      "question": "Which string is valid JSON?",
+      "options": {
+        "A": "`{zones: [1, 2]}`",
+        "B": "`{\"zones\": [01, 2]}`",
+        "C": "`{\"zones\": [1, 2,]}`",
+        "D": "`{\"zones\": [1, 2.5, -3e2]}`"
+      },
+      "answer": "D",
+      "explanation": "JSON requires quoted keys, forbids leading zeros in numbers and does not allow trailing commas. Exponents and negative numbers are allowed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "This parser is fine for configuration files. What would you need to change for multi-gigabyte JSON logs, and why do streaming (SAX-style) parsers exist?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for parsing a surrogate pair such as `\"\\ud83d\\ude00\"`, then extend `parse_unicode_escape` to produce the 4-byte UTF-8 emoji."
+    }
+  ]
+}

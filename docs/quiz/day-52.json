@@ -1,0 +1,37 @@
+{
+  "day": 52,
+  "mcq": [
+    {
+      "question": "Why does `save_atomically` write to `garden.txt.tmp` and then rename it?",
+      "options": {
+        "A": "Temporary files are written faster",
+        "B": "Renaming compresses the file",
+        "C": "A rename replaces the file in one step, so a crash leaves either the old or the new file, never a half-written one",
+        "D": "It lets two programs write the same file at once"
+      },
+      "answer": "C",
+      "explanation": "Writing in place first truncates the file. If the program crashes before finishing, the data is gone. Rename-over-existing is atomic on POSIX file systems."
+    },
+    {
+      "question": "What does `load_or_recover` do with a save file it cannot parse?",
+      "options": {
+        "A": "Deletes it and continues",
+        "B": "Crashes with an exception so the user notices",
+        "C": "Loads as many lines as it can and ignores the rest",
+        "D": "Renames it to `.corrupt`, starts with an empty garden and reports that it recovered"
+      },
+      "answer": "D",
+      "explanation": "User data must never be destroyed automatically. Moving the file aside keeps the app usable and leaves the damaged file for manual repair."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When a save format changes, you can migrate old files on load or keep the old reader forever. What are the long-term costs of each approach?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a version 3 format that adds a `location` field per plant, then extend `serialise` and `deserialise` while keeping versions 1 and 2 loadable."
+    }
+  ]
+}

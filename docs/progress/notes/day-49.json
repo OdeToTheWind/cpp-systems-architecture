@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-01",
+  "learnings": [
+    "An exception hierarchy (`BookingError` with `SoldOut`, `SeatTaken`, `PaymentDeclined` below it) lets callers catch broadly or precisely, and lets specific exceptions carry extra data.",
+    "`std::error_code` pairs an integer with a category; a custom `std::error_category` plus `is_error_code_enum` makes your own enum work like the standard ones.",
+    "A Result type (value *or* error, like C++23 `std::expected`) suits failures that are an ordinary outcome, such as a mistyped seat code.",
+    "`std::system_error` bridges the two worlds: it is an exception that carries an `error_code`."
+  ],
+  "pitfalls": [
+    "`return seat_errc::empty;` did not compile for `Result<Seat>`: enum → error_code → Result is two user-defined conversions, so `Result` got a constructor template for error-code enums.",
+    "Catching `BookingError` before `SeatTaken` meant the specific handler never ran; the most specific handler must come first.",
+    "A test string containing `??'` triggered a trigraph warning; the bad seat code in the test is now `#!`."
+  ],
+  "next": "Day 50 makes sure that when something does throw, no data is left half-changed."
+}

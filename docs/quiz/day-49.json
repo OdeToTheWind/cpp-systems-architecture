@@ -1,0 +1,37 @@
+{
+  "day": 49,
+  "mcq": [
+    {
+      "question": "When is returning an error value (such as a Result or std::error_code) a better choice than throwing an exception?",
+      "options": {
+        "A": "Never – exceptions are always better in C++",
+        "B": "Only in destructors",
+        "C": "When failure is an ordinary, expected outcome that the immediate caller will handle, such as a mistyped seat code",
+        "D": "When the error must cross many layers of the call stack"
+      },
+      "answer": "C",
+      "explanation": "Exceptions suit rare failures the immediate caller cannot fix. Expected failures are part of normal control flow, and an explicit return value makes handling them visible and cheap."
+    },
+    {
+      "question": "What does specialising `std::is_error_code_enum<seat_errc>` enable?",
+      "options": {
+        "A": "Throwing `seat_errc` values as exceptions",
+        "B": "Implicit conversion of `seat_errc` values to `std::error_code`, using the `make_error_code` found by argument-dependent lookup",
+        "C": "Printing enums with `operator<<`",
+        "D": "Using `seat_errc` as an integer"
+      },
+      "answer": "B",
+      "explanation": "With the trait set, `std::error_code ec = seat_errc::empty;` calls your `make_error_code`, which attaches your custom category."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A deep exception hierarchy can mirror every possible failure. How deep should it be, and how do you decide which failures deserve their own class?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `try_book` function that returns `Result<std::string>` instead of throwing for a taken seat, then implement it on top of `BoxOffice`."
+    }
+  ]
+}

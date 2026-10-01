@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-06",
+  "learnings": [
+    "`std::chrono` separates durations (`minutes`, `hours`, `days`) from time points (`sys_time`), and the type system stops you from adding two time points.",
+    "C++20 calendar types (`year_month_day`, `weekday`, `sys_days`) validate dates with `ok()` and convert to day counts for arithmetic.",
+    "Business-day arithmetic is a loop over days that skips weekends and a set of holidays.",
+    "A fixed UTC offset is just a duration added to a UTC time point; `floor<days>` then splits the result into a date and a time of day."
+  ],
+  "pitfalls": [
+    "Adding 30 days to January 31 by incrementing the month produced an invalid date; arithmetic is now done on `sys_days`.",
+    "An order at exactly 15:00 shipped the same day; the cut-off check now uses `>=`.",
+    "Converting a late-evening UTC time to UTC+05:30 kept the old date; deriving the date from the shifted time point fixed it."
+  ],
+  "next": "Day 55 serves this kind of logic over the web."
+}

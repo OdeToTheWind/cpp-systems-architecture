@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-02",
+  "learnings": [
+    "The basic guarantee keeps every invariant intact after an exception; the strong guarantee also leaves the state exactly as before; nothrow means the operation cannot fail at all.",
+    "A scope guard is RAII for undo: its destructor runs the rollback unless the success path calls `dismiss()`.",
+    "Copy-and-swap gives the strong guarantee: do all the work on a copy, then commit with a swap that cannot throw.",
+    "Marking `swap` `noexcept` documents and enforces that the commit step can never fail, and lets the standard library use it safely."
+  ],
+  "pitfalls": [
+    "The first transfer subtracted from one account, then threw while writing the journal – 25.00 vanished; the unsafe version is kept as a warning.",
+    "The failure-injection hook stayed armed after a failed strong transfer, because the copy consumed it but the original kept it; it is now handed to the copy with `std::exchange`.",
+    "A rollback lambda captured `cents` by reference to a loop variable that changed later; the guards now capture only what lives long enough."
+  ],
+  "next": "Day 51 parses and produces JSON, with errors that point at the exact character."
+}

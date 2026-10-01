@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 48 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 369 `TEST_CASE`s across 48 test executables.
-- **Deliverables mapped to code:** 271 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 8,189 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 96 multiple-choice questions with explanations, plus 96 open bonus questions (48 hands-on, test-first tasks).
+- **Curriculum completion:** 56 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 433 `TEST_CASE`s across 56 test executables.
+- **Deliverables mapped to code:** 315 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 9,785 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 112 multiple-choice questions with explanations, plus 112 open bonus questions (56 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -70,14 +70,14 @@
 | 46 | Variadic Templates | 🟡 | A *structured logging and metrics helper for a game server*. One `log` call takes any number of key/value pairs of any types, a `sum_all` adds whatever numbers it is given, tuples of coordinates are unpacked straight into function calls, and a factory forwards its arguments perfectly to whatever object it creates. | [code](src/day_46_variadic_templates/lesson.hpp) · [tests](tests/test_day_46.cpp) · [notes](docs/progress/day-46-reflection.md) |
 | 47 | Desktop GUI Architecture | 🟡 | A *travel currency converter* desktop app built with Model-View-Presenter. The model knows exchange rates, the view is a thin interface any toolkit (Qt, wxWidgets, a console) can implement, and the presenter holds every UI rule – so the whole app is tested headlessly with a fake view, no window needed. | [code](src/day_47_gui_architecture/lesson.hpp) · [tests](tests/test_day_47.cpp) · [notes](docs/progress/day-47-reflection.md) |
 | 48 | Static vs Dynamic Typing | 🟡 | A *spreadsheet cell engine*. A cell may hold nothing, a number, text, a boolean or an error – decided at run time from what the user typed – yet every operation on cells is checked at compile time through std::variant and std::visit. Units are given their own types so metres and feet can never be added by accident, and a plugin metadata bag shows where std::any fits. | [code](src/day_48_static_dynamic_typing/lesson.hpp) · [tests](tests/test_day_48.cpp) · [notes](docs/progress/day-48-reflection.md) |
-| 49 | Advanced Error Handling | 🟡 | _planned_ | – |
-| 50 | Exception Safety & RAII | 🟡 | _planned_ | – |
-| 51 | Working with JSON | 🟡 | _planned_ | – |
-| 52 | Local Persistence | 🟡 | _planned_ | – |
-| 53 | Sending Email (SMTP & MIME) | 🟡 | _planned_ | – |
-| 54 | Date and Time with chrono | 🟡 | _planned_ | – |
-| 55 | Hosting C++ Online | 🟡 | _planned_ | – |
-| 56 | Command-Line Arguments | 🟡 | _planned_ | – |
+| 49 | Advanced Error Handling | 🟡 | A *concert ticket booking service*. Business failures – sold out, seat taken, payment declined – form an exception hierarchy callers can catch as broadly or as precisely as they need; the low-level seat-code parser reports problems as std::error_code values from its own error category; and a small Result type is used where failure is an ordinary outcome. | [code](src/day_49_advanced_errors/lesson.hpp) · [tests](tests/test_day_49.cpp) · [notes](docs/progress/day-49-reflection.md) |
+| 50 | Exception Safety & RAII | 🟡 | A *credit-union ledger*. A transfer touches two accounts and an audit journal; if anything throws halfway – a limit check, a full journal, a failing audit write – the ledger must never lose or create money. The lesson compares an unsafe transfer with versions that give the basic and the strong exception guarantee. | [code](src/day_50_exception_safety/lesson.hpp) · [tests](tests/test_day_50.cpp) · [notes](docs/progress/day-50-reflection.md) |
+| 51 | Working with JSON | 🟡 | A *smart-garden irrigation controller* that is configured with JSON and reports its status as JSON. The lesson builds the JSON support itself – a value model, a recursive-descent parser that reports the line and column of every syntax error, and a serialiser that escapes strings correctly – the same job nlohmann/json does in production. | [code](src/day_51_json/lesson.hpp) · [tests](tests/test_day_51.cpp) · [notes](docs/progress/day-51-reflection.md) |
+| 52 | Local Persistence | 🟡 | A *houseplant care app* that remembers every plant's watering interval and the day it was last watered between runs. Saving must never leave a half-written file behind, old save files from version 1 of the app must still load, and a corrupt file is set aside instead of crashing the app or silently losing it. | [code](src/day_52_persistence/lesson.hpp) · [tests](tests/test_day_52.cpp) · [notes](docs/progress/day-52-reflection.md) |
+| 53 | Sending Email (SMTP & MIME) | 🟡 | A *housing co-op's monthly statement mailer*. Each member gets a MIME message with a plain-text and an HTML version plus a CSV attachment. Addresses are validated, header injection is impossible, and the SMTP conversation runs over an injectable transport – a real socket in production, a scripted fake in tests, or a dry run that only prints the dialogue. | [code](src/day_53_email_smtp/lesson.hpp) · [tests](tests/test_day_53.cpp) · [notes](docs/progress/day-53-reflection.md) |
+| 54 | Date and Time with chrono | 🟡 | A *freight-forwarding delivery estimator*. Orders placed after the warehouse cut-off ship the next business day, transit counts business days only (no weekends, no public holidays), and the promised pick-up time is shown in every partner office's local time. | [code](src/day_54_date_time/lesson.hpp) · [tests](tests/test_day_54.cpp) · [notes](docs/progress/day-54-reflection.md) |
+| 55 | Hosting C++ Online | 🟡 | A *"Word of the Day" web service* for a language school, written so it can be hosted anywhere: as a CGI program behind Apache or nginx today, or behind an embedded HTTP server later. The request comes from CGI environment variables, a router picks the handler, the response is written in CGI format, and settings come from the environment with safe defaults. | [code](src/day_55_hosting/lesson.hpp) · [tests](tests/test_day_55.cpp) · [notes](docs/progress/day-55-reflection.md) |
+| 56 | Command-Line Arguments | 🟡 | `logscan`, a *log-search command-line tool* for an operations team. It takes flags (-i, -n, -c), options with values (-m 5 or --max=5), a pattern and any number of files, prints a usage message on --help or on a mistake, and returns grep-style exit codes so scripts can react: 0 = matches found, 1 = no match, 2 = usage or file error. | [code](src/day_56_command_line/lesson.hpp) · [tests](tests/test_day_56.cpp) · [notes](docs/progress/day-56-reflection.md) |
 | 57 | REST APIs & JSON | 🟠 | _planned_ | – |
 | 58 | HTTP Requests | 🟠 | _planned_ | – |
 | 59 | Query Parameters, Headers & Payloads | 🟠 | _planned_ | – |

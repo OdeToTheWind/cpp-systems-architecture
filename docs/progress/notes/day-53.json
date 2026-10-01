@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-05",
+  "learnings": [
+    "A MIME message nests parts with boundaries: multipart/mixed holds a multipart/alternative (plain text and HTML) followed by base64-encoded attachments.",
+    "SMTP is a line-based conversation of commands and three-digit reply codes; checking each code turns server refusals into clear errors.",
+    "Putting the network behind a small `Transport` interface makes the whole protocol testable with a scripted fake server and usable as a dry run.",
+    "Any header value built from user input must have CR and LF removed, or a crafted subject could inject extra headers."
+  ],
+  "pitfalls": [
+    "A body line starting with '.' ended the message early; SMTP dot-stuffing (sending '..' instead) fixed it.",
+    "Base64 output without line breaks was rejected by a strict server; lines are now wrapped at 76 characters.",
+    "A subject with `\\r\\nBcc:` could have added a hidden recipient – `header_safe` now replaces line breaks in header values."
+  ],
+  "next": "Day 54 schedules deliveries with dates, times and time zones."
+}

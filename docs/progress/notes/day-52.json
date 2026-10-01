@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-04",
+  "learnings": [
+    "Writing to a temporary file and then renaming it over the real one is atomic on POSIX: readers see the complete old file or the complete new one, never a mix.",
+    "A version header at the top of a save file lets newer program versions keep loading old files, with defaults for fields that did not exist yet.",
+    "A file that cannot be parsed should be moved aside, not deleted – it is still the user's data and may be recoverable by hand.",
+    "Loading a missing file is not an error: it simply means the first run."
+  ],
+  "pitfalls": [
+    "Writing the save file in place truncated it before the new contents arrived, so a crash mid-save lost every plant; the temp-file-and-rename approach fixed it.",
+    "On Windows the corrupt file could not be renamed while it was still open; the stream is closed first.",
+    "Version 1 files without an interval failed to load after the format changed until the parser learned both versions."
+  ],
+  "next": "Day 53 sends email: MIME formatting and the SMTP conversation."
+}

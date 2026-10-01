@@ -1,0 +1,37 @@
+{
+  "day": 55,
+  "mcq": [
+    {
+      "question": "In CGI, where does the program find the query string of the request?",
+      "options": {
+        "A": "In `argv[1]`",
+        "B": "On standard input, always",
+        "C": "In the `QUERY_STRING` environment variable set by the web server",
+        "D": "In a file called `request.txt`"
+      },
+      "answer": "C",
+      "explanation": "CGI passes request metadata through environment variables such as `REQUEST_METHOD`, `PATH_INFO` and `QUERY_STRING`. Request bodies, for POST, arrive on standard input."
+    },
+    {
+      "question": "The path `/health` exists but only handles GET. What should a `DELETE /health` request receive?",
+      "options": {
+        "A": "404 Not Found",
+        "B": "200 OK with an empty body",
+        "C": "500 Internal Server Error",
+        "D": "405 Method Not Allowed"
+      },
+      "answer": "D",
+      "explanation": "404 means the resource does not exist. 405 tells the client that the resource exists but does not support the method, which is more precise and helps debugging."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "CGI starts a new process for every request. Why was that acceptable in the 1990s, and what replaced it (FastCGI, embedded servers, serverless)?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `POST /suggest` route that reads a word from the request body, then extend `Request` and `request_from_cgi` to carry a body."
+    }
+  ]
+}

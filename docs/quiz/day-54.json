@@ -1,0 +1,37 @@
+{
+  "day": 54,
+  "mcq": [
+    {
+      "question": "Why is `year_month_day{2026y, February, 30d}.ok()` false?",
+      "options": {
+        "A": "Because days above 28 are never allowed",
+        "B": "February 2026 has only 28 days, and `ok()` checks the day against the real month length",
+        "C": "Because 2026 is a leap year",
+        "D": "Because February is month 1, not 2"
+      },
+      "answer": "B",
+      "explanation": "C++20 calendar types can hold any field values, and `ok()` reports whether they form a real date, including leap-year rules."
+    },
+    {
+      "question": "An order arrives on Friday after the cut-off. With no holidays, on which day does it ship?",
+      "options": {
+        "A": "Saturday",
+        "B": "Friday",
+        "C": "Monday, the next business day",
+        "D": "Sunday"
+      },
+      "answer": "C",
+      "explanation": "After the cut-off the order moves to the next day, and weekends are skipped, so the next business day after Friday is Monday."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Fixed UTC offsets ignore daylight saving time. When is that acceptable, and what does the C++20 time-zone database (`std::chrono::zoned_time`) add?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `business_days_between(a, b, holidays)`, then implement it and check it against `add_business_days` for several pairs of dates."
+    }
+  ]
+}

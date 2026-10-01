@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-03",
+  "learnings": [
+    "A JSON value maps naturally onto `std::variant<nullptr_t, bool, double, string, Array, Object>`, with arrays and objects holding further values recursively.",
+    "Recursive descent turns a grammar into code: one function per rule (value, object, array, string, number), each consuming input and calling the others.",
+    "Keeping the byte position lets the parser compute the line and column of any error, which makes broken configuration files easy to fix.",
+    "When writing JSON, quotes, backslashes and control characters must be escaped, and NaN or infinity cannot be represented at all."
+  ],
+  "pitfalls": [
+    "A malicious file with thousands of nested `[` overflowed the stack; the parser now stops at a maximum depth.",
+    "Numbers were parsed with the user's locale, so `1.5` failed on a German system; parsing and printing now use the classic \"C\" locale.",
+    "`std::map` for objects reordered keys alphabetically, surprising users who diffed their config; objects now keep insertion order."
+  ],
+  "next": "Day 52 saves application state to disk safely between runs."
+}

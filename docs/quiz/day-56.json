@@ -1,0 +1,37 @@
+{
+  "day": 56,
+  "mcq": [
+    {
+      "question": "For `logscan -n ERROR app.log`, what is `argv[0]`?",
+      "options": {
+        "A": "`-n`",
+        "B": "The program name, such as `logscan`",
+        "C": "`ERROR`",
+        "D": "The number of arguments"
+      },
+      "answer": "B",
+      "explanation": "`argv[0]` holds the program name and `argc` counts it. The user's arguments start at `argv[1]`."
+    },
+    {
+      "question": "What does `--` mean on this command line: `logscan -- -weird-pattern app.log`?",
+      "options": {
+        "A": "It is an empty option that is ignored",
+        "B": "Everything after `--` is positional, so `-weird-pattern` is the pattern, not a flag",
+        "C": "It turns off all output",
+        "D": "It reads the pattern from standard input"
+      },
+      "answer": "B",
+      "explanation": "`--` is the POSIX convention for ending option parsing. It lets users search for text that starts with a dash."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Hand-written argument parsing is instructive, but libraries such as CLI11 or cxxopts exist. When is a dependency worth it for a small tool?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `-v` (invert match) flag that prints lines that do NOT contain the pattern, then add it to `parse_args` and `execute`."
+    }
+  ]
+}

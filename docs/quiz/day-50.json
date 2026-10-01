@@ -1,0 +1,37 @@
+{
+  "day": 50,
+  "mcq": [
+    {
+      "question": "Which exception-safety guarantee does copy-and-swap provide for `transfer_strong`?",
+      "options": {
+        "A": "The strong guarantee: if anything throws, the ledger is exactly as it was before the call",
+        "B": "The basic guarantee only",
+        "C": "No guarantee",
+        "D": "The nothrow guarantee: the transfer can never fail"
+      },
+      "answer": "A",
+      "explanation": "All the work happens on a copy, and the only operation on the real ledger is a swap that cannot throw. A failure therefore leaves the original untouched."
+    },
+    {
+      "question": "Why must `Ledger::swap` be `noexcept` for copy-and-swap to work?",
+      "options": {
+        "A": "`noexcept` makes the copy faster",
+        "B": "Only `noexcept` functions may modify member variables",
+        "C": "The compiler requires every swap to be `noexcept`",
+        "D": "The commit step must not be able to fail, or the strong guarantee would be lost at the last moment"
+      },
+      "answer": "D",
+      "explanation": "If the final swap could throw halfway, the ledger could end up partially updated. A non-throwing swap makes the commit atomic from the caller's point of view."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The strong guarantee costs a full copy of the ledger per transfer. When is the basic guarantee good enough, and how would you get strong safety more cheaply for a large ledger?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `transfer_basic` leaves a journal entry behind when the *second* balance update fails, then decide whether that is acceptable and document it."
+    }
+  ]
+}

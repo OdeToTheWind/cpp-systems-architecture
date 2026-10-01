@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-07",
+  "learnings": [
+    "CGI is the simplest hosting model: the web server puts the request in environment variables (REQUEST_METHOD, PATH_INFO, QUERY_STRING) and reads the response from standard output.",
+    "Separating request parsing, routing, handlers and response rendering means the same application can later run inside an embedded HTTP server unchanged.",
+    "A router that distinguishes 404 (no such path) from 405 (path exists, wrong method) gives clients precise answers.",
+    "Deployment settings belong in environment variables with safe defaults, validated once at start-up so a typo fails fast."
+  ],
+  "pitfalls": [
+    "A handler exception printed the database error to the visitor; the router now returns a generic 500 and keeps details out of the response.",
+    "`day=-1` parsed as a huge unsigned number; the handler now rejects anything that starts with a minus sign.",
+    "Query values with `+` and `%20` arrived still encoded until `parse_query` decoded them."
+  ],
+  "next": "Day 56 builds a real command-line tool with flags, options and exit codes."
+}

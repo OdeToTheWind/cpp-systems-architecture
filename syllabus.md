@@ -91,14 +91,14 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 46 | Variadic Templates | Parameter packs, fold expressions, perfect forwarding, std::tuple and std::apply | Intermediate | Covered |
 | 47 | Desktop GUI Architecture | Model-View-Presenter, widget-free presenters, input validation, headless testing of UI logic | Intermediate | Covered |
 | 48 | Static vs Dynamic Typing | Static type checking, std::variant and std::visit, std::any, type-safe heterogeneous data | Intermediate | Covered |
-| 49 | Advanced Error Handling | Custom exception hierarchies, std::error_code, result types, choosing exceptions vs error values | Intermediate | Planned |
-| 50 | Exception Safety & RAII | Basic, strong and nothrow guarantees, scope guards, copy-and-swap, noexcept | Intermediate | Planned |
-| 51 | Working with JSON | JSON value model, recursive-descent parsing, serialisation with escaping, error positions | Intermediate | Planned |
-| 52 | Local Persistence | Saving and loading application state, atomic writes, schema versions, recovering from corrupt files | Intermediate | Planned |
-| 53 | Sending Email (SMTP & MIME) | Building MIME messages, address validation, the SMTP dialogue over an injectable transport, dry runs | Intermediate | Planned |
-| 54 | Date and Time with chrono | Durations and time points, calendar dates, business-day arithmetic, UTC offsets | Intermediate | Planned |
-| 55 | Hosting C++ Online | Request/response handlers, CGI-style environment parsing, routing, deployment-ready configuration | Intermediate | Planned |
-| 56 | Command-Line Arguments | argc and argv, flags and options, positional arguments, usage messages and exit codes | Intermediate | Planned |
+| 49 | Advanced Error Handling | Custom exception hierarchies, std::error_code, result types, choosing exceptions vs error values | Intermediate | Covered |
+| 50 | Exception Safety & RAII | Basic, strong and nothrow guarantees, scope guards, copy-and-swap, noexcept | Intermediate | Covered |
+| 51 | Working with JSON | JSON value model, recursive-descent parsing, serialisation with escaping, error positions | Intermediate | Covered |
+| 52 | Local Persistence | Saving and loading application state, atomic writes, schema versions, recovering from corrupt files | Intermediate | Covered |
+| 53 | Sending Email (SMTP & MIME) | Building MIME messages, address validation, the SMTP dialogue over an injectable transport, dry runs | Intermediate | Covered |
+| 54 | Date and Time with chrono | Durations and time points, calendar dates, business-day arithmetic, UTC offsets | Intermediate | Covered |
+| 55 | Hosting C++ Online | Request/response handlers, CGI-style environment parsing, routing, deployment-ready configuration | Intermediate | Covered |
+| 56 | Command-Line Arguments | argc and argv, flags and options, positional arguments, usage messages and exit codes | Intermediate | Covered |
 
 ## Phase 3 · Networking, APIs & Automation (Days 57–63)
 

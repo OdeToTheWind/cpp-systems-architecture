@@ -1,0 +1,37 @@
+{
+  "day": 53,
+  "mcq": [
+    {
+      "question": "Why does the SMTP client send `..hidden line` when the message contains a line `.hidden line`?",
+      "options": {
+        "A": "A line with a single dot ends the DATA section, so leading dots are doubled (dot-stuffing) and the server removes one",
+        "B": "To mark the line as a comment",
+        "C": "Because SMTP forbids lines starting with a letter",
+        "D": "To encrypt the line"
+      },
+      "answer": "A",
+      "explanation": "The end of the message body is signalled by a line containing only '.'. Doubling a leading dot keeps body lines from being mistaken for that terminator."
+    },
+    {
+      "question": "What does the `Transport` interface make possible?",
+      "options": {
+        "A": "Sending email without any SMTP server",
+        "B": "Running the same SMTP logic against a real socket, a scripted fake server in tests, or a dry run",
+        "C": "Encrypting the connection automatically",
+        "D": "Bypassing the server's reply codes"
+      },
+      "answer": "B",
+      "explanation": "The client only calls `send_line` and `read_reply`. Swapping the implementation behind that small interface changes where the bytes go without touching the protocol code."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Production systems often hand email to a provider's HTTP API instead of speaking SMTP. What do you gain and lose compared with SMTP?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for SMTP AUTH PLAIN (send `AUTH PLAIN` with base64 credentials, expect 235) using the fake server, then add an optional login step to `SmtpClient`."
+    }
+  ]
+}
