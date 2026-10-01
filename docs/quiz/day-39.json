@@ -1,0 +1,37 @@
+{
+  "day": 39,
+  "mcq": [
+    {
+      "question": "What does the `override` keyword do?",
+      "options": {
+        "A": "Makes a non-virtual base function virtual",
+        "B": "Prevents derived classes from overriding the function",
+        "C": "Calls the base class version automatically",
+        "D": "Makes the compiler verify that the function really overrides a virtual function of a base class"
+      },
+      "answer": "D",
+      "explanation": "Without `override`, a typo in the name or parameter list silently declares a new function. With it, such a mismatch is a compile error."
+    },
+    {
+      "question": "`session_cost_cents` is non-virtual but calls the virtual `price_per_kwh_cents()`. What is this design called?",
+      "options": {
+        "A": "The singleton pattern",
+        "B": "Function overloading",
+        "C": "The template method pattern",
+        "D": "The pimpl idiom"
+      },
+      "answer": "C",
+      "explanation": "The base class fixes the algorithm's steps in a non-virtual function, and derived classes customise individual steps through virtual hooks."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Inheritance from a concrete class (`SolarCanopyCharger : AcCharger`) reuses code but couples the classes tightly. When would you prefer composition – a charger that *has* a pricing strategy?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `MembershipDiscount` interface implemented only by some chargers, then use `dynamic_cast` in a billing function to apply it."
+    }
+  ]
+}

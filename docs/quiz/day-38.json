@@ -1,0 +1,37 @@
+{
+  "day": 38,
+  "mcq": [
+    {
+      "question": "Why does `Battle` take a seed and own its `std::mt19937` instead of using `std::random_device` directly?",
+      "options": {
+        "A": "Because `random_device` cannot produce integers",
+        "B": "So that the same seed replays exactly the same battle, which makes the game testable",
+        "C": "Because `mt19937` is required for `uniform_int_distribution` to compile",
+        "D": "To make the monsters stronger"
+      },
+      "answer": "B",
+      "explanation": "Injecting the source of randomness turns a non-deterministic game into a reproducible one. Tests fix the seed; the real game can still seed from `random_device`."
+    },
+    {
+      "question": "How does `Ogre` change the way it attacks?",
+      "options": {
+        "A": "It changes a global damage table",
+        "B": "It hides `roll_damage` with a non-virtual function of the same name",
+        "C": "It overrides the virtual `roll_damage` and sometimes returns 0 before calling the base version",
+        "D": "It adds a new data member that `Battle` checks"
+      },
+      "answer": "C",
+      "explanation": "The battle calls `roll_damage` through a `Monster&`, so the override is chosen at run time. The base class implementation is reused for the actual hit."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Many games use an entity-component-system design instead of an inheritance hierarchy. What problems of deep hierarchies does ECS avoid?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `Skeleton` monster that takes half damage from attacks, then implement it by overriding a new virtual `take_hit` in `Combatant`."
+    }
+  ]
+}

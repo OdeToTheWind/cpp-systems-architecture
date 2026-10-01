@@ -1,0 +1,37 @@
+{
+  "day": 37,
+  "mcq": [
+    {
+      "question": "What makes Bresenham's line algorithm well suited to drawing pixels?",
+      "options": {
+        "A": "It uses floating-point slopes for perfect accuracy",
+        "B": "It draws every pixel in the bounding rectangle",
+        "C": "It decides each next pixel using only integer additions and comparisons",
+        "D": "It requires the GPU"
+      },
+      "answer": "C",
+      "explanation": "Bresenham keeps an integer error term and steps along the major axis, choosing the minor-axis step when the error crosses a threshold. No division or floating point is needed."
+    },
+    {
+      "question": "Why does `flood_fill` use an explicit `std::vector` as a stack instead of recursion?",
+      "options": {
+        "A": "Recursion is not allowed in member functions",
+        "B": "Recursing once per pixel could overflow the call stack for large areas",
+        "C": "Vectors make the fill visit pixels in diagonal order",
+        "D": "The explicit stack fills fewer pixels"
+      },
+      "answer": "B",
+      "explanation": "The call stack is small (often 1–8 MB). An explicit stack lives on the heap and can grow to millions of entries."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The canvas exports PPM because the format is trivial to write. What would you change to export PNG, and why might you use a library for it rather than writing the encoder yourself?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `Canvas::fill_circle(cx, cy, r, colour)` that fills every pixel within the radius, then implement it without using `flood_fill`."
+    }
+  ]
+}

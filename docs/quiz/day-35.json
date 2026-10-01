@@ -1,0 +1,37 @@
+{
+  "day": 35,
+  "mcq": [
+    {
+      "question": "Why does `EventBus::unsubscribe` only mark a subscription inactive while an event is being delivered?",
+      "options": {
+        "A": "Because `std::function` objects cannot be destroyed",
+        "B": "To make unsubscribing faster",
+        "C": "Erasing from the vector during the delivery loop would invalidate the loop's position and skip or repeat listeners",
+        "D": "Because handles are reused after unsubscribing"
+      },
+      "answer": "C",
+      "explanation": "Modifying a container while iterating over it is a classic source of bugs. Deferring the removal until delivery finishes keeps the loop's view stable."
+    },
+    {
+      "question": "What does `ScopedSubscription` guarantee?",
+      "options": {
+        "A": "The listener runs before all other listeners",
+        "B": "The listener is unsubscribed automatically when the subscription object is destroyed",
+        "C": "The listener is called at most once",
+        "D": "The listener runs on a separate thread"
+      },
+      "answer": "B",
+      "explanation": "It applies RAII to subscriptions: tying the subscription's lifetime to an object prevents a listener from running after the data it captured has been destroyed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Event-driven code can be hard to follow because the call graph is decided at run time. What tooling or conventions help a team keep an event bus understandable?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `EventBus::subscribe_once(topic, listener)` that delivers a single event and then unsubscribes automatically, then implement it."
+    }
+  ]
+}

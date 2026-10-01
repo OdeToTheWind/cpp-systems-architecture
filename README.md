@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 32 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 250 `TEST_CASE`s across 32 test executables.
-- **Deliverables mapped to code:** 182 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 5,535 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 64 multiple-choice questions with explanations, plus 64 open bonus questions (32 hands-on, test-first tasks).
+- **Curriculum completion:** 40 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 308 `TEST_CASE`s across 40 test executables.
+- **Deliverables mapped to code:** 227 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 6,896 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 80 multiple-choice questions with explanations, plus 80 open bonus questions (40 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -54,14 +54,14 @@
 | 30 | Getters and Setters | 🟡 | An *aquarium controller*. The keeper can read and set the water temperature in Celsius or Fahrenheit and adjust the pH and lighting, but the controller refuses any value that would harm the fish – and stores temperatures in one exact internal unit. | [code](src/day_30_getters_setters/lesson.hpp) · [tests](tests/test_day_30.cpp) · [notes](docs/progress/day-30-reflection.md) |
 | 31 | Member Functions | 🟡 | A *coffee-roastery batch tracker*. Each roast batch has methods that change it (and return `*this` so they chain), const methods that only read it, and static members that belong to the roastery as a whole: the batch-number counter and the list of beans it buys. | [code](src/day_31_member_functions/lesson.hpp) · [tests](tests/test_day_31.cpp) · [notes](docs/progress/day-31-reflection.md) |
 | 32 | Constructors and Initialiser Lists | 🟡 | A *car-rental reservation desk*. Every way of creating a reservation – a blank walk-in form, a full booking, a booking for "N days from a start day", or a copy of last year's booking – goes through a constructor that guarantees a valid object from the very first moment it exists. | [code](src/day_32_constructors/lesson.hpp) · [tests](tests/test_day_32.cpp) · [notes](docs/progress/day-32-reflection.md) |
-| 33 | Namespaces | 🟡 | _planned_ | – |
-| 34 | Optional, Required & Default Parameters | 🟡 | _planned_ | – |
-| 35 | Event Listeners & Callbacks | 🟡 | _planned_ | – |
-| 36 | Instances and State | 🟡 | _planned_ | – |
-| 37 | Graphics Programming | 🟡 | _planned_ | – |
-| 38 | Game Development with OOP | 🟡 | _planned_ | – |
-| 39 | Inheritance | 🟡 | _planned_ | – |
-| 40 | Iterators | 🟡 | _planned_ | – |
+| 33 | Namespaces | 🟡 | A *weather-station data library* that ships two versions of its parser at once. Version 2 is the default through an inline namespace, version 1 stays available for old station firmware, unit helpers live in nested namespaces with a short alias, and two different `mean` functions coexist because each lives in its own namespace. | [code](src/day_33_namespaces/lesson.hpp) · [tests](tests/test_day_33.cpp) · [notes](docs/progress/day-33-reflection.md) |
+| 34 | Optional, Required & Default Parameters | 🟡 | A *continuous-integration job scheduler*. A job always needs a name and a command; everything else – timeout, branch filter, retries, build matrix – is optional, and "not given" must stay distinguishable from "given as zero". | [code](src/day_34_optional_parameters/lesson.hpp) · [tests](tests/test_day_34.cpp) · [notes](docs/progress/day-34-reflection.md) |
+| 35 | Event Listeners & Callbacks | 🟡 | A *smart-home hub*. Devices publish events – the doorbell rang, motion in the hallway, the smoke alarm went off – and any number of independent listeners react, without the devices knowing who is listening. Listeners can unsubscribe safely, even while an event is being delivered. | [code](src/day_35_event_listeners/lesson.hpp) · [tests](tests/test_day_35.cpp) · [notes](docs/progress/day-35-reflection.md) |
+| 36 | Instances and State | 🟡 | A *parcel-locker network*. Every parcel object tracks its own state as it moves through a lifecycle – registered, in transit, waiting in a locker, collected – or ends up returned to the sender. Illegal jumps (collecting a parcel that never arrived) are refused, and each parcel keeps its own history. | [code](src/day_36_instances_state/lesson.hpp) · [tests](tests/test_day_36.cpp) · [notes](docs/progress/day-36-reflection.md) |
+| 37 | Graphics Programming | 🟡 | An *event-poster generator* that draws shapes on an in-memory raster canvas – lines, circles, filled areas – and then shows the same picture two ways: as ASCII art in the terminal and as a PPM image file any viewer can open. Drawing never knows how the picture will be displayed, so a window library such as SFML could be added as a third output. | [code](src/day_37_graphics/lesson.hpp) · [tests](tests/test_day_37.cpp) · [notes](docs/progress/day-37-reflection.md) |
+| 38 | Game Development with OOP | 🟡 | *Dungeon Duel*, a turn-based battle. A hero fights a sequence of monsters; both sides attack, the hero can drink a limited number of potions, and the game can be won or lost. Randomness is injected through the engine, so every battle can be replayed in tests. | [code](src/day_38_game_development/lesson.hpp) · [tests](tests/test_day_38.cpp) · [notes](docs/progress/day-38-reflection.md) |
+| 39 | Inheritance | 🟡 | An *electric-vehicle charging network*. A base `Charger` defines how a charging session is billed; AC posts, DC fast chargers and solar-canopy chargers specialise it, and capability interfaces (remote reporting, maintenance) are mixed in with multiple inheritance. | [code](src/day_39_inheritance/lesson.hpp) · [tests](tests/test_day_39.cpp) · [notes](docs/progress/day-39-reflection.md) |
+| 40 | Iterators | 🟡 | A *radio station's "recently played" board*. The last N tracks live in a fixed-size ring buffer with its own iterator, so the board works with range-based for and with every standard algorithm; the station's library is cleaned with erase loops that never use an invalidated iterator. | [code](src/day_40_iterators/lesson.hpp) · [tests](tests/test_day_40.cpp) · [notes](docs/progress/day-40-reflection.md) |
 | 41 | File I/O with fstream | 🟡 | _planned_ | – |
 | 42 | Working with Directories | 🟡 | _planned_ | – |
 | 43 | Reading and Writing CSV | 🟡 | _planned_ | – |

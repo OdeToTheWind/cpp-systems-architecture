@@ -1,0 +1,37 @@
+{
+  "day": 36,
+  "mcq": [
+    {
+      "question": "Which move does the parcel transition table forbid?",
+      "options": {
+        "A": "From `in_transit` to `in_locker`",
+        "B": "From `registered` straight to `collected`",
+        "C": "From `in_locker` to `returned`",
+        "D": "From `registered` to `in_transit`"
+      },
+      "answer": "B",
+      "explanation": "A parcel can only be collected from a locker. Encoding the legal moves in one table makes every illegal jump, such as collecting a parcel that never arrived, easy to reject."
+    },
+    {
+      "question": "Why does `Parcel::advance` check the transition *before* changing `state_`?",
+      "options": {
+        "A": "So that a refused transition leaves the parcel exactly as it was",
+        "B": "Because enum classes cannot be assigned after construction",
+        "C": "To make the history shorter",
+        "D": "Because exceptions cannot be thrown after an assignment"
+      },
+      "answer": "A",
+      "explanation": "Validating first and modifying second gives the strong exception guarantee for this operation: if it throws, nothing has changed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The transition table is data, not code. What would you gain, and lose, by loading it from a configuration file instead of compiling it in?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a new `damaged` state reachable only from `in_transit` and leading only to `returned`, then extend the enum, `to_string` and the table."
+    }
+  ]
+}

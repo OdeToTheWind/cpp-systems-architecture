@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-19",
+  "learnings": [
+    "A raster canvas is just a width, a height and a vector of colours indexed by `y * width + x`.",
+    "Bresenham's line and the midpoint circle algorithms decide every pixel with integer additions only, which is why they were ideal for early hardware.",
+    "An iterative flood fill with an explicit stack handles large areas that would overflow the call stack with recursion.",
+    "Keeping drawing separate from display means the same picture can become ASCII art, a PPM file or, later, an SFML window."
+  ],
+  "pitfalls": [
+    "Drawing a circle that crossed the canvas edge wrote outside the vector; `set` now clips pixels outside the canvas.",
+    "A recursive flood fill crashed on a 2000×2000 canvas; the explicit stack fixed it.",
+    "Printing `uint8_t` colour values into the PPM wrote raw bytes; unary `+` promotes them to numbers."
+  ],
+  "next": "Day 38 puts objects together into a small game with a loop and rules."
+}

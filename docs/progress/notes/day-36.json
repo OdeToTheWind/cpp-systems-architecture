@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-18",
+  "learnings": [
+    "An `enum class` gives each state a name and stops states from silently converting to integers.",
+    "A transition table makes the whole state machine visible in one place and turns 'is this move legal?' into one lookup.",
+    "Every object carries its own state and history, so a thousand parcels are a thousand independent state machines.",
+    "Behaviour that depends on state (`collect`, `expire_if_uncollected`) checks the state first and goes through the same validated transition."
+  ],
+  "pitfalls": [
+    "A parcel could be 'collected' before it reached the locker because the setter accepted any state; `advance` now consults the table.",
+    "An illegal transition used to change the state before throwing; validation now happens before anything is modified.",
+    "History entries with a day earlier than the previous one made the expiry calculation negative; time is now checked to move forward."
+  ],
+  "next": "Day 37 draws pictures – with a canvas object whose state is pixels."
+}

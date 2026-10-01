@@ -1,0 +1,37 @@
+{
+  "day": 33,
+  "mcq": [
+    {
+      "question": "Why does `weather::parse(...)` call the version 2 parser?",
+      "options": {
+        "A": "Because v2 was declared after v1 and the last one wins",
+        "B": "Because the compiler picks the highest version number",
+        "C": "Because of argument-dependent lookup on `std::string_view`",
+        "D": "Because `v2` is declared as an `inline namespace`, so its members are also members of `weather`"
+      },
+      "answer": "D",
+      "explanation": "Members of an inline namespace behave as if they were declared in the enclosing namespace. Libraries use this to make the current version the default while keeping old ones reachable by name."
+    },
+    {
+      "question": "Why should a using-directive such as `using namespace std;` never appear in a header?",
+      "options": {
+        "A": "It makes compilation fail on MSVC",
+        "B": "Every file that includes the header inherits all those names, which can cause ambiguities and silent overload changes",
+        "C": "It slows down the program at run time",
+        "D": "Using-directives are not allowed at namespace scope"
+      },
+      "answer": "B",
+      "explanation": "A header's using-directive leaks into every translation unit that includes it, and the includer cannot undo it. Using-declarations inside functions are the safe, local alternative."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Inline namespaces are also used for ABI versioning (for example `std::__1` in libc++). What problem does that solve for a library shipped as a compiled binary?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `weather::v3::parse` that also reads humidity, add v3 as the new inline namespace, and make sure v2 is still reachable by its qualified name."
+    }
+  ]
+}

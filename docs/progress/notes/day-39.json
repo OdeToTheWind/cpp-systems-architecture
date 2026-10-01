@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-21",
+  "learnings": [
+    "A non-virtual 'template method' in the base class fixes the procedure, while protected virtual hooks let each derived class supply the details.",
+    "`override` makes the compiler check that a function really overrides a base virtual function, and `final` forbids further overriding or derivation.",
+    "A base class used polymorphically needs a virtual destructor, or deleting through a base pointer skips the derived destructor.",
+    "Multiple inheritance is safe and common when the extra bases are pure interfaces; `dynamic_cast` can ask an object whether it implements one."
+  ],
+  "pitfalls": [
+    "A misspelled `price_per_kwh_cent()` silently created a new function instead of overriding; adding `override` turned that into a compile error.",
+    "Destroying a fast charger through `unique_ptr<Charger>` skipped the derived destructor until `~Charger` became virtual.",
+    "The session cost exceeded what a charger can physically deliver; the base class now caps the energy by power and time."
+  ],
+  "next": "Day 40 looks at how containers are walked – iterators."
+}

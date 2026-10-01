@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-15",
+  "learnings": [
+    "Namespaces group related names and prevent collisions: `stats::mean` and `climatology::mean` can live side by side.",
+    "An `inline namespace` makes its contents available through the enclosing namespace, which is how libraries make the newest API version the default while keeping old versions reachable.",
+    "A namespace alias (`namespace wu = weather::units;`) shortens long qualified names without importing anything.",
+    "A using-declaration imports one name into a scope; a using-directive imports all of them and can make calls ambiguous – never put one in a header."
+  ],
+  "pitfalls": [
+    "`using namespace stats; using namespace climatology;` made `mean(values)` ambiguous; qualified names fixed it.",
+    "An anonymous namespace in a header gives every including file its *own* copy of the names – fine for constants, wasteful for large objects.",
+    "Old v1 firmware readings were silently parsed as v2 until the version was made explicit at the call site."
+  ],
+  "next": "Day 34 designs functions with optional parameters that stay readable at the call site."
+}

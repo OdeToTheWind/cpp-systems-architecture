@@ -1,0 +1,37 @@
+{
+  "day": 40,
+  "mcq": [
+    {
+      "question": "Which iterator category does `std::list<int>::iterator` model?",
+      "options": {
+        "A": "Random access",
+        "B": "Contiguous",
+        "C": "Bidirectional",
+        "D": "Forward only"
+      },
+      "answer": "C",
+      "explanation": "A doubly linked list can step forwards and backwards one node at a time, but cannot jump by n in constant time, so it is bidirectional, not random access."
+    },
+    {
+      "question": "What is the correct way to continue after `list.erase(it)` inside a loop?",
+      "options": {
+        "A": "Call `++it` on the erased iterator",
+        "B": "Restart from `list.begin()`",
+        "C": "Decrement `it` before erasing",
+        "D": "Use the iterator returned by `erase`, which points to the next element"
+      },
+      "answer": "D",
+      "explanation": "Erasing invalidates the iterator to the erased element. `erase` returns a valid iterator to the following element, which is exactly where the loop should continue."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Custom iterators are powerful but easy to get subtly wrong. When would you write one, and when would you reach for C++20 ranges or a generator instead?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test that iterates the `RingBuffer` from newest to oldest, then add `rbegin()`/`rend()` (or make the iterator bidirectional) to pass it."
+    }
+  ]
+}

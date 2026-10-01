@@ -113,7 +113,8 @@ def _definition_patterns(name: str, constructor: bool) -> list[re.Pattern[str]]:
     escaped = re.escape(name)
     prefix = r"(?:[\w:<>,*&\[\]~\s]*?[\w>*&\]]\s+)" + ("?" if constructor else "")
     return [
-        re.compile(rf"^\s*(?:template\s*<.*>\s*)?(?:class|struct|union|enum(?:\s+class)?|concept|namespace)\s+{escaped}\b"),
+        re.compile(rf"^\s*(?:template\s*<.*>\s*)?(?:inline\s+)?(?:class|struct|union|enum(?:\s+class)?|concept|namespace)"
+                   rf"\s+(?:\w+::)*{escaped}\b"),
         re.compile(rf"^\s*(?:template\s*<.*>\s*)?using\s+{escaped}\s*="),
         re.compile(rf"^\s*#\s*define\s+{escaped}\b"),
         re.compile(rf"^\s*(?:template\s*<.*>\s*)?(?:\[\[\w+\]\]\s*)?{prefix}(?:\w+::)*~?{escaped}\s*\("),
@@ -177,7 +178,7 @@ def locate(day: int, symbol: str) -> Location | None:
                 if hit is not None:
                     return Location(path, hit + 1, _clean(lines[hit]), _doc_above(lines, hit))
                 continue
-            start = scope_line if parts[-2] == name else scope_line + 1
+            start = scope_line  # the scope line itself may hold the name (`namespace units::metric`)
         for i in range(start, len(lines)):
             line = lines[i]
             if not _is_code(line) or STATEMENT_KEYWORDS.match(line):

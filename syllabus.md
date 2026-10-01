@@ -75,14 +75,14 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 30 | Getters and Setters | Accessors and mutators, validation in setters, unit conversion behind an interface | Intermediate | Covered |
 | 31 | Member Functions | Const member functions, static member functions, static data, this, method chaining | Intermediate | Covered |
 | 32 | Constructors and Initialiser Lists | Default, parameterised, delegating and copy constructors, member initialiser lists, validation at construction | Intermediate | Covered |
-| 33 | Namespaces | Nested and inline namespaces, namespace aliases, anonymous namespaces, using-declarations vs using-directives | Intermediate | Planned |
-| 34 | Optional, Required & Default Parameters | std::optional parameters, overload sets, builder objects, parameter ordering rules | Intermediate | Planned |
-| 35 | Event Listeners & Callbacks | Observer pattern, subscription handles, unsubscribing safely, std::function listeners | Intermediate | Planned |
-| 36 | Instances and State | Per-object state, state machines with enum class, transition validation, lifecycle history | Intermediate | Planned |
-| 37 | Graphics Programming | Raster canvas, Bresenham lines, circles and fills, exporting PPM images, separating drawing from display | Intermediate | Planned |
-| 38 | Game Development with OOP | Game entities as classes, turn-based game loop, injected randomness, win and lose conditions | Intermediate | Planned |
-| 39 | Inheritance | Base and derived classes, virtual and override, final, virtual destructors, multiple inheritance of interfaces | Intermediate | Planned |
-| 40 | Iterators | Iterator categories, begin and end, writing a custom iterator, iterator invalidation | Intermediate | Planned |
+| 33 | Namespaces | Nested and inline namespaces, namespace aliases, anonymous namespaces, using-declarations vs using-directives | Intermediate | Covered |
+| 34 | Optional, Required & Default Parameters | std::optional parameters, overload sets, builder objects, parameter ordering rules | Intermediate | Covered |
+| 35 | Event Listeners & Callbacks | Observer pattern, subscription handles, unsubscribing safely, std::function listeners | Intermediate | Covered |
+| 36 | Instances and State | Per-object state, state machines with enum class, transition validation, lifecycle history | Intermediate | Covered |
+| 37 | Graphics Programming | Raster canvas, Bresenham lines, circles and fills, exporting PPM images, separating drawing from display | Intermediate | Covered |
+| 38 | Game Development with OOP | Game entities as classes, turn-based game loop, injected randomness, win and lose conditions | Intermediate | Covered |
+| 39 | Inheritance | Base and derived classes, virtual and override, final, virtual destructors, multiple inheritance of interfaces | Intermediate | Covered |
+| 40 | Iterators | Iterator categories, begin and end, writing a custom iterator, iterator invalidation | Intermediate | Covered |
 | 41 | File I/O with fstream | ifstream and ofstream, text and binary files, append mode, error checking, RAII file handling | Intermediate | Planned |
 | 42 | Working with Directories | std::filesystem paths, creating and walking directories, filtering by extension, sandboxed operations | Intermediate | Planned |
 | 43 | Reading and Writing CSV | Parsing quoted CSV fields, validating rows, reporting bad rows, writing CSV safely | Intermediate | Planned |

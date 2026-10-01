@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-16",
+  "learnings": [
+    "Parameters with defaults must come after all required parameters, because arguments are matched strictly from the left.",
+    "`std::optional<int>` distinguishes 'not given' (use the project default) from 'given as 0' (really no retries) – a plain default value cannot.",
+    "An overload is the right tool when a different *shape* of input is accepted, such as a whole build matrix instead of one job.",
+    "A builder takes required values in its constructor and optional ones through named setters, then validates once in `build()`."
+  ],
+  "pitfalls": [
+    "Retries defaulted to 0, so 'use the default' and 'no retries' could not be told apart; `std::optional<int>` fixed it.",
+    "To set only the retries, every earlier optional argument had to be repeated – the builder avoids that.",
+    "Validation lived in `schedule_job` only, so jobs created by the builder skipped it; both paths now call `validate`."
+  ],
+  "next": "Day 35 lets objects react to events without knowing who triggers them."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 34,
+  "mcq": [
+    {
+      "question": "Why is `retries` a `std::optional<int>` instead of an `int` with a default of 0?",
+      "options": {
+        "A": "Because `int` parameters cannot have default values",
+        "B": "Because `std::optional` is faster to pass",
+        "C": "So that 'not given' (use the project default) can be told apart from 'given as 0' (no retries)",
+        "D": "Because a negative number of retries must be representable"
+      },
+      "answer": "C",
+      "explanation": "With a plain default, the function cannot know whether the caller wanted 0 or simply said nothing. `std::nullopt` makes the absence explicit."
+    },
+    {
+      "question": "Which declaration is ill-formed in C++?",
+      "options": {
+        "A": "`void f(std::string name, int timeout = 30);`",
+        "B": "`void f(std::string name, std::optional<int> retries = std::nullopt);`",
+        "C": "`void f(std::string name, int a = 1, int b = 2);`",
+        "D": "`void f(int timeout = 30, std::string name);`"
+      },
+      "answer": "D",
+      "explanation": "Once a parameter has a default argument, every parameter after it must also have one, because arguments are matched left to right."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Builders add a class and several setters. At what number of optional settings does a builder start to pay for itself, and what are the alternatives in C++20?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `JobBuilder::depends_on(job_name)` that records dependencies and makes `build()` reject a job that depends on itself, then implement it."
+    }
+  ]
+}

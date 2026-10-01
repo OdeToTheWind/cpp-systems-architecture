@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-20",
+  "learnings": [
+    "Game entities share a base class (`Combatant`) for what they have in common and override only what differs, such as how an ogre attacks.",
+    "A turn-based game loop is a state machine: act, react, then check the win and lose conditions.",
+    "Injecting the random engine with a seed makes every battle replayable, which is what makes game logic testable.",
+    "`std::unique_ptr<Monster>` in a vector lets one dungeon hold different monster types polymorphically."
+  ],
+  "pitfalls": [
+    "Health could go negative and display as -7 hp; `take_damage` now clamps at zero and ignores negative damage.",
+    "A monster that had just died still hit back in the same turn; the loop now checks `alive()` before the counter-attack.",
+    "Using a global random engine made tests depend on test order; each battle now owns its seeded engine."
+  ],
+  "next": "Day 39 looks more closely at inheritance hierarchies and their rules."
+}
