@@ -1,0 +1,37 @@
+{
+  "day": 18,
+  "mcq": [
+    {
+      "question": "Given `long long seat_fee_cents(Cabin cabin = Cabin::economy, bool extra_legroom = false, bool window = false);`, how do you request a window seat in economy without extra legroom?",
+      "options": {
+        "A": "`seat_fee_cents(window = true)`",
+        "B": "`seat_fee_cents(, , true)`",
+        "C": "`seat_fee_cents(Cabin::economy, false, true)` – defaults can only be skipped from the right",
+        "D": "`seat_fee_cents(true)`"
+      },
+      "answer": "C",
+      "explanation": "C++ has no keyword arguments for ordinary function calls, so every parameter before the one you set must be supplied. A parameter struct with designated initialisers avoids this."
+    },
+    {
+      "question": "What is required for `book_flight(\"LHR\", \"JFK\", 5540, {.cabin = Cabin::premium, .bags = 2})` to compile in C++20?",
+      "options": {
+        "A": "`BookingOptions` must have a constructor taking every member",
+        "B": "The members must all be public static",
+        "C": "Designated initialisers must name every member",
+        "D": "`BookingOptions` must be an aggregate and the designators must appear in member declaration order"
+      },
+      "answer": "D",
+      "explanation": "Designated initialisers work on aggregates, may omit members (they keep their defaults), but must follow the order in which the members are declared."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Builder, parameter struct, or a long parameter list with defaults: which would you choose for a function with eight optional settings, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `.legroom()` setter on `BookingBuilder` that only economy passengers may use (business should throw), then implement it."
+    }
+  ]
+}

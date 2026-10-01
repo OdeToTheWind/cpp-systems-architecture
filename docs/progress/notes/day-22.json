@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-04",
+  "learnings": [
+    "Doxygen comments (`/** … */` or `///`) document the contract – parameters, return value, preconditions and exceptions – where callers look: in the header.",
+    "Ordinary comments should explain *why* the code is the way it is; a comment that repeats *what* the code says adds noise and goes stale.",
+    "Every `@throws` line is a promise that a test can check, which keeps the documentation honest.",
+    "Running `doxygen` turns the header comments into browsable HTML, and its warnings list undocumented functions."
+  ],
+  "pitfalls": [
+    "The cup conversion used 250 ml until a why-comment had to justify it – US recipes use the 236.588 ml customary cup.",
+    "A comment said 'returns grams' after the function had been changed to millilitres; the contract is now in the header and covered by a test.",
+    "The documentation auditor flagged commented-out code as undocumented functions until it only looked at real declarations."
+  ],
+  "next": "Day 23 examines where names are visible and how long objects live."
+}

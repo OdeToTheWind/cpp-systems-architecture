@@ -1,0 +1,37 @@
+{
+  "day": 19,
+  "mcq": [
+    {
+      "question": "Why does `find_free_bed()` return a `Bed*` rather than a `Bed&`?",
+      "options": {
+        "A": "A pointer can be `nullptr` to say 'no free bed'; a reference must always refer to an object",
+        "B": "References cannot be returned from member functions",
+        "C": "Pointers are faster than references",
+        "D": "A reference would copy the bed"
+      },
+      "answer": "A",
+      "explanation": "A reference has to be bound to a real object, so it cannot express 'nothing found'. A pointer can, but the caller must check it before dereferencing."
+    },
+    {
+      "question": "A pointer to the first element of a `std::vector` is stored, then `push_back` is called on that vector. What can happen to the stored pointer?",
+      "options": {
+        "A": "Nothing; vector elements never move",
+        "B": "It may dangle, because the vector may have reallocated its elements to new storage",
+        "C": "It is automatically updated to the new address",
+        "D": "It becomes `nullptr`"
+      },
+      "answer": "B",
+      "explanation": "When a vector's capacity is exceeded it allocates a larger buffer and moves its elements there. Every pointer, reference and iterator into the old buffer is invalidated."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Modern guidelines say raw pointers should never own memory. In this lesson they only observe beds. How would you explain the difference between an owning and a non-owning pointer to a new teammate?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `Ward::discharge(const std::string& name)` that frees the patient's bed and returns whether anyone was discharged, then implement it using `find_patient`."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-31",
+  "learnings": [
+    "C++ has only positional arguments; defaults can be omitted only from the right, so the order of parameters is part of the design.",
+    "A struct of options with default member initialisers, filled with C++20 designated initialisers (`{.cabin = Cabin::premium, .bags = 2}`), reads like keyword arguments.",
+    "The classic Named Parameter Idiom chains setters that return `*this`, which also works before C++20.",
+    "Overloads let one operation accept different shapes of input, and one overload can delegate to another to share validation."
+  ],
+  "pitfalls": [
+    "A width of `0.0` was used to mean 'not given', so a real zero-width input silently became a square – an explicit overload or `std::optional` says what it means.",
+    "Designated initialisers must follow the declaration order of the members; writing `.bags` before `.cabin` did not compile.",
+    "`-Wmissing-field-initializers` fired for designated initialisers until every option had a default member initialiser."
+  ],
+  "next": "Day 19 looks at what happens when functions receive pointers and references instead of copies."
+}

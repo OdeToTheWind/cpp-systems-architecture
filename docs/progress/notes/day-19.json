@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-01",
+  "learnings": [
+    "`&x` gives the address of `x`, `*p` reaches the object a pointer points at, and a reference is simply another name for an existing object.",
+    "Use a reference when an argument must exist, and a pointer when 'nothing' (`nullptr`) is a valid answer – and then check it before using it.",
+    "A const member function can only hand out pointers or references to const, so read-only access is enforced by the compiler.",
+    "Pointer arithmetic is only valid inside one array: `begin() + 3` and `end() - begin()` work because the beds live in one `std::array`."
+  ],
+  "pitfalls": [
+    "A pointer into a `std::vector` dangled after `push_back` reallocated the storage – the beds now live in a fixed-size `std::array`.",
+    "`transfer(bed, bed)` emptied the bed it was moving into; transferring a bed onto itself is now rejected by comparing addresses.",
+    "Dereferencing the result of `find_free_bed()` on a full ward crashed – callers now check for `nullptr` first."
+  ],
+  "next": "Day 20 returns functions themselves – through function pointers, lambdas and std::function."
+}

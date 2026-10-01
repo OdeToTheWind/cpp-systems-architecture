@@ -1,0 +1,37 @@
+{
+  "day": 21,
+  "mcq": [
+    {
+      "question": "Which property makes `compute_bill` a pure function?",
+      "options": {
+        "A": "It is declared `inline`",
+        "B": "Its result depends only on its arguments and it changes nothing outside itself",
+        "C": "It returns a struct instead of a number",
+        "D": "It never throws exceptions"
+      },
+      "answer": "B",
+      "explanation": "Purity means no side effects (no printing, no globals, no I/O) and no hidden inputs. That is what makes it trivial to test and safe to reuse."
+    },
+    {
+      "question": "Why is `total_from_printed_bill` a warning sign rather than a solution?",
+      "options": {
+        "A": "Parsing text is not possible in C++",
+        "B": "It is slower than recalculating the bill",
+        "C": "Printed numbers are always rounded incorrectly",
+        "D": "Reusing data by parsing printed text breaks whenever the presentation changes"
+      },
+      "answer": "D",
+      "explanation": "Text output is for humans. When a program has to read it back, presentation and logic are coupled, and a harmless wording change becomes a bug."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Logging is a side effect too. How would you add logging to `compute_bill` without losing the benefits of a pure function?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `format_bill_csv(const Bill&)` that produces one CSV line per bill, then implement it without changing `compute_bill` at all."
+    }
+  ]
+}

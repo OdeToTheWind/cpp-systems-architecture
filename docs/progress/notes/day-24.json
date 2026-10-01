@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-06",
+  "learnings": [
+    "The first step of every fix is a minimal reproduction: the exact input, the expected output and the actual output.",
+    "Debug traces belong on `std::cerr` (or an injected stream) and behind a switch, so normal output stays clean and tests can capture them.",
+    "When failures start at some unknown input, binary search finds the first failing case in about log2(n) checks.",
+    "Contract checks that throw (`expects`) document invariants, run in every build and can themselves be tested; `assert` disappears when `NDEBUG` is set."
+  ],
+  "pitfalls": [
+    "The shipped fee used `>= grace_days`, charging people who returned on the last free day – the reproduction for day 3 showed it immediately.",
+    "Printing `late_fee(...)` inside an output expression put the trace lines in the middle of the result line; the fee is now computed first.",
+    "Computing the bisection midpoint as `(low + high) / 2` can overflow; `low + (high - low) / 2` cannot."
+  ],
+  "next": "Day 25 sets up the development environment that makes all of this fast: presets, warnings and sanitizers."
+}

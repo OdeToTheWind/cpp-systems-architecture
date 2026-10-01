@@ -1,0 +1,37 @@
+{
+  "day": 22,
+  "mcq": [
+    {
+      "question": "Which comment adds the most value next to `return cups * 236.588;`?",
+      "options": {
+        "A": "`// multiply cups by 236.588`",
+        "B": "`// US recipes use the customary cup, not the 250 ml metric cup`",
+        "C": "`// return the result`",
+        "D": "`// TODO`"
+      },
+      "answer": "B",
+      "explanation": "Good comments explain why the code is the way it is. Repeating what the expression already says adds nothing and goes stale when the code changes."
+    },
+    {
+      "question": "Where should a function's Doxygen `@param`, `@return` and `@throws` documentation live in this project?",
+      "options": {
+        "A": "In the header, on the declaration that callers read",
+        "B": "In the `.cpp` file, next to the implementation",
+        "C": "In a separate Word document",
+        "D": "In the commit message that added the function"
+      },
+      "answer": "A",
+      "explanation": "Documentation describes the contract callers rely on, so it belongs where callers look: the declaration in the header. Implementation notes explaining why can live in the `.cpp` file."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Some teams require a doc comment on every function; others say good names make most comments unnecessary. Where do you draw the line?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `find_undocumented` reports a function whose doc comment is separated from it by a blank line, then decide whether that is right and make the test agree."
+    }
+  ]
+}

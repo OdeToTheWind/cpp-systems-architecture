@@ -1,0 +1,37 @@
+{
+  "day": 20,
+  "mcq": [
+    {
+      "question": "Why does `make_discount` capture `percent` by value (`[percent]`) and not by reference (`[&percent]`)?",
+      "options": {
+        "A": "The returned lambda outlives the call; a reference to the parameter would dangle",
+        "B": "Capturing by reference is not allowed in returned lambdas",
+        "C": "Capture by value makes the lambda faster",
+        "D": "Function parameters cannot be captured by reference"
+      },
+      "answer": "A",
+      "explanation": "`percent` is destroyed when `make_discount` returns. A lambda that refers to it would read a dead object. Capturing by value copies it into the lambda."
+    },
+    {
+      "question": "Which of these can a `std::function<long long(long long)>` NOT hold?",
+      "options": {
+        "A": "A function that takes two parameters",
+        "B": "A capturing lambda",
+        "C": "A plain function `long long f(long long)`",
+        "D": "An object with `long long operator()(long long) const`"
+      },
+      "answer": "A",
+      "explanation": "`std::function` stores any callable with a compatible call signature, whether it is a function, a lambda or a function object. A callable needing two arguments does not match."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`RateFunction` is a raw function pointer, while `PriceRule` is a `std::function`. What does each cost, and when would you use a template parameter instead of either?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `make_free_shipping_over(long long threshold)` rule that sets the price to zero for orders above the threshold, then compose it with a discount."
+    }
+  ]
+}

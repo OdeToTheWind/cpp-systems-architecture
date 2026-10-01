@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-30",
+  "learnings": [
+    "`std::map` keeps keys sorted and finds them in O(log n); `std::vector` keeps insertion order and gives O(1) access by index.",
+    "`map[key]` inserts a value-initialised element when the key is missing, so read-only lookups must use `find()` or `contains()`.",
+    "To rank a map by value, copy its pairs into a vector and sort that – a map can only be ordered by its key.",
+    "C++20 `std::erase(vector, value)` replaces the error-prone erase-remove idiom."
+  ],
+  "pitfalls": [
+    "Checking stock with `stock[\"ladder\"]` created a ladder with zero items in the report – `quantity` now uses `find`.",
+    "An extra `std::cin.ignore()` swallowed the first letter of the first item (`milk` became `ilk`); reading whole lines with `std::getline` removed the need for it.",
+    "Ties in the popularity board came out in a different order on another compiler until `std::sort` was replaced with `std::stable_sort`."
+  ],
+  "next": "Day 18 passes these containers to functions with clear, named options."
+}

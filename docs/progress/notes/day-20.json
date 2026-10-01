@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-02",
+  "learnings": [
+    "A function pointer (`long long (*)(int)`) can store any free function with that exact signature, and a lookup table can return one at run time.",
+    "A lambda returned from a function must capture by value – a reference capture would point at the factory's dead local variables.",
+    "`std::function` can hold function pointers, lambdas and function objects alike, at the cost of a possible allocation and an indirect call.",
+    "Callbacks invert control: the engine produces quotes, the caller decides what to do with each one."
+  ],
+  "pitfalls": [
+    "An unknown operator silently fell back to addition in the first engine; unknown carriers now return `nullptr` and are reported.",
+    "`compose(f, g)` first applied `g` – the test that a discount followed by a fee differs from a fee followed by a discount caught it.",
+    "Calling an empty `std::function` throws `std::bad_function_call`; `quote` checks `if (rule)` before applying an optional rule."
+  ],
+  "next": "Day 21 asks whether a function should return its result or print it."
+}

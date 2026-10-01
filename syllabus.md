@@ -50,16 +50,16 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 12 | Functions | Declarations vs definitions, parameters and return values, pass by value and const reference, overloading, default arguments | Beginner | Covered |
 | 13 | For Loops | Counted and range-based for loops, nested loops, break and continue, index-safe iteration | Beginner | Covered |
 | 14 | Code Blocks and Indentation | Block scope, braces for every branch, the dangling-else trap, consistent indentation style | Beginner | Covered |
-| 15 | While and Do-While Loops | Pre-test and post-test loops, sentinel loops, menu loops, termination on end of input | Beginner | Planned |
-| 16 | Flowchart Programming | Translating decisions, processes and loops from a flowchart into structured C++ | Beginner | Planned |
-| 17 | Vectors and Maps | std::vector and std::map insert, lookup, update and erase, iteration, choosing the right container | Beginner | Planned |
-| 18 | Positional and Named Arguments | Positional parameters, default arguments, overloads, parameter structs and designated initialisers | Beginner | Planned |
-| 19 | Pointers and References | Address-of and dereference, references, pass by pointer vs reference, nullptr checks, const correctness | Beginner | Planned |
-| 20 | Returning Functions | Returning values and structs, function pointers, std::function, lambdas returned from functions, callbacks | Beginner | Planned |
-| 21 | Return vs Print | Pure functions vs side effects, returning data and formatting it separately, testable design | Beginner | Planned |
-| 22 | Documentation vs Comments | Doxygen comments, why-comments vs what-comments, documenting preconditions and errors | Beginner | Planned |
-| 23 | Scope, Lifetime & Global Variables | Block, function, namespace and static scope, shadowing, object lifetime, internal linkage | Beginner | Planned |
-| 24 | Debugging Techniques | Reproducing bugs, assertions, std::cerr tracing, bisecting failing inputs, debugger-friendly code | Beginner | Planned |
+| 15 | While and Do-While Loops | Pre-test and post-test loops, sentinel loops, menu loops, termination on end of input | Beginner | Covered |
+| 16 | Flowchart Programming | Translating decisions, processes and loops from a flowchart into structured C++ | Beginner | Covered |
+| 17 | Vectors and Maps | std::vector and std::map insert, lookup, update and erase, iteration, choosing the right container | Beginner | Covered |
+| 18 | Positional and Named Arguments | Positional parameters, default arguments, overloads, parameter structs and designated initialisers | Beginner | Covered |
+| 19 | Pointers and References | Address-of and dereference, references, pass by pointer vs reference, nullptr checks, const correctness | Beginner | Covered |
+| 20 | Returning Functions | Returning values and structs, function pointers, std::function, lambdas returned from functions, callbacks | Beginner | Covered |
+| 21 | Return vs Print | Pure functions vs side effects, returning data and formatting it separately, testable design | Beginner | Covered |
+| 22 | Documentation vs Comments | Doxygen comments, why-comments vs what-comments, documenting preconditions and errors | Beginner | Covered |
+| 23 | Scope, Lifetime & Global Variables | Block, function, namespace and static scope, shadowing, object lifetime, internal linkage | Beginner | Covered |
+| 24 | Debugging Techniques | Reproducing bugs, assertions, std::cerr tracing, bisecting failing inputs, debugger-friendly code | Beginner | Covered |
 
 ## Phase 2 · Intermediate C++ (Days 25–56)
 

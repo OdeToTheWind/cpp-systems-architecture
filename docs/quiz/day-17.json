@@ -1,0 +1,37 @@
+{
+  "day": 17,
+  "mcq": [
+    {
+      "question": "What does `stock[\"ladder\"]` do when the map has no key `\"ladder\"`?",
+      "options": {
+        "A": "It inserts `\"ladder\"` with a value-initialised `int` (0) and returns a reference to it",
+        "B": "It throws `std::out_of_range`",
+        "C": "It returns 0 without changing the map",
+        "D": "It is undefined behaviour"
+      },
+      "answer": "A",
+      "explanation": "`operator[]` always returns a reference, so it must create the element when it is missing. Use `find`, `contains` or `at` for read-only lookups."
+    },
+    {
+      "question": "A waiting list must keep people in arrival order and serve the oldest first. Which container fits best among these?",
+      "options": {
+        "A": "`std::map<std::string, int>`, which sorts by name",
+        "B": "`std::vector<std::string>` (or `std::deque`), which keeps insertion order",
+        "C": "`std::set<std::string>`",
+        "D": "`std::unordered_map<std::string, int>`"
+      },
+      "answer": "B",
+      "explanation": "Sequence containers keep elements in the order they were added. Associative containers order by key or by hash, which loses the arrival order."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`std::map` and `std::unordered_map` both store key-value pairs. Which would you pick for the inventory, and what changes when the shop has a million tools instead of fifty?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `Waitlist::position(name)` method that returns the one-based place in the queue or `std::nullopt`, then implement it with `std::find`."
+    }
+  ]
+}

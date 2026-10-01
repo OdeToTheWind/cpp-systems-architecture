@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-28",
+  "learnings": [
+    "A `while` loop tests before every iteration and may run zero times; a `do … while` loop runs its body at least once – a natural fit for a menu.",
+    "A sentinel value such as `cancel` ends an input loop cleanly, but end of input must end it too, or the loop spins forever.",
+    "Bounded retries need an explicit counter in the condition (`attempts < max_attempts`), not just a hope that the user gets it right.",
+    "Some loops have no predictable length – the Collatz sequence is the classic example – which is exactly when `while` beats `for`."
+  ],
+  "pitfalls": [
+    "The old menu asked for two numbers before checking whether the menu choice was valid; the choice is now validated first.",
+    "Closing the input in the middle of the coin loop made the program loop forever; `collect_coins` now treats end of input like `cancel` and refunds the coins.",
+    "Greedy change for an amount the coins cannot make (3 cents) never terminated in a draft – the loop now also stops when it runs out of coin sizes."
+  ],
+  "next": "Day 16 draws these loops and decisions as flowcharts before writing them."
+}

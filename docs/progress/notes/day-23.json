@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-05",
+  "learnings": [
+    "A name declared in a block is visible until the closing brace; a function-local `static` is initialised once, on first use, and lives until the program exits.",
+    "An anonymous namespace gives names internal linkage, so helpers in one `.cpp` file can never clash with names in another.",
+    "Automatic objects die at the end of their scope in reverse order, heap objects die when their owner releases them, and statics die after `main` returns.",
+    "Constants in a namespace give the benefits of globals without the danger, because nobody can modify them."
+  ],
+  "pitfalls": [
+    "An inner `waiting` variable hid the outer one and the outer count never changed – `-Wshadow` reports this, and the demo silences it only around the deliberate example.",
+    "The static `Tracked` object wrote into a log vector that had already been destroyed at exit; the log is now a static that is constructed first and destroyed last.",
+    "A mutable global ticket counter could be reset from any file; it now lives behind `next_ticket()` with internal linkage."
+  ],
+  "next": "Day 24 hunts down a real bug with tracing, assertions and bisection."
+}

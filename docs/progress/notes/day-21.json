@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-03",
+  "learnings": [
+    "A pure function depends only on its arguments and has no side effects, so the same input always gives the same output and it can be tested with one line.",
+    "Returning a struct keeps every number available to the caller; formatting it is a separate, replaceable step.",
+    "A function that prints can only be tested by capturing and parsing its text, which breaks as soon as the wording changes.",
+    "Separating calculation from presentation lets the same bill feed a receipt, a CSV export and a building total."
+  ],
+  "pitfalls": [
+    "The first version printed each flat's bill, so totalling the building meant parsing text – `building_total` now sums returned `Bill`s.",
+    "Changing 'total' to 'amount due' in the printed bill broke the parser, which is exactly why the returning design exists.",
+    "Rounding VAT in two places gave totals one cent apart; the VAT is now computed once in `compute_bill`."
+  ],
+  "next": "Day 22 documents these functions so others can use them without reading their bodies."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 15,
+  "mcq": [
+    {
+      "question": "Which loop is guaranteed to execute its body at least once?",
+      "options": {
+        "A": "`while (condition) { … }`",
+        "B": "`for (;condition;) { … }`",
+        "C": "A range-based `for` over an empty vector",
+        "D": "`do { … } while (condition);`"
+      },
+      "answer": "D",
+      "explanation": "A do-while loop tests its condition after the body, so the body always runs once. That makes it a natural fit for a menu that must be shown before the first choice."
+    },
+    {
+      "question": "Why does `collect_coins` return `std::nullopt` when `prompt_line` reports end of input?",
+      "options": {
+        "A": "Because end of input means the customer typed `cancel`",
+        "B": "Because `std::optional` cannot hold zero",
+        "C": "Because no more input can ever arrive, so retrying would loop forever",
+        "D": "To force the caller to restart the program"
+      },
+      "answer": "C",
+      "explanation": "A read loop must stop on end of input as well as on its sentinel value. Otherwise a closed stream makes every read fail instantly and the loop never ends."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Greedy change-making is optimal for euro coins but not for every coin system (try coins of 1, 3 and 4 for 6 cents). How would you detect that, and what algorithm would you use instead?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `max_coins` limit on `make_change` that throws when the change would need more coins than the machine holds, then implement it."
+    }
+  ]
+}

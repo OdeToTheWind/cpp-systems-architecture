@@ -1,0 +1,37 @@
+{
+  "day": 24,
+  "mcq": [
+    {
+      "question": "Failures start somewhere between day 0 and day 1000, and every later day fails too. About how many checks does bisection need to find the first failing day?",
+      "options": {
+        "A": "About 500",
+        "B": "Exactly 1000",
+        "C": "About 100",
+        "D": "About 10"
+      },
+      "answer": "D",
+      "explanation": "Each check halves the remaining range, so log2(1001) is roughly 10 checks. A linear scan could need a thousand."
+    },
+    {
+      "question": "Why does this lesson use `expects()`, which throws, instead of `assert()` for its invariants?",
+      "options": {
+        "A": "`assert` is removed when `NDEBUG` is defined (typical release builds), while `expects` always runs and can be tested",
+        "B": "`assert` is deprecated in C++20",
+        "C": "`assert` cannot check integer comparisons",
+        "D": "Exceptions are faster than assertions"
+      },
+      "answer": "A",
+      "explanation": "`assert` compiles to nothing in builds with `NDEBUG`, so the check silently disappears in production. A throwing contract check stays active and its failure can be asserted in a test."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Printing debug output, stepping in a debugger, adding a failing test first: describe a bug where each approach is the best first move."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test proving that `first_failing_day` gives a wrong answer when failures are not monotonic (for example only days 10–20 fail), then document that precondition in its comment."
+    }
+  ]
+}

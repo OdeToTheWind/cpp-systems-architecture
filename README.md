@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 14 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 115 `TEST_CASE`s across 14 test executables.
-- **Deliverables mapped to code:** 78 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 2,439 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 28 multiple-choice questions with explanations, plus 28 open bonus questions (14 hands-on, test-first tasks).
+- **Curriculum completion:** 24 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 190 `TEST_CASE`s across 24 test executables.
+- **Deliverables mapped to code:** 135 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 4,098 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 48 multiple-choice questions with explanations, plus 48 open bonus questions (24 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -36,16 +36,16 @@
 | 12 | Functions | 🟢 | A *bakery order counter*. Small, documented functions price each pastry by size, build up an order, apply a loyalty-card discount and print the receipt. This header holds only the declarations; their definitions live in lesson.cpp. | [code](src/day_12_functions/lesson.hpp) · [tests](tests/test_day_12.cpp) · [notes](docs/progress/day-12-reflection.md) |
 | 13 | For Loops | 🟢 | A *marathon timing station*. Chip mats record each runner's split at every checkpoint; loops total the times, rank the finishers while skipping runners who did not finish, find the first runner under a target time, and print a pace chart. | [code](src/day_13_for_loops/lesson.hpp) · [tests](tests/test_day_13.cpp) · [notes](docs/progress/day-13-reflection.md) |
 | 14 | Code Blocks and Indentation | 🟢 | A *snippet checker for a coding bootcamp*. Students paste C++ snippets; the checker finds unbalanced brackets with line numbers, flags `if`/`else`/loops without braces (the dangling-else trap), reports mixed or odd indentation, and re-indents the code. | [code](src/day_14_code_blocks/lesson.hpp) · [tests](tests/test_day_14.cpp) · [notes](docs/progress/day-14-reflection.md) |
-| 15 | While and Do-While Loops | 🟢 | _planned_ | – |
-| 16 | Flowchart Programming | 🟢 | _planned_ | – |
-| 17 | Vectors and Maps | 🟢 | _planned_ | – |
-| 18 | Positional and Named Arguments | 🟢 | _planned_ | – |
-| 19 | Pointers and References | 🟢 | _planned_ | – |
-| 20 | Returning Functions | 🟢 | _planned_ | – |
-| 21 | Return vs Print | 🟢 | _planned_ | – |
-| 22 | Documentation vs Comments | 🟢 | _planned_ | – |
-| 23 | Scope, Lifetime & Global Variables | 🟢 | _planned_ | – |
-| 24 | Debugging Techniques | 🟢 | _planned_ | – |
+| 15 | While and Do-While Loops | 🟢 | A *vending-machine controller*. It accepts coins until the price is covered (or the customer types `cancel`), pays change with as few coins as possible, locks the service panel after three wrong PINs, and shows its menu at least once per session. | [code](src/day_15_while_loops/lesson.hpp) · [tests](tests/test_day_15.cpp) · [notes](docs/progress/day-15-reflection.md) |
+| 16 | Flowchart Programming | 🟢 | An *airport check-in kiosk*. Each rule – the baggage fee, the boarding check and the queue the kiosk works through – is first drawn as a flowchart (kept in the code as Mermaid text) and then translated shape by shape into structured C++. | [code](src/day_16_flowchart_programming/lesson.hpp) · [tests](tests/test_day_16.cpp) · [notes](docs/progress/day-16-reflection.md) |
+| 17 | Vectors and Maps | 🟢 | A *community tool library*. A `std::map` keeps the stock of every tool by name, a `std::vector` keeps the waiting list in arrival order, and borrow counts are sorted into a "most popular tools" board. | [code](src/day_17_vectors_maps/lesson.hpp) · [tests](tests/test_day_17.cpp) · [notes](docs/progress/day-17-reflection.md) |
+| 18 | Positional and Named Arguments | 🟢 | An *airline booking API*. The route is passed positionally (it is always needed), optional extras have defaults, overloads accept a date in two shapes, and the many optional settings travel in a parameter struct filled with C++20 designated initialisers – C++'s closest equivalent to keyword arguments. | [code](src/day_18_named_arguments/lesson.hpp) · [tests](tests/test_day_18.cpp) · [notes](docs/progress/day-18-reflection.md) |
+| 19 | Pointers and References | 🟢 | A *hospital ward bed board*. Each bed is a slot in a fixed array; the board hands out pointers to free beds (or nullptr when the ward is full), moves patients between beds through references, and only ever reads through const pointers when it reports. | [code](src/day_19_pointers_references/lesson.hpp) · [tests](tests/test_day_19.cpp) · [notes](docs/progress/day-19-reflection.md) |
+| 20 | Returning Functions | 🟢 | A *shipping-rate engine for an online shop*. Carrier rates are plain functions looked up through function pointers, promotions are lambdas built at run time and composed into one pricing rule, quotes come back as structs, and the checkout page receives each quote through a callback. | [code](src/day_20_returning_functions/lesson.hpp) · [tests](tests/test_day_20.cpp) · [notes](docs/progress/day-20-reflection.md) |
+| 21 | Return vs Print | 🟢 | An *apartment-building electricity billing tool*. The same tiered tariff is written twice: once as a function that prints as it calculates (hard to reuse or test), and once as pure functions that return a bill which is formatted separately – and only the second design can total the whole building. | [code](src/day_21_return_vs_print/lesson.hpp) · [tests](tests/test_day_21.cpp) · [notes](docs/progress/day-21-reflection.md) |
+| 22 | Documentation vs Comments | 🟢 | A *kitchen unit-conversion library* that is documented the professional way – Doxygen comments describe what each function promises, ordinary comments explain why – plus a small documentation auditor that checks a header for undocumented functions. | [code](src/day_22_documentation/lesson.hpp) · [tests](tests/test_day_22.cpp) · [notes](docs/progress/day-22-reflection.md) |
+| 23 | Scope, Lifetime & Global Variables | 🟢 | A *deli-counter ticket dispenser*. Shop-wide settings live in a namespace, the ticket counter is a function-local static that survives between calls, helper code is hidden with internal linkage, and a lifetime log shows exactly when each object is born and destroyed. | [code](src/day_23_scope_lifetime/lesson.hpp) · [tests](tests/test_day_23.cpp) · [notes](docs/progress/day-23-reflection.md) |
+| 24 | Debugging Techniques | 🟢 | A *library late-fee calculator* that shipped with a real bug: some borrowers were charged for the grace day. The bug is reproduced with a minimal failing case, traced with debug output on std::cerr, cornered by bisecting the inputs, and fixed – with assertions guarding the invariants so it cannot come back. | [code](src/day_24_debugging/lesson.hpp) · [tests](tests/test_day_24.cpp) · [notes](docs/progress/day-24-reflection.md) |
 | 25 | Local Development Environment Setup | 🟡 | _planned_ | – |
 | 26 | IDE Tips and Tricks | 🟡 | _planned_ | – |
 | 27 | Object-Oriented Programming Basics | 🟡 | _planned_ | – |

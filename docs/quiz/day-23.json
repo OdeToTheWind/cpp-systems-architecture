@@ -1,0 +1,37 @@
+{
+  "day": 23,
+  "mcq": [
+    {
+      "question": "How often is `static int counter = 0;` inside `next_ticket()` initialised?",
+      "options": {
+        "A": "Every time `next_ticket()` is called",
+        "B": "Once, the first time control passes through the declaration",
+        "C": "Once per thread that calls it",
+        "D": "Before `main` starts, even if the function is never called"
+      },
+      "answer": "B",
+      "explanation": "A function-local static is initialised the first time execution reaches it, thread-safely since C++11, and keeps its value for the rest of the program."
+    },
+    {
+      "question": "What does putting a helper in an anonymous namespace inside `lesson.cpp` achieve?",
+      "options": {
+        "A": "The helper runs faster because it is inlined",
+        "B": "The helper can be used from any file that includes `lesson.hpp`",
+        "C": "The helper gets internal linkage, so it cannot clash with or be called from other translation units",
+        "D": "The helper is constructed before `main`"
+      },
+      "answer": "C",
+      "explanation": "Names in an unnamed namespace are unique to their translation unit. That is the modern replacement for `static` functions at file scope."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Global variables are often called evil, yet `std::cout` is a global object. What makes a global acceptable, and what makes one dangerous?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test proving that a `TicketDispenser` class (with the counter as a member) can run two independent counters, then implement it and compare it with the function-static version."
+    }
+  ]
+}

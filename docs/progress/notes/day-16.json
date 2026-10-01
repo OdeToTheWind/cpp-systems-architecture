@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-29",
+  "learnings": [
+    "Each diamond in a flowchart becomes one condition, each rectangle a statement, and each arrow that points back up a loop.",
+    "Terminal shapes (refuse, deny, issue) map naturally to early `return`s, which keeps the C++ as flat as the drawing.",
+    "Keeping the flowchart as Mermaid text next to the code means it is reviewed and updated with the code instead of rotting in a wiki.",
+    "Counting the diamonds gives the number of decisions – and a lower bound on the number of tests needed to cover every path."
+  ],
+  "pitfalls": [
+    "The first grading flowchart only bounded the top grade, so 150 points got a B; every path now starts with the range check.",
+    "The prompt asked about a learner's permit while the variable was called `has_license`; names now match the flowchart labels.",
+    "Boundary weights (exactly 23 kg and 32 kg) followed the wrong arrow until the comparisons were copied exactly from the diamonds."
+  ],
+  "next": "Day 17 stores the passengers and bags in containers instead of separate variables."
+}

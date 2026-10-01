@@ -1,0 +1,37 @@
+{
+  "day": 16,
+  "mcq": [
+    {
+      "question": "In a flowchart, what does an arrow that leads back up to an earlier decision become in C++?",
+      "options": {
+        "A": "A recursive function call",
+        "B": "A `goto` statement",
+        "C": "An `else` branch",
+        "D": "A loop, such as `while (condition)`"
+      },
+      "answer": "D",
+      "explanation": "An arrow pointing back to an earlier diamond means the steps repeat until the condition changes. Structured C++ expresses that as a loop, not a jump."
+    },
+    {
+      "question": "The baggage flowchart has four decision diamonds. What is the minimum number of test cases needed to make every diamond go both ways at least once?",
+      "options": {
+        "A": "Enough cases that each of the four conditions is seen both true and false",
+        "B": "Exactly one test per flowchart",
+        "C": "Four tests, one per diamond, each taking the 'yes' arrow",
+        "D": "Sixteen tests, every combination"
+      },
+      "answer": "A",
+      "explanation": "Branch coverage requires every decision to evaluate both true and false at least once. A few well-chosen cases do that; every combination is only needed for full path coverage."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Flowcharts are rare in modern codebases, yet state diagrams and sequence diagrams are common. When is drawing logic first worth the time, and when is code plus tests the better specification?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an oversized-bag rule (longer than 158 cm in total dimensions costs an extra 50.00). Add the diamond to the Mermaid flowchart first, then to the code."
+    }
+  ]
+}
