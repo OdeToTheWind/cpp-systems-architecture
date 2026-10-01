@@ -1,0 +1,37 @@
+{
+  "day": 10,
+  "mcq": [
+    {
+      "question": "Which values can `std::uniform_int_distribution<int> die(1, 6)` produce?",
+      "options": {
+        "A": "1 to 5, because the upper bound is excluded",
+        "B": "1, 2, 3, 4, 5 and 6 – both bounds are inclusive",
+        "C": "0 to 6",
+        "D": "Any int, scaled into the range by the caller"
+      },
+      "answer": "B",
+      "explanation": "Unlike iterator ranges, `uniform_int_distribution` uses a closed interval [a, b]. `uniform_real_distribution` is the one that uses a half-open interval [a, b)."
+    },
+    {
+      "question": "Why do the tests create engines with `make_engine(42)` instead of seeding from `std::random_device`?",
+      "options": {
+        "A": "`std::random_device` does not work inside tests",
+        "B": "A fixed seed makes every run produce the same sequence, so failures can be reproduced",
+        "C": "A fixed seed produces better-quality random numbers",
+        "D": "`std::mt19937` cannot be seeded from `random_device`"
+      },
+      "answer": "B",
+      "explanation": "Reproducibility is what makes randomised code testable and debuggable. Real sessions can still use `random_device` for an unpredictable seed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Different standard libraries may implement `std::normal_distribution` differently, so the same seed can give different numbers on Windows and Linux. When does that matter, and how would you guarantee identical results everywhere?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an `advantage(spec, engine)` function that rolls twice and keeps the higher total, then implement it and check its average is higher than a single roll."
+    }
+  ]
+}

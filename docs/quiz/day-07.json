@@ -1,0 +1,37 @@
+{
+  "day": 7,
+  "mcq": [
+    {
+      "question": "What is the value and type of `a + b` when `a` and `b` are `std::uint8_t` holding 200 and 100?",
+      "options": {
+        "A": "The `uint8_t` 44, because the sum wraps around",
+        "B": "The `uint8_t` 255, because it saturates",
+        "C": "The `int` 300, because both operands are promoted to `int` first",
+        "D": "A compile error, because the sum would overflow"
+      },
+      "answer": "C",
+      "explanation": "Integer promotion converts operands narrower than `int` to `int` before arithmetic, so no wrap-around happens until the result is stored back into a narrow type."
+    },
+    {
+      "question": "When is `const_cast` used correctly in the decoder?",
+      "options": {
+        "A": "To modify a string literal in place",
+        "B": "To convert a `double` into an `int`",
+        "C": "To cast a base-class pointer to a derived class",
+        "D": "To pass a `const` string to a legacy C function that takes `char*` but never writes through it"
+      },
+      "answer": "D",
+      "explanation": "`const_cast` only adds or removes const. It is safe when the callee does not actually modify the data; writing to an object that was originally const is undefined behaviour."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`dynamic_cast` lets the decoder ask 'is this a Refund?'. When is that a sign the design should use a virtual function instead?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `narrow<std::uint8_t>(256)` and `narrow<float>(16'777'217)`, then confirm `narrow` reports both as lossy."
+    }
+  ]
+}

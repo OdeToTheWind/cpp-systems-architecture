@@ -1,50 +1,71 @@
-// tests/test_day_03.cpp
-#include <cassert>
-#include <string>
+// Tests for Day 03 – Input & Output Streams.
 #include <sstream>
-#include <iostream>
+#include <string>
 
-// Simulated BMI calculation (same logic as main)
-bool calculate_bmi(double height_cm, double weight_kg, double& out_bmi) {
-    if (height_cm <= 0 || weight_kg <= 0) {
-        return false;
-    }
-    out_bmi = weight_kg / ((height_cm / 100.0) * (height_cm / 100.0));
-    return true;
+#include "cppm/testing.hpp"
+#include "day_03_input_output/lesson.hpp"
+
+using namespace cppm::day03;
+
+TEST_CASE("ask_int accepts a valid number on the first try") {
+    std::istringstream in("42\n");
+    std::ostringstream out;
+    CHECK_EQ(ask_int(in, out, "Age: ", 5, 120).value_or(-1), 42);
 }
 
-// Simulated gender category string
-std::string get_gender_string(char input) {
-    char lower = std::tolower(input);
-    if (lower == 'm') return "Male";
-    if (lower == 'f') return "Female";
-    if (lower == 'o') return "Other";
-    return "Invalid";
+TEST_CASE("ask_int recovers from text and re-asks for out-of-range values") {
+    std::istringstream in("abc\n200\n30\n");
+    std::ostringstream out;
+    CHECK_EQ(ask_int(in, out, "Age: ", 5, 120).value_or(-1), 30);
+    CHECK(out.str().find("not a whole number") != std::string::npos);
+    CHECK(out.str().find("from 5 to 120") != std::string::npos);
 }
 
-int main() {
-    double bmi = 0.0;
+TEST_CASE("ask_int returns nothing at end of input instead of looping forever") {
+    std::istringstream in("oops");
+    std::ostringstream out;
+    CHECK(!ask_int(in, out, "Age: ", 0, 10).has_value());
+}
 
-    // Test BMI calculation
-    assert(calculate_bmi(170.0, 65.0, bmi) == true);
-    assert(bmi >= 22.4 && bmi <= 22.6);  // ≈22.49
+TEST_CASE("recover_stream clears the fail state and the bad line") {
+    std::istringstream in("xyz rest of line\n7\n");
+    int value{};
+    CHECK(!(in >> value));
+    CHECK(recover_stream(in));
+    CHECK(static_cast<bool>(in >> value));
+    CHECK_EQ(value, 7);
+}
 
-    assert(calculate_bmi(160.0, 55.0, bmi) == true);
-    assert(bmi >= 21.4 && bmi <= 21.6);  // ≈21.48
+TEST_CASE("ask_choice is case-insensitive and rejects other answers") {
+    std::istringstream in("x\nvip\nv\n");
+    std::ostringstream out;
+    CHECK_EQ(ask_choice(in, out, "? ", "SVT").value_or('?'), 'V');
+    CHECK(out.str().find("choose one of: SVT") != std::string::npos);
+}
 
-    assert(calculate_bmi(180.0, 90.0, bmi) == true);
-    assert(bmi >= 27.7 && bmi <= 27.9);  // ≈27.78
+TEST_CASE("price_cents uses exact integer cents") {
+    CHECK_EQ(price_cents({"a", 20, 'S', 1}), 8000);
+    CHECK_EQ(price_cents({"a", 20, 'V', 3}), 15000);
+    CHECK_EQ(price_cents({"a", 20, 'T', 2}), 6050);
+}
 
-    // Invalid inputs
-    assert(calculate_bmi(0, 70.0, bmi) == false);
-    assert(calculate_bmi(175.0, -5.0, bmi) == false);
+TEST_CASE("format_receipt aligns labels and prints two decimals") {
+    const auto text = format_receipt({"Ada", 36, 'T', 1});
+    CHECK(text.find("Attendee    Ada") != std::string::npos);
+    CHECK(text.find("Ticket      Student") != std::string::npos);
+    CHECK(text.find("Total                 45.50 EUR") != std::string::npos);
+}
 
-    // Test gender mapping
-    assert(get_gender_string('M') == "Male");
-    assert(get_gender_string('f') == "Female");
-    assert(get_gender_string('O') == "Other");
-    assert(get_gender_string('x') == "Invalid");
+TEST_CASE("run walks through a full registration with corrections") {
+    std::istringstream in("Grace Hopper\nold\n85\nq\nV\n2\n");
+    std::ostringstream out;
+    CHECK_EQ(run(in, out), 0);
+    CHECK(out.str().find("135.00 EUR") != std::string::npos);
+}
 
-    std::cout << "Day 03 tests passed (BMI calculation + gender mapping).\n";
-    return 0;
+TEST_CASE("run reports an incomplete registration at end of input") {
+    std::istringstream in("Linus\n21\n");
+    std::ostringstream out;
+    run(in, out);
+    CHECK(out.str().find("Registration incomplete") != std::string::npos);
 }

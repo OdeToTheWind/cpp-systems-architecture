@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-19",
+  "learnings": [
+    "The standard only guarantees minimum sizes and the ordering `short <= int <= long <= long long`; `std::int32_t` and friends give exact widths when they matter.",
+    "`std::numeric_limits<T>` reports the range of any arithmetic type, and `lowest()` (not `min()`) is the most negative floating-point value.",
+    "Unsigned arithmetic wraps modulo 2^N by definition, while signed overflow is undefined behaviour – counters that must wrap belong in unsigned types.",
+    "A `float` has a 24-bit significand, so integers above 16,777,216 are no longer all representable."
+  ],
+  "pitfalls": [
+    "Printing `numeric_limits<char>::max()` printed a raw byte instead of 127 – unary `+` promotes character types to `int` before printing.",
+    "Comparing a negative range bound with an unsigned maximum gave the wrong answer; `std::cmp_less_equal` compares signed and unsigned values safely.",
+    "An 8-bit packet counter silently reset to 0 after 255 packets – the planner now shows exactly when a chosen type wraps."
+  ],
+  "next": "Day 07 converts between these types on purpose, with casts that make every conversion visible."
+}

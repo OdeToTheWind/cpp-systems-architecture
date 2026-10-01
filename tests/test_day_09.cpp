@@ -1,49 +1,74 @@
-// tests/test_day_09.cpp
-#include <cassert>
-#include <string>
-#include <iostream>
+// Tests for Day 09 – Logical Operators.
+#include <sstream>
 
-// Simulated functions for testing logical combinations
-bool can_drive(int age, bool has_license, bool has_insurance) {
-    return age >= 18 && has_license && has_insurance;
+#include "cppm/testing.hpp"
+#include "day_09_logical_operators/lesson.hpp"
+
+using namespace cppm::day09;
+
+namespace {
+const Door server_room{"server room", 3, false};
+const Badge engineer{"Ada", 3, true, 100};
+}  // namespace
+
+TEST_CASE("an active, cleared badge opens the door during office hours") {
+    CHECK(can_enter(&engineer, server_room, {10, 9, false, false}));
+    CHECK(!can_enter(&engineer, server_room, {10, 22, false, false}));
+    CHECK(!can_enter(&engineer, server_room, {10, 9, true, false}));
+    CHECK(!can_enter(&engineer, server_room, {101, 9, false, false}));
 }
 
-bool gets_discount(double amount, bool is_member, bool is_weekend) {
-    return amount >= 5000 || (is_member && is_weekend);
+TEST_CASE("an escort lets a low-clearance visitor through") {
+    const Badge visitor{"Guest", 1, true, 365};
+    CHECK(!can_enter(&visitor, server_room, {1, 10, false, false}));
+    CHECK(can_enter(&visitor, server_room, {1, 10, false, true}));
 }
 
-bool is_strong_password(const std::string& pwd) {
-    if (pwd.length() < 8) return false;
-
-    bool has_upper = false, has_lower = false, has_digit = false;
-    for (char c : pwd) {
-        if (c >= 'A' && c <= 'Z') has_upper = true;
-        if (c >= 'a' && c <= 'z') has_lower = true;
-        if (c >= '0' && c <= '9') has_digit = true;
-    }
-    return has_upper && has_lower && has_digit;
+TEST_CASE("short-circuit evaluation protects against a null badge") {
+    CHECK(!badge_is_active(nullptr));
+    CHECK(!can_enter(nullptr, server_room, {1, 10, false, true}));
+    const Badge disabled{"Old", 4, false, 365};
+    CHECK(!badge_is_active(&disabled));
 }
 
-int main() {
-    // Driving eligibility
-    assert(can_drive(20, true, true) == true);
-    assert(can_drive(17, true, true) == false);
-    assert(can_drive(25, false, true) == false);
-    assert(can_drive(30, true, false) == false);
+TEST_CASE("denial_reasons lists every unmet condition") {
+    const Badge visitor{"Guest", 1, true, 5};
+    const auto reasons = denial_reasons(&visitor, server_room, {9, 23, true, false});
+    REQUIRE_EQ(reasons.size(), 4u);
+    CHECK_EQ(reasons[0], "building is in lockdown");
+    CHECK_EQ(reasons[1], "badge expired");
+    CHECK_EQ(reasons[2], "clearance too low and no escort");
+    CHECK_EQ(reasons[3], "door closed after hours");
+    CHECK(denial_reasons(&engineer, server_room, {1, 9, false, false}).empty());
+}
 
-    // Discount logic
-    assert(gets_discount(6000, false, false) == true);
-    assert(gets_discount(3000, true, true) == true);
-    assert(gets_discount(4000, false, false) == false);
+TEST_CASE("&& stops at the first false operand and || at the first true one") {
+    EvaluationTrace and_trace;
+    CHECK(!(and_trace.check("a", false) && and_trace.check("b", true)));
+    CHECK_EQ(and_trace.joined(), "a");
+    EvaluationTrace or_trace;
+    CHECK(or_trace.check("a", true) || or_trace.check("b", false));
+    CHECK_EQ(or_trace.joined(), "a");
+    EvaluationTrace full;
+    CHECK(full.check("a", true) && full.check("b", true));
+    CHECK_EQ(full.evaluated().size(), 2u);
+}
 
-    // Password strength
-    assert(is_strong_password("Passw0rd") == true);
-    assert(is_strong_password("password") == false);     // no upper, no digit
-    assert(is_strong_password("P4ss") == false);          // too short
-    assert(is_strong_password("P4ssword!") == true);
+TEST_CASE("De Morgan's laws hold and the truth table is complete") {
+    CHECK(de_morgan_holds());
+    const auto table = truth_table();
+    CHECK_EQ(table[0], "F F | F F T");
+    CHECK_EQ(table[3], "T T | T T F");
+}
 
-    std::cout << "Day 09 logical operators tests passed.\n";
-    std::cout << "(Run main.cpp with different inputs to see combinations in action)\n";
-
-    return 0;
+TEST_CASE("run evaluates each request against the server room") {
+    std::istringstream in("3 10 0 0\n1 22 1 0\nhello\n\n");
+    std::ostringstream out;
+    CHECK_EQ(run(in, out), 0);
+    const auto text = out.str();
+    CHECK(text.find("evaluated [lockdown_clear]") != std::string::npos);
+    CHECK(text.find("door opens") != std::string::npos);
+    CHECK(text.find("denied: building is in lockdown") != std::string::npos);
+    CHECK(text.find("denied: door closed after hours") != std::string::npos);
+    CHECK(text.find("please type four numbers") != std::string::npos);
 }

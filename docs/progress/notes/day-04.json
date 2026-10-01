@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-17",
+  "learnings": [
+    "An identifier starts with a letter or underscore, continues with letters, digits or underscores, and must not be one of the 92 C++20 keywords and alternative tokens.",
+    "Names containing `__` anywhere, or starting with `_` followed by a capital letter, are reserved for the compiler and standard library – using them is undefined behaviour.",
+    "A project convention matters more than which convention: here variables and functions use snake_case, types PascalCase and constants UPPER_SNAKE_CASE or kPascalCase.",
+    "Hungarian prefixes (`strName`, `bDone`) duplicate what the type system already knows and go stale when the type changes."
+  ],
+  "pitfalls": [
+    "`to_snake_case(\"HTTPServer\")` first produced `h_t_t_p_server`; an underscore is now inserted only at a lower-to-upper boundary or before the last capital of an acronym.",
+    "The vague-name check flagged `string_builder` because it starts with `str`; a prefix now counts only when a capital letter follows it.",
+    "`std::isupper` was called with a plain `char`, which is undefined for negative values – every classification now casts to `unsigned char`."
+  ],
+  "next": "Day 05 does arithmetic with well-named variables and learns where integer and floating-point maths differ."
+}

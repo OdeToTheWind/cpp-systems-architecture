@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-14",
+  "learnings": [
+    "Brace initialisation (`int x{3.7};`) refuses narrowing conversions at compile time, while `int x = 3.7;` silently truncates.",
+    "`auto` deduces the type from the initialiser, so `auto fee = 12.5;` is a `double` and `auto name = std::string{\"x\"};` is a `std::string`, not a `const char*`.",
+    "`std::cin >> x` stops at whitespace, so names with spaces need `std::getline`; reading every answer as a whole line and then parsing it avoids the classic leftover-newline bug.",
+    "A failed extraction puts the stream into a fail state; a robust reader checks the result and asks again instead of using a half-read value."
+  ],
+  "pitfalls": [
+    "Reading the age with `std::cin >> age` and then the name with `std::getline` produced an empty name – reading every answer with `std::getline` and parsing fixed it.",
+    "`\"12abc\"` was accepted as 12 by `>>`; `parse_number` now requires the whole line to be the number.",
+    "The calculator used to print `inf` for division by zero; `calculate` now throws `std::domain_error` and the demo reports it."
+  ],
+  "next": "Day 02 turns the raw strings typed at the sign-up desk into clean, well-formatted text."
+}

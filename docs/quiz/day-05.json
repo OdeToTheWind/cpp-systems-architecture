@@ -1,0 +1,37 @@
+{
+  "day": 5,
+  "mcq": [
+    {
+      "question": "What are `-7 / 2` and `-7 % 2` in C++?",
+      "options": {
+        "A": "`-4` and `1`",
+        "B": "`-3` and `-1`",
+        "C": "`-3.5` and `0`",
+        "D": "`-4` and `-1`"
+      },
+      "answer": "B",
+      "explanation": "Since C++11 integer division truncates toward zero, and the remainder takes the sign of the dividend, so that `b * (a / b) + a % b == a` still holds."
+    },
+    {
+      "question": "Why does `checked_multiply` compare `a` with `numeric_limits<long long>::max() / b` instead of multiplying first and checking the result?",
+      "options": {
+        "A": "Signed overflow is undefined behaviour, so the overflowing multiplication must never be executed",
+        "B": "Division is faster than multiplication",
+        "C": "The result of an overflowing multiplication is always zero",
+        "D": "`numeric_limits` only works with division"
+      },
+      "answer": "A",
+      "explanation": "Once a signed multiplication overflows, the program's behaviour is undefined and the compiler may assume it never happens. The safe approach decides in advance whether the product fits."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The bill splitter gives leftover cents to the first diners. Is that fair? Describe two other policies and how you would make the chosen one explicit in the API."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `split_bill(total, people, weights)` that splits by weights (for example 2:1:1) while the shares still add up exactly, then implement it."
+    }
+  ]
+}

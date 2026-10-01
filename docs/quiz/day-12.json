@@ -1,0 +1,37 @@
+{
+  "day": 12,
+  "mcq": [
+    {
+      "question": "Where must the default argument `Size size = Size::medium` be written?",
+      "options": {
+        "A": "In both the declaration and the definition, so they stay in sync",
+        "B": "Only in the definition in `lesson.cpp`",
+        "C": "In the declaration that callers see (the header), and not repeated in the definition",
+        "D": "In the call, every time the function is used"
+      },
+      "answer": "C",
+      "explanation": "A default argument is part of what the caller's compiler needs to see, so it belongs in the declaration. Repeating it in the definition in the same scope is an error."
+    },
+    {
+      "question": "What is the best parameter type for a function that only reads a large `Order`?",
+      "options": {
+        "A": "`Order`",
+        "B": "`Order&`",
+        "C": "`Order*` without const",
+        "D": "`const Order&`"
+      },
+      "answer": "D",
+      "explanation": "A const reference avoids copying the order's vector and documents, and enforces, that the function will not modify it. A non-const reference would allow modification, and passing by value copies."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Overloading `format_price` keeps one name for three operations. When can overloads confuse readers or the compiler, for example with `0` or `nullptr` arguments?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `remove_item(Order&, const std::string&)` function that removes the first matching line and reports whether it found one, then implement it in lesson.cpp."
+    }
+  ]
+}

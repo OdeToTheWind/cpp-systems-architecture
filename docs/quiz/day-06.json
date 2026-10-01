@@ -1,0 +1,37 @@
+{
+  "day": 6,
+  "mcq": [
+    {
+      "question": "Which statement about integer sizes does the C++ standard actually guarantee?",
+      "options": {
+        "A": "`int` is always exactly 32 bits",
+        "B": "`long` is always 64 bits on 64-bit machines",
+        "C": "`char` is always unsigned",
+        "D": "`sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)` and `long long` has at least 64 bits"
+      },
+      "answer": "D",
+      "explanation": "The standard specifies minimum widths and an ordering, not exact sizes. `long` is 32 bits on 64-bit Windows, and the signedness of plain `char` is implementation-defined."
+    },
+    {
+      "question": "A `std::uint8_t` packet counter holds 255 and is incremented once. What happens?",
+      "options": {
+        "A": "It becomes 0, because unsigned arithmetic wraps modulo 256",
+        "B": "It becomes 256",
+        "C": "It stays at 255 (saturates)",
+        "D": "Undefined behaviour, as with signed overflow"
+      },
+      "answer": "A",
+      "explanation": "Unsigned integer arithmetic is defined to wrap around modulo 2^N. Only signed overflow is undefined behaviour."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Fixed-width types such as `std::int16_t` save memory, but most code uses plain `int`. When is the extra precision about size worth it, and when is it noise?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `will_wrap_after(start, increments)` function that predicts whether an 8-bit counter wraps, then implement it without a loop."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 20, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Development (Debug, warnings as errors)",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "CPPM_WERROR": "ON" }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "sanitize",
+      "displayName": "AddressSanitizer + UBSan",
+      "binaryDir": "${sourceDir}/build-sanitize",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "CPPM_WERROR": "ON", "CPPM_SANITIZE": "ON" }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage (gcov/gcovr)",
+      "binaryDir": "${sourceDir}/build-coverage",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "CPPM_COVERAGE": "ON" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "dev", "configurePreset": "dev" },
+    { "name": "release", "configurePreset": "release" },
+    { "name": "sanitize", "configurePreset": "sanitize" },
+    { "name": "coverage", "configurePreset": "coverage" }
+  ],
+  "testPresets": [
+    { "name": "dev", "configurePreset": "dev", "output": { "outputOnFailure": true } },
+    { "name": "sanitize", "configurePreset": "sanitize", "output": { "outputOnFailure": true } },
+    { "name": "coverage", "configurePreset": "coverage", "output": { "outputOnFailure": true } }
+  ]
+}

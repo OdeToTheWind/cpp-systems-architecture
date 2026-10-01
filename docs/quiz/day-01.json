@@ -1,0 +1,37 @@
+{
+  "day": 1,
+  "mcq": [
+    {
+      "question": "What happens when you compile `int seats{4.5};`?",
+      "options": {
+        "A": "`seats` becomes 4 and the compiler stays silent",
+        "B": "`seats` becomes 5 because the value is rounded",
+        "C": "Compilation fails, because brace initialisation forbids narrowing a `double` to an `int`",
+        "D": "It compiles but throws `std::bad_cast` at run time"
+      },
+      "answer": "C",
+      "explanation": "List (brace) initialisation rejects narrowing conversions such as double to int. Copy initialisation (`int seats = 4.5;`) would silently truncate to 4, which is exactly the bug braces protect you from."
+    },
+    {
+      "question": "The user types `Ada Lovelace` and presses Enter. What does `std::cin >> name;` store in a `std::string name`?",
+      "options": {
+        "A": "`Ada Lovelace`",
+        "B": "`Ada`, because `>>` stops reading at the first whitespace",
+        "C": "An empty string, because the line contains a space",
+        "D": "Nothing – the stream throws an exception"
+      },
+      "answer": "B",
+      "explanation": "Formatted extraction with `>>` skips leading whitespace and stops at the next one, leaving ` Lovelace\\n` in the buffer. `std::getline(std::cin, name)` reads the whole line including spaces."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`auto` saves typing, but some teams ban it for simple numbers. When does `auto` make code clearer, and when could it hide a bug such as an unintended `int` instead of `double`?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `parse_number<int>(\"0x1A\")` is rejected, then decide whether hexadecimal input should be accepted and make the test pass either way."
+    }
+  ]
+}

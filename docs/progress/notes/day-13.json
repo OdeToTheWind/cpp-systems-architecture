@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-26",
+  "learnings": [
+    "A range-based `for` over a container cannot run past its end, so it removes a whole class of off-by-one errors.",
+    "`continue` skips the rest of one iteration and `break` leaves the loop; both keep early-exit logic flat.",
+    "Index loops over containers should use `std::size_t` to match `size()` and avoid signed/unsigned comparison warnings.",
+    "Counting down with an unsigned index is written `for (i = n; i-- > 0;)`, which tests before it decrements and never wraps to a huge value."
+  ],
+  "pitfalls": [
+    "`for (std::size_t i = n - 1; i >= 0; --i)` never ended, because an unsigned value is always >= 0 – the `i-- > 0` form fixed it.",
+    "Ranking with `std::sort` shuffled runners with equal times; `std::stable_sort` keeps ties in start order.",
+    "The pace chart overflowed `int` for long ultra distances in an early draft; the chart now stays within marathon distances and the test checks the largest value."
+  ],
+  "next": "Day 14 looks at the blocks these loops create and how indentation can lie about them."
+}

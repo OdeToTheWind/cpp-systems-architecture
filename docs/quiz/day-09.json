@@ -1,0 +1,37 @@
+{
+  "day": 9,
+  "mcq": [
+    {
+      "question": "Why is `badge != nullptr && badge->active` safe even when `badge` is null?",
+      "options": {
+        "A": "`badge->active` returns false for a null pointer",
+        "B": "The compiler reorders the operands to check `active` last",
+        "C": "Dereferencing a null pointer inside a condition is defined behaviour",
+        "D": "`&&` short-circuits: when the left operand is false the right operand is never evaluated"
+      },
+      "answer": "D",
+      "explanation": "The built-in `&&` guarantees left-to-right evaluation and skips the right operand when the result is already known. Dereferencing a null pointer would be undefined behaviour."
+    },
+    {
+      "question": "Which expression is equivalent to `!(has_badge && has_clearance)`?",
+      "options": {
+        "A": "`!has_badge && !has_clearance`",
+        "B": "`has_badge || has_clearance`",
+        "C": "`!has_badge && has_clearance`",
+        "D": "`!has_badge || !has_clearance`"
+      },
+      "answer": "D",
+      "explanation": "De Morgan's law: negating an AND turns it into an OR of the negations. The door is refused if at least one requirement is missing."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Short-circuit evaluation means side effects in the right operand may not happen. Should conditions ever contain side effects? Give an example where it causes a bug."
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test proving that `can_enter` never reads the badge's clearance during a lockdown (use an `EvaluationTrace`-style spy), then restructure the expression so it passes."
+    }
+  ]
+}

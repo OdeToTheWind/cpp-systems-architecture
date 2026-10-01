@@ -1,0 +1,37 @@
+{
+  "day": 2,
+  "mcq": [
+    {
+      "question": "What does `std::string(\"conference\").find(\"x\")` return?",
+      "options": {
+        "A": "`-1` as an `int`",
+        "B": "`std::string::npos`, the largest value of `size_type`",
+        "C": "`0`, the start of the string",
+        "D": "It throws `std::out_of_range`"
+      },
+      "answer": "B",
+      "explanation": "`find` reports a miss with the special constant `npos` (an unsigned maximum). Comparing the result with `npos` before using it as a position is essential."
+    },
+    {
+      "question": "Why does the badge printer call `std::tolower(static_cast<unsigned char>(c))` instead of `std::tolower(c)`?",
+      "options": {
+        "A": "`tolower` only accepts `unsigned char` parameters and would not compile",
+        "B": "The cast makes the call faster",
+        "C": "Passing a negative `char` value (such as a byte of 'é') to `tolower` is undefined behaviour",
+        "D": "Without the cast `tolower` returns upper-case letters"
+      },
+      "answer": "C",
+      "explanation": "The `<cctype>` functions require a value representable as `unsigned char` (or EOF). On platforms where `char` is signed, bytes above 127 become negative, so the cast is needed for correctness."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`trim` takes a `std::string_view` but returns a `std::string`. Why would returning a `std::string_view` into the caller's text be risky?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `truncate_words(text, width)` helper that never cuts a word in half, then implement it in the lesson."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-27",
+  "learnings": [
+    "Every pair of braces opens a scope, and objects declared inside are destroyed at its closing brace, in reverse order of construction.",
+    "An `else` always binds to the nearest unmatched `if`, whatever the indentation says – braces on every branch make code mean what it looks like.",
+    "Compilers can spot misleading layouts (`-Wdangling-else`, `-Wmisleading-indentation`); keeping warnings on catches them.",
+    "Matching brackets is a stack problem: push on open, pop and compare on close, and report what is left at the end."
+  ],
+  "pitfalls": [
+    "The bracket checker reported errors inside string literals and comments until it learned to skip them.",
+    "Re-indenting dedented the line *after* a closing brace instead of the brace itself; the depth is now lowered before a line starting with `}` is printed.",
+    "The dangling-else example would not build with `-Werror`, so the warning is silenced for that one function, with a comment saying why."
+  ],
+  "next": "Day 15 writes loops whose length is not known in advance – while and do-while."
+}

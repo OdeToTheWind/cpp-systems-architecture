@@ -1,360 +1,125 @@
-# C++ Systems Architecture: 100-Day Engineering Challenge
-
-[![C++ CI (MinGW / Ninja)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-ci.yml/badge.svg)](https://github.com/OdeToTheWind/cpp-systems-architecture/actions)
-![C++ Standard](https://img.shields.io/badge/c++-17%20%7C%2020%20%7C%2023-blue)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-## Overview
-
-This repository documents a structured **100-day professional development challenge** focused on modern C++ and systems programming. The goal is to build production-grade habits and deep understanding through:
-
-- Modern C++ (C++17/20/23 features, strong typing, RAII, smart pointers, concepts)
-- CMake-based build system with modular structure
-- Unit testing (planned: Catch2 / GoogleTest) with high coverage
-- Clean architecture, separation of concerns, and systems thinking
-- Automated continuous integration via GitHub Actions (build + tests)
-- Daily incremental progress with reflections and documentation
-
-This project is part of a broader portfolio demonstrating disciplined engineering, performance awareness, and architectural maturity in C++.
-
-## Project Structure
-
-Organized for clarity, scalability, and professional workflows:
-
-```text
-cpp-systems-architecture/
-├── .github/                # GitHub Actions CI pipelines
-│   └── workflows/
-│       └── cpp-ci.yml
-├── build/                  # Build artifacts (ignored by git)
-├── cmake/                  # Custom CMake modules & helpers
-├── docs/                   # Architecture notes, memory layouts, design decisions
-│   └── progress/
-│       ├── day_01_memory.md
-│       ├── day_02_strings.md
-│       ├── day_03_prints.md
-│       ├── day_04_variable_names.md
-│       ├── day_05_maths_operations.md
-│       ├── day_06_data_types.md
-│       ├── day_07_convert_types_casting.md
-│       ├── day_08_if_else_conditionals.md
-│       ├── day_09_logical_operators.md 
-│       ├── day_10_randomisation.md 
-│       ├── day_11_error_handling.md 
-│       ├── day_12_functions.md 
-│       ├── day_13_for_loops.md 
-│       ├── day_14_code_block_indentation.md 
-│       ├── day_15_while_loops.md 
-│       ├── day_16_flowchart_programming.md 
-│       ├── day_17_maps_vectors.md   
-│       ├── day_18_positional_keyword_arguments.md  
-│       ├── day_19_pointer_references.md   
-│       ├── day_20_returning_functions.md  
-│       ├── day_21_return_vs_print.md  
-│       ├── day_22_docs_strings_comments.md  
-│       ├── day_23_scope_local_global_variables.md  
-│       ├── day_24_debugging_technique.md  
-│       ├── day_25_dev_env_setup_local.md  
-│       ├── day_26_ide_tips_tricks.md  
-│       ├── day_27_oop_basics.md  
-│       ├── day_28_classes.md  
-│       ├── day_29_external_libraries.md  
-│       └── day_XX_*.md      
-├── include/                # Public headers (.hpp)
-├── src/                    # Implementation code – one folder per day/topic
-│   ├── day_01_memory/
-│   │   └── main.cpp
-│   ├── day_02_strings/
-│   │   └── main.cpp
-│   ├── day_03_prints/
-│   │   └── main.cpp
-│   ├── day_04_variable_names/
-│   │   └── main.cpp
-│   ├── day_05_maths_operations/
-│   │   └── main.cpp
-│   ├── day_06_data_types/
-│   │   └── main.cpp
-│   ├── day_07_convert_types_casting/
-│   │   └── main.cpp
-│   ├── day_08_if_else_conditionals/
-│   │   └── main.cpp
-│   ├── day_09_logical_operators/
-│   │   └── main.cpp
-│   ├── day_10_randomisation/
-│   │   └── main.cpp
-│   ├── day_11_error_handling/
-│   │   └── main.cpp
-│   ├── day_12_functions/
-│   │   └── main.cpp
-│   ├── day_13_for_loops/
-│   │   └── main.cpp
-│   ├── day_14_code_block_indentation/
-│   │   └── main.cpp
-│   ├── day_15_while_loops/
-│   │   └── main.cpp
-│   ├── day_16_flowchart_programming/
-│   │   └── main.cpp
-│   ├── day_17_maps_vectors/
-│   │   └── main.cpp
-│   ├── day_18_positional_keyword_arguments/
-│   │   └── main.cpp
-│   ├── day_19_pointer_references/
-│   │   └── main.cpp
-│   ├── day_20_returning_functions/
-│   │   └── main.cpp
-│   ├── day_21_return_vs_print/
-│   │   └── main.cpp
-│   ├── day_22_docs_strings_comments/
-│   │   └── main.cpp
-│   ├── day_23_scope_local_global_variables/
-│   │   └── main.cpp
-│   ├── day_24_debugging_technique/
-│   │   └── main.cpp
-│   ├── day_25_dev_env_setup_local/
-│   │   └── main.cpp
-│   ├── day_26_ide_tips_tricks/
-│   │   └── main.cpp
-│   ├── day_27_oop_basics/
-│   │   └── main.cpp
-│   ├── day_28_classes/
-│   │   └── main.cpp
-│   └── day_29_external_libraries/ 
-│       └── main.cpp
-├── tests/                  # Unit & integration tests       
-│   ├── test_day_01.cpp
-│   ├── test_day_02.cpp
-│   ├── test_day_03.cpp
-│   ├── test_day_04.cpp
-│   ├── test_day_05.cpp
-│   ├── test_day_06.cpp
-│   ├── test_day_07.cpp
-│   ├── test_day_08.cpp
-│   ├── test_day_09.cpp
-│   ├── test_day_10.cpp
-│   ├── test_day_11.cpp
-│   ├── test_day_12.cpp
-│   ├── test_day_13.cpp
-│   ├── test_day_14.cpp
-│   ├── test_day_15.cpp
-│   ├── test_day_16.cpp
-│   ├── test_day_17.cpp
-│   ├── test_day_18.cpp
-│   ├── test_day_19.cpp
-│   ├── test_day_20.cpp
-│   ├── test_day_21.cpp
-│   ├── test_day_22.cpp
-│   ├── test_day_23.cpp
-│   ├── test_day_24.cpp
-│   ├── test_day_25.cpp
-│   ├── test_day_26.cpp
-│   ├── test_day_27.cpp
-│   ├── test_day_28.cpp
-│   └── test_day_29.cpp
-├── CMakeLists.txt          # Root build configuration
-├── procpp.sh               # Convenience script to build/run
-├── README.md
-└── .gitignore
-```
-
-### Key Engineering Practices
-
-- **Modern C++** — C++17 as baseline, moving toward C++20/23 (concepts, ranges, modules where supported)
-- **Build System** — CMake 3.20+, Ninja generator preferred, reproducible builds
-- **Testing** — Incremental unit tests per day (Catch2 or GoogleTest planned)
-- **CI/CD** — GitHub Actions workflow for build verification, compiler warnings, static analysis (planned: clang-tidy)
-- **Code Quality** — Strict warnings (-Wall -Wextra -Wpedantic -Wshadow -Wconversion), zero UB focus
-- **Systems Thinking** — Emphasis on memory layout, pointers/references, performance, concurrency later
-
-### Daily Progress
-
-| Day | Topic | Status | Key Focus / Deliverables |
-|-----|-------|--------|--------------------------|
-| 01 | Variables, Types & Basic I/O | ✅ Completed | Fundamental types, initialization, `cin`/`cout`/`getline`, mini calculator |
-| 02 | String Manipulation (`std::string`) | ✅ Completed | `length`, `substr`, `find`, concatenation, formatting, input cleaning |
-| 03 | Input and Print Functions (`cin`/`cout`) | ✅ Completed | Console I/O patterns, buffer cleaning, formatted output |
-| 04 | Variable Naming Rules & Conventions | ✅ Completed | snake_case, intention-revealing names, anti-patterns |
-| 05 | Mathematical Operations in C++ | ✅ Completed | Arithmetic operators, compound assignment, `<cmath>` functions |
-| 06 | Data Types in C++ | ✅ Completed | Fundamental types, modifiers, sizes/ranges, fixed-width integers |
-| 07 | Type Conversion & Casting | ✅ Completed | Implicit vs explicit, `static_cast`, `dynamic_cast`, narrowing |
-| 08 | Conditional Statements (`if`/`else if`/`else`) | ✅ Completed | Decision making, input validation, early returns |
-| 09 | Logical Operators (`&&`, `\|\|`, `!`) | ✅ Completed | Combining conditions, short-circuiting, De Morgan's laws |
-| 10 | Randomisation (`<random>`) | ✅ Completed | `std::mt19937`, uniform distributions, modern RNG |
-| 11 | Error Handling (`try`/`catch`/`throw`) | ✅ Completed | Exception handling, `std::runtime_error`, input validation |
-| 12 | Functions | ✅ Completed | Declaration, parameters, return values, overloading |
-| 13 | For Loops | ✅ Completed | Traditional and range-based for loops, nested loops |
-| 14 | Code Blocks and Indentation | ✅ Completed | Scoping, consistent style, readability best practices |
-| 15 | While and Do-While Loops | ✅ Completed | Pre-test vs post-test loops, menu systems |
-| 16 | Flowchart Programming | ✅ Completed | Translating logic flow into clean C++ code |
-| 17 | Vectors and Maps | ✅ Completed | Dynamic lists (`std::vector`) and dictionaries (`std::map`) |
-| 18 | Positional & Keyword Arguments | ✅ Completed | Default arguments, function overloading, Named Parameter Idiom |
-| 19 | Pointers and References | ✅ Completed | Raw pointers, references, pass-by-value vs pass-by-reference |
-| 20 | Returning Functions (`std::function`) | ✅ Completed | Function pointers, `std::function`, callbacks |
-| 21 | Return vs Print | ✅ Completed | Function design, side effects vs pure functions |
-| 22 | Documentation (Doxygen style) | ✅ Completed | Comments vs docstrings, generating documentation |
-| 23 | Scope and Local/Global Variables | ✅ Completed | Variable lifetime, shadowing, namespace usage |
-| 24 | Debugging Techniques | ⏳ Planned | GDB basics, debugging strategies |
-
-### Intermediate Projects (Section 2)
-
-| Day | Topic | Status | Key Focus / Deliverables |
-|-----|-------|--------|--------------------------|
-| 25 | Local Development Environment Setup | ⏳ Planned | IDE/Compiler setup, CMake best practices |
-| 26 | IDE Tips and Tricks | ⏳ Planned | Advanced editor features, debugging in IDE |
-| 27 | Object-Oriented Programming Basics | ⏳ Planned | OOP principles in C++ |
-| 28 | Creating Classes | ⏳ Planned | Class definition, encapsulation |
-| 29 | Using External Libraries | ⏳ Planned | Header-only vs linking, vcpkg/Conan |
-| 30 | Getters and Setters | ⏳ Planned | Accessors and mutators |
-| 31 | C++ Methods | ⏳ Planned | Member functions, const methods |
-| 32 | Constructors and Initializers | ⏳ Planned | Default, parameterized, copy constructors |
-| 33 | Namespaces | ⏳ Planned | Namespace aliasing and organization |
-| 34 | Optional, Required & Default Parameters | ⏳ Planned | Advanced parameter handling |
-| 35 | Event Listeners & Callbacks | ⏳ Planned | Observer pattern basics |
-| 36 | Instances and State | ⏳ Planned | Object state management |
-| 37 | Graphics with SFML or Raylib | ⏳ Planned | Basic graphics programming |
-| 38 | Game Development with OOP | ⏳ Planned | Simple game architecture |
-| 39 | Inheritance | ⏳ Planned | Base and derived classes |
-| 40 | Iterators | ⏳ Planned | STL iterators and ranges |
-| 41 | File I/O (`fstream`) | ⏳ Planned | Reading/writing text and binary files |
-| 42 | Working with Directories | ⏳ Planned | Filesystem library (`std::filesystem`) |
-| 43 | Reading/Writing CSV | ⏳ Planned | CSV parsing and generation |
-| 44 | Data Frameworks (Eigen / Dlib) | ⏳ Planned | Introduction to numerical libraries |
-| 45 | Vector/Map Transformations | ⏳ Planned | STL algorithms on containers |
-| 46 | Variadic Templates | ⏳ Planned | Packing/unpacking arguments |
-| 47 | Desktop GUI with Qt / wxWidgets | ⏳ Planned | Basic GUI application |
-| 48 | Static vs Dynamic Typing | ⏳ Planned | Type safety in C++ |
-| 49 | Advanced Error Handling | ⏳ Planned | Custom exceptions, error codes |
-| 50 | Try / Catch / Throw Deep Dive | ⏳ Planned | Exception safety, RAII |
-| 51 | Working with JSON (`nlohmann/json`) | ⏳ Planned | JSON serialization/deserialization |
-| 52 | Local Persistence | ⏳ Planned | Saving/loading application state |
-| 53 | Sending Email (libcurl) | ⏳ Planned | Network integration |
-| 54 | Date and Time (`<chrono>`) | ⏳ Planned | Modern time handling |
-| 55 | Hosting C++ Online (WebAssembly / CGI) | ⏳ Planned | Deploying C++ code |
-| 56 | APIs & HTTP Requests | ⏳ Planned | Making HTTP calls |
-| 57 | Sending Parameters with Requests | ⏳ Planned | REST API consumption |
-| 58 | APIs with Authentication | ⏳ Planned | Token-based authentication |
-| 59 | Web Scraping | ⏳ Planned | Parsing HTML with Gumbo |
-| 60 | Browser Automation | ⏳ Planned | WebDriver bindings |
-| 61 | Web Development with Crow / Pistache | ⏳ Planned | Lightweight web frameworks |
-| 62 | Command Line Tools | ⏳ Planned | Building CLI applications |
-| 63 | C++ Templates & Design Patterns | ⏳ Planned | Generic programming |
-| 64 | Advanced STL & Algorithms | ⏳ Planned | `std::sort`, `std::find`, ranges |
-
-### Advanced C++ Projects
-
-| Day | Topic | Status | Key Focus / Deliverables |
-|-----|-------|--------|--------------------------|
-| 65 | Build Your Own REST API with C++ | ⏳ Planned | Crow / Pistache framework, routes, JSON responses, basic auth |
-| 66 | Build Your Own Blog | ⏳ Planned | Full CRUD blog with SQLite backend and simple templating |
-| 67 | Databases with SQLite (C++ Wrapper) | ⏳ Planned | SQLite3 C++ wrapper, prepared statements, basic CRUD |
-| 68 | Dataframe Inspection | ⏳ Planned | Load CSV into tabular structure, print schema & sample rows |
-| 69 | Data Cleaning | ⏳ Planned | Handle missing values, duplicates, type conversion |
-| 70 | Sorting Values in Dataframes | ⏳ Planned | Multi-column sorting, custom comparators |
-| 71 | Arithmetic Operations with C++ Math Libraries | ⏳ Planned | Eigen / Armadillo vector & matrix arithmetic |
-| 72 | Relational Database Schemas | ⏳ Planned | Design tables, foreign keys, joins with SQLite |
-| 73 | Descriptive Statistics | ⏳ Planned | Mean, median, std-dev, quantiles using modern C++ |
-| 74 | Creating Charts with C++ Graphics Libraries | ⏳ Planned | Plot data using matplotlib-cpp or matplotplusplus |
-| 75 | Using Jupyter with C++ Kernel (xeus-cling) | ⏳ Planned | Interactive C++ notebooks, live coding & visualization |
-| 76 | HTML Markdown | ⏳ Planned | Convert Markdown → HTML, basic static site generation |
-| 77 | Creating NumPy NDArrays (Armadillo / xtensor) | ⏳ Planned | Multi-dimensional arrays, broadcasting, slicing |
-| 78 | Matrix Multiplication | ⏳ Planned | Efficient matrix multiplication with Eigen / Armadillo |
-| 79 | Running Regressions with C++ ML Libraries | ⏳ Planned | Linear regression using mlpack or dlib |
-| 80 | Multi-Variable Regression | ⏳ Planned | Multiple linear regression, feature scaling, evaluation |
-
-### Professional Portfolio Building – Independent Assignments
-
-| Day | Topic | Status | Key Focus / Deliverables |
-|-----|-------|--------|--------------------------|
-| 81 | Text to Morse Code Converter | ⏳ Planned | String processing, encoding/decoding, console + file I/O |
-| 82 | Portfolio Website (WebAssembly / Emscripten) | ⏳ Planned | Compile C++ to WASM, interactive personal portfolio site |
-| 83 | Tic Tac Toe Game | ⏳ Planned | Game logic, win detection, console or simple GUI version |
-| 84 | Image Watermarking App (OpenCV) | ⏳ Planned | Load image, overlay text/logo, save result using OpenCV |
-| 85 | Typing Speed Test | ⏳ Planned | Timer, WPM calculation, accuracy tracking, interactive UI |
-| 86 | Breakout Game (SDL2) | ⏳ Planned | 2D game loop, collision detection, score system with SDL2 |
-| 87 | Cafe and Wifi Website | ⏳ Planned | Static + dynamic site with C++ backend (Crow/Pistache) |
-| 88 | Todo List Website | ⏳ Planned | Full CRUD todo app with SQLite + REST API + frontend |
-| 89 | Disappearing Text Writing App | ⏳ Planned | Timed text disappearance, focus training, local storage |
-| 90 | Image Color Palette Generator | ⏳ Planned | Extract dominant colors from image using OpenCV / k-means |
-| 91 | Custom Web Scraper | ⏳ Planned | Robust scraper with libcurl + Gumbo, data export to CSV/JSON |
-| 92 | Automating the Google Dinosaur Game | ⏳ Planned | Computer vision + input simulation to play the Chrome game |
-| 93 | Space Invaders Game | ⏳ Planned | Classic arcade game using SDL2 or SFML, complete game loop |
-| 94 | Custom API Driven Website | ⏳ Planned | Frontend + C++ REST API backend with authentication |
-| 95 | An Online Shop | ⏳ Planned | Product catalog, cart, checkout simulation, SQLite backend |
-| 96 | Custom Browser Automation | ⏳ Planned | Automate browser actions using WebDriver C++ bindings |
-| 97 | Analyse and Visualise the Space Race | ⏳ Planned | Data analysis + charts of historical space race data |
-| 98 | Analyse Deaths Involving the Police in the US | ⏳ Planned | Statistical analysis, data cleaning, visualization of dataset |
-| 99 | Predict Earnings using Multivariable Regression | ⏳ Planned | Feature engineering, multi-variable regression, model evaluation |
-| 100 | Capstone Project – Full-Stack C++ Portfolio App | ⏳ Planned | Combine everything: WebAssembly frontend + C++ backend + DB + ML + deployment |
-
-Detailed reflections, code explanations, memory diagrams, and lessons learned are in  [docs/progress/](./docs/progress/)
-
-### Getting Started
-## Prerequisites
-
-- C++ compiler (GCC 12+, Clang 15+, MSVC 2022+ recommended)
-- CMake 3.20+
-- Ninja (preferred) or Make
-- Git
-
-## Setup (MSYS2 / MinGW / UCRT64 recommended on Windows)
-# Clone the repository
-```bash
-git clone https://github.com/OdeToTheWind/cpp-systems-architecture.git
-cd cpp-systems-architecture
-
-# (Optional but recommended) Update MSYS2 packages
-pacman -Syu
-
-# Install toolchain if not already present
-pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja
-```
-## Build & Run
-```bash
-# Build everything (uses Ninja if available)
-./procpp.sh
-
-# Run Day 1 example
-./build/day_01_memory.exe
-
-# Or from inside build folder
-cd build && ./day_01_memory.exe
-```
-## Future Commands (planned)
-```bash
-Bash# Run tests (once added)
-ctest -V
-
-# Static analysis (future)
-clang-tidy ...
-```
-### Contributing
-This is a personal challenge repository. Issues, suggestions, and constructive discussions are welcome.
-
-### License
-MIT License – see the LICENSE file for details.
-
-<!--
-
-### Quick Notes on Improvements & Choices
-
-- Adapted tone, badges, and structure directly from your Python README
-- Used realistic C++ badges (C++ standard range, license)
-- CI badge links to your actual workflow file (`cpp-ci.yml`)
-- Emphasized systems architecture angle (memory, pointers, performance) to match repo name
-- Kept setup instructions Windows/MSYS2-focused (since that's your environment), but still general
-- Progress table mirrors your Python version (easy to update)
-- No emojis in headings, professional phrasing
-- Left room for future growth (testing, clang-tidy, modules, sanitizers)
-
-You can copy-paste this directly into your `README.md`.
-
-If you want:
-- A real LICENSE file (MIT boilerplate)
-- Badges for code coverage, clang-tidy, or build status on more platforms
-- Expansion of the progress table with more planned days
-- Addition of planned tools (vcpkg, Conan, sanitizers)
-
-Just let me know — happy to refine further.
-
-Good luck with Day 2 and the rest of the challenge! Keep the momentum.
-
--->
+# placeholder
+<!-- kpis:start -->
+- **Curriculum completion:** 14 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 115 `TEST_CASE`s across 14 test executables.
+- **Deliverables mapped to code:** 78 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 2,439 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 28 multiple-choice questions with explanations, plus 28 open bonus questions (14 hands-on, test-first tasks).
+- **Coverage gate:** CI fails below ? % line coverage of `src/`.
+- **Compilers in CI:** ?.
+- **Operating systems in CI:** ?.
+- **Quality checks per commit:** warnings as errors · clang-format · ASan + UBSan · unit tests with coverage · syllabus sync.
+<!-- kpis:end -->
+<!-- topic-map:start -->
+| Phase | Days | What it covers |
+|---|:-:|---|
+| [1 · Beginner Fundamentals](syllabus.md#phase-1--beginner-fundamentals-days-124) | 1–24 | Write small, correct programs: types, strings, streams, arithmetic, conditionals, loops, functions, containers, pointers and error handling. |
+| [2 · Intermediate C++](syllabus.md#phase-2--intermediate-c-days-2556) | 25–56 | Organise real programs: build tooling, classes and OOP, files and data formats, the STL, templates, RAII, persistence and deployment. |
+| [3 · Networking, APIs & Automation](syllabus.md#phase-3--networking-apis--automation-days-5763) | 57–63 | Talk to the outside world: REST and JSON, HTTP messages, authentication, notifications, scraping and browser automation — all testable offline. |
+| [4 · Advanced C++ Language & Tooling](syllabus.md#phase-4--advanced-c-language--tooling-days-6482) | 64–82 | Use the language at full strength: templates, concepts, ranges, ownership, move semantics, compile-time code, concurrency, coroutines, testing, packaging, profiling and storage engines. |
+| [5 · Capstone-Style Systems Projects](syllabus.md#phase-5--capstone-style-systems-projects-days-83100) | 83–100 | Ship complete tools: CLIs, pipelines, services, plugins, validation, performance work, packaging and a portfolio capstone. |
+<!-- topic-map:end -->
+<!-- course-index:start -->
+| Day | Topic | Level | Scenario you build | Links |
+|---:|---|:-:|---|---|
+| 1 | Variables, Types & Basic I/O | 🟢 | A *coding-club sign-up desk* that records each new member's profile card (name, age, height, membership tier, newsletter choice) and offers a mini calculator for splitting the club's membership fees. | [code](src/day_01_variables/lesson.hpp) · [tests](tests/test_day_01.cpp) · [notes](docs/progress/day-01-reflection.md) |
+| 2 | String Manipulation | 🟢 | A *conference badge printer* that turns messy sign-up rows such as `" ada LOVELACE ; analytical engines ltd "` into clean, centred, fixed-width badges. | [code](src/day_02_strings/lesson.hpp) · [tests](tests/test_day_02.cpp) · [notes](docs/progress/day-02-reflection.md) |
+| 3 | Input & Output Streams | 🟢 | A *workshop registration desk* that asks attendees questions in the console, re-asks after every invalid answer instead of crashing or looping forever, and prints a neatly aligned receipt with the ticket price. | [code](src/day_03_input_output/lesson.hpp) · [tests](tests/test_day_03.cpp) · [notes](docs/progress/day-03-reflection.md) |
+| 4 | Variable Naming Rules | 🟢 | A *naming review bot* for pull requests: it inspects every proposed identifier and reports errors (the name will not compile), warnings about reserved names, and style advice so that variables, functions, types and constants each follow one convention. | [code](src/day_04_variable_names/lesson.hpp) · [tests](tests/test_day_04.cpp) · [notes](docs/progress/day-04-reflection.md) |
+| 5 | Mathematical Operations | 🟢 | A *restaurant bill splitter* that works in whole cents: it applies a discount before tax, splits the total fairly between diners, and refuses calculations that would overflow or divide by zero. | [code](src/day_05_math_operations/lesson.hpp) · [tests](tests/test_day_05.cpp) · [notes](docs/progress/day-05-reflection.md) |
+| 6 | Data Types & Fixed-width Integers | 🟢 | A *weather-station firmware memory planner*. The microcontroller has a few kilobytes of RAM, so every sensor field must use the smallest integer type that can hold its range – and the team must know exactly when a counter will wrap around. | [code](src/day_06_data_types/lesson.hpp) · [tests](tests/test_day_06.cpp) · [notes](docs/progress/day-06-reflection.md) |
+| 7 | Type Conversion & Casting | 🟢 | A *payment-terminal message decoder*. Amounts arrive as raw integers and bytes from a card terminal; the decoder must convert them without silent truncation, talk to a legacy C checksum API, inspect the wire bytes, and tell payment messages from refunds. | [code](src/day_07_type_conversion/lesson.hpp) · [tests](tests/test_day_07.cpp) · [notes](docs/progress/day-07-reflection.md) |
+| 8 | Conditional Statements | 🟢 | A *ski-resort lift operations board*. Every morning the duty manager enters the wind speed, temperature, visibility and fresh snow; the board decides which lifts may open, explains every closure, and rejects sensor readings that cannot be real. | [code](src/day_08_conditionals/lesson.hpp) · [tests](tests/test_day_08.cpp) · [notes](docs/progress/day-08-reflection.md) |
+| 9 | Logical Operators | 🟢 | A *data-centre door controller* that decides whether a badge may open a door, explains every refusal, and proves with an evaluation trace exactly when C++ stops evaluating a condition. | [code](src/day_09_logical_operators/lesson.hpp) · [tests](tests/test_day_09.cpp) · [notes](docs/progress/day-09-reflection.md) |
+| 10 | Randomisation | 🟢 | A *tabletop role-playing game master's toolkit*: dice notation such as `3d6+2`, loot that drops with a given chance, randomly generated non-player characters and a shuffled initiative order – all reproducible from a seed so a session can be replayed. | [code](src/day_10_randomisation/lesson.hpp) · [tests](tests/test_day_10.cpp) · [notes](docs/progress/day-10-reflection.md) |
+| 11 | Error Handling | 🟢 | A *greenhouse sensor log reader*. Log files are messy, devices disappear and people type impossible values; the reader must keep going, count what went wrong and why, and only stop for errors it truly cannot handle. | [code](src/day_11_error_handling/lesson.hpp) · [tests](tests/test_day_11.cpp) · [notes](docs/progress/day-11-reflection.md) |
+| 12 | Functions | 🟢 | A *bakery order counter*. Small, documented functions price each pastry by size, build up an order, apply a loyalty-card discount and print the receipt. This header holds only the declarations; their definitions live in lesson.cpp. | [code](src/day_12_functions/lesson.hpp) · [tests](tests/test_day_12.cpp) · [notes](docs/progress/day-12-reflection.md) |
+| 13 | For Loops | 🟢 | A *marathon timing station*. Chip mats record each runner's split at every checkpoint; loops total the times, rank the finishers while skipping runners who did not finish, find the first runner under a target time, and print a pace chart. | [code](src/day_13_for_loops/lesson.hpp) · [tests](tests/test_day_13.cpp) · [notes](docs/progress/day-13-reflection.md) |
+| 14 | Code Blocks and Indentation | 🟢 | A *snippet checker for a coding bootcamp*. Students paste C++ snippets; the checker finds unbalanced brackets with line numbers, flags `if`/`else`/loops without braces (the dangling-else trap), reports mixed or odd indentation, and re-indents the code. | [code](src/day_14_code_blocks/lesson.hpp) · [tests](tests/test_day_14.cpp) · [notes](docs/progress/day-14-reflection.md) |
+| 15 | While and Do-While Loops | 🟢 | _planned_ | – |
+| 16 | Flowchart Programming | 🟢 | _planned_ | – |
+| 17 | Vectors and Maps | 🟢 | _planned_ | – |
+| 18 | Positional and Named Arguments | 🟢 | _planned_ | – |
+| 19 | Pointers and References | 🟢 | _planned_ | – |
+| 20 | Returning Functions | 🟢 | _planned_ | – |
+| 21 | Return vs Print | 🟢 | _planned_ | – |
+| 22 | Documentation vs Comments | 🟢 | _planned_ | – |
+| 23 | Scope, Lifetime & Global Variables | 🟢 | _planned_ | – |
+| 24 | Debugging Techniques | 🟢 | _planned_ | – |
+| 25 | Local Development Environment Setup | 🟡 | _planned_ | – |
+| 26 | IDE Tips and Tricks | 🟡 | _planned_ | – |
+| 27 | Object-Oriented Programming Basics | 🟡 | _planned_ | – |
+| 28 | Creating Classes | 🟡 | _planned_ | – |
+| 29 | Using External Libraries | 🟡 | _planned_ | – |
+| 30 | Getters and Setters | 🟡 | _planned_ | – |
+| 31 | Member Functions | 🟡 | _planned_ | – |
+| 32 | Constructors and Initialiser Lists | 🟡 | _planned_ | – |
+| 33 | Namespaces | 🟡 | _planned_ | – |
+| 34 | Optional, Required & Default Parameters | 🟡 | _planned_ | – |
+| 35 | Event Listeners & Callbacks | 🟡 | _planned_ | – |
+| 36 | Instances and State | 🟡 | _planned_ | – |
+| 37 | Graphics Programming | 🟡 | _planned_ | – |
+| 38 | Game Development with OOP | 🟡 | _planned_ | – |
+| 39 | Inheritance | 🟡 | _planned_ | – |
+| 40 | Iterators | 🟡 | _planned_ | – |
+| 41 | File I/O with fstream | 🟡 | _planned_ | – |
+| 42 | Working with Directories | 🟡 | _planned_ | – |
+| 43 | Reading and Writing CSV | 🟡 | _planned_ | – |
+| 44 | Tabular Data Analysis | 🟡 | _planned_ | – |
+| 45 | STL Algorithms | 🟡 | _planned_ | – |
+| 46 | Variadic Templates | 🟡 | _planned_ | – |
+| 47 | Desktop GUI Architecture | 🟡 | _planned_ | – |
+| 48 | Static vs Dynamic Typing | 🟡 | _planned_ | – |
+| 49 | Advanced Error Handling | 🟡 | _planned_ | – |
+| 50 | Exception Safety & RAII | 🟡 | _planned_ | – |
+| 51 | Working with JSON | 🟡 | _planned_ | – |
+| 52 | Local Persistence | 🟡 | _planned_ | – |
+| 53 | Sending Email (SMTP & MIME) | 🟡 | _planned_ | – |
+| 54 | Date and Time with chrono | 🟡 | _planned_ | – |
+| 55 | Hosting C++ Online | 🟡 | _planned_ | – |
+| 56 | Command-Line Arguments | 🟡 | _planned_ | – |
+| 57 | REST APIs & JSON | 🟠 | _planned_ | – |
+| 58 | HTTP Requests | 🟠 | _planned_ | – |
+| 59 | Query Parameters, Headers & Payloads | 🟠 | _planned_ | – |
+| 60 | API Authentication | 🟠 | _planned_ | – |
+| 61 | Notification Automation | 🟠 | _planned_ | – |
+| 62 | Web Scraping | 🟠 | _planned_ | – |
+| 63 | Browser Automation | 🟠 | _planned_ | – |
+| 64 | Templates & Generic Programming | 🟠 | _planned_ | – |
+| 65 | Concepts & Constraints | 🟠 | _planned_ | – |
+| 66 | Ranges & Views | 🟠 | _planned_ | – |
+| 67 | Smart Pointers & Ownership | 🟠 | _planned_ | – |
+| 68 | Move Semantics | 🟠 | _planned_ | – |
+| 69 | Operator Overloading | 🟠 | _planned_ | – |
+| 70 | Compile-time Programming | 🟠 | _planned_ | – |
+| 71 | Functional Tools | 🟠 | _planned_ | – |
+| 72 | Design Patterns | 🟠 | _planned_ | – |
+| 73 | Concurrency: Threads & Mutexes | 🟠 | _planned_ | – |
+| 74 | Concurrency: Futures & Thread Pools | 🟠 | _planned_ | – |
+| 75 | Coroutines | 🟠 | _planned_ | – |
+| 76 | Atomics & Memory Order | 🟠 | _planned_ | – |
+| 77 | Logging & Configuration | 🟠 | _planned_ | – |
+| 78 | Unit Testing & Test Doubles | 🟠 | _planned_ | – |
+| 79 | Build Systems & Packaging | 🟠 | _planned_ | – |
+| 80 | Profiling & Performance | 🟠 | _planned_ | – |
+| 81 | Regular Expressions | 🟠 | _planned_ | – |
+| 82 | Building a Storage Engine | 🟠 | _planned_ | – |
+| 83 | Robust CLI Application | 🔴 | _planned_ | – |
+| 84 | Data Pipeline / ETL | 🔴 | _planned_ | – |
+| 85 | Concurrent File Processor | 🔴 | _planned_ | – |
+| 86 | Custom Logging & Monitoring Tool | 🔴 | _planned_ | – |
+| 87 | Plugin-style Architecture | 🔴 | _planned_ | – |
+| 88 | Automated Report Generator | 🔴 | _planned_ | – |
+| 89 | Background Task Scheduler | 🔴 | _planned_ | – |
+| 90 | Memory-efficient Large File Processor | 🔴 | _planned_ | – |
+| 91 | Type-safe Configuration System | 🔴 | _planned_ | – |
+| 92 | Test Suite for a Multi-module Library | 🔴 | _planned_ | – |
+| 93 | Network Service Core | 🔴 | _planned_ | – |
+| 94 | Data Validation & Cleaning Library | 🔴 | _planned_ | – |
+| 95 | Performance-critical Module | 🔴 | _planned_ | – |
+| 96 | Packaging a Real Tool | 🔴 | _planned_ | – |
+| 97 | Automation Bot Suite | 🔴 | _planned_ | – |
+| 98 | Scientific Simulation | 🔴 | _planned_ | – |
+| 99 | Observability & Debugging Toolkit | 🔴 | _planned_ | – |
+| 100 | Portfolio Capstone: Production-ready C++ Tool | 🔴 | _planned_ | – |
+<!-- course-index:end -->

@@ -1,0 +1,37 @@
+{
+  "day": 11,
+  "mcq": [
+    {
+      "question": "Why does `load_with_audit` use `throw;` instead of `throw error;` inside its catch block?",
+      "options": {
+        "A": "`throw error;` does not compile inside a catch block",
+        "B": "`throw;` rethrows the original exception object, keeping its dynamic type; `throw error;` throws a copy of the static type and slices it",
+        "C": "`throw;` is faster because it skips stack unwinding",
+        "D": "`throw;` converts the exception into `std::exception`"
+      },
+      "answer": "B",
+      "explanation": "`error` is a `const std::exception&`. Throwing it by name copies only the `std::exception` part, losing a derived `SensorError`. A bare `throw;` keeps the original object."
+    },
+    {
+      "question": "A `catch (const std::exception&)` clause is written *before* `catch (const SensorError&)`. What happens when a `SensorError` is thrown?",
+      "options": {
+        "A": "The more specific `SensorError` handler is always chosen",
+        "B": "Both handlers run in order",
+        "C": "The program terminates because of the ambiguity",
+        "D": "The `std::exception` handler catches it and the `SensorError` handler is never reached"
+      },
+      "answer": "D",
+      "explanation": "Handlers are tried in order and the first matching one wins. Because `SensorError` derives from `std::exception`, the general handler matches first, so specific handlers must come earlier."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "The log reader counts bad lines instead of stopping at the first one. When should a program stop at the first error, and when should it collect them all?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `HumiditySensorError` that derives from `SensorError` and records the humidity value, then make `parse_reading` throw it."
+    }
+  ]
+}

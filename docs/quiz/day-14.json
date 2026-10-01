@@ -1,0 +1,37 @@
+{
+  "day": 14,
+  "mcq": [
+    {
+      "question": "In `if (member) if (has_coupon) a(); else b();`, when does `b()` run?",
+      "options": {
+        "A": "When `member` is false",
+        "B": "When `member` is true and `has_coupon` is false – the `else` belongs to the inner `if`",
+        "C": "Never – the code does not compile",
+        "D": "Always, after `a()`"
+      },
+      "answer": "B",
+      "explanation": "An else binds to the nearest unmatched if, regardless of indentation. This is the dangling-else trap that braces on every branch prevent."
+    },
+    {
+      "question": "When is an object declared inside a `for` loop body destroyed?",
+      "options": {
+        "A": "Only when the loop finishes",
+        "B": "At the end of the enclosing function",
+        "C": "When the program exits",
+        "D": "At the end of every iteration, when the body's closing brace is reached"
+      },
+      "answer": "D",
+      "explanation": "The loop body is a block. Each iteration enters it again, constructing the object, and leaves it at the closing brace, destroying it. The block-scope demo shows this order."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Teams often enforce formatting with clang-format in CI. What are the benefits and the costs of automatic formatting compared with a written style guide?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `check_brackets` ignores brackets inside `/* block comments */`, then extend the checker to skip them."
+    }
+  ]
+}

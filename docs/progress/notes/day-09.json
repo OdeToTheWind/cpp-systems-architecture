@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-22",
+  "learnings": [
+    "`&&` evaluates its right operand only if the left is true, and `||` only if the left is false – this short-circuit is guaranteed and ordered.",
+    "Short-circuiting makes `ptr != nullptr && ptr->active` safe: the dereference never happens for a null pointer.",
+    "De Morgan's laws, `!(a && b) == !a || !b` and `!(a || b) == !a && !b`, turn a negated policy into a list of individual reasons.",
+    "Naming each sub-condition (`valid_badge`, `office_hours`) makes the final expression read like the security policy itself."
+  ],
+  "pitfalls": [
+    "The first version wrote `!badge->active && badge` and crashed on a null badge – operand order matters with short-circuiting.",
+    "`!a && b` was read as `!(a && b)`; `!` binds tighter than `&&`, so parentheses now make every intent explicit.",
+    "GCC flagged the De Morgan check as a self-comparison once it folded the expressions; computing each side into a named variable keeps the demonstration warning-free."
+  ],
+  "next": "Day 10 adds randomness – and makes it reproducible so it can be tested."
+}

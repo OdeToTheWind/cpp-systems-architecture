@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-24",
+  "learnings": [
+    "Throw objects derived from `std::exception`, never strings or integers – callers can then catch one base class and still call `what()`.",
+    "Catch by `const&`: catching by value copies the exception and slices a derived type down to its base.",
+    "Order catch clauses from most specific to most general, because the first matching handler wins.",
+    "`throw;` rethrows the exception currently being handled unchanged; `throw error;` would throw a sliced copy."
+  ],
+  "pitfalls": [
+    "A non-numeric divisor became 0 and was reported as division by zero; parsing now distinguishes malformed text (`std::invalid_argument`) from impossible values (`SensorError`).",
+    "`std::stod(\"1e999\")` throws `std::out_of_range`, which the first version did not catch – the log reader now handles it as malformed input.",
+    "Indexing `readings[5]` past the end read garbage silently; `reading_at` uses `.at()`, which throws `std::out_of_range` instead."
+  ],
+  "next": "Day 12 splits the reader into small functions with clear parameters and return values."
+}

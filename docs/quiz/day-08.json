@@ -1,0 +1,37 @@
+{
+  "day": 8,
+  "mcq": [
+    {
+      "question": "Why does `lift_decision` deliberately have no `default:` label in its `switch` over `Lift`?",
+      "options": {
+        "A": "`default` is not allowed in a switch over an `enum class`",
+        "B": "A `default` label makes the switch slower",
+        "C": "So the compiler can warn when a new `Lift` value is added but not handled",
+        "D": "Without `default` the switch automatically falls through to the next case"
+      },
+      "answer": "C",
+      "explanation": "With `-Wswitch` (part of `-Wall`), a switch over an enum that omits an enumerator and has no default produces a warning. A default label silences that useful check."
+    },
+    {
+      "question": "In `if (kmh < 20) ... else if (kmh < 45) ... else if (kmh < 70) ...`, why does the second test not need `kmh >= 20`?",
+      "options": {
+        "A": "C++ adds the lower bound automatically",
+        "B": "The second branch is only reached when the first condition was false, so `kmh >= 20` is already known",
+        "C": "Because `else if` evaluates both conditions together",
+        "D": "It does need it; without it 10 km/h would match twice"
+      },
+      "answer": "B",
+      "explanation": "An else-if chain checks conditions in order and stops at the first true one. Each later branch therefore implicitly carries the negation of every earlier condition."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Guard clauses return early, but some style guides require a single return per function. What are the trade-offs for readability and for debugging?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a new `Lift::magic_carpet` that opens in any wind below storm force, add it to the enum, and let the compiler tell you every switch you must update."
+    }
+  ]
+}

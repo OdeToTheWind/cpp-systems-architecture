@@ -1,0 +1,37 @@
+{
+  "day": 3,
+  "mcq": [
+    {
+      "question": "After `std::cin >> age` fails because the user typed `abc`, what must happen before the next read can succeed?",
+      "options": {
+        "A": "Call `clear()` to reset the error flags and `ignore(...)` to discard the bad characters",
+        "B": "Nothing – the next `>>` automatically skips the bad input",
+        "C": "Call `flush()` on `std::cin`",
+        "D": "Re-create `std::cin` with `std::cin = std::istream(...)`"
+      },
+      "answer": "A",
+      "explanation": "A failed extraction sets failbit, which makes every following read fail immediately. `clear()` resets the flags, but the offending text is still buffered, so it must be ignored as well."
+    },
+    {
+      "question": "Which of these manipulators affects only the very next value written to the stream?",
+      "options": {
+        "A": "`std::setw`",
+        "B": "`std::fixed`",
+        "C": "`std::setprecision`",
+        "D": "`std::left`"
+      },
+      "answer": "A",
+      "explanation": "The field width is reset to zero after each formatted output, so `setw` must be repeated for every column. The other manipulators are sticky and stay in effect until changed."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`ask_int` returns `std::optional<int>` instead of throwing at end of input. When is end of input an error, and when is it a normal way to finish?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a test proving that `ask_int` accepts `  42  ` with surrounding spaces but rejects `42abc`, then change the implementation until both behaviours hold."
+    }
+  ]
+}

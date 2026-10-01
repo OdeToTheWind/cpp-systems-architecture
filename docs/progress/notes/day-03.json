@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-16",
+  "learnings": [
+    "When `std::cin >> value` fails, the stream sets `failbit` and every later read fails too, until `clear()` resets the flags.",
+    "`clear()` alone is not enough: the bad characters are still in the buffer, so `ignore(numeric_limits<streamsize>::max(), '\\n')` must discard the rest of the line.",
+    "At end of input (`eof()`), retrying can never succeed – a read loop must stop instead of spinning forever.",
+    "`std::setw` applies only to the next output item, while `std::fixed`, `std::setprecision` and `std::left` stay in effect until changed."
+  ],
+  "pitfalls": [
+    "Typing `abc` for the age made the program loop forever printing the prompt – `recover_stream` now clears the stream and returns false at end of input.",
+    "Mixing `>>` and `std::getline` left an empty ticket answer; `ask_int` now discards the rest of the line after a successful read.",
+    "Money was stored as `double` and printed `135.000000001`; prices are now whole cents in a `long long`."
+  ],
+  "next": "Day 04 gives every value in these programs a name that explains itself."
+}

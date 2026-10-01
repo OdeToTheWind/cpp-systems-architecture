@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-23",
+  "learnings": [
+    "An *engine* (`std::mt19937`) produces raw random bits and a *distribution* shapes them; one engine can feed many distributions.",
+    "`std::uniform_int_distribution<int>(1, 6)` includes both bounds, unlike the half-open ranges used elsewhere in the library.",
+    "Seeding with a fixed number makes a whole session reproducible – essential for tests and for replaying a reported bug – while `std::random_device` supplies a fresh seed for real play.",
+    "`std::shuffle` gives every permutation the same probability; hand-written swap loops usually do not."
+  ],
+  "pitfalls": [
+    "A minimum greater than the maximum crashed the old demo, because it violates `uniform_int_distribution`'s precondition – `parse_dice` now validates the numbers before any distribution is built.",
+    "A loot chance of 1.5 was accepted and behaved oddly; `count_loot_drops` rejects probabilities outside [0, 1], including NaN.",
+    "Tests that compared exact random numbers failed on another standard library, because distributions may be implemented differently – the tests now check ranges and statistics, and only compare runs made on the same platform."
+  ],
+  "next": "Day 11 makes the programs survive bad data with exceptions instead of crashing."
+}

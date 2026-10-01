@@ -1,0 +1,37 @@
+{
+  "day": 13,
+  "mcq": [
+    {
+      "question": "Why does `for (std::size_t i = n - 1; i >= 0; --i)` never terminate?",
+      "options": {
+        "A": "`--i` is evaluated before the first iteration",
+        "B": "An unsigned value is always greater than or equal to zero, so the condition is always true",
+        "C": "`std::size_t` is a signed type on 64-bit systems",
+        "D": "The loop body is skipped when `n` is zero"
+      },
+      "answer": "B",
+      "explanation": "When `i` is 0, decrementing it wraps around to the largest `size_t`, and the condition still holds. Writing `for (i = n; i-- > 0;)` tests before decrementing."
+    },
+    {
+      "question": "In `rank_finishers`, what does `continue` do when a runner has not finished?",
+      "options": {
+        "A": "Stops the whole loop",
+        "B": "Restarts the loop from the first runner",
+        "C": "Skips the rest of this iteration and moves on to the next runner",
+        "D": "Adds the runner with a time of zero"
+      },
+      "answer": "C",
+      "explanation": "`continue` jumps to the next iteration, while `break` would end the loop. It keeps the 'skip DNFs' rule at the top of the loop body instead of wrapping everything in an if."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Range-based for loops hide the index. When do you still need an index, and what are the alternatives (for example `std::views::enumerate` in C++23)?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an `average_split_per_checkpoint(runners, checkpoints)` function that averages each checkpoint over finishers only, then implement it with nested loops."
+    }
+  ]
+}

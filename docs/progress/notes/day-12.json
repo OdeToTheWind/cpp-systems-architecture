@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-25",
+  "learnings": [
+    "A declaration tells the compiler a function exists; the single definition provides its body – the header declares, `lesson.cpp` defines.",
+    "Default arguments belong in the declaration only; repeating them in the definition is a compile error.",
+    "Pass large objects by `const&` to read them without copying, by `&` when the function must modify the caller's object, and by value when the function needs its own copy.",
+    "Overloads share a name but differ in parameter lists; delegating from one overload to another keeps a single formatting rule."
+  ],
+  "pitfalls": [
+    "Writing the default argument in both the header and the definition caused 'redefinition of default argument' – it now lives only in the header.",
+    "`add_item(Order order, …)` added items to a copy that vanished on return; the parameter is now `Order&`.",
+    "Helper functions defined in the header caused multiple-definition link errors once two files included it; helpers now live in an anonymous namespace in `lesson.cpp`."
+  ],
+  "next": "Day 13 repeats work with for loops over the data these functions produce."
+}

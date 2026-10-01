@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-20",
+  "learnings": [
+    "Operands smaller than `int` are promoted to `int` before arithmetic, so `uint8_t(200) + uint8_t(100)` is the `int` 300, not a wrapped byte.",
+    "Comparing a negative `int` with an `unsigned` converts the `int` to a huge unsigned value; `std::cmp_less` compares by value instead.",
+    "`static_cast` is for well-defined conversions, `const_cast` only removes constness (writing through it to a truly const object is undefined), `reinterpret_cast` reinterprets bits, and `dynamic_cast` checks the real type of a polymorphic object at run time.",
+    "A checked `narrow<To>(value)` that round-trips the value and compares signs turns silent truncation into a reported error."
+  ],
+  "pitfalls": [
+    "`total / count` truncated the average ticket to whole cents – `static_cast<double>` on one operand makes the division floating-point.",
+    "`dynamic_cast` failed to compile because `Message` had no virtual function; a virtual destructor makes the class polymorphic and is required anyway.",
+    "`narrow<unsigned>(-1)` passed the round-trip test (it comes back as -1), so the sign comparison was added to catch it."
+  ],
+  "next": "Day 08 uses these values to make decisions with if, else and switch."
+}

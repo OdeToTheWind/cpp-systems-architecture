@@ -1,0 +1,15 @@
+{
+  "date": "2026-03-15",
+  "learnings": [
+    "`find` returns `std::string::npos` when nothing matches, so every `find` result must be compared with `npos` before it is used as a position.",
+    "`substr(pos, count)` takes a *length*, not an end position – `last - first + 1` is the length of the trimmed range.",
+    "`std::tolower` and `std::isalpha` take an `int` that must be representable as `unsigned char`; casting `char` to `unsigned char` first avoids undefined behaviour for accented letters.",
+    "`std::string_view` lets helpers such as `trim` accept literals, `std::string`s and slices without copying."
+  ],
+  "pitfalls": [
+    "The palindrome check used `isalpha`, so `\"1a2\"` counted as a palindrome; switching to `isalnum` keeps digits in the comparison.",
+    "`centre` underflowed `width - size` when the text was longer than the badge; long text is now shortened with `...` first.",
+    "Calling `substr` on a `npos` result from `find` threw `std::out_of_range`; `split_once` now returns `std::nullopt` when the delimiter is missing."
+  ],
+  "next": "Day 03 reads those rows from the console and recovers when the user types something unexpected."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 4,
+  "mcq": [
+    {
+      "question": "Which identifier is reserved for the implementation, so using it in your own code is undefined behaviour?",
+      "options": {
+        "A": "`buffer_`",
+        "B": "`_buffer` inside a function",
+        "C": "`_Buffer`",
+        "D": "`Buffer2`"
+      },
+      "answer": "C",
+      "explanation": "Any name that starts with an underscore followed by an upper-case letter, or that contains a double underscore, is reserved everywhere. A lower-case name after a leading underscore is only reserved at global scope."
+    },
+    {
+      "question": "Under this project's conventions, which name is correct for a class that stores bank accounts?",
+      "options": {
+        "A": "`account_repository`",
+        "B": "`ACCOUNT_REPOSITORY`",
+        "C": "`AccountRepository`",
+        "D": "`clsAccountRepository`"
+      },
+      "answer": "C",
+      "explanation": "Types use PascalCase, variables and functions snake_case, constants UPPER_SNAKE_CASE. Hungarian prefixes like `cls` repeat what the code already says."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A teammate argues that one-letter names are fine everywhere because IDEs show the type on hover. Where are short names genuinely clearer, and where do they hurt?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that `review_name(\"Alignas\", Kind::type)` is accepted while `review_name(\"alignas\", Kind::variable)` is an error, then make sure both pass."
+    }
+  ]
+}
