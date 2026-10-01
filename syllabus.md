@@ -106,10 +106,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 
 | Day | Topic | Key Learnings / Deliverables | Level | Status |
 |----:|-------|------------------------------|-------|--------|
-| 57 | REST APIs & JSON | HTTP methods and their meaning, status codes, resource routing, JSON request and response bodies | Advanced | Planned |
-| 58 | HTTP Requests | HTTP/1.1 request and response formats, parsing status lines and headers, timeouts and retries over an injectable transport | Advanced | Planned |
-| 59 | Query Parameters, Headers & Payloads | Percent-encoding, query strings, custom headers, form and JSON request bodies | Advanced | Planned |
-| 60 | API Authentication | API keys, Bearer tokens, Basic auth with Base64, secrets from environment variables, redaction | Advanced | Planned |
+| 57 | REST APIs & JSON | HTTP methods and their meaning, status codes, resource routing, JSON request and response bodies | Advanced | Covered |
+| 58 | HTTP Requests | HTTP/1.1 request and response formats, parsing status lines and headers, timeouts and retries over an injectable transport | Advanced | Covered |
+| 59 | Query Parameters, Headers & Payloads | Percent-encoding, query strings, custom headers, form and JSON request bodies | Advanced | Covered |
+| 60 | API Authentication | API keys, Bearer tokens, Basic auth with Base64, secrets from environment variables, redaction | Advanced | Covered |
 | 61 | Notification Automation | Health checks, alert thresholds, webhook payloads, rate limiting and dry-run delivery | Advanced | Planned |
 | 62 | Web Scraping | Tokenising HTML, extracting elements and attributes, robots.txt rules, polite crawling | Advanced | Planned |
 | 63 | Browser Automation | WebDriver commands, locator strategies, explicit waits, the page-object pattern | Advanced | Planned |

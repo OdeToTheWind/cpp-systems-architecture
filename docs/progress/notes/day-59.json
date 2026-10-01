@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-11",
+  "learnings": [
+    "Percent-encoding leaves only unreserved characters untouched and encodes every other UTF-8 byte as %XX.",
+    "Query strings keep their order and may repeat a key, so they are a list of pairs rather than a map.",
+    "Form bodies use the same encoding with '+' for spaces; JSON bodies need Content-Type: application/json, and both need an exact Content-Length.",
+    "Preparing a request offline and printing its wire format makes every byte checkable before anything is sent."
+  ],
+  "pitfalls": [
+    "A city name with a space broke the URL until values were percent-encoded.",
+    "Header values containing CR/LF could inject extra headers; `Headers::set` now rejects line breaks.",
+    "Logging the prepared request printed the API key; the wire text can now mask secret headers."
+  ],
+  "next": "Day 60 adds authentication: API keys, bearer tokens and Basic auth."
+}

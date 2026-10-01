@@ -1,0 +1,37 @@
+{
+  "day": 59,
+  "mcq": [
+    {
+      "question": "What does `percent_encode(\"a b&c\")` return?",
+      "options": {
+        "A": "`a+b&c`",
+        "B": "`a b%26c`",
+        "C": "`a%20b%26c`",
+        "D": "`a%20b&c`"
+      },
+      "answer": "C",
+      "explanation": "Space and `&` are not unreserved characters, so both are encoded. `+` for spaces is only used in form bodies."
+    },
+    {
+      "question": "Why is a query string stored as a vector of pairs instead of a `std::map`?",
+      "options": {
+        "A": "A map cannot hold strings",
+        "B": "Vectors encode faster",
+        "C": "HTTP forbids sorted parameters",
+        "D": "Keys may repeat and order matters, as in `amenity=pool&amenity=gym`"
+      },
+      "answer": "D",
+      "explanation": "A map would merge repeated keys and sort them, which changes the request the server sees."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Why should a client reject header values containing CR or LF instead of escaping them?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `multipart/form-data` body builder with a boundary and test that the Content-Length matches the body."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-09",
+  "learnings": [
+    "REST models data as resources addressed by URLs; the HTTP method says what to do with them (GET reads, POST creates, PUT replaces, PATCH updates, DELETE removes).",
+    "Safe methods never change server state; idempotent methods can be repeated with the same effect, which is what makes retrying them safe.",
+    "Status codes are part of the contract: 201 with a Location header for a create, 204 for an empty success, 400 for bad input, 404 for a missing resource, 405 for a wrong method.",
+    "Simulating the API in memory keeps routing and status-code logic testable without sockets."
+  ],
+  "pitfalls": [
+    "Returning 200 for every outcome hid errors from clients; each branch now has its own status code.",
+    "`std::stoi` accepted \"2024abc\" as a year; the parser now requires the whole field to be a number.",
+    "Hand-written JSON forgot to escape quotes inside titles until `to_json` escaped every string."
+  ],
+  "next": "Day 58 writes and parses the HTTP messages themselves."
+}

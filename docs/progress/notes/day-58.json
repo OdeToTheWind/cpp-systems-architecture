@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-10",
+  "learnings": [
+    "An HTTP/1.1 request is plain text: a request line, header lines ending in CRLF, a blank line, then an optional body.",
+    "Header names are case-insensitive and the body length comes from Content-Length or chunked transfer encoding.",
+    "Putting the network behind a `Transport` interface lets tests replay canned responses, including timeouts.",
+    "Exponential back-off doubles the wait between retries, capped at a maximum, and a server's Retry-After takes precedence."
+  ],
+  "pitfalls": [
+    "Retrying a 404 just repeated the same error; only timeouts, connection failures and 5xx responses are retried now.",
+    "Bodies longer than Content-Length leaked trailing bytes into the result until the body was cut to the declared size.",
+    "Real sleeps made the tests slow; the sleep function is injected and the tests only record the delays."
+  ],
+  "next": "Day 59 builds query strings, headers and request bodies."
+}

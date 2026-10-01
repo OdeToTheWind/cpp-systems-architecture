@@ -1,0 +1,37 @@
+{
+  "day": 57,
+  "mcq": [
+    {
+      "question": "Which HTTP method is idempotent but *not* safe?",
+      "options": {
+        "A": "`GET`",
+        "B": "`PUT`",
+        "C": "`POST`",
+        "D": "`HEAD`"
+      },
+      "answer": "B",
+      "explanation": "`PUT` changes state, so it is not safe. Sending the same `PUT` twice leaves the same result, so it is idempotent."
+    },
+    {
+      "question": "A `POST /books` creates book 7. What is the best response?",
+      "options": {
+        "A": "`200 OK` with an empty body",
+        "B": "`204 No Content` with the book as JSON",
+        "C": "`201 Created` with `Location: /books/7` and the new book as JSON",
+        "D": "`302 Found` redirecting to `/books`"
+      },
+      "answer": "C",
+      "explanation": "201 tells the client a resource was created and Location says where it is. 204 must not have a body."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should validation errors return 400 or 422? What matters more: the exact code, or that clients can rely on it consistently?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `PATCH /books/{id}` that changes only the fields in the body, with a test for a 404 and a 400 case."
+    }
+  ]
+}

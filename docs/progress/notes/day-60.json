@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-12",
+  "learnings": [
+    "APIs authenticate with a key header, a short-lived Bearer token or HTTP Basic auth; each just ends up as a request header.",
+    "Basic auth is Base64 of \"user:password\" – an encoding, not encryption – so it is only safe over TLS.",
+    "A token cache with an injectable clock refreshes a little before expiry, so requests never race an expiring token.",
+    "Secrets live in environment variables, are wrapped in a type that prints ***, and are redacted from logs in both raw and Base64 forms."
+  ],
+  "pitfalls": [
+    "Missing environment variables were reported one at a time; the loader now lists every gap in one message.",
+    "The Basic auth header leaked the password in logs because only the raw secret was redacted, not its Base64 form.",
+    "Refreshing exactly at expiry caused occasional 401s; the cache now refreshes 30 seconds early."
+  ],
+  "next": "Day 61 automates notifications from health checks."
+}

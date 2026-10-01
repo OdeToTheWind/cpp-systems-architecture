@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 56 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 433 `TEST_CASE`s across 56 test executables.
-- **Deliverables mapped to code:** 315 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 9,785 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 112 multiple-choice questions with explanations, plus 112 open bonus questions (56 hands-on, test-first tasks).
+- **Curriculum completion:** 60 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 464 `TEST_CASE`s across 60 test executables.
+- **Deliverables mapped to code:** 337 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 10,604 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 120 multiple-choice questions with explanations, plus 120 open bonus questions (60 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -78,10 +78,10 @@
 | 54 | Date and Time with chrono | 🟡 | A *freight-forwarding delivery estimator*. Orders placed after the warehouse cut-off ship the next business day, transit counts business days only (no weekends, no public holidays), and the promised pick-up time is shown in every partner office's local time. | [code](src/day_54_date_time/lesson.hpp) · [tests](tests/test_day_54.cpp) · [notes](docs/progress/day-54-reflection.md) |
 | 55 | Hosting C++ Online | 🟡 | A *"Word of the Day" web service* for a language school, written so it can be hosted anywhere: as a CGI program behind Apache or nginx today, or behind an embedded HTTP server later. The request comes from CGI environment variables, a router picks the handler, the response is written in CGI format, and settings come from the environment with safe defaults. | [code](src/day_55_hosting/lesson.hpp) · [tests](tests/test_day_55.cpp) · [notes](docs/progress/day-55-reflection.md) |
 | 56 | Command-Line Arguments | 🟡 | `logscan`, a *log-search command-line tool* for an operations team. It takes flags (-i, -n, -c), options with values (-m 5 or --max=5), a pattern and any number of files, prints a usage message on --help or on a mistake, and returns grep-style exit codes so scripts can react: 0 = matches found, 1 = no match, 2 = usage or file error. | [code](src/day_56_command_line/lesson.hpp) · [tests](tests/test_day_56.cpp) · [notes](docs/progress/day-56-reflection.md) |
-| 57 | REST APIs & JSON | 🟠 | _planned_ | – |
-| 58 | HTTP Requests | 🟠 | _planned_ | – |
-| 59 | Query Parameters, Headers & Payloads | 🟠 | _planned_ | – |
-| 60 | API Authentication | 🟠 | _planned_ | – |
+| 57 | REST APIs & JSON | 🟠 | A *library-book REST API*, simulated in memory. No network is involved: the goal is to understand what each HTTP method means, which status code each outcome deserves, and how JSON request and response bodies are produced and consumed by a resource-oriented API. | [code](src/day_57_rest_api/lesson.hpp) · [tests](tests/test_day_57.cpp) · [notes](docs/progress/day-57-reflection.md) |
+| 58 | HTTP Requests | 🟠 | A *public-transport departures client* for a station display. It writes correct HTTP/1.1 requests, parses status lines, headers and both plain and chunked bodies, and retries timeouts and temporary server errors with exponential back-off – all over an injectable transport, so tests use canned responses and never wait or touch the network. | [code](src/day_58_http_client/lesson.hpp) · [tests](tests/test_day_58.cpp) · [notes](docs/progress/day-58-reflection.md) |
+| 59 | Query Parameters, Headers & Payloads | 🟠 | A *hotel-search API client*. What matters is exactly what goes on the wire, so every request is first *prepared* offline – URL with percent-encoded query, headers, form or JSON body with the right Content-Type and Content-Length – and can be inspected byte by byte before anything would be sent. | [code](src/day_59_request_payloads/lesson.hpp) · [tests](tests/test_day_59.cpp) · [notes](docs/progress/day-59-reflection.md) |
+| 60 | API Authentication | 🟠 | A *shipping-rate aggregator* that queries three carriers, each with a different authentication scheme: an API key header, a short-lived Bearer token that must be refreshed, and HTTP Basic auth. Credentials come from environment variables, are wrapped so they cannot be printed by accident, and are redacted from every log line. | [code](src/day_60_api_auth/lesson.hpp) · [tests](tests/test_day_60.cpp) · [notes](docs/progress/day-60-reflection.md) |
 | 61 | Notification Automation | 🟠 | _planned_ | – |
 | 62 | Web Scraping | 🟠 | _planned_ | – |
 | 63 | Browser Automation | 🟠 | _planned_ | – |

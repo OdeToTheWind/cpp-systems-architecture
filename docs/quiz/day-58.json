@@ -1,0 +1,37 @@
+{
+  "day": 58,
+  "mcq": [
+    {
+      "question": "How does a client know where an HTTP/1.1 header section ends?",
+      "options": {
+        "A": "The `Content-Length` header",
+        "B": "An empty line: `\\r\\n\\r\\n`",
+        "C": "The connection closes",
+        "D": "A `0` chunk"
+      },
+      "answer": "B",
+      "explanation": "Headers end at the first blank line. Content-Length or chunked encoding then tells you how long the body is."
+    },
+    {
+      "question": "Which response should the client retry?",
+      "options": {
+        "A": "`404 Not Found`",
+        "B": "`503 Service Unavailable`",
+        "C": "`400 Bad Request`",
+        "D": "`401 Unauthorized`"
+      },
+      "answer": "B",
+      "explanation": "5xx errors and timeouts may be temporary. 4xx errors mean the request itself is wrong, so repeating it gives the same answer."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Retrying a `POST` that timed out could create a duplicate order. How do idempotency keys solve this?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add jitter to the back-off (a random factor from an injected engine) and test it with a fixed seed."
+    }
+  ]
+}

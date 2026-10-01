@@ -1,0 +1,37 @@
+{
+  "day": 60,
+  "mcq": [
+    {
+      "question": "Why must HTTP Basic auth only be used over TLS?",
+      "options": {
+        "A": "Base64 is an encoding, so anyone who sees the header can decode the password",
+        "B": "Base64 is too slow without TLS",
+        "C": "Servers reject Basic auth over plain HTTP",
+        "D": "Base64 needs a TLS key to decode"
+      },
+      "answer": "A",
+      "explanation": "Base64 hides nothing. The credentials are protected only by the encrypted connection."
+    },
+    {
+      "question": "Why does the token cache refresh 30 seconds *before* expiry?",
+      "options": {
+        "A": "Servers require refreshing every 30 seconds",
+        "B": "It halves the number of token fetches",
+        "C": "So a token cannot expire while a request carrying it is still in flight",
+        "D": "It makes the clock unnecessary"
+      },
+      "answer": "C",
+      "explanation": "A token that expires during the request gives a 401. A safety margin avoids that race."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Environment variables, a secrets manager or an encrypted file: which would you use for API keys in production, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Make `TokenCache` retry the fetch once when it throws, and test that a second failure propagates."
+    }
+  ]
+}
