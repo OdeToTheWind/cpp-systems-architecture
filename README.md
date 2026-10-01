@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 60 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 464 `TEST_CASE`s across 60 test executables.
-- **Deliverables mapped to code:** 337 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 10,604 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 120 multiple-choice questions with explanations, plus 120 open bonus questions (60 hands-on, test-first tasks).
+- **Curriculum completion:** 63 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 485 `TEST_CASE`s across 63 test executables.
+- **Deliverables mapped to code:** 352 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 11,374 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 126 multiple-choice questions with explanations, plus 126 open bonus questions (63 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -82,9 +82,9 @@
 | 58 | HTTP Requests | 🟠 | A *public-transport departures client* for a station display. It writes correct HTTP/1.1 requests, parses status lines, headers and both plain and chunked bodies, and retries timeouts and temporary server errors with exponential back-off – all over an injectable transport, so tests use canned responses and never wait or touch the network. | [code](src/day_58_http_client/lesson.hpp) · [tests](tests/test_day_58.cpp) · [notes](docs/progress/day-58-reflection.md) |
 | 59 | Query Parameters, Headers & Payloads | 🟠 | A *hotel-search API client*. What matters is exactly what goes on the wire, so every request is first *prepared* offline – URL with percent-encoded query, headers, form or JSON body with the right Content-Type and Content-Length – and can be inspected byte by byte before anything would be sent. | [code](src/day_59_request_payloads/lesson.hpp) · [tests](tests/test_day_59.cpp) · [notes](docs/progress/day-59-reflection.md) |
 | 60 | API Authentication | 🟠 | A *shipping-rate aggregator* that queries three carriers, each with a different authentication scheme: an API key header, a short-lived Bearer token that must be refreshed, and HTTP Basic auth. Credentials come from environment variables, are wrapped so they cannot be printed by accident, and are redacted from every log line. | [code](src/day_60_api_auth/lesson.hpp) · [tests](tests/test_day_60.cpp) · [notes](docs/progress/day-60-reflection.md) |
-| 61 | Notification Automation | 🟠 | _planned_ | – |
-| 62 | Web Scraping | 🟠 | _planned_ | – |
-| 63 | Browser Automation | 🟠 | _planned_ | – |
+| 61 | Notification Automation | 🟠 | An *on-call alert bot* for a small web shop. Health readings (disk usage, response latency, queue depth) are compared with warning and critical thresholds; a state change produces a chat-webhook JSON payload, repeats are rate-limited per check, and recoveries are announced. Delivery goes through an injected sink, so a dry run prints what would be posted. | [code](src/day_61_notifications/lesson.hpp) · [tests](tests/test_day_61.cpp) · [notes](docs/progress/day-61-reflection.md) |
+| 62 | Web Scraping | 🟠 | A *second-hand bookshop price watcher*. Catalogue pages are tokenised into tags and text, book cards are extracted by tag and class, robots.txt is honoured, and a polite crawler follows pagination links on one host with a delay between requests. Pages come from an injected fetch function, so the whole crawl runs offline against saved HTML. | [code](src/day_62_web_scraping/lesson.hpp) · [tests](tests/test_day_62.cpp) · [notes](docs/progress/day-62-reflection.md) |
+| 63 | Browser Automation | 🟠 | A *checkout smoke test* for an online shop, run before every release. The test logs in, adds a book to the cart and checks the order confirmation. A real run would drive a browser through the W3C WebDriver protocol; here a fake browser with delayed elements stands in for it, so locators, explicit waits and page objects can be practised – and tested – offline. | [code](src/day_63_browser_automation/lesson.hpp) · [tests](tests/test_day_63.cpp) · [notes](docs/progress/day-63-reflection.md) |
 | 64 | Templates & Generic Programming | 🟠 | _planned_ | – |
 | 65 | Concepts & Constraints | 🟠 | _planned_ | – |
 | 66 | Ranges & Views | 🟠 | _planned_ | – |

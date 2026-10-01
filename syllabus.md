@@ -110,9 +110,9 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 58 | HTTP Requests | HTTP/1.1 request and response formats, parsing status lines and headers, timeouts and retries over an injectable transport | Advanced | Covered |
 | 59 | Query Parameters, Headers & Payloads | Percent-encoding, query strings, custom headers, form and JSON request bodies | Advanced | Covered |
 | 60 | API Authentication | API keys, Bearer tokens, Basic auth with Base64, secrets from environment variables, redaction | Advanced | Covered |
-| 61 | Notification Automation | Health checks, alert thresholds, webhook payloads, rate limiting and dry-run delivery | Advanced | Planned |
-| 62 | Web Scraping | Tokenising HTML, extracting elements and attributes, robots.txt rules, polite crawling | Advanced | Planned |
-| 63 | Browser Automation | WebDriver commands, locator strategies, explicit waits, the page-object pattern | Advanced | Planned |
+| 61 | Notification Automation | Health checks, alert thresholds, webhook payloads, rate limiting and dry-run delivery | Advanced | Covered |
+| 62 | Web Scraping | Tokenising HTML, extracting elements and attributes, robots.txt rules, polite crawling | Advanced | Covered |
+| 63 | Browser Automation | WebDriver commands, locator strategies, explicit waits, the page-object pattern | Advanced | Covered |
 
 ## Phase 4 · Advanced C++ Language & Tooling (Days 64–82)
 

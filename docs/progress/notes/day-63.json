@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-15",
+  "learnings": [
+    "WebDriver is an HTTP protocol: every command (navigate, find element, click, send keys) is a POST to the driver with a small JSON body.",
+    "Locators should be stable: ids first, then classes, and link text when that is what the user sees.",
+    "Explicit waits poll a condition with a timeout, so tests are as fast as the page allows and fail with a clear message.",
+    "Page objects keep selectors in one place; tests read as user actions such as login, add and checkout."
+  ],
+  "pitfalls": [
+    "A fixed sleep made the test slow when the page was fast and flaky when it was slow; explicit waits replaced it.",
+    "A click handler that navigated destroyed its own std::function while it was running – AddressSanitizer would flag it; the handler is now copied before the call.",
+    "Element handles from the previous page were reused after navigation; the fake browser now reports them as stale, like a real one."
+  ],
+  "next": "Phase 4 starts with Day 64: templates and generic programming."
+}

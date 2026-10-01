@@ -1,0 +1,37 @@
+{
+  "day": 63,
+  "mcq": [
+    {
+      "question": "Why is an explicit wait better than `sleep(3s)` before clicking?",
+      "options": {
+        "A": "It never times out",
+        "B": "It continues as soon as the element appears and fails with a clear timeout otherwise",
+        "C": "It makes the page load faster",
+        "D": "It avoids sending WebDriver commands"
+      },
+      "answer": "B",
+      "explanation": "Polling a condition is both faster and more reliable than guessing a fixed delay."
+    },
+    {
+      "question": "What is the main benefit of a page object?",
+      "options": {
+        "A": "Selectors live in one class, so a UI change is fixed in one place",
+        "B": "It removes the need for a browser",
+        "C": "It makes tests run in parallel",
+        "D": "It caches page HTML"
+      },
+      "answer": "A",
+      "explanation": "Tests call methods such as `login()` and `checkout()`. Only the page object knows the locators."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "End-to-end browser tests are slow and can be flaky. How many should a project have compared with unit tests?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `remove(title)` action to `ShopPage` with a matching button in `FakeShop`, and test that the cart count goes down."
+    }
+  ]
+}

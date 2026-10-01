@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-14",
+  "learnings": [
+    "A tokenizer turns HTML into open tags, close tags and text; entities like &amp; are decoded only in text and attribute values.",
+    "Selecting by tag and whole class name, with depth tracking for nested elements, is enough for most catalogue pages.",
+    "robots.txt groups rules by user agent; the longest matching rule decides, and Allow wins a tie.",
+    "A polite crawler stays on one host, waits the crawl delay between requests, remembers visited pages and stops at a page limit."
+  ],
+  "pitfalls": [
+    "A `<` inside a script body was read as a tag until script and style contents were skipped.",
+    "Matching class \"car\" also matched \"card\" with a substring search; classes are now compared as whole words.",
+    "Two pages linking to each other as \"next\" looped forever until visited pages were remembered."
+  ],
+  "next": "Day 63 automates a browser for pages that need JavaScript."
+}

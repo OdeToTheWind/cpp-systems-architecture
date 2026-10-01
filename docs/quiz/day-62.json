@@ -1,0 +1,37 @@
+{
+  "day": 62,
+  "mcq": [
+    {
+      "question": "robots.txt has `Disallow: /private` and `Allow: /private/public`. Is `/private/public/x` allowed?",
+      "options": {
+        "A": "No, because Disallow always wins",
+        "B": "No, because the first matching rule wins",
+        "C": "Only if Crawl-delay is set",
+        "D": "Yes, because the longer Allow rule matches"
+      },
+      "answer": "D",
+      "explanation": "The most specific (longest) matching rule decides. Allow wins only on an exact tie in length."
+    },
+    {
+      "question": "Why does the tokenizer skip the contents of `<script>` elements?",
+      "options": {
+        "A": "Scripts are always empty",
+        "B": "Browsers ignore scripts",
+        "C": "Scripts are only allowed in `<head>`",
+        "D": "Script code may contain `<` and `>` that are not tags"
+      },
+      "answer": "D",
+      "explanation": "Text like `if (a < b)` would be read as a tag. Skipping to `</script>` avoids this."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A site's terms of service forbid scraping but it has no robots.txt. What should you do?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add an `ETag` cache to the crawler: store each page's ETag and send it again, treating a 304-style \"unchanged\" answer as a cache hit."
+    }
+  ]
+}

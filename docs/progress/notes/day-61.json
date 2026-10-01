@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-13",
+  "learnings": [
+    "Separate warning and critical thresholds give people time to act before an outage; the order warning <= critical is validated.",
+    "Alerting on *state changes* (escalation and recovery) instead of every bad reading keeps the channel useful.",
+    "A per-check cooldown rate-limits reminders while a problem persists, without hiding a new escalation.",
+    "Injecting the delivery sink makes a dry run trivial: the same code prints the payload instead of posting it."
+  ],
+  "pitfalls": [
+    "Every reading above the threshold posted a message and flooded the channel until the cooldown was added.",
+    "A recovery was never announced because OK readings were ignored; state is now tracked per check.",
+    "A check name containing a quote produced invalid JSON until text was escaped."
+  ],
+  "next": "Day 62 extracts data from web pages."
+}
