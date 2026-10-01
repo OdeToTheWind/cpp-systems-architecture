@@ -1,0 +1,37 @@
+{
+  "day": 48,
+  "mcq": [
+    {
+      "question": "Why does `Length<Metres>{1} + Length<Feet>{3}` fail to compile?",
+      "options": {
+        "A": "Because templates cannot have `operator+`",
+        "B": "Because `double` cannot be added to `double`",
+        "C": "They are different types and `operator+` is only defined for two lengths of the same unit",
+        "D": "It compiles and returns 4"
+      },
+      "answer": "C",
+      "explanation": "Encoding the unit in the type lets the compiler reject unit mix-ups. A deliberate conversion such as `to_metres` is required."
+    },
+    {
+      "question": "When should you choose `std::variant` over `std::any`?",
+      "options": {
+        "A": "When the set of possible types is known and fixed, so the compiler can check that every case is handled",
+        "B": "When values may be of any type that plugins invent later",
+        "C": "When you want to avoid all type checks",
+        "D": "When storing only strings"
+      },
+      "answer": "A",
+      "explanation": "A variant's alternatives are part of its type, and `std::visit` must handle each one. `std::any` accepts unknown types but checks them only when `any_cast` is called."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Dynamic languages check types at run time; C++ checks most of them at compile time. Which bugs in this spreadsheet engine would a dynamically typed version only find in production?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a new `Date` alternative in `Cell` (text like `2026-04-30`). Add it and let the compiler show every visitor you must update."
+    }
+  ]
+}

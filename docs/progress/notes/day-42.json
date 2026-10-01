@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-24",
+  "learnings": [
+    "`std::filesystem::path` composes paths with `/` and handles separators portably; `lexically_normal` resolves `.` and `..` without touching the disk.",
+    "`recursive_directory_iterator` walks a whole tree; sorting the results makes the behaviour deterministic across file systems.",
+    "A sandbox that resolves every path relative to one root and rejects anything starting with `..` makes destructive tools safe to run.",
+    "Planning moves first (a dry run) and executing them second lets the user review exactly what will happen."
+  ],
+  "pitfalls": [
+    "A relative path such as `inbox/../../etc` escaped the sandbox in the first draft; `lexically_relative` now detects the leading `..`.",
+    "Two cameras both produced `IMG_1.jpg`, and the second move overwrote the first; destinations now get a numeric suffix when taken.",
+    "Comparing a path ending in `/.` with the root failed because of the trailing separator; the sandbox now compares relative paths instead."
+  ],
+  "next": "Day 43 reads and writes the most common data file of all: CSV."
+}

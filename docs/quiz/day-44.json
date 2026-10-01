@@ -1,0 +1,37 @@
+{
+  "day": 44,
+  "mcq": [
+    {
+      "question": "Why does the table store each column in its own vector instead of storing a vector of row structs?",
+      "options": {
+        "A": "Operations that scan one column read contiguous memory and touch none of the other columns",
+        "B": "Row structs cannot hold strings",
+        "C": "It uses less memory for small tables",
+        "D": "Vectors of structs cannot be sorted"
+      },
+      "answer": "A",
+      "explanation": "Analytics usually aggregate one or two columns over many rows. A column layout keeps those values together, which is far more cache-friendly than skipping over whole rows."
+    },
+    {
+      "question": "What is the median of 3, 1, 4, 2?",
+      "options": {
+        "A": "2.5",
+        "B": "2",
+        "C": "3",
+        "D": "2.75"
+      },
+      "answer": "A",
+      "explanation": "Sorted, the values are 1, 2, 3, 4. With an even count the median is the average of the two middle values, (2 + 3) / 2."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "This mini table copies data when filtering. A real library might return a view of selected row indices instead. What are the trade-offs?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `group_count(table, key_column)` that counts rows per key, then implement it next to `group_mean`."
+    }
+  ]
+}

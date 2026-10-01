@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-23",
+  "learnings": [
+    "`std::ofstream` and `std::ifstream` close their file in the destructor, so RAII guarantees the file is flushed and released even when an exception is thrown.",
+    "`std::ios::app` sends every write to the end of the file, keeping existing content; `std::ios::trunc` empties it first.",
+    "Binary files should be written field by field in a defined byte order – dumping a struct with `write` copies padding and depends on the machine's endianness.",
+    "After a read loop, `eof()` is the expected ending; `bad()` signals a real I/O failure, and `gcount()` reveals a partial final record."
+  ],
+  "pitfalls": [
+    "A helper called `file_size(path)` was ambiguous with `std::filesystem::file_size`, found through argument-dependent lookup; it is now `measured_size`.",
+    "A crash during a flight left a half-written last record, which the reader turned into a garbage sample; `read_samples` now reports stray bytes as truncation.",
+    "Opening a missing file 'worked' silently because the stream state was never checked; every open is now followed by `if (!stream)`."
+  ],
+  "next": "Day 42 manages whole folders of files with std::filesystem."
+}

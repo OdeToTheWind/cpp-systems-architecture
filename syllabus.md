@@ -83,14 +83,14 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 38 | Game Development with OOP | Game entities as classes, turn-based game loop, injected randomness, win and lose conditions | Intermediate | Covered |
 | 39 | Inheritance | Base and derived classes, virtual and override, final, virtual destructors, multiple inheritance of interfaces | Intermediate | Covered |
 | 40 | Iterators | Iterator categories, begin and end, writing a custom iterator, iterator invalidation | Intermediate | Covered |
-| 41 | File I/O with fstream | ifstream and ofstream, text and binary files, append mode, error checking, RAII file handling | Intermediate | Planned |
-| 42 | Working with Directories | std::filesystem paths, creating and walking directories, filtering by extension, sandboxed operations | Intermediate | Planned |
-| 43 | Reading and Writing CSV | Parsing quoted CSV fields, validating rows, reporting bad rows, writing CSV safely | Intermediate | Planned |
-| 44 | Tabular Data Analysis | Column-oriented tables, filtering, derived columns, group-by aggregation, summary statistics | Intermediate | Planned |
-| 45 | STL Algorithms | transform, copy_if, accumulate, sort with custom comparators, partition, erase-remove | Intermediate | Planned |
-| 46 | Variadic Templates | Parameter packs, fold expressions, perfect forwarding, std::tuple and std::apply | Intermediate | Planned |
-| 47 | Desktop GUI Architecture | Model-View-Presenter, widget-free presenters, input validation, headless testing of UI logic | Intermediate | Planned |
-| 48 | Static vs Dynamic Typing | Static type checking, std::variant and std::visit, std::any, type-safe heterogeneous data | Intermediate | Planned |
+| 41 | File I/O with fstream | ifstream and ofstream, text and binary files, append mode, error checking, RAII file handling | Intermediate | Covered |
+| 42 | Working with Directories | std::filesystem paths, creating and walking directories, filtering by extension, sandboxed operations | Intermediate | Covered |
+| 43 | Reading and Writing CSV | Parsing quoted CSV fields, validating rows, reporting bad rows, writing CSV safely | Intermediate | Covered |
+| 44 | Tabular Data Analysis | Column-oriented tables, filtering, derived columns, group-by aggregation, summary statistics | Intermediate | Covered |
+| 45 | STL Algorithms | transform, copy_if, accumulate, sort with custom comparators, partition, erase-remove | Intermediate | Covered |
+| 46 | Variadic Templates | Parameter packs, fold expressions, perfect forwarding, std::tuple and std::apply | Intermediate | Covered |
+| 47 | Desktop GUI Architecture | Model-View-Presenter, widget-free presenters, input validation, headless testing of UI logic | Intermediate | Covered |
+| 48 | Static vs Dynamic Typing | Static type checking, std::variant and std::visit, std::any, type-safe heterogeneous data | Intermediate | Covered |
 | 49 | Advanced Error Handling | Custom exception hierarchies, std::error_code, result types, choosing exceptions vs error values | Intermediate | Planned |
 | 50 | Exception Safety & RAII | Basic, strong and nothrow guarantees, scope guards, copy-and-swap, noexcept | Intermediate | Planned |
 | 51 | Working with JSON | JSON value model, recursive-descent parsing, serialisation with escaping, error positions | Intermediate | Planned |

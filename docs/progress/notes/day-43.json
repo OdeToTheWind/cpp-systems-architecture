@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-25",
+  "learnings": [
+    "CSV fields may be quoted; inside quotes, commas and line breaks are data and a doubled quote `\"\"` is one literal quote (RFC 4180).",
+    "Because a quoted field can contain a newline, one record may span several physical lines – reading line by line is not enough.",
+    "An importer should validate every row, collect the errors with line numbers and keep going, so a user can fix the whole file at once.",
+    "When writing, quote a field only if it contains a comma, a quote or a line break, and double the quotes inside it."
+  ],
+  "pitfalls": [
+    "Splitting on every comma broke names like `\"Lovelace, Ada\"` into two columns; the parser now tracks whether it is inside quotes.",
+    "An unterminated quote made the reader swallow the rest of the file; it now throws with the line where the record started.",
+    "Written names containing quotes could not be read back until `csv_escape` doubled them."
+  ],
+  "next": "Day 44 analyses tabular data once it is loaded."
+}

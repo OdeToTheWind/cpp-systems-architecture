@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-30",
+  "learnings": [
+    "C++ is statically typed: giving each unit its own type (`Length<Metres>`, `Length<Feet>`) turns unit mix-ups into compile errors.",
+    "`std::variant` holds exactly one of a fixed list of types, chosen at run time, while every operation on it is still checked at compile time.",
+    "`std::visit` with an overload set must handle every alternative, so adding a new cell type forces every visitor to be updated.",
+    "`std::any` can hold any type at all, but the type is only checked when reading with `any_cast` – right for plugin metadata, wrong for core data."
+  ],
+  "pitfalls": [
+    "Storing cells as strings and converting on every use made `\"12 apples\"` count as 12; the parser now decides the type once and keeps it.",
+    "`std::get<double>` on a text cell threw `bad_variant_access` in the sum; `std::get_if` checks the alternative first.",
+    "`any_cast<long>` on an `int` value threw – `std::any` requires the exact stored type, not a convertible one."
+  ],
+  "next": "Day 49 designs error handling for a whole subsystem: exception hierarchies and error codes."
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-28",
+  "learnings": [
+    "A parameter pack (`typename... Args`) captures any number of template arguments, and `sizeof...` counts them at compile time.",
+    "Fold expressions such as `(0 + ... + values)` expand a pack with an operator; an initial value makes the empty pack well-defined.",
+    "`std::forward<Args>(args)...` passes each argument on with its original value category, so temporaries are moved and named objects copied.",
+    "`std::apply` calls a function with the elements of a tuple as separate arguments – the reverse of packing them."
+  ],
+  "pitfalls": [
+    "A unary fold `(... + values)` failed to compile for an empty pack; the binary fold with `0` fixed it.",
+    "Forwarding with `std::move` instead of `std::forward` moved from the caller's named string and left it empty.",
+    "An empty field list left a counter set but never read, which `-Wunused-but-set-variable` flagged in that one instantiation."
+  ],
+  "next": "Day 47 structures a desktop GUI so its logic can be tested without a window."
+}

@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 40 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 308 `TEST_CASE`s across 40 test executables.
-- **Deliverables mapped to code:** 227 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 6,896 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 80 multiple-choice questions with explanations, plus 80 open bonus questions (40 hands-on, test-first tasks).
+- **Curriculum completion:** 48 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 369 `TEST_CASE`s across 48 test executables.
+- **Deliverables mapped to code:** 271 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 8,189 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 96 multiple-choice questions with explanations, plus 96 open bonus questions (48 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -62,14 +62,14 @@
 | 38 | Game Development with OOP | 🟡 | *Dungeon Duel*, a turn-based battle. A hero fights a sequence of monsters; both sides attack, the hero can drink a limited number of potions, and the game can be won or lost. Randomness is injected through the engine, so every battle can be replayed in tests. | [code](src/day_38_game_development/lesson.hpp) · [tests](tests/test_day_38.cpp) · [notes](docs/progress/day-38-reflection.md) |
 | 39 | Inheritance | 🟡 | An *electric-vehicle charging network*. A base `Charger` defines how a charging session is billed; AC posts, DC fast chargers and solar-canopy chargers specialise it, and capability interfaces (remote reporting, maintenance) are mixed in with multiple inheritance. | [code](src/day_39_inheritance/lesson.hpp) · [tests](tests/test_day_39.cpp) · [notes](docs/progress/day-39-reflection.md) |
 | 40 | Iterators | 🟡 | A *radio station's "recently played" board*. The last N tracks live in a fixed-size ring buffer with its own iterator, so the board works with range-based for and with every standard algorithm; the station's library is cleaned with erase loops that never use an invalidated iterator. | [code](src/day_40_iterators/lesson.hpp) · [tests](tests/test_day_40.cpp) · [notes](docs/progress/day-40-reflection.md) |
-| 41 | File I/O with fstream | 🟡 | _planned_ | – |
-| 42 | Working with Directories | 🟡 | _planned_ | – |
-| 43 | Reading and Writing CSV | 🟡 | _planned_ | – |
-| 44 | Tabular Data Analysis | 🟡 | _planned_ | – |
-| 45 | STL Algorithms | 🟡 | _planned_ | – |
-| 46 | Variadic Templates | 🟡 | _planned_ | – |
-| 47 | Desktop GUI Architecture | 🟡 | _planned_ | – |
-| 48 | Static vs Dynamic Typing | 🟡 | _planned_ | – |
+| 41 | File I/O with fstream | 🟡 | A *flight data recorder for a hobby drone*. Events are appended to a text log a human can read, telemetry samples are stored in a compact binary file with a fixed, portable record layout, and every read checks for missing, unreadable or truncated files. | [code](src/day_41_file_io/lesson.hpp) · [tests](tests/test_day_41.cpp) · [notes](docs/progress/day-41-reflection.md) |
+| 42 | Working with Directories | 🟡 | A *photo-shoot ingest tool*. After a shoot, a memory card is dumped into an inbox folder; the tool walks it, plans where every file belongs (raw/, jpeg/, video/, sidecar/, other/), avoids name collisions, prints the resulting tree – and refuses to touch anything outside the one folder it was given, so a typo can never damage the rest of the disk. | [code](src/day_42_directories/lesson.hpp) · [tests](tests/test_day_42.cpp) · [notes](docs/progress/day-42-reflection.md) |
+| 43 | Reading and Writing CSV | 🟡 | A *charity fun-run registration import*. The web form exports a CSV in which names contain commas and quotes, some rows are broken and some values are impossible. The importer parses quoted fields correctly, reports every bad row with its line number instead of crashing, and writes a clean CSV for the timing company. | [code](src/day_43_csv/lesson.hpp) · [tests](tests/test_day_43.cpp) · [notes](docs/progress/day-43-reflection.md) |
+| 44 | Tabular Data Analysis | 🟡 | A *bike-share trip analysis*. A month of trips is loaded into a small column-oriented table – the same idea as a pandas DataFrame – then filtered, extended with a derived speed column, grouped by station and summarised with count, mean, median and standard deviation. | [code](src/day_44_tabular_data/lesson.hpp) · [tests](tests/test_day_44.cpp) · [notes](docs/progress/day-44-reflection.md) |
+| 45 | STL Algorithms | 🟡 | An *e-sports league table*. Season results are turned into points, players under the minimum number of matches are filtered out, disqualified players are removed, the table is sorted with proper tie-breakers and split into promotion and relegation zones – each step one standard algorithm instead of a hand-written loop. | [code](src/day_45_stl_algorithms/lesson.hpp) · [tests](tests/test_day_45.cpp) · [notes](docs/progress/day-45-reflection.md) |
+| 46 | Variadic Templates | 🟡 | A *structured logging and metrics helper for a game server*. One `log` call takes any number of key/value pairs of any types, a `sum_all` adds whatever numbers it is given, tuples of coordinates are unpacked straight into function calls, and a factory forwards its arguments perfectly to whatever object it creates. | [code](src/day_46_variadic_templates/lesson.hpp) · [tests](tests/test_day_46.cpp) · [notes](docs/progress/day-46-reflection.md) |
+| 47 | Desktop GUI Architecture | 🟡 | A *travel currency converter* desktop app built with Model-View-Presenter. The model knows exchange rates, the view is a thin interface any toolkit (Qt, wxWidgets, a console) can implement, and the presenter holds every UI rule – so the whole app is tested headlessly with a fake view, no window needed. | [code](src/day_47_gui_architecture/lesson.hpp) · [tests](tests/test_day_47.cpp) · [notes](docs/progress/day-47-reflection.md) |
+| 48 | Static vs Dynamic Typing | 🟡 | A *spreadsheet cell engine*. A cell may hold nothing, a number, text, a boolean or an error – decided at run time from what the user typed – yet every operation on cells is checked at compile time through std::variant and std::visit. Units are given their own types so metres and feet can never be added by accident, and a plugin metadata bag shows where std::any fits. | [code](src/day_48_static_dynamic_typing/lesson.hpp) · [tests](tests/test_day_48.cpp) · [notes](docs/progress/day-48-reflection.md) |
 | 49 | Advanced Error Handling | 🟡 | _planned_ | – |
 | 50 | Exception Safety & RAII | 🟡 | _planned_ | – |
 | 51 | Working with JSON | 🟡 | _planned_ | – |

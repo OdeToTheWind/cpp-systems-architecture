@@ -1,0 +1,37 @@
+{
+  "day": 47,
+  "mcq": [
+    {
+      "question": "In Model-View-Presenter, which part decides whether the Convert button is enabled?",
+      "options": {
+        "A": "The presenter",
+        "B": "The view",
+        "C": "The model",
+        "D": "The GUI toolkit's event loop"
+      },
+      "answer": "A",
+      "explanation": "The view only displays what it is told and forwards events. The presenter holds the UI rules, which is why it can be tested without any widgets."
+    },
+    {
+      "question": "What makes it possible to test the converter without opening a window?",
+      "options": {
+        "A": "The tests run the GUI in a hidden window",
+        "B": "The presenter depends only on the `ConverterView` interface, so tests can pass a fake view",
+        "C": "The model contains all the UI logic",
+        "D": "Qt provides a headless mode that the tests use"
+      },
+      "answer": "B",
+      "explanation": "Depending on an interface instead of concrete widgets lets the tests substitute a fake that records what the presenter asked it to show."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "MVP, MVVM and MVC divide responsibilities differently. Which one fits a toolkit with data binding, such as Qt Quick, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an 'Swap currencies' button in the presenter (`on_swap_clicked`) using the fake view, then add the method to the view interface and presenter."
+    }
+  ]
+}

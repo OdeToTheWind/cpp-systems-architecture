@@ -1,0 +1,37 @@
+{
+  "day": 41,
+  "mcq": [
+    {
+      "question": "Which open mode keeps the existing contents of a log file and adds new lines at the end?",
+      "options": {
+        "A": "`std::ios::app`",
+        "B": "`std::ios::trunc`",
+        "C": "`std::ios::ate` alone, for every write",
+        "D": "`std::ios::binary`"
+      },
+      "answer": "A",
+      "explanation": "With `app`, every write is appended regardless of the current position. `trunc` empties the file on open, and `ate` only positions the stream at the end once, at open time."
+    },
+    {
+      "question": "Why are telemetry samples written field by field instead of with `out.write(reinterpret_cast<const char*>(&sample), sizeof sample)`?",
+      "options": {
+        "A": "`write` cannot handle integers",
+        "B": "Dumping the struct copies padding bytes and the machine's own byte order, so the file is not portable",
+        "C": "Writing field by field makes the file smaller only on Windows",
+        "D": "`reinterpret_cast` is not allowed with `std::ofstream`"
+      },
+      "answer": "B",
+      "explanation": "A struct's memory layout includes compiler-chosen padding and native endianness. Writing each field in a fixed byte order produces the same file on every platform."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Text logs are easy to read; binary files are compact and fast. For a flight recorder, which data belongs in which format, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for a `rotate_log(path, max_bytes)` function that renames the log to `.1` once it grows past a limit, then implement it with std::filesystem."
+    }
+  ]
+}

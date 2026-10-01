@@ -1,0 +1,37 @@
+{
+  "day": 45,
+  "mcq": [
+    {
+      "question": "What does `std::remove_if` do to a vector on its own?",
+      "options": {
+        "A": "Erases the matching elements and shrinks the vector",
+        "B": "Sorts the matching elements to the back",
+        "C": "Throws if no element matches",
+        "D": "Moves the elements to keep to the front and returns an iterator to the new logical end; the size does not change"
+      },
+      "answer": "D",
+      "explanation": "Algorithms cannot change a container's size. `remove_if` compacts the survivors, and `erase(new_end, end())` removes the leftovers – or C++20 `std::erase_if` does both."
+    },
+    {
+      "question": "Which tool sorts by points descending and then by name ascending most concisely?",
+      "options": {
+        "A": "Calling `std::sort` twice, by name and then by points, with plain `std::sort`",
+        "B": "Using `std::max_element` in a loop",
+        "C": "Comparing `std::tuple(-points, name)` values inside the `std::sort` comparator",
+        "D": "Using `std::partition` on the points"
+      },
+      "answer": "C",
+      "explanation": "Tuples compare lexicographically, so one comparison expresses every tie-breaker. Sorting twice only works with a stable sort for the second pass."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "C++20 ranges let you write `std::ranges::sort(table, {}, &Record::points)`. When do projections make a comparator unnecessary, and when do you still need one?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `relegation_zone(ranked, points)` that moves players below a threshold to the end while keeping their order, then implement it."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 42,
+  "mcq": [
+    {
+      "question": "Why does `Sandbox::resolve` reject `inbox/../../etc`?",
+      "options": {
+        "A": "Because paths may not contain more than one `..`",
+        "B": "Because `/etc` does not exist on Windows",
+        "C": "After normalisation the path is outside the sandbox root, so its relative path starts with `..`",
+        "D": "Because recursive_directory_iterator cannot list it"
+      },
+      "answer": "C",
+      "explanation": "`lexically_normal` collapses the `..` components, and `lexically_relative(root)` then begins with `..` for any path that leaves the root. Refusing those paths keeps the tool inside its folder."
+    },
+    {
+      "question": "Two files called `IMG_1.jpg` arrive from different cameras. What does `plan_ingest` do?",
+      "options": {
+        "A": "Keeps the first name and gives the next one a numeric suffix such as `IMG_1_1.jpg`",
+        "B": "Overwrites the first with the second",
+        "C": "Skips the second file silently",
+        "D": "Stops the whole ingest with an error"
+      },
+      "answer": "A",
+      "explanation": "The planner tracks every destination already taken, including files already in the library, and adds a suffix until the name is free, so no photo is ever lost."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "A dry run shows the plan before anything moves. Which other destructive tools you use offer this, and what makes a dry run trustworthy?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for an `undo(plan)` function that moves every file back to where it came from, then implement it on top of `apply_plan`."
+    }
+  ]
+}

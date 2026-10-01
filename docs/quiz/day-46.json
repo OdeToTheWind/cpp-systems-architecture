@@ -1,0 +1,37 @@
+{
+  "day": 46,
+  "mcq": [
+    {
+      "question": "What is the value of `sum_all()` with no arguments, given `return (0 + ... + values);`?",
+      "options": {
+        "A": "A compile error, because the pack is empty",
+        "B": "Undefined behaviour",
+        "C": "0, because the binary fold starts from the initial value",
+        "D": "1"
+      },
+      "answer": "C",
+      "explanation": "A binary fold with an initial value expands to just that value for an empty pack. A unary fold over `+` with an empty pack would not compile."
+    },
+    {
+      "question": "Why does `make_tracked` use `std::forward<Args>(args)...` rather than passing `args...` directly?",
+      "options": {
+        "A": "Because parameter packs cannot be expanded without it",
+        "B": "To convert every argument to a `std::string`",
+        "C": "To make the call `constexpr`",
+        "D": "Inside the function every named parameter is an lvalue; `std::forward` restores rvalue-ness so temporaries can be moved"
+      },
+      "answer": "D",
+      "explanation": "A forwarding reference remembers whether the caller passed an lvalue or an rvalue. `std::forward` uses that to forward each argument with its original value category."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Variadic templates generate a new function for every distinct argument list. When can that cause code bloat, and how would you limit it?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test for `all_positive(values...)` built from a fold over `&&`, including the empty case, then implement it."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "day": 43,
+  "mcq": [
+    {
+      "question": "How is the field `Dwayne \"The Rock\" J` written in a CSV file?",
+      "options": {
+        "A": "`Dwayne \\\"The Rock\\\" J`",
+        "B": "`'Dwayne \"The Rock\" J'`",
+        "C": "`Dwayne \"The Rock\" J` without any quoting",
+        "D": "`\"Dwayne \"\"The Rock\"\" J\"`"
+      },
+      "answer": "D",
+      "explanation": "RFC 4180 encloses the field in double quotes and represents each literal quote inside it as two quotes. Backslash escapes are not part of the CSV standard."
+    },
+    {
+      "question": "Why can't a CSV reader simply call `std::getline` once per record?",
+      "options": {
+        "A": "`std::getline` cannot read commas",
+        "B": "CSV files never use newline characters",
+        "C": "Each field must be read with a separate `>>`",
+        "D": "A quoted field may contain a line break, so one record can span several lines"
+      },
+      "answer": "D",
+      "explanation": "Inside quotes, line breaks are part of the data. The reader must keep reading lines until the quote is closed before the record is complete."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should an importer stop at the first bad row or report all of them? How does the answer change for a bank transfer file compared with a fun-run registration list?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a failing test showing that a semicolon-separated export (common in Europe) can be imported, then add a delimiter parameter to `read_record`."
+    }
+  ]
+}

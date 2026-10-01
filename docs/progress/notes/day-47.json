@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-29",
+  "learnings": [
+    "Model-View-Presenter puts data in the model, keeps the view passive, and gives every UI rule to the presenter, which knows no widgets.",
+    "Because the view is an interface, a fake view in the tests can record what the presenter asked it to show – the whole UI logic is tested headlessly.",
+    "A Qt, wxWidgets or console front end only has to implement the view interface; the presenter and model do not change.",
+    "Validating input on every change (enabling or disabling the Convert button) gives immediate feedback without dialogs."
+  ],
+  "pitfalls": [
+    "The first version parsed the amount inside a button-click handler tied to a widget class, so nothing could be tested without a window.",
+    "Amounts with thousands separators such as `1,250.00` were rejected until `parse_amount` learned to ignore them.",
+    "Yen amounts were shown with cents; the presenter now formats JPY without decimals."
+  ],
+  "next": "Day 48 compares compile-time and run-time typing in one spreadsheet engine."
+}

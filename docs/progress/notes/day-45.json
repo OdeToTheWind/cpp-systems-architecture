@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-27",
+  "learnings": [
+    "`std::transform`, `std::copy_if` and `std::accumulate` name *what* a loop does, which makes intent obvious and off-by-one errors impossible.",
+    "`std::remove_if` only moves the kept elements forward; `erase` must cut off the tail – or use C++20 `std::erase_if` directly.",
+    "Comparing `std::tuple`s gives a lexicographic multi-key ordering for free; negating numbers turns ascending into descending.",
+    "`std::stable_partition` splits a range by a predicate while keeping the relative order inside each part."
+  ],
+  "pitfalls": [
+    "Calling `remove_if` without `erase` left the vector the same size with leftover elements at the end.",
+    "Players tied on points were ordered differently on each run with a custom comparator that ignored names; the name is now the final tie-breaker.",
+    "`std::partition` scrambled the ranking inside the promotion zone; `std::stable_partition` keeps it."
+  ],
+  "next": "Day 46 writes functions that accept any number of arguments of any type."
+}
