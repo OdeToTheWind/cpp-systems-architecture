@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-27",
+  "learnings": [
+    "A function becomes a coroutine when it uses co_yield, co_await or co_return; its return type's promise_type controls how it behaves.",
+    "initial_suspend returning suspend_always makes a coroutine lazy – nothing runs until it is resumed.",
+    "A generator turns co_yield into a range-for: each ++ resumes the coroutine to its next yield, so infinite sequences are fine.",
+    "An awaitable's await_suspend receives the paused coroutine's handle, so an event loop can resume it later."
+  ],
+  "pitfalls": [
+    "A generator that took its text by const reference read a destroyed temporary; coroutine parameters are now taken by value.",
+    "Forgetting to destroy the coroutine handle leaked the frame; the owning types destroy it in their destructors.",
+    "Resuming waiters while iterating the map broke when a scene waited again for the same event; the list is now moved out first."
+  ],
+  "next": "Day 76 goes below mutexes to atomics and memory ordering."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 76,
+  "mcq": [
+    {
+      "question": "Which memory order is enough for a request counter that is only read for a dashboard?",
+      "options": {
+        "A": "`memory_order_relaxed`",
+        "B": "`memory_order_seq_cst` is required",
+        "C": "`memory_order_acquire` on every increment",
+        "D": "No atomic is needed"
+      },
+      "answer": "A",
+      "explanation": "Each increment stays atomic. The counter does not publish other data, so no ordering is needed."
+    },
+    {
+      "question": "Why is the `ready_` flag stored with `memory_order_release` in `Mailbox::publish`?",
+      "options": {
+        "A": "To make the store faster",
+        "B": "To lock the config",
+        "C": "So a reader that loads it with acquire also sees the config written before it",
+        "D": "Release is the only order that compiles for bool"
+      },
+      "answer": "C",
+      "explanation": "Release/acquire creates a happens-before edge. Relaxed would not order the plain write."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Lock-free code is hard to get right. How would you convince yourself (and a reviewer) that an atomic design is correct?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Replace the `SpinLock` in a test with a `std::mutex` and compare their timings under 1, 2 and 8 threads."
+    }
+  ]
+}

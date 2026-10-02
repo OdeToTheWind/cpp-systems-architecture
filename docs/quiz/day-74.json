@@ -1,0 +1,37 @@
+{
+  "day": 74,
+  "mcq": [
+    {
+      "question": "A task submitted to the pool throws `std::invalid_argument`. Where does the exception appear?",
+      "options": {
+        "A": "It terminates the worker thread",
+        "B": "When the caller calls `get()` on the task's future",
+        "C": "It is printed and discarded",
+        "D": "It is thrown from `submit()`"
+      },
+      "answer": "B",
+      "explanation": "`packaged_task` stores the exception in the shared state, and `future::get()` rethrows it."
+    },
+    {
+      "question": "Why does the pool's destructor set `stopping_` and join the workers?",
+      "options": {
+        "A": "To cancel every queued task",
+        "B": "To detach the workers safely",
+        "C": "Because futures need the pool to be destroyed",
+        "D": "So queued tasks finish and no worker outlives the pool"
+      },
+      "answer": "D",
+      "explanation": "Workers drain the queue and exit when it is empty and `stopping_` is set. join() waits for them."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`std::async` with the default launch policy may run the task lazily on the calling thread. When could that surprise you?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `wait_idle()` method to `ThreadPool` that blocks until the queue is empty and no task is running."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-26",
+  "learnings": [
+    "std::async runs a function on another thread and returns a future; get() waits for the result.",
+    "A promise is the writing end of a future: one thread sets a value or an exception, another receives it.",
+    "Exceptions thrown inside a task are stored in its future and rethrown by get(), so errors are not lost between threads.",
+    "A fixed-size thread pool with a task queue bounds the number of threads however many tasks arrive."
+  ],
+  "pitfalls": [
+    "Calling get() inside the loop that launched each std::async made the work sequential; the futures are now collected first.",
+    "`std::function` cannot hold a move-only `packaged_task`, so the pool wraps it in a shared_ptr.",
+    "Running a task while holding the queue mutex serialised the pool; tasks now run after the lock is released."
+  ],
+  "next": "Day 75 writes code that pauses and resumes itself: coroutines."
+}

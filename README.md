@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 72 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 548 `TEST_CASE`s across 72 test executables.
-- **Deliverables mapped to code:** 398 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 12,868 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 144 multiple-choice questions with explanations, plus 144 open bonus questions (72 hands-on, test-first tasks).
+- **Curriculum completion:** 76 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 576 `TEST_CASE`s across 76 test executables.
+- **Deliverables mapped to code:** 418 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 13,598 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 152 multiple-choice questions with explanations, plus 152 open bonus questions (76 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -94,10 +94,10 @@
 | 70 | Compile-time Programming | 🟠 | The telemetry firmware of a *soil-moisture sensor board*. Packets are sent over a slow radio link, so the CRC lookup table is computed by the compiler instead of at boot, configuration constants are validated at compile time, and one serialise function handles every field type, choosing its encoding with type traits and `if constexpr`. | [code](src/day_70_compile_time/lesson.hpp) · [tests](tests/test_day_70.cpp) · [notes](docs/progress/day-70-reflection.md) |
 | 71 | Functional Tools | 🟠 | The *pricing rules engine* of an online shop. Discounts, taxes and rounding are small functions that marketing can combine per campaign: rules are lambdas that capture their settings, pipelines are built by composing functions, member pointers are called through std::invoke, regional tax uses std::bind_front, and an expensive shipping-rate lookup is memoised. | [code](src/day_71_functional/lesson.hpp) · [tests](tests/test_day_71.cpp) · [notes](docs/progress/day-71-reflection.md) |
 | 72 | Design Patterns | 🟠 | A *note-taking editor*. Notes are lists of lines that can be exported as plain text, Markdown or HTML (strategy), with exporters created by name from a registry (factory), extra behaviour such as line numbers or a word-count footer stacked on top (decorator), and every edit recorded as an object that can be undone and redone (command). | [code](src/day_72_design_patterns/lesson.hpp) · [tests](tests/test_day_72.cpp) · [notes](docs/progress/day-72-reflection.md) |
-| 73 | Concurrency: Threads & Mutexes | 🟠 | _planned_ | – |
-| 74 | Concurrency: Futures & Thread Pools | 🟠 | _planned_ | – |
-| 75 | Coroutines | 🟠 | _planned_ | – |
-| 76 | Atomics & Memory Order | 🟠 | _planned_ | – |
+| 73 | Concurrency: Threads & Mutexes | 🟠 | A *print shop's job server*. Several front desks submit print jobs into a bounded queue, several printers take jobs from it, and the shop counts pages per printer. The queue blocks producers when it is full and consumers when it is empty – a classic producer-consumer design built from std::thread, std::mutex and std::condition_variable. | [code](src/day_73_threads/lesson.hpp) · [tests](tests/test_day_73.cpp) · [notes](docs/progress/day-73-reflection.md) |
+| 74 | Concurrency: Futures & Thread Pools | 🟠 | The *thumbnail service* of a photo-sharing site. Every upload needs several thumbnails and a checksum; the work is independent per image, so it runs in parallel. Results and errors travel back through futures, and a fixed-size thread pool keeps a burst of uploads from starting hundreds of threads. | [code](src/day_74_futures_thread_pools/lesson.hpp) · [tests](tests/test_day_74.cpp) · [notes](docs/progress/day-74-reflection.md) |
+| 75 | Coroutines | 🟠 | The scripting layer of a *story-driven game*. Level designers want to write a cutscene top to bottom – "say this, wait until the player orders, say that" – instead of splitting it into callbacks. Coroutines make that possible: generators produce lazy sequences (dialogue lines, an endless ID stream) and awaitable scenes pause until a game event resumes them. | [code](src/day_75_coroutines/lesson.hpp) · [tests](tests/test_day_75.cpp) · [notes](docs/progress/day-75-reflection.md) |
+| 76 | Atomics & Memory Order | 🟠 | The *live metrics* of a busy web server. Every request thread bumps counters and records its latency; a dashboard thread reads them. Taking a mutex on every request would make the metrics the bottleneck, so they use atomics: relaxed counters, a compare-exchange loop for the slowest request, a spin lock, and a release/acquire handshake that publishes a config snapshot safely. | [code](src/day_76_atomics/lesson.hpp) · [tests](tests/test_day_76.cpp) · [notes](docs/progress/day-76-reflection.md) |
 | 77 | Logging & Configuration | 🟠 | _planned_ | – |
 | 78 | Unit Testing & Test Doubles | 🟠 | _planned_ | – |
 | 79 | Build Systems & Packaging | 🟠 | _planned_ | – |

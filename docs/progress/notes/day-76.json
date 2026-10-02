@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-28",
+  "learnings": [
+    "std::atomic makes single operations indivisible; fetch_add on a counter needs no mutex.",
+    "compare_exchange_weak in a loop implements any read-modify-write, such as \"raise to the maximum\".",
+    "memory_order_relaxed is enough for independent counters; a release store paired with an acquire load also publishes the data written before it.",
+    "atomic_flag with acquire/release is enough to build a spin lock that works with lock_guard."
+  ],
+  "pitfalls": [
+    "Publishing a config with a relaxed flag store let a reader see the flag before the data; the store is now release and the load acquire.",
+    "compare_exchange_weak can fail spuriously, so it is always used in a loop.",
+    "A spin lock burned a whole core under contention; it now yields while waiting and is used only for tiny critical sections."
+  ],
+  "next": "Day 77 adds structured logging and configuration."
+}

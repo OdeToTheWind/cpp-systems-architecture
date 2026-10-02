@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-25",
+  "learnings": [
+    "std::thread starts running at once and must be joined (or detached) before it is destroyed, or the program terminates.",
+    "Shared data needs a mutex; lock_guard and scoped_lock unlock automatically, even when an exception is thrown.",
+    "A condition variable lets a thread sleep until another thread changes the state; the wait predicate handles spurious wake-ups.",
+    "Giving each thread private data and merging once at the end avoids most locking."
+  ],
+  "pitfalls": [
+    "Two transfers in opposite directions locked their mutexes in opposite orders and deadlocked; std::scoped_lock locks both safely.",
+    "Consumers waited forever after the producers finished until the queue gained close() and notify_all().",
+    "Tests that expected a particular thread order were flaky; tests now check totals and invariants that hold for every interleaving."
+  ],
+  "next": "Day 74 gets results back from threads with futures and a thread pool."
+}

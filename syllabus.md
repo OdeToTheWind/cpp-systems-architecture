@@ -129,10 +129,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 70 | Compile-time Programming | constexpr and consteval functions, static_assert, type traits, if constexpr | Advanced | Covered |
 | 71 | Functional Tools | Lambdas and captures, std::invoke, std::bind_front, higher-order functions, memoisation | Advanced | Covered |
 | 72 | Design Patterns | Strategy, factory, decorator and command patterns in modern C++ | Advanced | Covered |
-| 73 | Concurrency: Threads & Mutexes | std::thread, mutex and lock_guard, condition variables, producer-consumer queues | Advanced | Planned |
-| 74 | Concurrency: Futures & Thread Pools | std::async, promises and futures, exception propagation, a fixed-size thread pool | Advanced | Planned |
-| 75 | Coroutines | co_yield generators, co_await basics, promise types, lazy sequences | Advanced | Planned |
-| 76 | Atomics & Memory Order | std::atomic, compare-exchange, memory ordering, lock-free counters and flags | Advanced | Planned |
+| 73 | Concurrency: Threads & Mutexes | std::thread, mutex and lock_guard, condition variables, producer-consumer queues | Advanced | Covered |
+| 74 | Concurrency: Futures & Thread Pools | std::async, promises and futures, exception propagation, a fixed-size thread pool | Advanced | Covered |
+| 75 | Coroutines | co_yield generators, co_await basics, promise types, lazy sequences | Advanced | Covered |
+| 76 | Atomics & Memory Order | std::atomic, compare-exchange, memory ordering, lock-free counters and flags | Advanced | Covered |
 | 77 | Logging & Configuration | Log levels, formatters and sinks, INI-style configuration, environment overrides | Advanced | Planned |
 | 78 | Unit Testing & Test Doubles | Test fixtures, table-driven tests, fakes, stubs and mocks, dependency injection | Advanced | Planned |
 | 79 | Build Systems & Packaging | CMake targets and usage requirements, install and export rules, versioning, CPack | Advanced | Planned |

@@ -1,0 +1,37 @@
+{
+  "day": 73,
+  "mcq": [
+    {
+      "question": "What happens if a `std::thread` object is destroyed while it is still joinable?",
+      "options": {
+        "A": "The thread is detached automatically",
+        "B": "The destructor waits for the thread",
+        "C": "`std::terminate` is called",
+        "D": "The thread is cancelled"
+      },
+      "answer": "C",
+      "explanation": "You must call `join()` or `detach()` first. (C++20 `std::jthread` joins automatically.)"
+    },
+    {
+      "question": "Why does `not_empty_.wait(lock, predicate)` take a predicate?",
+      "options": {
+        "A": "To lock the mutex",
+        "B": "To make waiting faster",
+        "C": "To choose which thread wakes",
+        "D": "To re-check the condition after spurious or stale wake-ups"
+      },
+      "answer": "D",
+      "explanation": "A wake-up does not guarantee the condition holds. The predicate loops until it really does."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When would you choose a mutex-protected queue over a lock-free one in production?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `try_pop_for(std::chrono::milliseconds)` to `BoundedQueue` using `wait_for`, and test that it times out on an empty queue."
+    }
+  ]
+}
