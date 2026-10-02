@@ -154,10 +154,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 88 | Automated Report Generator | Aggregation with exact integer money, templated HTML, CSV export, escaping | Capstone | Covered |
 | 89 | Background Task Scheduler | Schedule specifications, an injectable clock, timeouts, no overlapping runs | Capstone | Covered |
 | 90 | Memory-efficient Large File Processor | Streaming in fixed-size chunks, line reassembly, external merge sort | Capstone | Covered |
-| 91 | Type-safe Configuration System | Typed settings, parsing and validation from environment variables, collecting every error, secret redaction | Capstone | Planned |
-| 92 | Test Suite for a Multi-module Library | Separate model, repository, notifier and service modules, fakes and a fixed clock, business-rule tests | Capstone | Planned |
-| 93 | Network Service Core | A line protocol, per-connection sessions, broadcasting, a transport-independent server core | Capstone | Planned |
-| 94 | Data Validation & Cleaning Library | Composable validators, error paths, normalising messy input, custom exceptions | Capstone | Planned |
+| 91 | Type-safe Configuration System | Typed settings, parsing and validation from environment variables, collecting every error, secret redaction | Capstone | Covered |
+| 92 | Test Suite for a Multi-module Library | Separate model, repository, notifier and service modules, fakes and a fixed clock, business-rule tests | Capstone | Covered |
+| 93 | Network Service Core | A line protocol, per-connection sessions, broadcasting, a transport-independent server core | Capstone | Covered |
+| 94 | Data Validation & Cleaning Library | Composable validators, error paths, normalising messy input, custom exceptions | Capstone | Covered |
 | 95 | Performance-critical Module | Naive vs spatial-index nearest-neighbour search, benchmarks, cross-checked results | Capstone | Planned |
 | 96 | Packaging a Real Tool | Single-sourced versions, generated usage docs, changelogs, release pre-flight checks | Capstone | Planned |
 | 97 | Automation Bot Suite | Combining scraping, APIs, scheduling and notifications with deduplication and retries | Capstone | Planned |

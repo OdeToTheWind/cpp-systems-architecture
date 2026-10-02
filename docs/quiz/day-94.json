@@ -1,0 +1,37 @@
+{
+  "day": 94,
+  "mcq": [
+    {
+      "question": "Which path does the validator report for a bad e-mail in the second attendee?",
+      "options": {
+        "A": "`attendees.email`",
+        "B": "`email`",
+        "C": "`attendees[2].email`",
+        "D": "`attendees[1].email`"
+      },
+      "answer": "D",
+      "explanation": "Object fields add `.name` and list items add `[index]`, counting from 0."
+    },
+    {
+      "question": "What does `all_of({integer(0, 100), check(...)})` pass to `check`?",
+      "options": {
+        "A": "The normalised number produced by `integer`",
+        "B": "The original text",
+        "C": "Nothing; the two run independently",
+        "D": "A list of both results"
+      },
+      "answer": "A",
+      "explanation": "Steps run in order, each on the previous one's output, and stop at the first failure."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should validation also be done in the browser? Why must the server validate anyway?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `date()` validator that accepts YYYY-MM-DD, rejects impossible dates, and use it for an `event_date` field."
+    }
+  ]
+}

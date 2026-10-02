@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-12",
+  "learnings": [
+    "A schema that binds each environment variable to a typed struct member, with a parser, a default and help text, replaces scattered getenv calls.",
+    "Pointers to members (`T Config::*`) let one generic loader write into any field of any config struct.",
+    "Collecting every problem before failing means an operator fixes a deployment in one attempt, not five.",
+    "The same schema prints a redacted description for logs and a documented .env.example for operators."
+  ],
+  "pitfalls": [
+    "The first loader stopped at the first bad variable, so fixing one error revealed the next only on the following deploy.",
+    "A typo such as DISPATCH_REGION was silently ignored; unknown variables with the prefix are now reported.",
+    "An error message echoed the rejected API key; secret fields never include their value in messages."
+  ],
+  "next": "Day 92 splits a real library into modules with a full test suite."
+}

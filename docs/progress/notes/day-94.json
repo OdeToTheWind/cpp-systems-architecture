@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-15",
+  "learnings": [
+    "Small validators (text, integer, e-mail, one-of) compose into schemas for whole nested payloads.",
+    "Each validator returns a normalised value, so the rest of the system receives trimmed, lower-cased, typed data.",
+    "Paths such as attendees[1].email tell an API client exactly which field to fix.",
+    "Objects keep validating after the first bad field, so all problems are reported at once; unknown fields are rejected."
+  ],
+  "pitfalls": [
+    "all_of ran a custom check on an unparsed string and crashed; each step now receives the previous step's normalised output, and stops at the first failure.",
+    "\"2.5\" was accepted as a whole number until fractional values were rejected explicitly.",
+    "Silently dropping unknown fields hid client typos such as 'emial'; they are now errors."
+  ],
+  "next": "Day 95 compares a naive algorithm with a spatial index."
+}

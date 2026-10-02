@@ -1,0 +1,37 @@
+{
+  "day": 91,
+  "mcq": [
+    {
+      "question": "Why does `Schema::load` collect every problem before throwing?",
+      "options": {
+        "A": "Exceptions cannot be thrown inside loops",
+        "B": "So an operator can fix all configuration errors in one deployment",
+        "C": "It makes loading faster",
+        "D": "The first error is usually wrong"
+      },
+      "answer": "B",
+      "explanation": "Reporting one error at a time turns a five-typo config into five failed deployments."
+    },
+    {
+      "question": "What does `int DispatchConfig::*member` hold?",
+      "options": {
+        "A": "A pointer to a global int",
+        "B": "Which int member of DispatchConfig to use, so `config.*member` reads or writes it",
+        "C": "A copy of the member's value",
+        "D": "The member's byte size"
+      },
+      "answer": "B",
+      "explanation": "A pointer to member names a field of the class. It is combined with an object via `.*` or `->*`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a service refuse to start when it sees an unknown variable with its prefix, or only warn?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `DISPATCH_MAX_DISTANCE_KM` field that accepts a decimal number between 0.5 and 50 and test its errors."
+    }
+  ]
+}

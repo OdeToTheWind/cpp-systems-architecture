@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-13",
+  "learnings": [
+    "Modules with one-way dependencies – model, then ports, then service – keep the rules independent of storage and e-mail.",
+    "Ports are interfaces; the in-memory repository, recording notifier and fixed clock are fakes that make every rule testable.",
+    "Storing dates as day numbers turns due dates and fines into integer arithmetic; conversion to the calendar happens only for display.",
+    "A suite organised by module (model, ports, service) shows at a glance what is covered."
+  ],
+  "pitfalls": [
+    "A free copy was lent to a walk-in while someone was waiting for it; copies are now held for the reservation queue in order.",
+    "Renewals extended from today instead of from the due date, which rewarded late renewals.",
+    "Notifications first went out before the loan was removed, so the reader was told about a book still on loan."
+  ],
+  "next": "Day 93 builds the core of a network service."
+}

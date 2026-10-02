@@ -1,0 +1,37 @@
+{
+  "day": 92,
+  "mcq": [
+    {
+      "question": "Why does `LendingService` depend on `Repository`, `Notifier` and `Clock` interfaces?",
+      "options": {
+        "A": "Interfaces make the code run faster",
+        "B": "So tests can use fakes and the rules never depend on a database, SMTP or the real date",
+        "C": "C++ requires interfaces for classes with methods",
+        "D": "To allow multiple inheritance"
+      },
+      "answer": "B",
+      "explanation": "The service is written against ports. Production and tests plug in different implementations."
+    },
+    {
+      "question": "A book with one copy is returned while Ben has reserved it. Can Ana, who walks in, borrow it?",
+      "options": {
+        "A": "Yes, whoever comes first gets it",
+        "B": "No, the copy is held for Ben, who is first in the queue",
+        "C": "Yes, but Ben is notified to cancel",
+        "D": "Only if Ana pays a fee"
+      },
+      "answer": "B",
+      "explanation": "Free copies are held for earlier reservations, in queue order."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Where would you draw module boundaries if this library also had a web front end and a mobile app?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `cancel_reservation(member, isbn)` with tests, including the case where the cancelled member was first and a copy is free."
+    }
+  ]
+}

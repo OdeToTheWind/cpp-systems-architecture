@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 90 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 674 `TEST_CASE`s across 90 test executables.
-- **Deliverables mapped to code:** 490 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 16,787 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 180 multiple-choice questions with explanations, plus 180 open bonus questions (90 hands-on, test-first tasks).
+- **Curriculum completion:** 94 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 702 `TEST_CASE`s across 94 test executables.
+- **Deliverables mapped to code:** 510 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 17,877 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 188 multiple-choice questions with explanations, plus 188 open bonus questions (94 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -112,10 +112,10 @@
 | 88 | Automated Report Generator | 🔴 | The *monthly billing report of a freelance design studio*. Logged hours become one report per month: amounts are integer cents (never floating point), VAT is rounded once per invoice line by a documented rule, and the same data is rendered as an HTML page through a small template engine and as a CSV for the accountant – both safely escaped. | [code](src/day_88_reports/lesson.hpp) · [tests](tests/test_day_88.cpp) · [notes](docs/progress/day-88-reflection.md) |
 | 89 | Background Task Scheduler | 🔴 | The *maintenance scheduler of a SaaS back end*: refresh caches every 15 minutes, send usage reports hourly at :05, back up the database daily at 02:30. Schedules are written as short specs, time comes from an injectable clock so a whole week can be simulated in milliseconds, a job that runs too long is cut off by its timeout, and a job never overlaps with itself. | [code](src/day_89_scheduler/lesson.hpp) · [tests](tests/test_day_89.cpp) · [notes](docs/progress/day-89-reflection.md) |
 | 90 | Memory-efficient Large File Processor | 🔴 | A *web-server access log* far larger than the memory of the machine that must analyse it. The file is read in fixed-size chunks, lines that straddle chunk boundaries are reassembled, statistics are computed in one streaming pass, and the log is sorted by response time with an external merge sort: sorted runs that fit in memory are written to temporary files and then merged with a priority queue. | [code](src/day_90_large_files/lesson.hpp) · [tests](tests/test_day_90.cpp) · [notes](docs/progress/day-90-reflection.md) |
-| 91 | Type-safe Configuration System | 🔴 | _planned_ | – |
-| 92 | Test Suite for a Multi-module Library | 🔴 | _planned_ | – |
-| 93 | Network Service Core | 🔴 | _planned_ | – |
-| 94 | Data Validation & Cleaning Library | 🔴 | _planned_ | – |
+| 91 | Type-safe Configuration System | 🔴 | The settings of a *food-delivery dispatch service*, read from environment variables in every deployment. Instead of scattered getenv calls and string-to-int conversions, one schema binds each variable to a typed struct member with a parser, a default and documentation. Loading reports *all* problems at once, secrets never appear in logs, and the schema can print its own .env.example. | [code](src/day_91_typed_config/lesson.hpp) · [tests](tests/test_day_91.cpp) · [notes](docs/progress/day-91-reflection.md) |
+| 92 | Test Suite for a Multi-module Library | 🔴 | The *lending system of a community library*. The code is split into modules with one-way dependencies – model (plain data) <- ports (interfaces plus in-memory doubles) <- service (the rules) – each compiled separately. The test suite exercises each module on its own and the service through fakes and a fixed clock: borrowing, limits, renewals, reservation queues, fines and notifications. | [code](src/day_92_library_system/lesson.hpp) · [tests](tests/test_day_92.cpp) · [notes](docs/progress/day-92-reflection.md) |
+| 93 | Network Service Core | 🔴 | The *chat service behind a help-desk tool*: agents connect, pick a nickname, join rooms such as #billing, and messages are broadcast to everyone in the room. The core knows nothing about sockets – it receives bytes and connection events and emits text through an outbox interface – so the same code can sit behind TCP, WebSockets or a unit test. | [code](src/day_93_network_service/lesson.hpp) · [tests](tests/test_day_93.cpp) · [notes](docs/progress/day-93-reflection.md) |
+| 94 | Data Validation & Cleaning Library | 🔴 | The *order API of an event-ticketing site*. A request contains a buyer and a list of attendees. Small validators (string length, e-mail, integer range, one-of) are composed into a schema for the whole nested payload; validation reports *every* problem with a path such as `attendees[1].email`, and returns a normalised copy (trimmed text, lower-cased e-mails, "2" -> 2, defaults filled in) that the rest of the system can trust. | [code](src/day_94_validation/lesson.hpp) · [tests](tests/test_day_94.cpp) · [notes](docs/progress/day-94-reflection.md) |
 | 95 | Performance-critical Module | 🔴 | _planned_ | – |
 | 96 | Packaging a Real Tool | 🔴 | _planned_ | – |
 | 97 | Automation Bot Suite | 🔴 | _planned_ | – |

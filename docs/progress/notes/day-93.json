@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-14",
+  "learnings": [
+    "TCP delivers a byte stream, so a line protocol needs a framer that reassembles lines and limits their length.",
+    "Keeping the core free of sockets – bytes and events in, text out through an Outbox – makes it testable and reusable behind any transport.",
+    "Each connection has a session with its own state (nickname, rooms, framer).",
+    "Broadcasting means iterating sessions in a room and skipping the sender; disconnects must be announced and state dropped."
+  ],
+  "pitfalls": [
+    "A client that never sent a newline made the server buffer forever; lines over the limit are now discarded with a 413 reply.",
+    "Lines after QUIT in the same packet were still processed for a session that no longer existed.",
+    "A rename was not announced to the rooms, so other users saw messages from an unknown name."
+  ],
+  "next": "Day 94 builds a validation library for untrusted input."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 93,
+  "mcq": [
+    {
+      "question": "Why does the server need a `LineFramer` at all?",
+      "options": {
+        "A": "TCP sends one line per packet",
+        "B": "To encrypt messages",
+        "C": "TCP delivers bytes in arbitrary pieces, so lines must be reassembled",
+        "D": "To compress long lines"
+      },
+      "answer": "C",
+      "explanation": "One `recv` may contain half a line or three lines. The framer turns bytes back into messages."
+    },
+    {
+      "question": "What is the benefit of the core writing to an `Outbox` instead of sockets?",
+      "options": {
+        "A": "It is faster than sockets",
+        "B": "It avoids the need for sessions",
+        "C": "Sockets cannot send text",
+        "D": "The same code works behind TCP, WebSockets or a test, and tests need no network"
+      },
+      "answer": "D",
+      "explanation": "Transport independence keeps protocol logic testable and portable."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "How would you add rate limiting so one client cannot flood a room?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `TOPIC <#room> <text>` command that sets a room topic, announces it, and is sent to people when they join."
+    }
+  ]
+}
