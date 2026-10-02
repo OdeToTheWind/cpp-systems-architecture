@@ -64,7 +64,7 @@ jobs:
       # MSBuild interleaves errors with progress output; on failure, list just the errors again.
       - name: Show build errors
         if: failure() && steps.build.outcome == 'failure' && runner.os == 'Windows'
-        run: cmake --build build --config Release -- /v:minimal /clp:ErrorsOnly /nologo || true
+        run: cmake --build build --config Release -- -clp:ErrorsOnly -nologo || true  # dash switches: Git Bash rewrites /x into paths
 
       - name: Test
         run: ctest --test-dir build -C Release --output-on-failure --parallel 4
