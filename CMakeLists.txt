@@ -30,7 +30,8 @@ target_include_directories(cppm_settings INTERFACE
 target_link_libraries(cppm_settings INTERFACE Threads::Threads)
 
 if(MSVC)
-    target_compile_options(cppm_settings INTERFACE /W4 /permissive- /utf-8 /EHsc /Zc:__cplusplus)
+    # /Zc:preprocessor: the standard-conforming preprocessor (the legacy one breaks raw strings in macro arguments)
+    target_compile_options(cppm_settings INTERFACE /W4 /permissive- /utf-8 /EHsc /Zc:__cplusplus /Zc:preprocessor)
     target_compile_definitions(cppm_settings INTERFACE _CRT_SECURE_NO_WARNINGS NOMINMAX)
     if(CPPM_WERROR)
         target_compile_options(cppm_settings INTERFACE /WX)
