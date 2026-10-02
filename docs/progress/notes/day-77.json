@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-29",
+  "learnings": [
+    "Log levels are ordered, so each sink can choose its own threshold: everything to a debug file, only errors to the on-call channel.",
+    "Separating formatters from sinks means any output (console, file, memory) can use any format (text, key=value).",
+    "An INI file with [sections] keeps configuration readable; settings are addressed as section.key.",
+    "Environment variables override file values, so one file works in every environment and secrets stay out of it."
+  ],
+  "pitfalls": [
+    "An inline \"; comment\" after a value became part of the value and broke integer parsing; inline comments now need whitespace before them.",
+    "`std::stoi(\"8x\")` returned 8; typed getters now require the whole value to be used.",
+    "Timestamps made log tests flaky until the clock was injected."
+  ],
+  "next": "Day 78 looks more closely at how to test code with dependencies."
+}

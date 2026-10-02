@@ -1,0 +1,37 @@
+{
+  "day": 78,
+  "mcq": [
+    {
+      "question": "`InMemoryRepository` stores customers in a map instead of a database. What kind of test double is it?",
+      "options": {
+        "A": "A stub",
+        "B": "A mock",
+        "C": "A spy",
+        "D": "A fake"
+      },
+      "answer": "D",
+      "explanation": "A fake really works, just in a simplified way. A stub returns canned answers, and a mock verifies interactions."
+    },
+    {
+      "question": "Why does `LoyaltyService` take a `Clock&` instead of reading the system date?",
+      "options": {
+        "A": "Reading the date is slow",
+        "B": "The system clock is not thread-safe",
+        "C": "References are faster than function calls",
+        "D": "So tests can control the date and check Friday behaviour on any day"
+      },
+      "answer": "D",
+      "explanation": "Injecting dependencies replaces hidden global inputs with ones the test controls."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "What is the cost of too many mocks? When would you rather test against a real database?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `refund(customer, cents)` method that removes points but never below zero, with a table-driven test."
+    }
+  ]
+}

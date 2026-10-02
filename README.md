@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 76 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 576 `TEST_CASE`s across 76 test executables.
-- **Deliverables mapped to code:** 418 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 13,598 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 152 multiple-choice questions with explanations, plus 152 open bonus questions (76 hands-on, test-first tasks).
+- **Curriculum completion:** 82 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 618 `TEST_CASE`s across 82 test executables.
+- **Deliverables mapped to code:** 450 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 14,845 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 164 multiple-choice questions with explanations, plus 164 open bonus questions (82 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -98,12 +98,12 @@
 | 74 | Concurrency: Futures & Thread Pools | 🟠 | The *thumbnail service* of a photo-sharing site. Every upload needs several thumbnails and a checksum; the work is independent per image, so it runs in parallel. Results and errors travel back through futures, and a fixed-size thread pool keeps a burst of uploads from starting hundreds of threads. | [code](src/day_74_futures_thread_pools/lesson.hpp) · [tests](tests/test_day_74.cpp) · [notes](docs/progress/day-74-reflection.md) |
 | 75 | Coroutines | 🟠 | The scripting layer of a *story-driven game*. Level designers want to write a cutscene top to bottom – "say this, wait until the player orders, say that" – instead of splitting it into callbacks. Coroutines make that possible: generators produce lazy sequences (dialogue lines, an endless ID stream) and awaitable scenes pause until a game event resumes them. | [code](src/day_75_coroutines/lesson.hpp) · [tests](tests/test_day_75.cpp) · [notes](docs/progress/day-75-reflection.md) |
 | 76 | Atomics & Memory Order | 🟠 | The *live metrics* of a busy web server. Every request thread bumps counters and records its latency; a dashboard thread reads them. Taking a mutex on every request would make the metrics the bottleneck, so they use atomics: relaxed counters, a compare-exchange loop for the slowest request, a spin lock, and a release/acquire handshake that publishes a config snapshot safely. | [code](src/day_76_atomics/lesson.hpp) · [tests](tests/test_day_76.cpp) · [notes](docs/progress/day-76-reflection.md) |
-| 77 | Logging & Configuration | 🟠 | _planned_ | – |
-| 78 | Unit Testing & Test Doubles | 🟠 | _planned_ | – |
-| 79 | Build Systems & Packaging | 🟠 | _planned_ | – |
-| 80 | Profiling & Performance | 🟠 | _planned_ | – |
-| 81 | Regular Expressions | 🟠 | _planned_ | – |
-| 82 | Building a Storage Engine | 🟠 | _planned_ | – |
+| 77 | Logging & Configuration | 🟠 | A *payment gateway* that must be tuned per environment without recompiling. Settings come from an INI file and can be overridden by environment variables in production; log messages have levels, go through a formatter (human text or key=value for log shippers) and are written to any number of sinks, each with its own minimum level. | [code](src/day_77_logging_config/lesson.hpp) · [tests](tests/test_day_77.cpp) · [notes](docs/progress/day-77-reflection.md) |
+| 78 | Unit Testing & Test Doubles | 🟠 | The *loyalty-points service* of a coffee chain. Awarding points depends on today's date (double points on Fridays), a customer database and an email service – none of which a unit test should touch. The service receives its dependencies through interfaces (dependency injection), so tests swap in a stub clock, a fake in-memory database and a mock mailer that records what it was asked to send. | [code](src/day_78_testing/lesson.hpp) · [tests](tests/test_day_78.cpp) · [notes](docs/progress/day-78-reflection.md) |
+| 79 | Build Systems & Packaging | 🟠 | *shipping an internal library*. Three in-house apps convert units with copy-pasted code; today it becomes "unitconv", a proper CMake package (see unitconv/CMakeLists.txt) with targets and usage requirements, install and export rules, a generated version header and a CPack configuration. This file models the rules the build system applies – semantic-version compatibility, build order, and how PUBLIC/PRIVATE/INTERFACE requirements propagate – so they can be tested, and it uses the real library through its public API. | [code](src/day_79_build_packaging/lesson.hpp) · [tests](tests/test_day_79.cpp) · [notes](docs/progress/day-79-reflection.md) |
+| 80 | Profiling & Performance | 🟠 | The nightly *delivery-route analytics* job of a courier company has grown from minutes to hours. Before changing anything, it gets a benchmark harness that reports medians rather than single noisy runs. Then three classic wins are measured: a better algorithm (duplicate parcel IDs), a better data layout (structure of arrays) and a cache-friendly loop order. | [code](src/day_80_performance/lesson.hpp) · [tests](tests/test_day_80.cpp) · [notes](docs/progress/day-80-reflection.md) |
+| 81 | Regular Expressions | 🟠 | A *support-ticket scrubber*. Before customer messages are copied into the bug tracker, personal data has to go: e-mail addresses, phone numbers, payment-card numbers and IP addresses are found with regular expressions and masked, while ticket IDs and log timestamps are parsed with capture groups. | [code](src/day_81_regex/lesson.hpp) · [tests](tests/test_day_81.cpp) · [notes](docs/progress/day-81-reflection.md) |
+| 82 | Building a Storage Engine | 🟠 | The *session store* of a ticket-booking site – a small key-value database that must not lose a booking when the server crashes mid-write. Like Bitcask or a database's write-ahead log, it only ever appends records to a file, keeps an in-memory index from each key to the offset of its latest record, recovers from a torn final write, groups changes into all-or-nothing transactions, and compacts the log when it fills with stale records. | [code](src/day_82_storage_engine/lesson.hpp) · [tests](tests/test_day_82.cpp) · [notes](docs/progress/day-82-reflection.md) |
 | 83 | Robust CLI Application | 🔴 | _planned_ | – |
 | 84 | Data Pipeline / ETL | 🔴 | _planned_ | – |
 | 85 | Concurrent File Processor | 🔴 | _planned_ | – |

@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-01",
+  "learnings": [
+    "Measure with std::chrono::steady_clock, repeat the work, and report the median – a single run is mostly noise.",
+    "The optimiser deletes work whose result is unused; writing results to a volatile sink keeps benchmarks honest.",
+    "Algorithmic wins dominate: replacing an O(n²) duplicate check with a hash set turned millions of comparisons into thousands of lookups.",
+    "Memory layout matters: struct-of-arrays and row-major loops read memory in order and use every byte the cache fetches."
+  ],
+  "pitfalls": [
+    "The first timed run included cache warm-up and lazy initialisation; the harness now does untimed warm-up runs.",
+    "Asserting timings in unit tests made them flaky; tests check operation counts and use a fake clock instead.",
+    "A function-local volatile sink triggered a set-but-unused warning; a namespace-scope inline variable works everywhere."
+  ],
+  "next": "Day 81 finds patterns in text with regular expressions."
+}

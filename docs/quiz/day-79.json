@@ -1,0 +1,37 @@
+{
+  "day": 79,
+  "mcq": [
+    {
+      "question": "Library `service` links `unitconv` PUBLIC, and `app` links `service`. Does `app` get unitconv's PUBLIC include directory?",
+      "options": {
+        "A": "Yes, PUBLIC requirements propagate to everything that links `service`",
+        "B": "No, requirements never propagate",
+        "C": "Only if `app` also links `unitconv` directly",
+        "D": "Only for INTERFACE libraries"
+      },
+      "answer": "A",
+      "explanation": "PUBLIC means \"I use it and my users need it too\". A PRIVATE link would stop the propagation."
+    },
+    {
+      "question": "With `COMPATIBILITY SameMajorVersion`, which request does unitconv 2.1.0 satisfy?",
+      "options": {
+        "A": "`find_package(unitconv 1.4)`",
+        "B": "`find_package(unitconv 2.0)`",
+        "C": "`find_package(unitconv 2.2)`",
+        "D": "`find_package(unitconv 3.0)`"
+      },
+      "answer": "B",
+      "explanation": "The major version must match and the installed version must be at least the requested one."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Header-only, static or shared library: what would you choose for unitconv, and how does it change packaging?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `BUILD_SHARED_LIBS` option to unitconv with symbol visibility via `GenerateExportHeader`, and check that the consumer still links."
+    }
+  ]
+}

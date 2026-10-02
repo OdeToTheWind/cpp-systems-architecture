@@ -1,0 +1,37 @@
+{
+  "day": 77,
+  "mcq": [
+    {
+      "question": "The file says `pool_size = 8` and the environment has `PAYGATE_DATABASE_POOL_SIZE=32`. Which value is used?",
+      "options": {
+        "A": "8, because the file is read first",
+        "B": "40, the sum",
+        "C": "32, because the environment overrides the file",
+        "D": "Neither: conflicting settings are an error"
+      },
+      "answer": "C",
+      "explanation": "Environment overrides let deployments change settings, and keep secrets, without editing the shared file."
+    },
+    {
+      "question": "A sink has minimum level WARNING. Which records does it write?",
+      "options": {
+        "A": "WARNING and ERROR",
+        "B": "Only WARNING",
+        "C": "Everything except DEBUG",
+        "D": "Only ERROR"
+      },
+      "answer": "A",
+      "explanation": "Levels are ordered. A sink writes every record at or above its threshold."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "What should never be logged, even at DEBUG level, in a payment system?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `JsonFormatter` that writes each record as one JSON object, with escaping, and a test for a message containing quotes."
+    }
+  ]
+}

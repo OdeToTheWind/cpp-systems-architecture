@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-31",
+  "learnings": [
+    "In modern CMake everything is a target, and usage requirements (include directories, compile features) travel with it as PUBLIC, PRIVATE or INTERFACE.",
+    "install(TARGETS … EXPORT) plus a package config file let other projects use the library with find_package(unitconv 2.0 REQUIRED).",
+    "The version is defined once, in project(VERSION), and flows into the generated header, the library's SOVERSION and the package version file.",
+    "CPack turns the install rules into archives or installers; `cpack -G TGZ` produced unitconv-2.1.0-Linux.tar.gz."
+  ],
+  "pitfalls": [
+    "Exporting failed because the library linked a course-only helper target; wrapping it in $<BUILD_INTERFACE:…> keeps it out of the package.",
+    "Hard-coded include paths broke after installation; $<BUILD_INTERFACE> and $<INSTALL_INTERFACE> give each tree the right path.",
+    "Requesting version 3.0 must fail for a 2.1 library; SameMajorVersion compatibility enforces that."
+  ],
+  "next": "Day 80 measures before optimising."
+}

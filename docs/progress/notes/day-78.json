@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-30",
+  "learnings": [
+    "Dependency injection – passing collaborators in through the constructor – is what makes code unit-testable.",
+    "A stub returns canned answers, a fake is a simplified working implementation, and a mock records calls so a test can check how a dependency was used.",
+    "A fixture builds a fresh, known world for every test, so tests never depend on each other.",
+    "Table-driven tests list inputs and expected outputs as data, which makes boundary cases easy to see and to add."
+  ],
+  "pitfalls": [
+    "A test that read the real date only failed on Fridays; the clock is now an injected interface.",
+    "Over-specified mocks broke whenever the implementation changed; tests verify only the interactions that matter (one email, to the right person).",
+    "A failing email after the save left points awarded without notification – the test now documents that ordering decision explicitly."
+  ],
+  "next": "Day 79 turns code into a library others can install."
+}

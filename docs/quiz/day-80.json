@@ -1,0 +1,37 @@
+{
+  "day": 80,
+  "mcq": [
+    {
+      "question": "Why report the *median* of several runs?",
+      "options": {
+        "A": "It is always the fastest run",
+        "B": "It is cheaper to compute than the mean",
+        "C": "It ignores occasional slow runs caused by the OS or other processes",
+        "D": "The standard requires it"
+      },
+      "answer": "C",
+      "explanation": "A few interrupted runs pull the mean up but barely move the median."
+    },
+    {
+      "question": "Doubling the input to the naive duplicate check multiplies the comparisons by about…",
+      "options": {
+        "A": "4",
+        "B": "2",
+        "C": "8",
+        "D": "log 2"
+      },
+      "answer": "A",
+      "explanation": "Comparing every pair is O(n²): n(n−1)/2 comparisons. The hashed version only doubles."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "\"Premature optimisation is the root of all evil.\" When is optimising early the right call?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a sorted-vector duplicate check (sort, then compare neighbours) and add its operation count to the run output."
+    }
+  ]
+}

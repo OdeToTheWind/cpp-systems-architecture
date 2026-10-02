@@ -1,0 +1,37 @@
+{
+  "day": 81,
+  "mcq": [
+    {
+      "question": "What is the difference between `regex_match` and `regex_search`?",
+      "options": {
+        "A": "`regex_match` is case-insensitive",
+        "B": "`regex_match` needs the whole string to match; `regex_search` finds a match anywhere",
+        "C": "`regex_search` returns all matches at once",
+        "D": "There is no difference since C++17"
+      },
+      "answer": "B",
+      "explanation": "That is why `is_ticket_id(\"see SUP-20417\")` is false."
+    },
+    {
+      "question": "In `regex_replace(text, ipv4, \"$1.x\")`, what is `$1`?",
+      "options": {
+        "A": "The first character of the match",
+        "B": "The whole match",
+        "C": "The text of the first capture group: the first three octets",
+        "D": "A literal dollar sign and 1"
+      },
+      "answer": "C",
+      "explanation": "Groups are numbered by their opening parenthesis. `$&` would be the whole match."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Regex-based redaction will miss some formats. What other safeguards would you add before sharing customer data?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add IBAN redaction (two letters, two check digits, then up to 30 letters or digits) that keeps the country code and the last four characters."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-03",
+  "learnings": [
+    "An append-only log never overwrites data, so a crash can only damage the last record, never older ones.",
+    "An in-memory index from each key to the offset of its latest record gives one seek per read.",
+    "Per-record checksums and a newline terminator let recovery detect a torn tail, truncate it, and continue.",
+    "A transaction's records count only once its commit marker is on disk; compaction writes live keys to a new file and renames it over the old one atomically."
+  ],
+  "pitfalls": [
+    "New records appended after a torn tail were unreadable until recovery truncated the file to the last good record.",
+    "Values containing '|' or newlines broke the record format until they were escaped.",
+    "Transaction ids restarted at 1 after a reopen and could merge with an old unfinished transaction; ids now continue from the highest one in the log."
+  ],
+  "next": "Phase 5 starts with Day 83: a robust command-line application."
+}

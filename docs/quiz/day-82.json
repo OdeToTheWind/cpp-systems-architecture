@@ -1,0 +1,37 @@
+{
+  "day": 82,
+  "mcq": [
+    {
+      "question": "The server crashes halfway through writing a record. What does recovery do?",
+      "options": {
+        "A": "It finds the damaged final record by its checksum or missing newline and truncates it",
+        "B": "It deletes the whole log",
+        "C": "It tries to guess the missing bytes",
+        "D": "It keeps the partial record"
+      },
+      "answer": "A",
+      "explanation": "In an append-only log only the tail can be damaged. Everything before it is still valid."
+    },
+    {
+      "question": "Why does compaction write a new file and then `rename` it over the old log?",
+      "options": {
+        "A": "Writing in place is not allowed",
+        "B": "rename replaces the file in one step, so a crash leaves either the old or the new log",
+        "C": "rename also compresses the file",
+        "D": "It makes reads faster during compaction"
+      },
+      "answer": "B",
+      "explanation": "Rewriting in place could leave a half-old, half-new file after a crash."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Real engines call fsync after writes. What does it protect against that flush() does not, and what does it cost?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `hint file` written during compaction that stores key→offset pairs, so `open` can skip replaying the whole log."
+    }
+  ]
+}

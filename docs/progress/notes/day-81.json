@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-02",
+  "learnings": [
+    "regex_match requires the whole string to match; regex_search and sregex_iterator find matches inside text.",
+    "Capture groups pull fields out of a match, and $1 refers to them in regex_replace.",
+    "When a replacement depends on the match (keep the domain, check Luhn), iterate the matches and build the output yourself.",
+    "Raw string literals R\"(...)\" keep backslashes readable in patterns."
+  ],
+  "pitfalls": [
+    "The phone pattern matched the middle of a 16-digit order number; ECMAScript regex has no look-behind, so the preceding character is captured and put back.",
+    "Order numbers looked like card numbers until the Luhn checksum was required before masking.",
+    "The pattern only knows North-American phone layouts – a test documents the gap instead of pretending it is covered."
+  ],
+  "next": "Day 82 builds a small storage engine."
+}

@@ -133,12 +133,12 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 74 | Concurrency: Futures & Thread Pools | std::async, promises and futures, exception propagation, a fixed-size thread pool | Advanced | Covered |
 | 75 | Coroutines | co_yield generators, co_await basics, promise types, lazy sequences | Advanced | Covered |
 | 76 | Atomics & Memory Order | std::atomic, compare-exchange, memory ordering, lock-free counters and flags | Advanced | Covered |
-| 77 | Logging & Configuration | Log levels, formatters and sinks, INI-style configuration, environment overrides | Advanced | Planned |
-| 78 | Unit Testing & Test Doubles | Test fixtures, table-driven tests, fakes, stubs and mocks, dependency injection | Advanced | Planned |
-| 79 | Build Systems & Packaging | CMake targets and usage requirements, install and export rules, versioning, CPack | Advanced | Planned |
-| 80 | Profiling & Performance | Measuring with std::chrono, benchmark harnesses, data layout and cache locality, algorithmic wins | Advanced | Planned |
-| 81 | Regular Expressions | std::regex matching and searching, capture groups, replacement, redacting sensitive data | Advanced | Planned |
-| 82 | Building a Storage Engine | Append-only logs, in-memory indexes, crash recovery, compaction and transactions | Advanced | Planned |
+| 77 | Logging & Configuration | Log levels, formatters and sinks, INI-style configuration, environment overrides | Advanced | Covered |
+| 78 | Unit Testing & Test Doubles | Test fixtures, table-driven tests, fakes, stubs and mocks, dependency injection | Advanced | Covered |
+| 79 | Build Systems & Packaging | CMake targets and usage requirements, install and export rules, versioning, CPack | Advanced | Covered |
+| 80 | Profiling & Performance | Measuring with std::chrono, benchmark harnesses, data layout and cache locality, algorithmic wins | Advanced | Covered |
+| 81 | Regular Expressions | std::regex matching and searching, capture groups, replacement, redacting sensitive data | Advanced | Covered |
+| 82 | Building a Storage Engine | Append-only logs, in-memory indexes, crash recovery, compaction and transactions | Advanced | Covered |
 
 ## Phase 5 · Capstone-Style Systems Projects (Days 83–100)
 
