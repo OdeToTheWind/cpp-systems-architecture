@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-19",
+  "learnings": [
+    "The SIR model is three coupled differential equations; RK4 integrates them accurately with modest step sizes.",
+    "A numerical result is trusted when it passes independent checks: conservation of the population, the analytic final-size equation, and the expected convergence rate.",
+    "Monte Carlo turns a random process into estimates with confidence intervals; more runs narrow the interval like 1 / sqrt(n).",
+    "std::mt19937_64 gives the same sequence everywhere, but standard distributions do not; converting raw bits to [0, 1) by hand keeps seeded results portable."
+  ],
+  "pitfalls": [
+    "Euler's method with half-day steps was off by thousands of cases; RK4 at the same step was over 100x more accurate.",
+    "The first test expected P(major outbreak) = 1 - 1/R0, which holds for exponential infectious periods; Reed-Frost generations follow z = 1 - exp(-R0 z) instead.",
+    "Starting the Monte Carlo from ten cases made a major outbreak certain and the estimate useless; it now starts from one imported case."
+  ],
+  "next": "Day 99 adds observability for bugs that only happen in production."
+}

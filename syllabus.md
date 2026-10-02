@@ -158,9 +158,9 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 92 | Test Suite for a Multi-module Library | Separate model, repository, notifier and service modules, fakes and a fixed clock, business-rule tests | Capstone | Covered |
 | 93 | Network Service Core | A line protocol, per-connection sessions, broadcasting, a transport-independent server core | Capstone | Covered |
 | 94 | Data Validation & Cleaning Library | Composable validators, error paths, normalising messy input, custom exceptions | Capstone | Covered |
-| 95 | Performance-critical Module | Naive vs spatial-index nearest-neighbour search, benchmarks, cross-checked results | Capstone | Planned |
-| 96 | Packaging a Real Tool | Single-sourced versions, generated usage docs, changelogs, release pre-flight checks | Capstone | Planned |
-| 97 | Automation Bot Suite | Combining scraping, APIs, scheduling and notifications with deduplication and retries | Capstone | Planned |
-| 98 | Scientific Simulation | SIR epidemic model with RK4 integration, stochastic Monte Carlo, reproducible seeds | Capstone | Planned |
-| 99 | Observability & Debugging Toolkit | Crash reports, nested timed spans, call tracing, watchpoints on values | Capstone | Planned |
-| 100 | Portfolio Capstone: Production-ready C++ Tool | A multi-module tool with a CLI, configuration, storage, reports, logging, packaging and a full test suite | Capstone | Planned |
+| 95 | Performance-critical Module | Naive vs spatial-index nearest-neighbour search, benchmarks, cross-checked results | Capstone | Covered |
+| 96 | Packaging a Real Tool | Single-sourced versions, generated usage docs, changelogs, release pre-flight checks | Capstone | Covered |
+| 97 | Automation Bot Suite | Combining scraping, APIs, scheduling and notifications with deduplication and retries | Capstone | Covered |
+| 98 | Scientific Simulation | SIR epidemic model with RK4 integration, stochastic Monte Carlo, reproducible seeds | Capstone | Covered |
+| 99 | Observability & Debugging Toolkit | Crash reports, nested timed spans, call tracing, watchpoints on values | Capstone | Covered |
+| 100 | Portfolio Capstone: Production-ready C++ Tool | A multi-module tool with a CLI, configuration, storage, reports, logging, packaging and a full test suite | Capstone | Covered |

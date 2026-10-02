@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-21",
+  "learnings": [
+    "A complete tool is many small modules – money, config, storage, reports, CLI – each with its own tests, plus end-to-end tests of the command line.",
+    "Course techniques combine naturally: integer money (Day 88), INI with env overrides (Days 77, 91), an append-only checksummed file (Day 82), exit codes (Day 83) and a single-sourced version (Day 96).",
+    "Running every test under warnings-as-errors, AddressSanitizer and two compilers catches bugs that the tests alone would miss.",
+    "Writing the reflection and quiz for each day turned 100 days of code into notes that are worth rereading."
+  ],
+  "pitfalls": [
+    "`for (const auto& e : Ledger(file).entries())` iterated a destroyed temporary; GCC warned and AddressSanitizer proved it – the ledger is now a named variable.",
+    "A negative amount for \"spend\" double-negated into income; amounts must be positive and the subcommand gives the direction.",
+    "Validating the report month as text allowed \"2026-13\"; it is now checked as a real date."
+  ],
+  "next": "Next: contribute to an open-source C++ project and keep building."
+}

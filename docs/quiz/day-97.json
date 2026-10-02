@@ -1,0 +1,37 @@
+{
+  "day": 97,
+  "mcq": [
+    {
+      "question": "The kettle stays at €44.00 for three checks. How many notifications does cy get?",
+      "options": {
+        "A": "One",
+        "B": "Three",
+        "C": "None",
+        "D": "One per hour"
+      },
+      "answer": "A",
+      "explanation": "The deduplicator remembers (user, product, price). Only a new lower price is announced again."
+    },
+    {
+      "question": "Which failure should `with_retries` retry?",
+      "options": {
+        "A": "A 503 Service Unavailable response",
+        "B": "A 404 Not Found response",
+        "C": "A malformed wishlist entry",
+        "D": "A missing product page that will never exist"
+      },
+      "answer": "A",
+      "explanation": "Only transient problems may succeed later. Permanent ones are reported at once."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Scraping a shop's pages every few minutes has costs for the shop. How would you keep the bot polite?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `quiet hours` rule (no notifications between 22:00 and 07:00, delivered at 07:00) using the injected clock."
+    }
+  ]
+}

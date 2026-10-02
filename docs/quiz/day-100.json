@@ -1,0 +1,37 @@
+{
+  "day": 100,
+  "mcq": [
+    {
+      "question": "Why was `for (const auto& e : Ledger(file).entries())` a bug in C++20?",
+      "options": {
+        "A": "Range-for cannot iterate a vector",
+        "B": "Ledger has no begin()",
+        "C": "The temporary Ledger is destroyed before the loop runs, so the loop reads freed memory",
+        "D": "It reads the file twice"
+      },
+      "answer": "C",
+      "explanation": "Only the result of `entries()` would be lifetime-extended, and it is a reference into the dead temporary. C++23 fixes this case."
+    },
+    {
+      "question": "What does exit code 2 from `budget` tell a script?",
+      "options": {
+        "A": "The command line was wrong: a usage error",
+        "B": "The ledger file is damaged",
+        "C": "A budget limit was exceeded",
+        "D": "Everything succeeded with warnings"
+      },
+      "answer": "A",
+      "explanation": "Usage errors (2) are distinct from data and I/O errors (1), so scripts can react differently."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Looking back over the 100 days, which three habits made the biggest difference to code quality?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `budget import file.csv` command that reuses the Day 84 pipeline ideas: quarantine bad rows and report a summary."
+    }
+  ]
+}

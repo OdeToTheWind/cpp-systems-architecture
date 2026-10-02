@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-20",
+  "learnings": [
+    "std::source_location as a default argument captures the caller's file and line with no macros.",
+    "RAII spans time each step of a request and form a tree; std::uncaught_exceptions tells a span whether it is ending because of an error.",
+    "A watchpoint wrapper logs every change of a suspicious value and can trigger when a condition such as \"stock < 0\" becomes true.",
+    "A crash report combines the exception chain (std::throw_with_nested), the flight recorder and the trace into one text an engineer can act on."
+  ],
+  "pitfalls": [
+    "function_name() is spelled differently by GCC, Clang and MSVC, so reports and tests use file and line only.",
+    "Spans are already closed when the report is written after unwinding; the trace (with error statuses) shows where it happened instead of the open-span stack.",
+    "Checking std::uncaught_exceptions() > 0 blamed spans created inside a catch handler; comparing with the count at construction fixed it."
+  ],
+  "next": "Day 100: the portfolio capstone."
+}

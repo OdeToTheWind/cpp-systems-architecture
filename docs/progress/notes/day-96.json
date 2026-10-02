@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-17",
+  "learnings": [
+    "A version defined once in the build system and written into a generated header can never disagree with the binary.",
+    "Help text and Markdown docs generated from one option table stay in sync; a test compares the committed USAGE.md with the generated text.",
+    "A Keep a Changelog file is easy to parse and check: newest first, dated, with entries, and no leftovers under Unreleased.",
+    "A pre-flight check lists every blocker before tagging a release instead of discovering them one by one."
+  ],
+  "pitfalls": [
+    "A release bumped 1.2.1 straight to 1.4.0; the check now requires a single semantic-version step.",
+    "Line endings converted on checkout would make the committed docs differ from the generated text, so the comparison reads files in binary mode and .gitattributes fixes LF.",
+    "The changelog said 1.3.0 while the binary still said 1.2.1 – exactly the mismatch the single source of truth removes."
+  ],
+  "next": "Day 97 automates a recurring chore with a bot."
+}

@@ -1,0 +1,37 @@
+{
+  "day": 98,
+  "mcq": [
+    {
+      "question": "Halving the step size of a fourth-order method reduces the error by about…",
+      "options": {
+        "A": "2 times",
+        "B": "4 times",
+        "C": "It does not change",
+        "D": "16 times"
+      },
+      "answer": "D",
+      "explanation": "Error scales like dt⁴, and 2⁴ = 16. Euler's error only halves."
+    },
+    {
+      "question": "Why does `uniform01` use the engine's raw bits instead of `std::uniform_real_distribution`?",
+      "options": {
+        "A": "Distributions are slower",
+        "B": "Distributions cannot produce doubles",
+        "C": "The engine needs no seed",
+        "D": "The engine's output is fixed by the standard, but distributions may differ between standard libraries"
+      },
+      "answer": "D",
+      "explanation": "Portable reproducibility needs both a fixed engine and a fixed transformation."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "How would you present the model's uncertainty to hospital managers who must plan beds?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add vaccination to the SIR model (a fraction moved from S to R at the start) and find the coverage that keeps the peak under 5,000."
+    }
+  ]
+}

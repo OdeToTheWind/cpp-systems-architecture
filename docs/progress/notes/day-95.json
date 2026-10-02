@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-16",
+  "learnings": [
+    "Keep the naive version: it is the specification the fast version is checked against.",
+    "A uniform grid turns \"nearest driver\" into a search of nearby cells, growing in rings until no unvisited cell can contain anything closer.",
+    "Randomised cross-checks over many seeds, cell sizes and queries – including points outside the city – catch the edge cases hand-written tests miss.",
+    "Counting distance computations shows the speed-up deterministically; wall-clock timings are reported, never asserted."
+  ],
+  "pitfalls": [
+    "Stopping at the first ring that contained any driver missed closer drivers just across a cell border; the stopping rule now uses the ring's minimum possible distance.",
+    "Ties between equally distant drivers made the two versions disagree; both now prefer the smaller id.",
+    "std::normal_distribution differs between standard libraries, so tests assert properties of the data, not exact positions."
+  ],
+  "next": "Day 96 turns a tool into a proper release."
+}

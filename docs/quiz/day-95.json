@@ -1,0 +1,37 @@
+{
+  "day": 95,
+  "mcq": [
+    {
+      "question": "Why is the naive nearest-driver scan kept after the grid index exists?",
+      "options": {
+        "A": "It is faster for large fleets",
+        "B": "The grid needs it to build cells",
+        "C": "It is the reference that the fast version is cross-checked against",
+        "D": "C++ requires a fallback"
+      },
+      "answer": "C",
+      "explanation": "An obviously correct slow version is the cheapest way to test a clever fast one."
+    },
+    {
+      "question": "When can the ring search stop?",
+      "options": {
+        "A": "As soon as any driver is found",
+        "B": "After exactly two rings",
+        "C": "When the closest possible point in the next ring is further than the best driver found",
+        "D": "When the ring has no drivers"
+      },
+      "answer": "C",
+      "explanation": "A closer driver could sit just across a cell border, so the bound must be checked before stopping."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When would a k-d tree or an R-tree be better than a uniform grid for drivers in a city?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `k_nearest(x, y, k)` to the grid and cross-check it against sorting all drivers by distance."
+    }
+  ]
+}

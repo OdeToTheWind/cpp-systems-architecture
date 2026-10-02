@@ -1,0 +1,37 @@
+{
+  "day": 99,
+  "mcq": [
+    {
+      "question": "How does `trace_call` know the caller's file and line?",
+      "options": {
+        "A": "It parses the stack trace",
+        "B": "Its `std::source_location::current()` default argument is evaluated at the call site",
+        "C": "A macro inserts `__LINE__`",
+        "D": "The compiler adds the information to every function"
+      },
+      "answer": "B",
+      "explanation": "Default arguments are evaluated where the call is written, so `current()` reports the caller."
+    },
+    {
+      "question": "A `Span` is destroyed during stack unwinding. How does it know to record \"error\"?",
+      "options": {
+        "A": "`std::uncaught_exceptions()` is higher than when the span was created",
+        "B": "The destructor catches the exception",
+        "C": "The tracer is told by the throw statement",
+        "D": "Destructors receive the exception as a parameter"
+      },
+      "answer": "A",
+      "explanation": "Comparing with the count at construction also avoids blaming spans opened inside a catch handler."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "What is the cost of always-on tracing in production, and how would sampling help?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Export the spans as JSON lines (name, parent, start, end, status) and parse them back in a test."
+    }
+  ]
+}

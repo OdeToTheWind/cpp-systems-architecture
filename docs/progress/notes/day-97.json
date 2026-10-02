@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-18",
+  "learnings": [
+    "A bot is a loop of small, separately testable parts: fetch, scrape, compare, notify.",
+    "Only transient failures (timeouts, 503s) are retried, with exponential back-off; permanent errors fail fast.",
+    "De-duplicating on (user, product, price) means a user hears about each new low price exactly once, however often the bot runs.",
+    "Injecting the fetcher, the clock and the notifier lets a whole day of bot activity run in a test in milliseconds."
+  ],
+  "pitfalls": [
+    "Users were notified again every 30 minutes while the price stayed low; the deduplicator stopped the spam.",
+    "A 404 was retried three times with growing delays; only TransientError is retried now.",
+    "A failed fetch overwrote the last known price with nothing; the last good price is kept until a new one is read."
+  ],
+  "next": "Day 98 simulates an epidemic numerically."
+}
