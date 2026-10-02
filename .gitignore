@@ -1,32 +1,46 @@
-# Build artifacts
+# Build trees (CMake presets build into build/, build-release/, build-sanitize/, build-coverage/)
 build/
-bin/
+build-*/
 out/
-*.exe
-*.out
+cmake-build-*/
+_CPack_Packages/
+*.tar.gz
+*.zip
+
+# Compiler output outside build trees
 *.o
 *.obj
 *.a
 *.lib
-*.dll
 *.so
+*.dylib
+*.dll
+*.exe
 *.pdb
 *.ilk
 *.exp
 
-# CMake generated
+# CMake files generated in the source tree by mistake (day.cmake and *.cmake.in are sources!)
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
-Makefile
-*.cmake
-CPack*
+CTestTestfile.cmake
+CMakeUserPresets.json
+compile_commands.json
 
-# MSYS2 / MinGW temp files
-*.stackdump
-*.d
-*.orig
-*.rej
+# Coverage
+*.gcda
+*.gcno
+*.gcov
+coverage.xml
+coverage/
+
+# Python tooling
+__pycache__/
+*.pyc
+
+# Local secrets (see .env.example)
+.env
 
 # Editors / OS
 .vscode/
@@ -39,3 +53,4 @@ Thumbs.db
 # Logs & temp
 *.log
 *.tmp
+*.stackdump
