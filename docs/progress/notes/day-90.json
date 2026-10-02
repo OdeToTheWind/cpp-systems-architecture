@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-11",
+  "learnings": [
+    "Reading fixed-size chunks keeps memory constant; the only state carried between chunks is the unfinished last line.",
+    "Statistics such as counts, sums and maxima can be computed in one streaming pass.",
+    "External merge sort writes sorted runs that fit in memory and then merges them with a priority queue holding one line per run.",
+    "Testing every chunk size from 1 byte upwards is a cheap way to catch boundary bugs."
+  ],
+  "pitfalls": [
+    "Lines split across chunks were counted twice until the assembler carried the partial line over.",
+    "Windows \\r\\n endings left a trailing \\r on every line; the assembler strips it.",
+    "Equal keys from different runs came out in a different order than an in-memory stable sort; ties now favour the earlier run."
+  ],
+  "next": "Day 91 validates configuration with types."
+}

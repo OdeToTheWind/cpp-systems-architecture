@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-08",
+  "learnings": [
+    "A plugin system starts with a small, stable interface; the host depends only on that, never on concrete plugins.",
+    "Plugins describe themselves (name, description, required API) and provide a factory, so the host creates configured instances by name.",
+    "A function-local static registry avoids the static initialisation order fiasco when plugins register during start-up.",
+    "Checking the API version at registration (same major, minor not newer than the host) turns incompatibility into a clear message instead of a crash."
+  ],
+  "pitfalls": [
+    "Self-registering plugins defined only in .cpp files of a static library were silently dropped by the linker, because nothing referenced them; registration now lives in headers via inline variables.",
+    "A second plugin with the same name replaced the first; duplicates are now refused and reported.",
+    "Option values like level=300 crashed inside a filter; options are validated in the factory."
+  ],
+  "next": "Day 88 generates reports with exact money and safe escaping."
+}

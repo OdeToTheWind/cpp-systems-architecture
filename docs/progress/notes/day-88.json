@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-09",
+  "learnings": [
+    "Money lives in integer cents; only division needs a rounding rule, and it should be written down (half away from zero).",
+    "Rounding per line and summing the rounded lines makes the report add up exactly as printed.",
+    "A template engine that escapes by default and needs an explicit marker ({{&x}}) for raw HTML makes the safe path the easy one.",
+    "CSV needs quoting for commas, quotes and newlines, and a leading ' to stop =, +, - or @ being run as spreadsheet formulas."
+  ],
+  "pitfalls": [
+    "Totals computed from unrounded values differed from the sum of the printed lines by a cent.",
+    "A client named \"Bolt <Ltd>\" broke the HTML table until values were escaped.",
+    "An explicit constructor with a default argument made `Entry e{}` fail to compile; Money now has a separate non-explicit default constructor."
+  ],
+  "next": "Day 89 runs jobs on a schedule."
+}

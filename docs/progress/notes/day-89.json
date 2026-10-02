@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-10",
+  "learnings": [
+    "Short specs such as \"every 15m\", \"hourly :05\" and \"daily 02:30\" are parsed into a variant, and next_after computes the next run for each kind.",
+    "Aligning interval schedules to multiples of the interval keeps them stable across restarts.",
+    "With an injectable clock the scheduler jumps from event to event, so a week of scheduling is tested in milliseconds.",
+    "A job still running when its next slot arrives is skipped, and a run past its timeout is cut off, so jobs never pile up."
+  ],
+  "pitfalls": [
+    "A schedule computed as \"now + interval\" drifted every time the process restarted.",
+    "next_after returned the current time for a job due right now, so it ran twice; it is now strictly after.",
+    "A throwing job stopped the whole scheduler until failures were caught and recorded per run."
+  ],
+  "next": "Day 90 processes files that do not fit in memory."
+}

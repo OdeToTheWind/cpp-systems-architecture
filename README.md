@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 86 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 646 `TEST_CASE`s across 86 test executables.
-- **Deliverables mapped to code:** 470 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 15,839 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 172 multiple-choice questions with explanations, plus 172 open bonus questions (86 hands-on, test-first tasks).
+- **Curriculum completion:** 90 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 674 `TEST_CASE`s across 90 test executables.
+- **Deliverables mapped to code:** 490 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 16,787 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 180 multiple-choice questions with explanations, plus 180 open bonus questions (90 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -108,10 +108,10 @@
 | 84 | Data Pipeline / ETL | 🔴 | The *nightly order import* of an online shop that sells through three marketplaces. Each marketplace exports a CSV in its own quirks; the pipeline extracts rows, transforms them into one clean order format (dates checked, money in integer cents, everything converted to EUR), loads them into the warehouse table without duplicates, and puts every bad row into a quarantine with the reason – so one broken line never stops the whole import. | [code](src/day_84_etl/lesson.hpp) · [tests](tests/test_day_84.cpp) · [notes](docs/progress/day-84-reflection.md) |
 | 85 | Concurrent File Processor | 🔴 | An *integrity checker for a photo archive*. Thousands of files sit on a NAS; once a week every file is checksummed in parallel and compared with the manifest from last time, so silent corruption, deleted files and unexpected new files are reported before the backups rotate. Results are deterministic – sorted by path – however the threads were scheduled. | [code](src/day_85_concurrent_files/lesson.hpp) · [tests](tests/test_day_85.cpp) · [notes](docs/progress/day-85-reflection.md) |
 | 86 | Custom Logging & Monitoring Tool | 🔴 | The *observability layer of a URL shortener*. Every request is logged as one JSON line (easy for log shippers), log files rotate by size so the disk never fills, request counts and latencies are exposed in the Prometheus text format, and alert rules fire only after a problem persists for several evaluations – and resolve on their own when it goes away. | [code](src/day_86_monitoring/lesson.hpp) · [tests](tests/test_day_86.cpp) · [notes](docs/progress/day-86-reflection.md) |
-| 87 | Plugin-style Architecture | 🔴 | _planned_ | – |
-| 88 | Automated Report Generator | 🔴 | _planned_ | – |
-| 89 | Background Task Scheduler | 🔴 | _planned_ | – |
-| 90 | Memory-efficient Large File Processor | 🔴 | _planned_ | – |
+| 87 | Plugin-style Architecture | 🔴 | A *photo-filter tool* whose filters come from plugins. The host knows only the plugin API (plugin_api.hpp): plugins register themselves with a registry, the host creates configured instances through their factories by name, and plugins written for an incompatible API version are refused with a reason instead of crashing at run time. | [code](src/day_87_plugins/lesson.hpp) · [tests](tests/test_day_87.cpp) · [notes](docs/progress/day-87-reflection.md) |
+| 88 | Automated Report Generator | 🔴 | The *monthly billing report of a freelance design studio*. Logged hours become one report per month: amounts are integer cents (never floating point), VAT is rounded once per invoice line by a documented rule, and the same data is rendered as an HTML page through a small template engine and as a CSV for the accountant – both safely escaped. | [code](src/day_88_reports/lesson.hpp) · [tests](tests/test_day_88.cpp) · [notes](docs/progress/day-88-reflection.md) |
+| 89 | Background Task Scheduler | 🔴 | The *maintenance scheduler of a SaaS back end*: refresh caches every 15 minutes, send usage reports hourly at :05, back up the database daily at 02:30. Schedules are written as short specs, time comes from an injectable clock so a whole week can be simulated in milliseconds, a job that runs too long is cut off by its timeout, and a job never overlaps with itself. | [code](src/day_89_scheduler/lesson.hpp) · [tests](tests/test_day_89.cpp) · [notes](docs/progress/day-89-reflection.md) |
+| 90 | Memory-efficient Large File Processor | 🔴 | A *web-server access log* far larger than the memory of the machine that must analyse it. The file is read in fixed-size chunks, lines that straddle chunk boundaries are reassembled, statistics are computed in one streaming pass, and the log is sorted by response time with an external merge sort: sorted runs that fit in memory are written to temporary files and then merged with a priority queue. | [code](src/day_90_large_files/lesson.hpp) · [tests](tests/test_day_90.cpp) · [notes](docs/progress/day-90-reflection.md) |
 | 91 | Type-safe Configuration System | 🔴 | _planned_ | – |
 | 92 | Test Suite for a Multi-module Library | 🔴 | _planned_ | – |
 | 93 | Network Service Core | 🔴 | _planned_ | – |

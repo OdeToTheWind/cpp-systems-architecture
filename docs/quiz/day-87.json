@@ -1,0 +1,37 @@
+{
+  "day": 87,
+  "mcq": [
+    {
+      "question": "The host API is 2.3. Which plugin is accepted?",
+      "options": {
+        "A": "One requiring API 1.7",
+        "B": "One requiring API 2.1",
+        "C": "One requiring API 2.9",
+        "D": "One requiring API 3.0"
+      },
+      "answer": "B",
+      "explanation": "The major version must match, and the plugin may not need features newer than the host's minor version."
+    },
+    {
+      "question": "Why can self-registering plugins vanish when they live in a static library's .cpp files?",
+      "options": {
+        "A": "The linker only pulls in object files that something references, so their static registrars never run",
+        "B": "Static libraries cannot contain static variables",
+        "C": "Registration happens after main returns",
+        "D": "The compiler removes all unused classes"
+      },
+      "answer": "A",
+      "explanation": "Common fixes are registering from headers (as here), whole-archive linking, or explicit registration calls."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Loading plugins from shared libraries (dlopen/LoadLibrary) adds ABI concerns. Which ones, and how would the API version help?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `sharpen` plugin with a `strength=1..5` option in its own header, registered with API 2.3, plus tests."
+    }
+  ]
+}

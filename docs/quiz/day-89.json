@@ -1,0 +1,37 @@
+{
+  "day": 89,
+  "mcq": [
+    {
+      "question": "A job runs every 10 minutes but one run takes 25 minutes. What happens at the next two slots?",
+      "options": {
+        "A": "They are skipped, because the previous run is still busy",
+        "B": "Two extra copies start in parallel",
+        "C": "They are queued and run back to back afterwards",
+        "D": "The scheduler stops"
+      },
+      "answer": "A",
+      "explanation": "No-overlap scheduling never starts a job while its previous run is in progress."
+    },
+    {
+      "question": "Why does the scheduler take a clock instead of calling `system_clock::now()`?",
+      "options": {
+        "A": "`system_clock` is not thread-safe",
+        "B": "`now()` is too slow",
+        "C": "Tests and simulations can control time and run a week instantly",
+        "D": "The standard clock cannot represent minutes"
+      },
+      "answer": "C",
+      "explanation": "An injected clock makes time an input, so behaviour at 02:30 can be tested at any time of day."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "What should happen to a daily 02:30 job when the clocks change for daylight saving time?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a \"weekly mon 03:00\" schedule kind with `next_after` tests that cross the end of the week."
+    }
+  ]
+}

@@ -150,10 +150,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 84 | Data Pipeline / ETL | Extract, transform and load stages, validation with quarantine, run summaries | Capstone | Covered |
 | 85 | Concurrent File Processor | Work distribution over a thread pool, checksums, per-item error reporting | Capstone | Covered |
 | 86 | Custom Logging & Monitoring Tool | Structured JSON logs, log rotation, metrics in Prometheus text format, alert thresholds | Capstone | Covered |
-| 87 | Plugin-style Architecture | Plugin interfaces, self-registration, factories, versioned compatibility checks | Capstone | Planned |
-| 88 | Automated Report Generator | Aggregation with exact integer money, templated HTML, CSV export, escaping | Capstone | Planned |
-| 89 | Background Task Scheduler | Schedule specifications, an injectable clock, timeouts, no overlapping runs | Capstone | Planned |
-| 90 | Memory-efficient Large File Processor | Streaming in fixed-size chunks, line reassembly, external merge sort | Capstone | Planned |
+| 87 | Plugin-style Architecture | Plugin interfaces, self-registration, factories, versioned compatibility checks | Capstone | Covered |
+| 88 | Automated Report Generator | Aggregation with exact integer money, templated HTML, CSV export, escaping | Capstone | Covered |
+| 89 | Background Task Scheduler | Schedule specifications, an injectable clock, timeouts, no overlapping runs | Capstone | Covered |
+| 90 | Memory-efficient Large File Processor | Streaming in fixed-size chunks, line reassembly, external merge sort | Capstone | Covered |
 | 91 | Type-safe Configuration System | Typed settings, parsing and validation from environment variables, collecting every error, secret redaction | Capstone | Planned |
 | 92 | Test Suite for a Multi-module Library | Separate model, repository, notifier and service modules, fakes and a fixed clock, business-rule tests | Capstone | Planned |
 | 93 | Network Service Core | A line protocol, per-connection sessions, broadcasting, a transport-independent server core | Capstone | Planned |

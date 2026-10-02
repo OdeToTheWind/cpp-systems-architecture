@@ -1,0 +1,37 @@
+{
+  "day": 88,
+  "mcq": [
+    {
+      "question": "Why are report totals the sum of *rounded* line amounts?",
+      "options": {
+        "A": "Rounding once at the end is not allowed by law",
+        "B": "It is faster",
+        "C": "Integers cannot hold unrounded values",
+        "D": "So the printed lines add up exactly to the printed total"
+      },
+      "answer": "D",
+      "explanation": "Customers check the arithmetic. Summing unrounded values can make the total differ from the lines by a cent."
+    },
+    {
+      "question": "Why does `csv_field(\"=SUM(A1)\")` add a leading `'`?",
+      "options": {
+        "A": "CSV requires quotes around equals signs",
+        "B": "To mark the cell as a number",
+        "C": "To stop spreadsheets from running the cell as a formula (CSV injection)",
+        "D": "It is how Excel escapes commas"
+      },
+      "answer": "C",
+      "explanation": "Formulas in exported data can run commands or leak data when a user opens the file."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should the template engine fail on a missing key or print an empty string? Who should decide?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `{{^list}}…{{/list}}` (render when the list is empty) to the template engine and use it for a \"no hours logged\" message."
+    }
+  ]
+}

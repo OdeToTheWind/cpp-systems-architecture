@@ -1,0 +1,37 @@
+{
+  "day": 90,
+  "mcq": [
+    {
+      "question": "How much memory does the merge phase of the external sort need?",
+      "options": {
+        "A": "The whole file",
+        "B": "Half the file",
+        "C": "Nothing; it works on disk only",
+        "D": "About one line per run, plus file buffers"
+      },
+      "answer": "D",
+      "explanation": "The priority queue holds only the current smallest line of each run."
+    },
+    {
+      "question": "Why is the line assembler tested with every chunk size from 1 byte up?",
+      "options": {
+        "A": "Boundary bugs appear only when a line or a \\r\\n is split at a specific position",
+        "B": "Small chunks are faster",
+        "C": "To measure memory use",
+        "D": "The standard requires it"
+      },
+      "answer": "A",
+      "explanation": "Trying all sizes guarantees every split position is exercised."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "When is it better to use a database or a tool such as `sort` from the shell than to write an external sort yourself?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Make `merge_runs` merge at most k runs at a time (multi-pass merge) and test it with k = 2 on 10 runs."
+    }
+  ]
+}
