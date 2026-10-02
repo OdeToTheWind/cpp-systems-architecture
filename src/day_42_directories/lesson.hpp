@@ -163,11 +163,11 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& root = fs::t
          {"IMG_0001.CR2", "IMG_0001.JPG", "IMG_0002.jpg", "MVI_0003.MOV", "IMG_0001.xmp", "notes.txt"}) {
         std::ofstream(root / "inbox" / "DCIM" / "100CANON" / name) << name;
     }
-    const Sandbox sandbox(root);
+    const Sandbox sandbox(root);  // canonical root: on macOS /var/… is really /private/var/…
     const auto plan = plan_ingest(sandbox);
     for (const auto& move : plan) {
-        out << "  " << move.from.filename().string() << " -> " << move.to.lexically_relative(root).generic_string()
-            << '\n';
+        out << "  " << move.from.filename().string() << " -> "
+            << move.to.lexically_relative(sandbox.root()).generic_string() << '\n';
     }
     auto answer = prompt_line(in, out, "Apply this plan? (y/n): ");
     if (answer && *answer == "y") {

@@ -58,7 +58,13 @@ jobs:
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPPM_WERROR=${{ matrix.werror }} "${compiler[@]}"
 
       - name: Build
+        id: build
         run: cmake --build build --config Release --parallel 4
+
+      # MSBuild interleaves errors with progress output; on failure, list just the errors again.
+      - name: Show build errors
+        if: failure() && steps.build.outcome == 'failure' && runner.os == 'Windows'
+        run: cmake --build build --config Release -- /v:minimal /clp:ErrorsOnly /nologo || true
 
       - name: Test
         run: ctest --test-dir build -C Release --output-on-failure --parallel 4
