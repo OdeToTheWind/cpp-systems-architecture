@@ -105,7 +105,8 @@ TEST_CASE("bad input gets error replies, never a crash") {
 }
 
 TEST_CASE("run simulates several clients") {
-    std::istringstream in("1 connect\n2 connect\n1 NICK ana\n2 NICK ben\n1 JOIN #x\n2 JOIN #x\n1 MSG #x hello\n2 drop\nstop\n");
+    std::istringstream in(
+        "1 connect\n2 connect\n1 NICK ana\n2 NICK ben\n1 JOIN #x\n2 JOIN #x\n1 MSG #x hello\n2 drop\nstop\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     CHECK(out.str().find("-> 2: <ana@#x> hello") != std::string::npos);

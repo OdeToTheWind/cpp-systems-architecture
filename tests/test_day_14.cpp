@@ -9,9 +9,9 @@
 using namespace cppm::day14;
 
 TEST_CASE("objects die at the closing brace of their block") {
-    const std::vector<std::string> expected{"enter outer",      "enter loop 0", "leave loop 0",  "enter loop 1",
-                                            "leave loop 1",     "enter inner",  "inner block runs", "leave inner",
-                                            "back in outer",    "leave outer"};
+    const std::vector<std::string> expected{"enter outer",   "enter loop 0", "leave loop 0",     "enter loop 1",
+                                            "leave loop 1",  "enter inner",  "inner block runs", "leave inner",
+                                            "back in outer", "leave outer"};
     CHECK(block_scope_demo() == expected);
 }
 

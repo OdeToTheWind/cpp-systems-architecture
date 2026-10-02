@@ -73,7 +73,7 @@ inline std::string query_string(const Params& params, bool form = false) {
 
 /// Header names compare case-insensitively; setting a header again replaces it.
 class Headers {
-public:
+  public:
     void set(const std::string& name, std::string value) {
         if (name.find_first_of("\r\n:") != std::string::npos || value.find_first_of("\r\n") != std::string::npos) {
             throw std::invalid_argument("header names and values must not contain line breaks");
@@ -94,9 +94,10 @@ public:
     }
     const std::vector<std::pair<std::string, std::string>>& items() const { return items_; }
 
-private:
+  private:
     static std::string lower(std::string text) {
-        std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+        std::transform(text.begin(), text.end(), text.begin(),
+                       [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
         return text;
     }
     std::vector<std::pair<std::string, std::string>> items_;
@@ -121,7 +122,7 @@ struct PreparedRequest {
 };
 
 class RequestBuilder {
-public:
+  public:
     RequestBuilder(std::string method, std::string host, std::string path)
         : method_(std::move(method)), host_(std::move(host)), path_(std::move(path)) {}
     RequestBuilder& param(const std::string& key, const std::string& value) {
@@ -152,7 +153,7 @@ public:
         return request;
     }
 
-private:
+  private:
     std::string method_;
     std::string host_;
     std::string path_;
@@ -186,9 +187,8 @@ inline int run(std::istream& in, std::ostream& out) {
         request.headers.set("X-Api-Key", "sk_live_123456");
         out << request.wire(true) << "\n---\n";
     }
-    const auto booking = RequestBuilder("POST", "api.hotels.example", "/v2/bookings")
-                             .json(R"({"hotel":"H42","nights":2})")
-                             .prepare();
+    const auto booking =
+        RequestBuilder("POST", "api.hotels.example", "/v2/bookings").json(R"({"hotel":"H42","nights":2})").prepare();
     out << booking.wire() << '\n';
     return 0;
 }

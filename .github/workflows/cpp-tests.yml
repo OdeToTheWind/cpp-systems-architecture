@@ -1,0 +1,120 @@
+name: C++ Day-to-Day Testing
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Every day's demo and tests, with each compiler learners are likely to use.
+  build-test:
+    name: ${{ matrix.compiler-name }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            compiler-name: "GCC 13"
+            cxx: g++-13
+            werror: "ON"
+          - os: ubuntu-24.04
+            compiler-name: "GCC 14"
+            cxx: g++-14
+            werror: "ON"
+          - os: ubuntu-24.04
+            compiler-name: "Clang 18"
+            cxx: clang++-18
+            werror: "ON"
+          - os: macos-15
+            compiler-name: "Apple Clang"
+            cxx: clang++
+            werror: "ON"
+          # MSVC warns about different things than GCC/Clang; it builds with /W4 but without /WX.
+          - os: windows-2022
+            compiler-name: "MSVC 2022"
+            cxx: ""
+            werror: "OFF"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure
+        run: |
+          compiler=()
+          if [[ -n "${{ matrix.cxx }}" ]]; then compiler=(-DCMAKE_CXX_COMPILER=${{ matrix.cxx }}); fi
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPPM_WERROR=${{ matrix.werror }} "${compiler[@]}"
+
+      - name: Build
+        run: cmake --build build --config Release --parallel 4
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure --parallel 4
+
+  # AddressSanitizer + UndefinedBehaviorSanitizer catch memory and UB bugs the tests alone miss.
+  sanitize:
+    name: ASan + UBSan (GCC 13)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++-13 -DCPPM_WERROR=ON -DCPPM_SANITIZE=ON
+      - name: Build
+        run: cmake --build build --parallel 4
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --parallel 4 -L day
+        env:
+          ASAN_OPTIONS: detect_leaks=1:strict_string_checks=1
+          UBSAN_OPTIONS: print_stacktrace=1
+
+  # Line coverage of src/ with a gate, so untested code cannot creep in.
+  coverage:
+    name: Coverage gate (GCC 13)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install gcovr
+        run: pip install gcovr==8.6
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++-13 -DCPPM_COVERAGE=ON
+      - name: Build
+        run: cmake --build build --parallel 4
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --parallel 4 -L day
+      - name: Coverage report
+        run: >
+          gcovr --root . --filter 'src/' --gcov-executable gcov-13
+          --exclude-unreachable-branches --print-summary --txt coverage.txt
+          --fail-under-line 90
+      - name: Show uncovered lines
+        if: always()
+        run: test -f coverage.txt && cat coverage.txt || true
+
+  # Formatting and the repository's own consistency checks (syllabus, docs, quizzes, README).
+  consistency:
+    name: clang-format + syllabus sync
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: clang-format
+        run: git ls-files 'src/*.hpp' 'src/*.cpp' 'include/*.hpp' 'include/*.cpp' 'tests/*.cpp' | xargs clang-format-18 --dry-run --Werror
+      - name: Syllabus, reflections, quizzes and README are in sync
+        run: python -m unittest discover -s tests/tooling -v

@@ -36,7 +36,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 };
 
 class AquariumController {
-public:
+  public:
     static constexpr double min_temperature_c = 22.0;
     static constexpr double max_temperature_c = 30.0;
 
@@ -75,7 +75,7 @@ public:
         log("light " + std::to_string(hours) + " h");
     }
 
-private:
+  private:
     static std::string format(double value) {
         std::ostringstream out;
         out << std::fixed << std::setprecision(1) << value;
@@ -110,11 +110,16 @@ inline int run(std::istream& in, std::ostream& out) {
                 out << "  a number is required\n";
                 continue;
             }
-            if (what == "c") tank.set_temperature_c(value);
-            else if (what == "f") tank.set_temperature_f(value);
-            else if (what == "ph") tank.set_ph(value);
-            else if (what == "light") tank.set_light_hours(static_cast<int>(value));
-            else out << "  unknown setting\n";
+            if (what == "c")
+                tank.set_temperature_c(value);
+            else if (what == "f")
+                tank.set_temperature_f(value);
+            else if (what == "ph")
+                tank.set_ph(value);
+            else if (what == "light")
+                tank.set_light_hours(static_cast<int>(value));
+            else
+                out << "  unknown setting\n";
         } catch (const std::out_of_range& error) {
             out << "  refused: " << error.what() << '\n';
         }

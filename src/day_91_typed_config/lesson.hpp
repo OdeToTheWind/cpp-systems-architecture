@@ -46,13 +46,13 @@ using Env = std::map<std::string, std::string>;
 
 /// A value that never prints itself.
 class Secret {
-public:
+  public:
     Secret() = default;
     explicit Secret(std::string value) : value_(std::move(value)) {}
     const std::string& reveal() const { return value_; }
     bool empty() const { return value_.empty(); }
 
-private:
+  private:
     std::string value_;
 };
 
@@ -66,7 +66,8 @@ inline int parse_int(const std::string& text, int low, int high) {
         used = 0;
     }
     if (used == 0 || used != text.size()) throw std::invalid_argument("expected an integer, got '" + text + "'");
-    if (v < low || v > high) throw std::invalid_argument("must be between " + std::to_string(low) + " and " + std::to_string(high));
+    if (v < low || v > high)
+        throw std::invalid_argument("must be between " + std::to_string(low) + " and " + std::to_string(high));
     return static_cast<int>(v);
 }
 
@@ -106,17 +107,19 @@ inline std::vector<std::string> parse_list(const std::string& text) {
 
 inline std::string parse_url(const std::string& text) {
     const auto scheme = text.find("://");
-    if (scheme == std::string::npos || scheme == 0 || scheme + 3 == text.size()) throw std::invalid_argument("expected a URL like postgres://host/db");
+    if (scheme == std::string::npos || scheme == 0 || scheme + 3 == text.size())
+        throw std::invalid_argument("expected a URL like postgres://host/db");
     return text;
 }
 
 /// One line per problem, all of them.
 class ConfigError : public std::runtime_error {
-public:
-    explicit ConfigError(std::vector<std::string> problems) : std::runtime_error(join(problems)), problems_(std::move(problems)) {}
+  public:
+    explicit ConfigError(std::vector<std::string> problems)
+        : std::runtime_error(join(problems)), problems_(std::move(problems)) {}
     const std::vector<std::string>& problems() const { return problems_; }
 
-private:
+  private:
     static std::string join(const std::vector<std::string>& p) {
         std::string out = std::to_string(p.size()) + " configuration problem(s):";
         for (const auto& line : p) out += "\n  " + line;
@@ -128,16 +131,17 @@ private:
 /// Binds environment variables to members of @p Config.
 template <typename Config>
 class Schema {
-public:
+  public:
     explicit Schema(std::string prefix) : prefix_(std::move(prefix)) {}
 
     /// @p member is where the value goes; @p parse converts the text; no default means required.
     template <typename T>
-    Schema& field(const std::string& name, T Config::*member, std::function<T(const std::string&)> parse, std::string help,
-                  std::optional<std::string> fallback = std::nullopt) {
+    Schema& field(const std::string& name, T Config::*member, std::function<T(const std::string&)> parse,
+                  std::string help, std::optional<std::string> fallback = std::nullopt) {
         const std::string var = prefix_ + name;
-        fields_.push_back({var, std::move(help), fallback, false,
-                           [member, parse, var](Config& config, const std::string& text) { config.*member = parse(text); }});
+        fields_.push_back(
+            {var, std::move(help), fallback, false,
+             [member, parse, var](Config& config, const std::string& text) { config.*member = parse(text); }});
         return *this;
     }
 
@@ -184,7 +188,8 @@ public:
         for (const auto& f : fields_) {
             const auto it = env.find(f.var);
             const std::string value = it != env.end() && !it->second.empty() ? it->second : f.fallback.value_or("");
-            out += f.var + "=" + (f.secret ? std::string("***") : value) + (it == env.end() && f.fallback ? " (default)" : "") + "\n";
+            out += f.var + "=" + (f.secret ? std::string("***") : value) +
+                   (it == env.end() && f.fallback ? " (default)" : "") + "\n";
         }
         return out;
     }
@@ -193,12 +198,13 @@ public:
     std::string env_example() const {
         std::string out;
         for (const auto& f : fields_) {
-            out += "# " + f.help + (f.fallback ? "" : " (required)") + "\n" + f.var + "=" + (f.secret ? "" : f.fallback.value_or("")) + "\n";
+            out += "# " + f.help + (f.fallback ? "" : " (required)") + "\n" + f.var + "=" +
+                   (f.secret ? "" : f.fallback.value_or("")) + "\n";
         }
         return out;
     }
 
-private:
+  private:
     struct Field {
         std::string var;
         std::string help;
@@ -225,14 +231,20 @@ struct DispatchConfig {
 inline Schema<DispatchConfig> dispatch_schema() {
     Schema<DispatchConfig> schema("DISPATCH_");
     schema.field<std::string>("DATABASE_URL", &DispatchConfig::database_url, parse_url, "PostgreSQL connection URL")
-        .field<int>("WORKERS", &DispatchConfig::workers, [](const std::string& t) { return parse_int(t, 1, 64); }, "worker threads, 1-64", "4")
-        .field<std::chrono::milliseconds>("COURIER_TIMEOUT", &DispatchConfig::courier_timeout, parse_duration, "how long a courier has to accept", "45s")
+        .field<int>(
+            "WORKERS", &DispatchConfig::workers, [](const std::string& t) { return parse_int(t, 1, 64); },
+            "worker threads, 1-64", "4")
+        .field<std::chrono::milliseconds>("COURIER_TIMEOUT", &DispatchConfig::courier_timeout, parse_duration,
+                                          "how long a courier has to accept", "45s")
         .field<bool>("DRY_RUN", &DispatchConfig::dry_run, parse_bool, "log assignments without sending them", "false")
-        .field<Mode>("MODE", &DispatchConfig::mode, [](const std::string& t) {
-            if (t == "live") return Mode::live;
-            if (t == "shadow") return Mode::shadow;
-            throw std::invalid_argument("expected live or shadow, got '" + t + "'");
-        }, "live or shadow (compare with the old dispatcher)", "live")
+        .field<Mode>(
+            "MODE", &DispatchConfig::mode,
+            [](const std::string& t) {
+                if (t == "live") return Mode::live;
+                if (t == "shadow") return Mode::shadow;
+                throw std::invalid_argument("expected live or shadow, got '" + t + "'");
+            },
+            "live or shadow (compare with the old dispatcher)", "live")
         .field<std::vector<std::string>>("REGIONS", &DispatchConfig::regions, parse_list, "comma-separated city codes")
         .secret("MAPS_API_KEY", &DispatchConfig::maps_api_key, "routing API key");
     return schema;
@@ -250,8 +262,9 @@ inline int run(std::istream& in, std::ostream& out) {
     }
     try {
         const auto config = schema.load(env);
-        out << "loaded: " << config.workers << " worker(s), timeout " << config.courier_timeout.count() << " ms, " << config.regions.size()
-            << " region(s)\n" << schema.describe(env);
+        out << "loaded: " << config.workers << " worker(s), timeout " << config.courier_timeout.count() << " ms, "
+            << config.regions.size() << " region(s)\n"
+            << schema.describe(env);
     } catch (const ConfigError& error) {
         out << error.what() << "\n\nexample:\n" << schema.env_example();
     }

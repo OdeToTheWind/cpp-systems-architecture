@@ -46,7 +46,7 @@ inline long long daily_rate_cents(CarClass car) {
 }
 
 class Reservation {
-public:
+  public:
     /// Parameterised constructor. The initialiser list initialises members directly (no default
     /// construction followed by assignment) – and const members *must* be initialised here.
     Reservation(std::string customer, CarClass car, int first_day, int last_day)
@@ -94,7 +94,7 @@ public:
     int days() const { return last_day_ - first_day_ + 1; }
     long long total_cents() const { return total_cents_; }
 
-private:
+  private:
     static inline int next_confirmation_ = 1000;
 
     // Members are initialised in THIS order, whatever order the initialiser list uses (-Wreorder warns).
@@ -135,8 +135,8 @@ inline int run(std::istream& in, std::ostream& out) {
         try {
             const Reservation booking = form.submit();
             const Reservation next_year = booking.copy_for_rebooking();
-            out << "  #" << booking.confirmation() << " " << booking.customer() << ", " << booking.days()
-                << " day(s), " << booking.total_cents() << " cents (next year: #" << next_year.confirmation() << ")\n";
+            out << "  #" << booking.confirmation() << " " << booking.customer() << ", " << booking.days() << " day(s), "
+                << booking.total_cents() << " cents (next year: #" << next_year.confirmation() << ")\n";
         } catch (const std::invalid_argument& error) {
             out << "  " << error.what() << '\n';
         }

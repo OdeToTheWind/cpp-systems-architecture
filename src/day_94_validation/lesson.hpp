@@ -57,7 +57,9 @@ struct Value {
     Value(Object o) : data(std::move(o)) {}
 
     template <typename T>
-    const T* get() const { return std::get_if<T>(&data); }
+    const T* get() const {
+        return std::get_if<T>(&data);
+    }
     const Value* field(const std::string& key) const {
         if (const auto* o = get<Object>()) {
             for (const auto& [k, v] : *o) {
@@ -89,8 +91,10 @@ inline Validator text(std::size_t min, std::size_t max) {
         const auto* s = v.get<std::string>();
         if (!s) return fail(p, path, "must be text");
         const auto first = s->find_first_not_of(" \t");
-        const std::string trimmed = first == std::string::npos ? "" : s->substr(first, s->find_last_not_of(" \t") - first + 1);
-        if (trimmed.size() < min) return fail(p, path, min == 1 ? "is required" : "must be at least " + std::to_string(min) + " characters");
+        const std::string trimmed =
+            first == std::string::npos ? "" : s->substr(first, s->find_last_not_of(" \t") - first + 1);
+        if (trimmed.size() < min)
+            return fail(p, path, min == 1 ? "is required" : "must be at least " + std::to_string(min) + " characters");
         if (trimmed.size() > max) return fail(p, path, "must be at most " + std::to_string(max) + " characters");
         return Value(trimmed);
     };
@@ -102,8 +106,8 @@ inline Validator integer(long long low, long long high) {
         double n = 0;
         if (const auto* d = v.get<double>()) {
             n = *d;
-        } else if (const auto* s = v.get<std::string>(); s && !s->empty() && s->size() < 16 &&
-                                                         s->find_first_not_of("-0123456789") == std::string::npos) {
+        } else if (const auto* s = v.get<std::string>();
+                   s && !s->empty() && s->size() < 16 && s->find_first_not_of("-0123456789") == std::string::npos) {
             n = static_cast<double>(std::stoll(*s));
         } else {
             return fail(p, path, "must be a whole number");
@@ -149,10 +153,12 @@ inline Validator all_of(std::vector<Validator> steps) {
 inline Validator email() {
     return all_of({text(3, 254), [](const Value& v, const std::string& path, Problems& p) -> std::optional<Value> {
                        std::string s = *v.get<std::string>();
-                       std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+                       std::transform(s.begin(), s.end(), s.begin(),
+                                      [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
                        const auto at = s.find('@');
                        if (at == std::string::npos || at == 0 || s.find('@', at + 1) != std::string::npos ||
-                           s.find('.', at) == std::string::npos || s.back() == '.' || s.find(' ') != std::string::npos) {
+                           s.find('.', at) == std::string::npos || s.back() == '.' ||
+                           s.find(' ') != std::string::npos) {
                            return fail(p, path, "must be an e-mail address");
                        }
                        return Value(s);
@@ -165,8 +171,12 @@ struct FieldRule {
     std::optional<Value> fallback;  // nullopt: required
 };
 
-inline FieldRule required(std::string name, Validator v) { return {std::move(name), std::move(v), std::nullopt}; }
-inline FieldRule optional_field(std::string name, Validator v, Value fallback) { return {std::move(name), std::move(v), std::move(fallback)}; }
+inline FieldRule required(std::string name, Validator v) {
+    return {std::move(name), std::move(v), std::nullopt};
+}
+inline FieldRule optional_field(std::string name, Validator v, Value fallback) {
+    return {std::move(name), std::move(v), std::move(fallback)};
+}
 
 /// An object with the given fields. Every field is checked (errors are collected, not stopped at),
 /// missing optional fields get their default, and unknown fields are rejected.
@@ -180,8 +190,10 @@ inline Validator object(std::vector<FieldRule> rules) {
             const std::string child = path.empty() ? rule.name : path + "." + rule.name;
             const Value* given = v.field(rule.name);
             if (!given) {
-                if (rule.fallback) out.emplace_back(rule.name, *rule.fallback);
-                else fail(p, child, "is required");
+                if (rule.fallback)
+                    out.emplace_back(rule.name, *rule.fallback);
+                else
+                    fail(p, child, "is required");
                 continue;
             }
             if (auto ok = rule.validator(*given, child, p)) out.emplace_back(rule.name, std::move(*ok));
@@ -231,7 +243,10 @@ inline Validator order_schema() {
                                        optional_field("ticket", one_of({"standard", "student", "vip"}), "standard")});
     return object({required("event", text(1, 40)), required("buyer_email", email()),
                    required("attendees", list(attendee, 1, 10)),
-                   optional_field("donation_eur", all_of({integer(0, 500), check([](const Value& v) { return *v.get<double>() != 13; }, "must not be 13 (we are superstitious)")}), 0)});
+                   optional_field("donation_eur",
+                                  all_of({integer(0, 500), check([](const Value& v) { return *v.get<double>() != 13; },
+                                                                 "must not be 13 (we are superstitious)")}),
+                                  0)});
 }
 
 inline std::string report(const Result& r) {
@@ -255,15 +270,18 @@ inline int run(std::istream& in, std::ostream& out) {
             std::vector<std::string> parts;
             std::istringstream ps(a);
             for (std::string part; std::getline(ps, part, ':');) parts.push_back(part);
-            Value::Object person{{"name", parts.size() > 0 ? parts[0] : ""}, {"email", parts.size() > 1 ? parts[1] : ""}};
+            Value::Object person{{"name", parts.size() > 0 ? parts[0] : ""},
+                                 {"email", parts.size() > 1 ? parts[1] : ""}};
             if (parts.size() > 2) person.emplace_back("ticket", parts[2]);
             attendees.emplace_back(person);
         }
-        const auto result = validate(schema, Value::Object{{"event", event}, {"buyer_email", buyer}, {"attendees", attendees}});
+        const auto result =
+            validate(schema, Value::Object{{"event", event}, {"buyer_email", buyer}, {"attendees", attendees}});
         out << report(result);
         if (result.value) {
             for (const auto& a : *result.value->field("attendees")->get<Value::List>()) {
-                out << "  " << *a.field("name")->get<std::string>() << " <" << *a.field("email")->get<std::string>() << "> " << *a.field("ticket")->get<std::string>() << '\n';
+                out << "  " << *a.field("name")->get<std::string>() << " <" << *a.field("email")->get<std::string>()
+                    << "> " << *a.field("ticket")->get<std::string>() << '\n';
             }
         }
     }

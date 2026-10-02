@@ -15,7 +15,8 @@ using namespace cppm::day85;
 namespace {
 void make_archive(const cppm::TempDir& dir, int files) {
     for (int i = 0; i < files; ++i) {
-        dir.write("photos/" + std::to_string(i % 4) + "/img" + std::to_string(i) + ".raw", std::string(static_cast<std::size_t>(i * 37 + 1), static_cast<char>('A' + i % 26)));
+        dir.write("photos/" + std::to_string(i % 4) + "/img" + std::to_string(i) + ".raw",
+                  std::string(static_cast<std::size_t>(i * 37 + 1), static_cast<char>('A' + i % 26)));
     }
 }
 }  // namespace
@@ -44,7 +45,8 @@ TEST_CASE("parallel results equal sequential results, in input order") {
     const auto many = checksum_all(dir.path(), files, 8);
     CHECK_EQ(many.size(), 60u);
     bool same = true;
-    for (std::size_t i = 0; i < one.size(); ++i) same = same && one[i].path == many[i].path && one[i].crc == many[i].crc && one[i].size == many[i].size;
+    for (std::size_t i = 0; i < one.size(); ++i)
+        same = same && one[i].path == many[i].path && one[i].crc == many[i].crc && one[i].size == many[i].size;
     CHECK(same);
     CHECK_THROWS_AS(checksum_all(dir.path(), files, 0), std::invalid_argument);
 }

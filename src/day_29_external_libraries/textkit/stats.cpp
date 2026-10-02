@@ -31,7 +31,9 @@ std::vector<std::string> words_of(std::string_view text) {
 
 }  // namespace
 
-const char* version() { return "1.4.2"; }
+const char* version() {
+    return "1.4.2";
+}
 
 Stats analyse(std::string_view text) {
     const auto words = words_of(text);

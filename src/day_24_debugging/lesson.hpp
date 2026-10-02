@@ -39,9 +39,9 @@ inline constexpr Deliverable DELIVERABLES[] = {
     {"a minimal reproduction report", "reproduce"},
 };
 
-inline constexpr int grace_days = 3;              // returning within 3 days of the due date is free
-inline constexpr long long cents_per_day = 25;    // after that, 0.25 per day …
-inline constexpr long long cap_cents = 1'000;     // … capped at 10.00 per item
+inline constexpr int grace_days = 3;            // returning within 3 days of the due date is free
+inline constexpr long long cents_per_day = 25;  // after that, 0.25 per day …
+inline constexpr long long cap_cents = 1'000;   // … capped at 10.00 per item
 
 /// A contract check: throws std::logic_error naming the broken condition. Unlike assert(),
 /// it also runs in release builds and can be tested.
@@ -53,7 +53,7 @@ inline void expects(bool condition, std::string_view what) {
 
 /// Writes debug lines only when enabled – to std::cerr by default, so normal output stays clean.
 class Tracer {
-public:
+  public:
     explicit Tracer(bool enabled = false, std::ostream& sink = std::cerr) : enabled_(enabled), sink_(&sink) {}
     void trace(std::string_view where, std::string_view what, long long value) const {
         if (enabled_) {
@@ -61,7 +61,7 @@ public:
         }
     }
 
-private:
+  private:
     bool enabled_;
     std::ostream* sink_;
 };
@@ -124,8 +124,8 @@ inline std::string reproduce(int days_late) {
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 24 – Debugging Techniques\n";
     int checks = 0;
-    const auto boundary = first_failing_day([](int day) { return late_fee(day) != late_fee_buggy(day); }, 0, 365,
-                                            &checks);
+    const auto boundary =
+        first_failing_day([](int day) { return late_fee(day) != late_fee_buggy(day); }, 0, 365, &checks);
     out << "Bisect: first mismatch at day " << boundary.value_or(-1) << " after " << checks << " checks\n";
     while (auto line = prompt_line(in, out, "days late [trace]> ")) {
         if (line->empty()) {

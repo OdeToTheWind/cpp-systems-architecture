@@ -43,12 +43,18 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// The strongest iterator category that @p Iterator models (C++20 concepts).
 template <typename Iterator>
 std::string_view category_of() {
-    if constexpr (std::contiguous_iterator<Iterator>) return "contiguous";
-    else if constexpr (std::random_access_iterator<Iterator>) return "random access";
-    else if constexpr (std::bidirectional_iterator<Iterator>) return "bidirectional";
-    else if constexpr (std::forward_iterator<Iterator>) return "forward";
-    else if constexpr (std::input_iterator<Iterator>) return "input";
-    else return "output or none";
+    if constexpr (std::contiguous_iterator<Iterator>)
+        return "contiguous";
+    else if constexpr (std::random_access_iterator<Iterator>)
+        return "random access";
+    else if constexpr (std::bidirectional_iterator<Iterator>)
+        return "bidirectional";
+    else if constexpr (std::forward_iterator<Iterator>)
+        return "forward";
+    else if constexpr (std::input_iterator<Iterator>)
+        return "input";
+    else
+        return "output or none";
 }
 
 struct Track {
@@ -60,12 +66,12 @@ struct Track {
 /// Keeps the last Capacity items; pushing into a full buffer overwrites the oldest.
 template <typename T, std::size_t Capacity>
 class RingBuffer {
-public:
+  public:
     static_assert(Capacity > 0);
 
     /// Walks from the oldest to the newest element.
     class Iterator {
-    public:
+      public:
         using iterator_category = std::forward_iterator_tag;
         using value_type = T;
         using difference_type = std::ptrdiff_t;
@@ -88,7 +94,7 @@ public:
         }
         bool operator==(const Iterator&) const = default;
 
-    private:
+      private:
         const RingBuffer* buffer_{nullptr};
         std::size_t position_{0};  // 0 = oldest element
     };
@@ -106,7 +112,7 @@ public:
     Iterator end() const { return Iterator(this, size_); }
     const T& at_logical(std::size_t position) const { return items_[(start_ + position) % Capacity]; }
 
-private:
+  private:
     std::array<T, Capacity> items_{};
     std::size_t start_{0};
     std::size_t size_{0};
@@ -145,7 +151,8 @@ std::string longest_recent_track(const RingBuffer<Track, N>& recent) {
 /// The interactive demo: "title seconds" lines played into a board that keeps the last 3.
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 40 – Iterators\n"
-        << "vector: " << category_of<std::vector<int>::iterator>() << ", list: " << category_of<std::list<int>::iterator>()
+        << "vector: " << category_of<std::vector<int>::iterator>()
+        << ", list: " << category_of<std::list<int>::iterator>()
         << ", forward_list: " << category_of<std::forward_list<int>::iterator>()
         << ", istream: " << category_of<std::istream_iterator<int>>() << '\n';
     RingBuffer<Track, 3> recent;

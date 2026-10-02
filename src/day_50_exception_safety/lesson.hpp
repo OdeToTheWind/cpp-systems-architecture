@@ -40,7 +40,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Runs a rollback action in its destructor unless dismiss() was called – RAII for "undo".
 class ScopeGuard {
-public:
+  public:
     explicit ScopeGuard(std::function<void()> rollback) : rollback_(std::move(rollback)) {}
     ~ScopeGuard() {
         if (active_) {
@@ -51,13 +51,13 @@ public:
     ScopeGuard(const ScopeGuard&) = delete;
     ScopeGuard& operator=(const ScopeGuard&) = delete;
 
-private:
+  private:
     std::function<void()> rollback_;
     bool active_{true};
 };
 
 class Ledger {
-public:
+  public:
     void open(const std::string& account, long long cents) { balances_[account] = cents; }
     long long balance(const std::string& account) const { return balances_.at(account); }
     long long total() const {
@@ -109,7 +109,7 @@ public:
         swap(copy);  // commit: noexcept
     }
 
-private:
+  private:
     void check(const std::string& from, const std::string& to, long long cents) const {
         if (!balances_.contains(from) || !balances_.contains(to)) throw std::invalid_argument("unknown account");
         if (cents <= 0) throw std::invalid_argument("amount must be positive");

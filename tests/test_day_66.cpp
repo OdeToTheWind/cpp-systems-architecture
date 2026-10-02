@@ -11,12 +11,9 @@ using namespace cppm::day66;
 
 namespace {
 std::vector<Order> sample() {
-    return {{1, "ana", 7500, true, "gift,express"},
-            {2, "ben", 2000, true, "express"},
-            {3, "ana", 9900, false, "gift"},
-            {4, "cleo", 12000, true, " gift , bulk"},
-            {5, "ben", 6000, true, ""},
-            {6, "dev", 6000, true, "bulk"}};
+    return {
+        {1, "ana", 7500, true, "gift,express"},   {2, "ben", 2000, true, "express"}, {3, "ana", 9900, false, "gift"},
+        {4, "cleo", 12000, true, " gift , bulk"}, {5, "ben", 6000, true, ""},        {6, "dev", 6000, true, "bulk"}};
 }
 }  // namespace
 

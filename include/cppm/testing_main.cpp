@@ -27,8 +27,7 @@ std::vector<TestCase>& registry() {
     return tests;
 }
 
-void report_check(bool passed, std::string_view expression, std::string_view detail, const char* file,
-                  int line) {
+void report_check(bool passed, std::string_view expression, std::string_view detail, const char* file, int line) {
     auto& c = counters();
     ++c.checks;
     if (passed) {

@@ -50,7 +50,8 @@ struct Token {
 };
 
 inline std::string lower(std::string text) {
-    std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    std::transform(text.begin(), text.end(), text.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
     return text;
 }
 
@@ -67,7 +68,8 @@ inline std::string decode_entities(std::string_view text) {
                 i = semi;
                 continue;
             }
-            if (entity.size() > 1 && entity[0] == '#' && std::all_of(entity.begin() + 1, entity.end(), [](unsigned char c) { return std::isdigit(c) != 0; })) {
+            if (entity.size() > 1 && entity[0] == '#' &&
+                std::all_of(entity.begin() + 1, entity.end(), [](unsigned char c) { return std::isdigit(c) != 0; })) {
                 const int code = std::stoi(std::string(entity.substr(1)));
                 if (code > 0 && code < 128) {
                     out += static_cast<char>(code);
@@ -173,7 +175,8 @@ inline bool has_class(const Token& token, std::string_view wanted) {
 }
 
 /// Elements named @p tag (and carrying class @p css_class if given) with their inner text.
-inline std::vector<Element> select(const std::vector<Token>& tokens, const std::string& tag, std::string_view css_class = {}) {
+inline std::vector<Element> select(const std::vector<Token>& tokens, const std::string& tag,
+                                   std::string_view css_class = {}) {
     static const std::set<std::string> void_tags{"br", "img", "input", "meta", "link", "hr"};
     std::vector<Element> found;
     for (std::size_t i = 0; i < tokens.size(); ++i) {
@@ -200,7 +203,7 @@ inline std::vector<Element> select(const std::vector<Token>& tokens, const std::
 
 /// The group of robots.txt rules for one user agent (or '*').
 class RobotsRules {
-public:
+  public:
     static RobotsRules parse(std::string_view text, const std::string& agent) {
         RobotsRules specific;
         RobotsRules any;
@@ -216,8 +219,10 @@ public:
             if (key == "user-agent") {
                 if (!in_agents) current = nullptr;
                 in_agents = true;
-                if (value == "*") current = &any;
-                else if (lower(value) == lower(agent)) current = &specific;
+                if (value == "*")
+                    current = &any;
+                else if (lower(value) == lower(agent))
+                    current = &specific;
                 if (current) current->matched_ = true;
                 continue;
             }
@@ -246,7 +251,7 @@ public:
     }
     std::chrono::seconds crawl_delay() const { return delay_; }
 
-private:
+  private:
     static std::string trim(const std::string& s) {
         const auto first = s.find_first_not_of(" \t\r");
         return first == std::string::npos ? "" : s.substr(first, s.find_last_not_of(" \t\r") - first + 1);
@@ -282,7 +287,7 @@ inline CrawlResult crawl(const Fetch& fetch, const Sleep& sleep, const std::stri
     while (next && static_cast<int>(result.visited.size()) < max_pages) {
         const std::string path = *next;
         next.reset();
-        if (!seen.insert(path).second) break;  // pagination loop
+        if (!seen.insert(path).second) break;              // pagination loop
         if (path.find("://") != std::string::npos) break;  // off-host link
         if (!robots.allowed(path)) {
             result.skipped.push_back(path);

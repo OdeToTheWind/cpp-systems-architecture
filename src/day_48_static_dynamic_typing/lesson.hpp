@@ -53,7 +53,9 @@ struct Metres {};
 struct Feet {};
 
 /// Conversions are explicit functions, never implicit.
-constexpr Length<Metres> to_metres(Length<Feet> feet) { return {feet.value * 0.3048}; }
+constexpr Length<Metres> to_metres(Length<Feet> feet) {
+    return {feet.value * 0.3048};
+}
 
 /// A spreadsheet error such as #DIV/0!.
 struct CellError {
@@ -125,7 +127,7 @@ inline Cell sum_numbers(const std::vector<Cell>& column) {
 
 /// Metadata from plugins written by other people: any value type, checked only when read.
 class PluginInfo {
-public:
+  public:
     void set(const std::string& key, std::any value) { values_[key] = std::move(value); }
     /// Typed read: throws std::bad_any_cast if the stored type is not exactly T.
     template <typename T>
@@ -141,7 +143,7 @@ public:
         return it == values_.end() ? nullptr : std::any_cast<T>(&it->second);
     }
 
-private:
+  private:
     std::map<std::string, std::any> values_;
 };
 

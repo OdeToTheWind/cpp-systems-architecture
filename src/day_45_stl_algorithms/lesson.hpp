@@ -91,8 +91,8 @@ inline void rank(std::vector<Record>& table) {
 /// Move everyone with at least @p points to the front, keeping the ranking order inside each zone.
 /// Returns how many are in the promotion zone.
 inline std::size_t promotion_zone(std::vector<Record>& ranked, int points) {
-    const auto boundary = std::stable_partition(ranked.begin(), ranked.end(),
-                                                [points](const Record& r) { return r.points() >= points; });
+    const auto boundary =
+        std::stable_partition(ranked.begin(), ranked.end(), [points](const Record& r) { return r.points() >= points; });
     return static_cast<std::size_t>(std::distance(ranked.begin(), boundary));
 }
 
@@ -112,7 +112,8 @@ inline int run(std::istream& in, std::ostream& out) {
     auto league = qualified(table, 3);
     rank(league);
     const auto promoted = promotion_zone(league, 10);
-    out << "removed " << removed << ", " << league.size() << " qualified, " << total_points(league) << " points in total\n";
+    out << "removed " << removed << ", " << league.size() << " qualified, " << total_points(league)
+        << " points in total\n";
     for (std::size_t i = 0; i < league.size(); ++i) {
         out << std::setw(2) << i + 1 << ". " << std::left << std::setw(10) << league[i].player << std::right
             << std::setw(3) << league[i].points() << (i < promoted ? "  ^ promoted" : "") << '\n';

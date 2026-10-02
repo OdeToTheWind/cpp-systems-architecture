@@ -76,11 +76,14 @@ inline std::string ascii(const Image& image) {
 
 /// The interactive demo: type a pipeline such as "invert | threshold level=100".
 inline int run(std::istream& in, std::ostream& out) {
-    out << "Day 87 – Capstone: Plugin Architecture\nhost API " << HOST_API.major << '.' << HOST_API.minor << "; plugins:\n";
+    out << "Day 87 – Capstone: Plugin Architecture\nhost API " << HOST_API.major << '.' << HOST_API.minor
+        << "; plugins:\n";
     for (const PluginInfo* p : PluginRegistry::instance().list()) {
-        out << "  " << p->name << " (API " << p->requires_api.major << '.' << p->requires_api.minor << ") – " << p->description << '\n';
+        out << "  " << p->name << " (API " << p->requires_api.major << '.' << p->requires_api.minor << ") – "
+            << p->description << '\n';
     }
-    for (const auto& [name, why] : PluginRegistry::instance().rejected()) out << "  rejected " << name << ": " << why << '\n';
+    for (const auto& [name, why] : PluginRegistry::instance().rejected())
+        out << "  rejected " << name << ": " << why << '\n';
     while (auto line = prompt_line(in, out, "pipeline> ")) {
         if (line->empty()) break;
         try {

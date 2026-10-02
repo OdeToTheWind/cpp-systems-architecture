@@ -1,3 +1,8 @@
+> **Historical document.** This audit describes the repository *before* it was rebuilt on the
+> `claude_brave` branch. Every gap it lists has since been addressed: `syllabus.md` now exists,
+> all 100 days have code, tests, notes, quizzes and generated reflections, and CI enforces
+> that they stay in sync. See the [README](README.md) for the current state.
+
 # Audit Report: 100-Day C++ Systems Architecture Challenge
 
 **Repository:** `OdeToTheWind/cpp-systems-architecture`

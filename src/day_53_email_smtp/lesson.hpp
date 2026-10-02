@@ -47,8 +47,9 @@ inline bool is_valid_address(std::string_view address) {
     const auto domain = address.substr(at + 1);
     const auto dot = domain.find('.');
     if (dot == std::string_view::npos || dot == 0 || domain.back() == '.') return false;
-    return std::none_of(address.begin(), address.end(),
-                        [](char c) { return std::isspace(static_cast<unsigned char>(c)) || std::iscntrl(static_cast<unsigned char>(c)); });
+    return std::none_of(address.begin(), address.end(), [](char c) {
+        return std::isspace(static_cast<unsigned char>(c)) || std::iscntrl(static_cast<unsigned char>(c));
+    });
 }
 
 /// RFC 4648 base64, wrapped at 76 characters per line as MIME requires.
@@ -106,13 +107,16 @@ inline std::string build_mime(const Email& email, const std::string& boundary = 
     m << "From: " << email.from << "\r\nTo: " << to_header << "\r\nSubject: " << header_safe(email.subject)
       << "\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"" << boundary << "\"\r\n\r\n"
       << "--" << boundary << "\r\nContent-Type: multipart/alternative; boundary=\"" << alt << "\"\r\n\r\n"
-      << "--" << alt << "\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n" << email.text << "\r\n"
-      << "--" << alt << "\r\nContent-Type: text/html; charset=utf-8\r\n\r\n" << email.html << "\r\n"
+      << "--" << alt << "\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n"
+      << email.text << "\r\n"
+      << "--" << alt << "\r\nContent-Type: text/html; charset=utf-8\r\n\r\n"
+      << email.html << "\r\n"
       << "--" << alt << "--\r\n";
     for (const auto& file : email.attachments) {
         m << "--" << boundary << "\r\nContent-Type: " << file.content_type << "; name=\"" << header_safe(file.filename)
           << "\"\r\nContent-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\""
-          << header_safe(file.filename) << "\"\r\n\r\n" << base64_encode(file.bytes) << "\r\n";
+          << header_safe(file.filename) << "\"\r\n\r\n"
+          << base64_encode(file.bytes) << "\r\n";
     }
     m << "--" << boundary << "--\r\n";
     return m.str();
@@ -120,7 +124,7 @@ inline std::string build_mime(const Email& email, const std::string& boundary = 
 
 /// The only thing SmtpClient knows about the network.
 class Transport {
-public:
+  public:
     virtual ~Transport() = default;
     virtual void send_line(const std::string& line) = 0;
     virtual std::string read_reply() = 0;  // e.g. "250 OK"
@@ -128,16 +132,16 @@ public:
 
 /// An SMTP reply code that was not the one expected.
 class SmtpError : public std::runtime_error {
-public:
+  public:
     SmtpError(int code, const std::string& reply) : std::runtime_error("SMTP error: " + reply), code_(code) {}
     int code() const noexcept { return code_; }
 
-private:
+  private:
     int code_;
 };
 
 class SmtpClient {
-public:
+  public:
     explicit SmtpClient(Transport& transport) : transport_(transport) {}
 
     /// The SMTP dialogue: greeting, EHLO, MAIL FROM, RCPT TO per recipient, DATA, message, ".", QUIT.
@@ -159,7 +163,7 @@ public:
         command("QUIT", 221);
     }
 
-private:
+  private:
     void command(const std::string& line, int expected) {
         transport_.send_line(line);
         expect(expected);
@@ -174,12 +178,15 @@ private:
 
 /// Pretends to be a happy SMTP server and records the conversation instead of sending anything.
 class DryRunTransport final : public Transport {
-public:
+  public:
     void send_line(const std::string& line) override {
         sent.push_back(line);
-        if (line == "DATA") reply_ = "354 End data with <CR><LF>.<CR><LF>";
-        else if (line == "QUIT") reply_ = "221 Bye";
-        else reply_ = "250 OK";
+        if (line == "DATA")
+            reply_ = "354 End data with <CR><LF>.<CR><LF>";
+        else if (line == "QUIT")
+            reply_ = "221 Bye";
+        else
+            reply_ = "250 OK";
     }
     std::string read_reply() override {
         if (first_) {
@@ -190,14 +197,17 @@ public:
     }
     std::vector<std::string> sent;
 
-private:
+  private:
     bool first_{true};
     std::string reply_;
 };
 
 inline Email monthly_statement(const std::string& member, const std::string& address, long long due_cents) {
-    const std::string amount = std::to_string(due_cents / 100) + "." + (due_cents % 100 < 10 ? "0" : "") + std::to_string(due_cents % 100);
-    return {"accounts@coop.example", {address}, "Your statement for May",
+    const std::string amount =
+        std::to_string(due_cents / 100) + "." + (due_cents % 100 < 10 ? "0" : "") + std::to_string(due_cents % 100);
+    return {"accounts@coop.example",
+            {address},
+            "Your statement for May",
             "Hello " + member + ",\nyou owe " + amount + " EUR this month.",
             "<p>Hello " + member + ",</p><p>you owe <b>" + amount + " EUR</b> this month.</p>",
             {{"statement.csv", "text/csv", "item,amount\nservice charge," + amount + "\n"}}};
@@ -216,7 +226,8 @@ inline int run(std::istream& in, std::ostream& out) {
             const Email email = monthly_statement(member, address, cents);
             DryRunTransport transport;
             SmtpClient(transport).send(email, build_mime(email));
-            out << "  dry run OK: " << transport.sent.size() << " lines sent, first: " << transport.sent.front() << '\n';
+            out << "  dry run OK: " << transport.sent.size() << " lines sent, first: " << transport.sent.front()
+                << '\n';
         } catch (const std::exception& error) {
             out << "  not sent: " << error.what() << '\n';
         }

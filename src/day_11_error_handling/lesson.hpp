@@ -40,12 +40,12 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// A reading that is well-formed but physically impossible. Carries the offending sensor id.
 class SensorError : public std::runtime_error {
-public:
+  public:
     SensorError(std::string sensor, const std::string& message)
         : std::runtime_error(sensor + ": " + message), sensor_(std::move(sensor)) {}
     const std::string& sensor() const noexcept { return sensor_; }
 
-private:
+  private:
     std::string sensor_;
 };
 

@@ -14,14 +14,15 @@ TEST_CASE("schedule specs are parsed strictly") {
     CHECK_EQ(std::get<Every>(parse_schedule("every 2h")).interval, 7200);
     CHECK_EQ(std::get<Hourly>(parse_schedule("hourly :05")).minute, 5);
     CHECK_EQ(std::get<Daily>(parse_schedule("daily 02:30")).hour, 2);
-    for (const char* bad : {"every 0m", "every 5d", "hourly 5", "daily 24:00", "daily 2:30", "weekly mon", "every 5m now", ""}) {
+    for (const char* bad :
+         {"every 0m", "every 5d", "hourly 5", "daily 24:00", "daily 2:30", "weekly mon", "every 5m now", ""}) {
         CHECK_THROWS_AS(parse_schedule(bad), std::invalid_argument);
     }
 }
 
 TEST_CASE("next runs are strictly in the future and aligned") {
     CHECK_EQ(next_after(Every{900}, 0), 900);
-    CHECK_EQ(next_after(Every{900}, 900), 1800);  // strictly after
+    CHECK_EQ(next_after(Every{900}, 900), 1800);   // strictly after
     CHECK_EQ(next_after(Every{900}, 1000), 1800);  // aligned to the interval, not to "now"
     CHECK_EQ(format_time(next_after(Hourly{5}, 3 * HOUR + 10 * MINUTE)), "Mon 04:05");
     CHECK_EQ(format_time(next_after(Daily{2, 30}, 2 * HOUR)), "Mon 02:30");
@@ -53,7 +54,9 @@ TEST_CASE("long runs time out and later runs never overlap") {
     SimulatedClock clock;
     Scheduler scheduler(clock);
     int calls = 0;
-    scheduler.add("reindex", "every 10m", [&calls](Seconds) { return ++calls == 1 ? Seconds{25 * MINUTE} : Seconds{60}; }, 25 * MINUTE);
+    scheduler.add(
+        "reindex", "every 10m", [&calls](Seconds) { return ++calls == 1 ? Seconds{25 * MINUTE} : Seconds{60}; },
+        25 * MINUTE);
     scheduler.run_until(HOUR);
     const auto& h = scheduler.history();
     CHECK_EQ(h[0].outcome, "ok");  // exactly at the timeout is allowed
@@ -71,10 +74,13 @@ TEST_CASE("long runs time out and later runs never overlap") {
 TEST_CASE("failing jobs are recorded and do not stop the scheduler") {
     SimulatedClock clock;
     Scheduler scheduler(clock);
-    scheduler.add("flaky", "every 1h", [](Seconds t) -> Seconds {
-        if (t == 2 * HOUR) throw std::runtime_error("disk full");
-        return 1;
-    }, 60);
+    scheduler.add(
+        "flaky", "every 1h",
+        [](Seconds t) -> Seconds {
+            if (t == 2 * HOUR) throw std::runtime_error("disk full");
+            return 1;
+        },
+        60);
     scheduler.run_until(3 * HOUR);
     CHECK_EQ(scheduler.history()[1].outcome, "failed: disk full");
     CHECK_EQ(scheduler.count("flaky", "ok"), 2);
@@ -82,7 +88,8 @@ TEST_CASE("failing jobs are recorded and do not stop the scheduler") {
 }
 
 TEST_CASE("run simulates and prints the history") {
-    std::istringstream in("add backup 600 3600 daily 02:30\nadd sync 4000 3600 hourly :00\nadd x 1 1 weekly\nrun 4\nstop\n");
+    std::istringstream in(
+        "add backup 600 3600 daily 02:30\nadd sync 4000 3600 hourly :00\nadd x 1 1 weekly\nrun 4\nstop\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

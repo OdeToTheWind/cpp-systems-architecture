@@ -44,7 +44,8 @@ TEST_CASE("SameMajorVersion accepts newer minors but never another major") {
 }
 
 TEST_CASE("targets are built after their dependencies, and cycles are rejected") {
-    const auto order = build_order({{"app", {"unitconv", "logging"}}, {"unitconv", {}}, {"logging", {"fmtlite"}}, {"fmtlite", {}}});
+    const auto order =
+        build_order({{"app", {"unitconv", "logging"}}, {"unitconv", {}}, {"logging", {"fmtlite"}}, {"fmtlite", {}}});
     auto pos = [&](const std::string& t) { return std::find(order.begin(), order.end(), t) - order.begin(); };
     CHECK_EQ(order.size(), 4u);
     CHECK(pos("fmtlite") < pos("logging"));
@@ -62,12 +63,15 @@ TEST_CASE("usage requirements propagate by scope") {
     const std::map<std::string, Target> targets{
         {"unitconv", {{{"unitconv/include", Scope::PUBLIC}, {"unitconv/src", Scope::PRIVATE}}, {}}},
         {"headers_only", {{{"ho/include", Scope::INTERFACE}}, {}}},
-        {"service", {{{"service/src", Scope::PRIVATE}}, {{"unitconv", Scope::PUBLIC}, {"headers_only", Scope::PRIVATE}}}},
+        {"service",
+         {{{"service/src", Scope::PRIVATE}}, {{"unitconv", Scope::PUBLIC}, {"headers_only", Scope::PRIVATE}}}},
         {"app", {{}, {{"service", Scope::PRIVATE}}}}};
     CHECK(effective_includes(targets, "unitconv") == std::set<std::string>{"unitconv/include", "unitconv/src"});
     CHECK(effective_includes(targets, "headers_only").empty());  // INTERFACE: for consumers only
-    CHECK(effective_includes(targets, "service") == std::set<std::string>{"service/src", "unitconv/include", "ho/include"});
-    CHECK(effective_includes(targets, "app") == std::set<std::string>{"unitconv/include"});  // only what service made PUBLIC
+    CHECK(effective_includes(targets, "service") ==
+          std::set<std::string>{"service/src", "unitconv/include", "ho/include"});
+    CHECK(effective_includes(targets, "app") ==
+          std::set<std::string>{"unitconv/include"});  // only what service made PUBLIC
 }
 
 TEST_CASE("CPack file names and the demo") {

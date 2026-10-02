@@ -41,9 +41,11 @@ TEST_CASE("incompatible API versions are refused with a reason") {
 }
 
 TEST_CASE("duplicate names are refused, other plugins can be added at run time") {
-    CHECK(!register_plugin({"invert", "impostor", {2, 0}, [](const Options&) { return std::make_unique<plugins::Invert>(); }}));
+    CHECK(!register_plugin(
+        {"invert", "impostor", {2, 0}, [](const Options&) { return std::make_unique<plugins::Invert>(); }}));
     CHECK_EQ(PluginRegistry::instance().rejected().at("invert"), "duplicate name");
-    CHECK(register_plugin({"zero", "all black", {2, 3}, [](const Options&) { return std::make_unique<plugins::Threshold>(256); }}));
+    CHECK(register_plugin(
+        {"zero", "all black", {2, 3}, [](const Options&) { return std::make_unique<plugins::Threshold>(256); }}));
     Image img = row({1, 200});
     PluginRegistry::instance().create("zero", {})->apply(img);
     CHECK(img.pixels == std::vector<std::uint8_t>{0, 0});

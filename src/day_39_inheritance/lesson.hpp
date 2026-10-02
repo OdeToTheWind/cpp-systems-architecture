@@ -43,7 +43,7 @@ struct DestructionLog {
 };
 
 class Charger {
-public:
+  public:
     Charger(std::string id, double power_kw) : id_(std::move(id)), power_kw_(power_kw) {
         if (power_kw <= 0) {
             throw std::invalid_argument("power must be positive");
@@ -66,33 +66,33 @@ public:
         return static_cast<long long>(delivered * price_per_kwh_cents()) + idle_fee_cents(minutes);
     }
 
-protected:
+  protected:
     virtual double price_per_kwh_cents() const { return 40.0; }
     virtual long long idle_fee_cents(int /*minutes*/) const { return 0; }
 
-private:
+  private:
     std::string id_;
     double power_kw_;
 };
 
 class AcCharger : public Charger {
-public:
+  public:
     explicit AcCharger(std::string id) : Charger(std::move(id), 11.0) {}
     ~AcCharger() override { ++DestructionLog::derived; }
     std::string kind() const override { return "AC 11 kW"; }
 
-protected:
+  protected:
     double price_per_kwh_cents() const override { return 35.0; }
 };
 
 /// `final`: fast chargers are a leaf of the hierarchy; the compiler rejects any further derivation.
 class DcFastCharger final : public Charger {
-public:
+  public:
     explicit DcFastCharger(std::string id) : Charger(std::move(id), 150.0) {}
     ~DcFastCharger() override { ++DestructionLog::derived; }
     std::string kind() const override { return "DC 150 kW"; }
 
-protected:
+  protected:
     double price_per_kwh_cents() const override { return 59.0; }
     /// Blocking a fast charger is expensive: 0.40 per minute after the first 45 minutes.
     long long idle_fee_cents(int minutes) const override { return minutes > 45 ? 40LL * (minutes - 45) : 0; }
@@ -100,21 +100,21 @@ protected:
 
 /// Interface: can send a status report to the operator's back office.
 class Reportable {
-public:
+  public:
     virtual ~Reportable() = default;
     virtual std::string status_report() const = 0;
 };
 
 /// Interface: needs periodic maintenance.
 class Maintainable {
-public:
+  public:
     virtual ~Maintainable() = default;
     virtual int days_until_service() const = 0;
 };
 
 /// One implementation inherited (AcCharger) plus two interfaces – the safe form of multiple inheritance.
 class SolarCanopyCharger final : public AcCharger, public Reportable, public Maintainable {
-public:
+  public:
     SolarCanopyCharger(std::string id, double solar_share, int days_to_service)
         : AcCharger(std::move(id)), solar_share_(solar_share), days_to_service_(days_to_service) {}
     std::string kind() const override { return "AC 11 kW + solar canopy"; }
@@ -123,13 +123,13 @@ public:
     }
     int days_until_service() const override { return days_to_service_; }
 
-protected:
+  protected:
     /// Solar energy is cheaper, so the price blends with the AC price by the solar share.
     double price_per_kwh_cents() const override {
         return AcCharger::price_per_kwh_cents() * (1.0 - solar_share_) + 10.0 * solar_share_;
     }
 
-private:
+  private:
     double solar_share_;
     int days_to_service_;
 };
@@ -160,8 +160,8 @@ inline int run(std::istream& in, std::ostream& out) {
             break;
         }
         for (const auto& charger : site) {
-            out << "  " << charger->id() << " (" << charger->kind() << "): " << charger->session_cost_cents(kwh, minutes)
-                << " cents\n";
+            out << "  " << charger->id() << " (" << charger->kind()
+                << "): " << charger->session_cost_cents(kwh, minutes) << " cents\n";
         }
     }
     for (const auto& charger : site) {

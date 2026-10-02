@@ -47,7 +47,9 @@ inline constexpr Deliverable DELIVERABLES[] = {
 static_assert(TEXTKIT_VERSION_MAJOR == 1, "this lesson is written for textkit 1.x");
 
 /// Uses only textkit/case.hpp – nothing has to be linked for these functions.
-inline std::string headline(std::string_view title) { return textkit::title_case(title) + "  [" + textkit::slug(title) + "]"; }
+inline std::string headline(std::string_view title) {
+    return textkit::title_case(title) + "  [" + textkit::slug(title) + "]";
+}
 
 /// Uses textkit/stats.hpp, whose definitions come from the linked `textkit` library.
 inline std::string summarise(std::string_view text) {
@@ -87,7 +89,8 @@ inline Version parse_version(std::string_view text) {
 }
 
 inline std::string to_string(const Version& v) {
-    return std::to_string(v.major_version) + '.' + std::to_string(v.minor_version) + '.' + std::to_string(v.patch_version);
+    return std::to_string(v.major_version) + '.' + std::to_string(v.minor_version) + '.' +
+           std::to_string(v.patch_version);
 }
 
 /// ">=1.2" any newer version; "^1.2.0" same major, at least 1.2.0; "==1.0.0" exactly; "1.2" means ">=1.2".
@@ -128,16 +131,23 @@ enum class Acquire { find_package, fetch_content };
 inline std::string cmake_snippet(const std::string& package, const std::string& version, Acquire how,
                                  const std::string& git_url = "") {
     if (how == Acquire::find_package) {
-        return "find_package(" + package + " " + version + " CONFIG REQUIRED)\n"
-               "target_link_libraries(app PRIVATE " + package + "::" + package + ")\n";
+        return "find_package(" + package + " " + version +
+               " CONFIG REQUIRED)\n"
+               "target_link_libraries(app PRIVATE " +
+               package + "::" + package + ")\n";
     }
     if (git_url.empty()) {
         throw std::invalid_argument("FetchContent needs a repository URL");
     }
     return "include(FetchContent)\n"
-           "FetchContent_Declare(" + package + " GIT_REPOSITORY " + git_url + " GIT_TAG v" + version + ")\n"
-           "FetchContent_MakeAvailable(" + package + ")\n"
-           "target_link_libraries(app PRIVATE " + package + ")\n";
+           "FetchContent_Declare(" +
+           package + " GIT_REPOSITORY " + git_url + " GIT_TAG v" + version +
+           ")\n"
+           "FetchContent_MakeAvailable(" +
+           package +
+           ")\n"
+           "target_link_libraries(app PRIVATE " +
+           package + ")\n";
 }
 
 /// The interactive demo: paste a newsletter paragraph; blank line to finish.

@@ -49,7 +49,8 @@ TEST_CASE("Basic auth matches the RFC 7617 example") {
 TEST_CASE("bearer tokens are cached and refreshed shortly before expiry") {
     long long now = 0;
     int issued = 0;
-    TokenCache cache([&] { return Token{"t" + std::to_string(++issued), 600s}; }, [&] { return std::chrono::seconds{now}; });
+    TokenCache cache([&] { return Token{"t" + std::to_string(++issued), 600s}; },
+                     [&] { return std::chrono::seconds{now}; });
     CHECK_EQ(cache.header(), "Bearer t1");
     now = 500;
     CHECK_EQ(cache.header(), "Bearer t1");

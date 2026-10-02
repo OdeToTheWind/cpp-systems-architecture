@@ -79,8 +79,7 @@ inline std::vector<std::pair<std::string, int>> rank_finishers(const std::vector
 }
 
 /// Name of the first runner (in start order) with a total under @p limit; stops scanning at once.
-inline std::optional<std::string> first_under(const std::vector<Runner>& runners, int limit,
-                                              std::size_t checkpoints) {
+inline std::optional<std::string> first_under(const std::vector<Runner>& runners, int limit, std::size_t checkpoints) {
     std::optional<std::string> found;
     for (std::size_t i = 0; i < runners.size(); ++i) {  // size_t matches runners.size()
         if (finished(runners[i], checkpoints) && total_seconds(runners[i]) < limit) {
@@ -115,8 +114,8 @@ inline std::vector<int> splits_in_reverse(const Runner& runner) {
 /// 3725 -> "1:02:05".
 inline std::string format_time(int seconds) {
     std::ostringstream out;
-    out << seconds / 3600 << ':' << std::setw(2) << std::setfill('0') << seconds % 3600 / 60 << ':'
-        << std::setw(2) << seconds % 60;
+    out << seconds / 3600 << ':' << std::setw(2) << std::setfill('0') << seconds % 3600 / 60 << ':' << std::setw(2)
+        << seconds % 60;
     return out.str();
 }
 

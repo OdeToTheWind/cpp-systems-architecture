@@ -44,16 +44,11 @@ enum class State { registered, in_transit, in_locker, collected, returned };
 
 inline std::string_view to_string(State state) {
     switch (state) {
-        case State::registered:
-            return "registered";
-        case State::in_transit:
-            return "in transit";
-        case State::in_locker:
-            return "in locker";
-        case State::collected:
-            return "collected";
-        case State::returned:
-            return "returned";
+        case State::registered: return "registered";
+        case State::in_transit: return "in transit";
+        case State::in_locker: return "in locker";
+        case State::collected: return "collected";
+        case State::returned: return "returned";
     }
     return "?";
 }
@@ -72,7 +67,7 @@ inline bool allowed(State from, State to) {
 }
 
 class Parcel {
-public:
+  public:
     Parcel(std::string id, std::string pickup_code) : id_(std::move(id)), pickup_code_(std::move(pickup_code)) {
         history_.emplace_back(0, State::registered);
     }
@@ -113,7 +108,7 @@ public:
     bool finished() const { return state_ == State::collected || state_ == State::returned; }
     const std::vector<std::pair<int, State>>& history() const { return history_; }
 
-private:
+  private:
     std::string id_;
     std::string pickup_code_;
     State state_{State::registered};
@@ -122,7 +117,7 @@ private:
 
 /// Many parcels, each with independent state.
 class LockerNetwork {
-public:
+  public:
     Parcel& add(const std::string& id, const std::string& code) {
         auto [it, inserted] = parcels_.try_emplace(id, id, code);
         if (!inserted) {
@@ -155,7 +150,7 @@ public:
         return counts;
     }
 
-private:
+  private:
     std::map<std::string, Parcel> parcels_;
 };
 

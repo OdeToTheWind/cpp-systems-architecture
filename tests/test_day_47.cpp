@@ -12,7 +12,7 @@ using namespace cppm::day47;
 namespace {
 /// A headless view that records what the presenter told it to show.
 class FakeView final : public ConverterView {
-public:
+  public:
     std::string amount = "100";
     std::string from = "EUR";
     std::string to = "USD";

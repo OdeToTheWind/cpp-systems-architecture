@@ -1,15 +1,221 @@
-# placeholder
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="C++ Systems Architecture – 100 days from your first variable to production-ready C++" width="100%">
+</p>
+
+<h1 align="center">C++ Systems Architecture – 100 Days of Professional C++</h1>
+
+<p align="center">
+  <a href="https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-tests.yml"><img src="https://github.com/OdeToTheWind/cpp-systems-architecture/actions/workflows/cpp-tests.yml/badge.svg" alt="CI status"></a>
+  <img src="https://img.shields.io/badge/C%2B%2B-20-00599c?style=flat-square&logo=cplusplus" alt="C++20">
+  <img src="https://img.shields.io/badge/days-100%20%2F%20100-2ea44f?style=flat-square" alt="100 of 100 days">
+  <img src="https://img.shields.io/badge/coverage%20gate-90%25-2ea44f?style=flat-square" alt="Coverage gate 90%">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square" alt="License: MIT"></a>
+</p>
+
+**C++ Systems Architecture** covers modern C++ in 100 topics, one per day, from variables and
+strings to concurrency, coroutines, packaging and a multi-module command-line tool. Each topic
+is a small, realistic program you can run and read: a learning-streak tracker on Day 1, an
+append-only storage engine on Day 82, a personal-finance CLI on Day 100.
+
+Every day contains:
+
+* **Code:** a documented `lesson.hpp` (plus `.cpp` modules where it helps) with a runnable demo.
+* **Tests:** a test executable that shows the behaviour and the edge cases.
+* **A reflection:** the key points of the topic and the mistakes to avoid.
+* **A quiz:** two multiple-choice questions and two open bonus questions.
+
+Run `./procpp.sh 18` to see Day 18 explained from its own code, run its tests and answer its
+questions. CI checks that all of this stays consistent, on three operating systems and five
+compilers.
+
+```bash
+git clone https://github.com/OdeToTheWind/cpp-systems-architecture.git && cd cpp-systems-architecture
+cmake --preset dev && cmake --build --preset dev     # every day, warnings as errors
+ctest --preset dev                                     # every test
+./build/bin/day_01_variables                           # run your first day
+```
+
+---
+
+## Project Goals
+
+| # | Objective | How the repository delivers it |
+|:-:|---|---|
+| 1 | **C++ written the professional way.** | C++20 throughout, built with `-Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror`, checked with AddressSanitizer and UBSan, and formatted with clang-format from Day 1 onwards. |
+| 2 | **Every topic is something you run.** | 100 distinct scenarios, one per day, each with a demo. No two days share a project, and CI enforces that. |
+| 3 | **Behaviour is shown by tests.** | Every day has its own test executable, at least 5 test cases each, with no network access, no wall-clock assertions and no placeholder checks. |
+| 4 | **Content stays consistent.** | `tests/tooling/test_syllabus_sync.py` ties the syllabus, code, tests, reflections, quizzes and this README together. |
+| 5 | **Complete tools by the end.** | Days 83–100 build complete tools: CLIs, pipelines, services, plugins, packaging and a multi-module capstone. |
+
+### How to use each day
+
+Run `./procpp.sh` and type a day number, or go straight to one with `./procpp.sh 18`.
+For that day the study mode prints the scenario, what you will learn, **the file and line
+where each skill is implemented**, the key learnings and pitfalls from the day's notes, and
+what each test proves. It then builds and runs the day's tests, offers to run the demo, and
+ends with a short self-check:
+
+* **2 multiple-choice questions.** Type A, B, C or D, and you see straight away whether you
+  were right, with an explanation.
+* **Bonus questions with no answers given.** One asks you to think and explain; the other is
+  a hands-on, test-first task: write a failing test, then make it pass.
+
+1. **Study the day:** `./procpp.sh 18` (on Windows, run it in Git Bash).
+2. **Open the code** at the locations it prints, and read the functions next to their tests.
+3. **Break something on purpose.** Change one line, run `./procpp.sh 18` again, and read why a test turned red.
+4. **Make it green again**, then read the full reflection in `docs/progress/day-18-reflection.md`.
+5. **Test yourself** at any time with `./procpp.sh 18 --quiz`, and run the demo with `./procpp.sh 18 --demo`.
+
+---
+
+## Tech Stack & Tools Overview
+
+### Language and build
+
+| Tool | Role in this project |
+|---|---|
+| **C++20** | The language taught. Modern features throughout: concepts, ranges, coroutines, `<=>`, `consteval`, `std::source_location`, designated initialisers. |
+| **Standard library only** | No day needs a third-party package. Networking, e-mail, browsers and clocks are simulated behind small interfaces, so every program builds offline on any platform. |
+| **CMake 3.20+** · **CTest** | One `CMakeLists.txt` discovers every `src/day_XX_*` folder and creates a library, a demo and a test executable for it. Presets: `dev`, `release`, `sanitize`, `coverage`. |
+| **`include/cppm/testing.hpp`** | A tiny, dependency-free test framework (`TEST_CASE`, `CHECK`, `REQUIRE`, `CHECK_THROWS_AS`) so the tests read like Catch2 but need nothing to download. |
+
+### Quality and automation
+
+| Tool | Role in this project |
+|---|---|
+| **GCC 13 / 14, Clang 18, Apple Clang, MSVC 2022** | Every day is compiled by all of them in CI; GCC and Clang with warnings as errors. |
+| **AddressSanitizer + UBSan** | Every test runs under the sanitizers in CI. They confirmed a real use-after-free during the course (Day 100). |
+| **gcovr** | Line coverage of `src/` with a gate in CI. |
+| **clang-format** | One formatting style (`.clang-format`), checked on every commit. |
+| **Python 3.10+ tooling** | `scripts/build_reflections.py` generates the reflections and README tables; `scripts/learn.py` is the study mode; `tests/tooling/` keeps everything in sync. |
+| **`procpp.sh`** | Study mode for one day (`./procpp.sh 18`) and the full local quality gate (`./procpp.sh --check`), which runs what CI runs. |
+| **GitHub Actions** | CI on Linux, macOS and Windows: build + tests, sanitizers, coverage, formatting and syllabus sync. |
+
+---
+
+## Dataset Description
+
+This project does not depend on one large dataset. Instead, each day brings the small,
+purpose-built data its scenario needs. The data falls into four groups, and none of it
+contains personal information.
+
+| Source | Where it comes from | Used by |
+|---|---|---|
+| **Synthetic in-code data** | Small, readable samples written directly in each lesson, for example orders, sensor readings, ticket texts and log lines. Edge cases are deliberately included: bad rows, duplicates, out-of-range values and malformed input. | Most days |
+| **Seeded generators** | Larger data produced reproducibly from a fixed seed with `std::mt19937_64`, whose output the standard fixes – for example access logs (Day 90), driver positions (Day 95) and epidemic runs (Day 98). | 80, 90, 95, 98 and others |
+| **Simulated services** | Fake HTTP servers, SMTP sessions, browsers, chat clients and shops implemented in memory behind the same interfaces a real client would use. They make network code testable without the internet. | 53, 57–63, 93, 97 |
+| **Files in temporary directories** | Ledgers, logs, manifests and archives created by the tests themselves in a `cppm::TempDir` that deletes itself, so a test can never touch your real files. | 41–43, 52, 82, 85, 90, 100 |
+
+---
+
+## Project Directory & Structure
+
+```text
+cpp-systems-architecture/
+├── src/                                # one folder per day
+│   ├── day_01_variables/
+│   │   ├── lesson.hpp                  # "Scenario:" comment · DELIVERABLES · code · run()
+│   │   └── main.cpp                    # the demo: cppm::day01::run(std::cin, std::cout)
+│   ├── …                               # days 02–99 (some add .cpp modules or a day.cmake)
+│   └── day_100_portfolio_capstone/     # multi-module capstone (the "budget" CLI)
+├── include/cppm/
+│   ├── testing.hpp · testing_main.cpp  # the test framework
+│   ├── lesson.hpp                      # Deliverable and prompt_line helpers shared by the lessons
+│   └── temp_dir.hpp                    # self-deleting temporary directories for tests and demos
+├── tests/
+│   ├── test_day_01.cpp … test_day_100.cpp
+│   └── tooling/                        # Python checks: syllabus sync, study mode, quiz quality
+├── docs/
+│   ├── assets/banner.svg
+│   ├── progress/
+│   │   ├── notes/day-XX.json           # hand-written learnings, pitfalls, next step
+│   │   └── day-XX-reflection.md        # generated from notes + code
+│   └── quiz/day-XX.json                # 2 multiple-choice + bonus questions per day
+├── scripts/
+│   ├── build_reflections.py            # generates reflections and the README's tables
+│   └── learn.py                        # the per-day study mode behind ./procpp.sh <day>
+├── .github/                            # CI workflow, issue and pull request templates
+├── CMakeLists.txt · CMakePresets.json  # the build: one library, demo and test per day
+├── syllabus.md                         # the 100-day curriculum, grouped into five phases
+├── procpp.sh                           # study a day (./procpp.sh 18) or run the full check (--check)
+├── .clang-format
+├── CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md · CITATION.cff
+└── LICENSE                             # MIT License
+```
+
+---
+
+## System & Data Architecture
+
+The repository is a small system with one source of truth for each fact. Hand-written
+inputs are on the left. Everything on the right is generated or verified from them, so
+nothing can drift.
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#f6f8fa','primaryTextColor':'#1f2328','primaryBorderColor':'#00599c','lineColor':'#00599c','fontSize':'13px'}}}%%
+flowchart LR
+  subgraph authored ["Written by authors"]
+    S["syllabus.md<br/><sub>topics · deliverables · status</sub>"]
+    C["src/day_XX/lesson.hpp<br/><sub>scenario · DELIVERABLES · code</sub>"]
+    T["tests/test_day_XX.cpp<br/><sub>behaviour + edge cases</sub>"]
+    N["notes/day-XX.json<br/><sub>learnings · pitfalls</sub>"]
+  end
+  subgraph generated ["Generated"]
+    R["day-XX-reflection.md"]
+    I["README tables<br/><sub>KPIs · topic map · index</sub>"]
+  end
+  S & C & T & N --> B["scripts/build_reflections.py"]
+  B --> R & I
+  G{{"CI · test_syllabus_sync.py"}} -. "fails the build if anything is stale" .-> generated
+```
+
+Each day, in turn, follows the same internal shape:
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#f6f8fa','primaryTextColor':'#1f2328','primaryBorderColor':'#00599c','lineColor':'#00599c','fontSize':'13px'}}}%%
+flowchart LR
+  A["SCENARIO<br/><sub>a realistic problem</sub>"] --> B["DELIVERABLES<br/><sub>skill → code map</sub>"]
+  B --> C["CODE<br/><sub>lesson.hpp · .cpp modules</sub>"]
+  C --> D["DEMO<br/><sub>build/bin/day_XX_…</sub>"]
+  C --> E["TESTS<br/><sub>test_day_XX, no network</sub>"]
+  E --> F["REFLECTION<br/><sub>learnings · pitfalls · next</sub>"]
+```
+
+And the build turns every day folder into three targets:
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#f6f8fa','primaryTextColor':'#1f2328','primaryBorderColor':'#00599c','lineColor':'#00599c','fontSize':'13px'}}}%%
+flowchart LR
+  F["src/day_XX_topic/"] --> L["day_XX_topic_lib<br/><sub>INTERFACE or STATIC</sub>"]
+  O["day.cmake<br/><sub>optional extra targets</sub>"] -.-> L
+  L --> M["day_XX_topic<br/><sub>demo executable</sub>"]
+  L --> X["test_day_XX<br/><sub>registered with CTest</sub>"]
+  W["cppm_settings<br/><sub>C++20 · warnings · sanitizers</sub>"] --> L
+```
+
+---
+
+## Key Performance Indicators & Metrics
+
+These numbers are **measured from the repository** by `scripts/build_reflections.py`, and CI
+fails if they are out of date.
+
 <!-- kpis:start -->
 - **Curriculum completion:** 100 / 100 days covered, each with code, tests and a reflection.
 - **Test cases:** 744 `TEST_CASE`s across 100 test executables.
 - **Deliverables mapped to code:** 540 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 19,360 non-blank lines of C++ in `src/`.
+- **Source size:** 19,949 non-blank lines of C++ in `src/`.
 - **Self-check questions:** 200 multiple-choice questions with explanations, plus 200 open bonus questions (100 hands-on, test-first tasks).
-- **Coverage gate:** CI fails below ? % line coverage of `src/`.
-- **Compilers in CI:** ?.
-- **Operating systems in CI:** ?.
+- **Coverage gate:** CI fails below 90 % line coverage of `src/`.
+- **Compilers in CI:** GCC 13, GCC 14, Clang 18, Apple Clang, MSVC 2022.
+- **Operating systems in CI:** macOS, Linux, Windows.
 - **Quality checks per commit:** warnings as errors · clang-format · ASan + UBSan · unit tests with coverage · syllabus sync.
 <!-- kpis:end -->
+
+---
+
+## Topic Map
+
 <!-- topic-map:start -->
 | Phase | Days | What it covers |
 |---|:-:|---|
@@ -19,6 +225,12 @@
 | [4 · Advanced C++ Language & Tooling](syllabus.md#phase-4--advanced-c-language--tooling-days-6482) | 64–82 | Use the language at full strength: templates, concepts, ranges, ownership, move semantics, compile-time code, concurrency, coroutines, testing, packaging, profiling and storage engines. |
 | [5 · Capstone-Style Systems Projects](syllabus.md#phase-5--capstone-style-systems-projects-days-83100) | 83–100 | Ship complete tools: CLIs, pipelines, services, plugins, validation, performance work, packaging and a portfolio capstone. |
 <!-- topic-map:end -->
+
+<details>
+<summary><b>All 100 days</b> (scenario, code, tests and notes for every day)</summary>
+
+Level: 🟢 Beginner · 🟡 Intermediate · 🟠 Advanced · 🔴 Capstone
+
 <!-- course-index:start -->
 | Day | Topic | Level | Scenario you build | Links |
 |---:|---|:-:|---|---|
@@ -123,3 +335,58 @@
 | 99 | Observability & Debugging Toolkit | 🔴 | A *checkout service that fails once in a few thousand orders*, only in production. A debugger cannot be attached there, so the service carries its own instruments: spans that time each step of a request, a flight recorder of recent calls captured with std::source_location, watchpoints that log every change to a suspicious variable, and a crash reporter that turns an exception (with its nested causes) into a report with all of that context. | [code](src/day_99_observability/lesson.hpp) · [tests](tests/test_day_99.cpp) · [notes](docs/progress/day-99-reflection.md) |
 | 100 | Portfolio Capstone: Production-ready C++ Tool | 🔴 | `budget`, a *personal-finance command-line tool* – the portfolio piece that pulls the course together. It records income and spending in an append-only, checksummed ledger file, reads limits per category from an INI file with environment overrides, prints monthly reports with budget warnings and a CSV export, logs what it does, carries a single-sourced version from the build, and is covered module by module and end to end by tests. | [code](src/day_100_portfolio_capstone/lesson.hpp) · [tests](tests/test_day_100.cpp) · [notes](docs/progress/day-100-reflection.md) |
 <!-- course-index:end -->
+
+</details>
+
+The detailed curriculum, with the deliverables for every day, is in [`syllabus.md`](syllabus.md).
+
+---
+
+## Technical Justifications & Explanations
+
+| Decision | Why |
+|---|---|
+| **One self-contained folder per day** | Any day can be opened, built and run on its own, and a broken day cannot break the rest. |
+| **Header-first lessons** | A learner reads one `lesson.hpp` top to bottom. Days that teach separate compilation (12, 22, 23, 92) or libraries (29, 79) add `.cpp` modules and their own CMake targets. |
+| **A home-grown test framework** | Catch2-style tests with no download, no version pinning and no build-time surprises – and the framework itself is short enough to read (Day 78 explains it). |
+| **A `DELIVERABLES` table in every lesson** | Each syllabus promise points to real code, and CI checks that the target exists. |
+| **Generated reflections and README tables** | Writing facts by hand invites drift. Generating them from code and notes, then verifying them in CI, keeps the documentation truthful. |
+| **No network, no real clock, no unseeded randomness in tests** | Tests must pass offline, on every OS and every time. Transports, clocks and random engines are injected. |
+| **Warnings as errors and sanitizers** | Many C++ bugs compile cleanly. In Day 100, GCC's `-Wdangling-reference` flagged a loop over a destroyed temporary and AddressSanitizer proved it. |
+| **Integer cents for money** | Binary floating point cannot represent cents exactly. Every financial example (Days 5, 84, 88, 100) uses integers and rounds deliberately. |
+| **Portable seeds** | `std::mt19937_64` is fixed by the standard; the distributions are not. Days that must reproduce exact numbers convert raw engine bits themselves. |
+| **CI on three operating systems and five compilers** | Path, line-ending and standard-library differences are caught in CI, not on a reader's machine. |
+
+---
+
+## Project Timeline & Deadlines
+
+| Milestone | Status |
+|---|---|
+| Days 1–63: fundamentals, intermediate C++, networking and automation | ✅ Done |
+| Days 64–100: advanced language features and complete tools | ✅ Done |
+| Study mode with quizzes: `./procpp.sh <day>` | ✅ Done |
+| CI on Linux, Windows and macOS with sanitizers and a coverage gate | ✅ Done |
+| `v1.0.0` release on the `main` branch | ⏳ Next |
+
+---
+
+## Contact & Author Information
+
+**[Bhargavi Badal](https://github.com/OdeToTheWind)**, author and maintainer
+
+<p>
+  <a href="https://github.com/OdeToTheWind"><img src="https://img.shields.io/badge/GitHub-OdeToTheWind-181717?style=flat-square&logo=github" alt="GitHub: OdeToTheWind"></a>
+  <a href="https://github.com/OdeToTheWind/cpp-systems-architecture/issues/new/choose"><img src="https://img.shields.io/badge/Report-an%20issue-00599c?style=flat-square" alt="Report an issue"></a>
+</p>
+
+* **Found a mistake or have an idea?** [Open an issue](https://github.com/OdeToTheWind/cpp-systems-architecture/issues/new/choose). Templates are provided for content errors, bugs and ideas.
+* **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+* **Found a security issue?** Report it privately, as described in [SECURITY.md](SECURITY.md).
+* **Referencing this project?** Please cite it using [CITATION.cff](CITATION.cff).
+
+### Licence
+
+Everything in this repository, code and written content alike, is released under the
+[MIT License](LICENSE). You may reuse and adapt it, including commercially, as long as
+the copyright notice is kept. Please credit **"C++ Systems Architecture" by [Bhargavi Badal](https://github.com/OdeToTheWind)**.

@@ -63,7 +63,8 @@ inline std::uint32_t crc32(std::istream& in) {
     while (in) {
         in.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
         const auto got = static_cast<std::size_t>(in.gcount());
-        for (std::size_t i = 0; i < got; ++i) crc = table[(crc ^ static_cast<unsigned char>(buffer[i])) & 0xFF] ^ (crc >> 8);
+        for (std::size_t i = 0; i < got; ++i)
+            crc = table[(crc ^ static_cast<unsigned char>(buffer[i])) & 0xFF] ^ (crc >> 8);
     }
     return crc ^ 0xFFFFFFFFu;
 }
@@ -95,7 +96,8 @@ struct FileResult {
 /// Checksum @p files with @p threads workers. Each worker repeatedly claims the next index with
 /// fetch_add, so fast workers take more files and no file is processed twice. Every result goes to
 /// its own pre-allocated slot, so no lock is needed and the output order matches the input order.
-inline std::vector<FileResult> checksum_all(const fs::path& root, const std::vector<std::string>& files, unsigned threads) {
+inline std::vector<FileResult> checksum_all(const fs::path& root, const std::vector<std::string>& files,
+                                            unsigned threads) {
     if (threads == 0) throw std::invalid_argument("need at least one thread");
     std::vector<FileResult> results(files.size());
     std::atomic<std::size_t> next{0};
@@ -142,7 +144,8 @@ inline std::map<std::string, FileResult> read_manifest(std::istream& in) {
         std::istringstream fields(line);
         std::string crc;
         FileResult r;
-        if (!(fields >> crc >> r.size) || crc.size() != 8 || !std::getline(fields >> std::ws, r.path) || r.path.empty()) {
+        if (!(fields >> crc >> r.size) || crc.size() != 8 || !std::getline(fields >> std::ws, r.path) ||
+            r.path.empty()) {
             throw std::runtime_error("manifest line " + std::to_string(number) + " is malformed");
         }
         r.crc = static_cast<std::uint32_t>(std::stoul(crc, nullptr, 16));
@@ -169,9 +172,12 @@ inline VerifyReport verify(const fs::path& root, const std::map<std::string, Fil
             continue;
         }
         const auto it = manifest.find(r.path);
-        if (it == manifest.end()) report.added.push_back(r.path);
-        else if (it->second.crc != r.crc || it->second.size != r.size) report.modified.push_back(r.path);
-        else report.ok.push_back(r.path);
+        if (it == manifest.end())
+            report.added.push_back(r.path);
+        else if (it->second.crc != r.crc || it->second.size != r.size)
+            report.modified.push_back(r.path);
+        else
+            report.ok.push_back(r.path);
         seen[r.path] = true;
     }
     for (const auto& [path, entry] : manifest) {
@@ -193,7 +199,9 @@ inline std::size_t create_manifest(const fs::path& root, unsigned threads) {
 inline int run(std::istream& in, std::ostream& out, const fs::path& root = fs::temp_directory_path() / "cppm-archive") {
     out << "Day 85 – Capstone: Concurrent File Processor\n";
     fs::create_directories(root / "2026" / "06");
-    for (int i = 1; i <= 6; ++i) std::ofstream(root / "2026" / "06" / ("IMG_" + std::to_string(i) + ".jpg"), std::ios::binary) << std::string(1000u * static_cast<unsigned>(i), static_cast<char>('a' + i));
+    for (int i = 1; i <= 6; ++i)
+        std::ofstream(root / "2026" / "06" / ("IMG_" + std::to_string(i) + ".jpg"), std::ios::binary)
+            << std::string(1000u * static_cast<unsigned>(i), static_cast<char>('a' + i));
     const unsigned threads = std::max(2u, std::thread::hardware_concurrency());
     while (auto line = prompt_line(in, out, "manifest | verify | touch <f> <text> | rm <f>> ")) {
         std::istringstream words(*line);
@@ -206,8 +214,9 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& root = fs::t
         } else if (command == "verify") {
             std::ifstream manifest_file(root / MANIFEST_NAME);
             const auto report = verify(root, read_manifest(manifest_file), threads);
-            out << "  ok " << report.ok.size() << ", modified " << report.modified.size() << ", missing " << report.missing.size()
-                << ", added " << report.added.size() << (report.clean() ? " – archive intact" : "") << '\n';
+            out << "  ok " << report.ok.size() << ", modified " << report.modified.size() << ", missing "
+                << report.missing.size() << ", added " << report.added.size()
+                << (report.clean() ? " – archive intact" : "") << '\n';
             for (const auto& p : report.modified) out << "  MODIFIED " << p << '\n';
             for (const auto& p : report.missing) out << "  MISSING  " << p << '\n';
             for (const auto& p : report.added) out << "  ADDED    " << p << '\n';

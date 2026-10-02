@@ -45,12 +45,12 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Holds a credential. Streaming it prints *** – the real value needs an explicit reveal().
 class Secret {
-public:
+  public:
     explicit Secret(std::string value) : value_(std::move(value)) {}
     const std::string& reveal() const { return value_; }
     friend std::ostream& operator<<(std::ostream& out, const Secret&) { return out << "***"; }
 
-private:
+  private:
     std::string value_;
 };
 
@@ -65,8 +65,8 @@ struct Credentials {
 /// Read SHIP_* variables from @p env (the real program passes the process environment). Every
 /// missing variable is reported in one message, so a deployment is fixed in one go.
 inline Credentials load_credentials(const std::map<std::string, std::string>& env) {
-    static const std::vector<std::string> required{"SHIP_ALPHA_API_KEY", "SHIP_BETA_CLIENT_ID", "SHIP_BETA_CLIENT_SECRET",
-                                                   "SHIP_GAMMA_USER", "SHIP_GAMMA_PASSWORD"};
+    static const std::vector<std::string> required{"SHIP_ALPHA_API_KEY", "SHIP_BETA_CLIENT_ID",
+                                                   "SHIP_BETA_CLIENT_SECRET", "SHIP_GAMMA_USER", "SHIP_GAMMA_PASSWORD"};
     std::string missing;
     for (const auto& name : required) {
         const auto it = env.find(name);
@@ -74,7 +74,8 @@ inline Credentials load_credentials(const std::map<std::string, std::string>& en
     }
     if (!missing.empty()) throw std::runtime_error("missing environment variables: " + missing);
     return {Secret(env.at("SHIP_ALPHA_API_KEY")), Secret(env.at("SHIP_BETA_CLIENT_ID")),
-            Secret(env.at("SHIP_BETA_CLIENT_SECRET")), env.at("SHIP_GAMMA_USER"), Secret(env.at("SHIP_GAMMA_PASSWORD"))};
+            Secret(env.at("SHIP_BETA_CLIENT_SECRET")), env.at("SHIP_GAMMA_USER"),
+            Secret(env.at("SHIP_GAMMA_PASSWORD"))};
 }
 
 inline std::string base64(std::string_view data) {
@@ -105,7 +106,7 @@ struct Token {
 };
 
 class TokenCache {
-public:
+  public:
     using Clock = std::function<std::chrono::seconds()>;  // seconds since some epoch, injectable for tests
     using Fetch = std::function<Token()>;
 
@@ -124,7 +125,7 @@ public:
     }
     int fetches() const { return fetches_; }
 
-private:
+  private:
     Fetch fetch_;
     Clock clock_;
     std::optional<std::string> token_;
@@ -137,7 +138,8 @@ inline std::map<std::string, std::string> auth_headers(const std::string& carrie
                                                        TokenCache& beta_tokens) {
     if (carrier == "alpha") return {{"X-Api-Key", credentials.alpha_api_key.reveal()}};
     if (carrier == "beta") return {{"Authorization", beta_tokens.header()}};
-    if (carrier == "gamma") return {{"Authorization", basic_auth_header(credentials.gamma_user, credentials.gamma_password)}};
+    if (carrier == "gamma")
+        return {{"Authorization", basic_auth_header(credentials.gamma_user, credentials.gamma_password)}};
     throw std::invalid_argument("unknown carrier " + carrier);
 }
 

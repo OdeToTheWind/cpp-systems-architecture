@@ -17,24 +17,15 @@ bool is_mass(Unit unit) {
 // Each unit's size in the base unit of its dimension: grams for mass, millilitres for volume.
 double in_base_units(Unit unit) {
     switch (unit) {
-        case Unit::gram:
-            return 1.0;
-        case Unit::kilogram:
-            return 1000.0;
-        case Unit::ounce:
-            return 28.349523125;  // avoirdupois ounce, exact by definition
-        case Unit::pound:
-            return 453.59237;
-        case Unit::millilitre:
-            return 1.0;
-        case Unit::litre:
-            return 1000.0;
-        case Unit::cup:
-            return cups_to_millilitres(1.0);
-        case Unit::tablespoon:
-            return 14.786765;
-        case Unit::teaspoon:
-            return 4.928922;
+        case Unit::gram: return 1.0;
+        case Unit::kilogram: return 1000.0;
+        case Unit::ounce: return 28.349523125;  // avoirdupois ounce, exact by definition
+        case Unit::pound: return 453.59237;
+        case Unit::millilitre: return 1.0;
+        case Unit::litre: return 1000.0;
+        case Unit::cup: return cups_to_millilitres(1.0);
+        case Unit::tablespoon: return 14.786765;
+        case Unit::teaspoon: return 4.928922;
     }
     return 1.0;
 }
@@ -81,7 +72,8 @@ std::vector<double> scale_recipe(const std::vector<double>& amounts, double fact
 std::vector<std::string> find_undocumented(std::string_view header_text) {
     // A deliberately small heuristic: a line that declares a function at namespace level,
     // and the closest non-blank line above it. Real projects use doxygen's WARN_IF_UNDOCUMENTED.
-    static const std::regex declaration(R"(^(?:inline\s+)?[\w:<>,\s*&]+?\s+[*&]?(\w+)\s*\([^;{]*\)\s*(?:const)?\s*[;{])");
+    static const std::regex declaration(
+        R"(^(?:inline\s+)?[\w:<>,\s*&]+?\s+[*&]?(\w+)\s*\([^;{]*\)\s*(?:const)?\s*[;{])");
     std::vector<std::string> missing;
     std::istringstream lines{std::string(header_text)};
     std::string line;

@@ -147,7 +147,8 @@ inline void save(const fs::path& path, const std::vector<Book>& books) {
     const fs::path temp = path.string() + ".tmp";
     {
         std::ofstream out(temp, std::ios::trunc);
-        for (const auto& b : books) out << b.id << '\t' << (b.done ? 1 : 0) << '\t' << b.title << '\t' << b.author << '\n';
+        for (const auto& b : books)
+            out << b.id << '\t' << (b.done ? 1 : 0) << '\t' << b.title << '\t' << b.author << '\n';
         if (!out.flush()) throw std::runtime_error("cannot write " + temp.string());
     }
     fs::rename(temp, path);
@@ -163,8 +164,8 @@ inline std::string json_string(const std::string& s) {
 }
 
 inline std::string to_json(const Book& b) {
-    return "{\"id\":" + std::to_string(b.id) + ",\"title\":" + json_string(b.title) + ",\"author\":" + json_string(b.author) +
-           ",\"done\":" + (b.done ? "true" : "false") + "}";
+    return "{\"id\":" + std::to_string(b.id) + ",\"title\":" + json_string(b.title) +
+           ",\"author\":" + json_string(b.author) + ",\"done\":" + (b.done ? "true" : "false") + "}";
 }
 
 inline std::string to_json(const std::vector<Book>& books) {
@@ -187,32 +188,39 @@ inline ExitCode execute(const Invocation& inv, const Settings& settings, std::os
     };
     verbose("store " + settings.store_path.string() + " has " + std::to_string(books.size()) + " book(s)");
     if (inv.command == "add") {
-        if (inv.args.empty() || inv.args.size() > 2 || inv.args[0].empty()) throw UsageError("add needs <title> [author]");
+        if (inv.args.empty() || inv.args.size() > 2 || inv.args[0].empty())
+            throw UsageError("add needs <title> [author]");
         int next = 1;
         for (const auto& b : books) next = std::max(next, b.id + 1);
         books.push_back({next, clean(inv.args[0]), inv.args.size() > 1 ? clean(inv.args[1]) : "", false});
         save(settings.store_path, books);
-        if (inv.json) out << to_json(books.back()) << '\n';
-        else if (inv.verbosity > 0) out << "added #" << next << ' ' << books.back().title << '\n';
+        if (inv.json)
+            out << to_json(books.back()) << '\n';
+        else if (inv.verbosity > 0)
+            out << "added #" << next << ' ' << books.back().title << '\n';
         return ExitCode::ok;
     }
     if (inv.command == "list") {
         if (!inv.args.empty()) throw UsageError("list takes no arguments");
         if (settings.list_sort == "title") {
-            std::stable_sort(books.begin(), books.end(), [](const Book& a, const Book& b) { return a.title < b.title; });
+            std::stable_sort(books.begin(), books.end(),
+                             [](const Book& a, const Book& b) { return a.title < b.title; });
         }
-        if (books.size() > static_cast<std::size_t>(settings.list_limit)) books.resize(static_cast<std::size_t>(settings.list_limit));
+        if (books.size() > static_cast<std::size_t>(settings.list_limit))
+            books.resize(static_cast<std::size_t>(settings.list_limit));
         if (inv.json) {
             out << to_json(books) << '\n';
         } else {
             for (const auto& b : books) {
-                out << (b.done ? "[x] " : "[ ] ") << '#' << b.id << ' ' << b.title << (b.author.empty() ? "" : " – " + b.author) << '\n';
+                out << (b.done ? "[x] " : "[ ] ") << '#' << b.id << ' ' << b.title
+                    << (b.author.empty() ? "" : " – " + b.author) << '\n';
             }
         }
         return ExitCode::ok;
     }
     if (inv.command == "done") {
-        if (inv.args.size() != 1 || inv.args[0].empty() || inv.args[0].find_first_not_of("0123456789") != std::string::npos) {
+        if (inv.args.size() != 1 || inv.args[0].empty() ||
+            inv.args[0].find_first_not_of("0123456789") != std::string::npos) {
             throw UsageError("done needs a numeric <id>");
         }
         const int id = std::stoi(inv.args[0]);
@@ -223,14 +231,18 @@ inline ExitCode execute(const Invocation& inv, const Settings& settings, std::os
         }
         it->done = true;
         save(settings.store_path, books);
-        if (inv.json) out << to_json(*it) << '\n';
-        else if (inv.verbosity > 0) out << "finished #" << id << ' ' << it->title << '\n';
+        if (inv.json)
+            out << to_json(*it) << '\n';
+        else if (inv.verbosity > 0)
+            out << "finished #" << id << ' ' << it->title << '\n';
         return ExitCode::ok;
     }
     if (inv.command == "stats") {
         const auto finished = std::count_if(books.begin(), books.end(), [](const Book& b) { return b.done; });
-        if (inv.json) out << "{\"books\":" << books.size() << ",\"done\":" << finished << "}\n";
-        else out << books.size() << " book(s), " << finished << " finished\n";
+        if (inv.json)
+            out << "{\"books\":" << books.size() << ",\"done\":" << finished << "}\n";
+        else
+            out << books.size() << " book(s), " << finished << " finished\n";
         return ExitCode::ok;
     }
     throw UsageError("unknown command '" + inv.command + "'");
@@ -252,7 +264,9 @@ inline int run(const std::vector<std::string>& args, std::ostream& out, std::ost
     }
 }
 
-inline std::vector<std::string> arguments_from(int argc, const char* const* argv) { return {argv + 1, argv + argc}; }
+inline std::vector<std::string> arguments_from(int argc, const char* const* argv) {
+    return {argv + 1, argv + argc};
+}
 
 /// Split a typed command line, honouring "double quotes" for titles with spaces.
 inline std::vector<std::string> split_words(const std::string& line) {
@@ -278,7 +292,8 @@ inline std::vector<std::string> split_words(const std::string& line) {
 }
 
 /// The interactive demo: type shelf command lines (store in the temp directory); prints each exit code.
-inline int run(std::istream& in, std::ostream& out, const fs::path& store = fs::temp_directory_path() / "cppm-shelf.tsv") {
+inline int run(std::istream& in, std::ostream& out,
+               const fs::path& store = fs::temp_directory_path() / "cppm-shelf.tsv") {
     out << "Day 83 – Capstone: A Robust CLI Application\n" << USAGE;
     while (auto line = prompt_line(in, out, "shelf ")) {
         auto args = split_words(*line);

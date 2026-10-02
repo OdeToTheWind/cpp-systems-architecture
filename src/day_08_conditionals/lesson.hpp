@@ -96,8 +96,7 @@ inline Decision lift_decision(Lift lift, const Reading& r) {
     }
     const Wind wind = classify_wind(r.wind_kmh);
     switch (lift) {
-        case Lift::drag_lift:
-            return wind == Wind::storm ? Decision{false, "storm-force wind"} : Decision{true, "ok"};
+        case Lift::drag_lift: return wind == Wind::storm ? Decision{false, "storm-force wind"} : Decision{true, "ok"};
         case Lift::chairlift:
             if (wind == Wind::strong || wind == Wind::storm) {
                 return {false, "chairs swing in strong wind"};
@@ -127,16 +126,15 @@ inline int avalanche_warning(const Reading& r) {
 }
 
 /// Short display labels are where the conditional operator shines.
-inline std::string_view status_label(const Decision& d) { return d.open ? "OPEN" : "CLOSED"; }
+inline std::string_view status_label(const Decision& d) {
+    return d.open ? "OPEN" : "CLOSED";
+}
 
 inline std::string_view lift_name(Lift lift) {
     switch (lift) {
-        case Lift::drag_lift:
-            return "drag lift";
-        case Lift::chairlift:
-            return "chairlift";
-        case Lift::gondola:
-            return "gondola";
+        case Lift::drag_lift: return "drag lift";
+        case Lift::chairlift: return "chairlift";
+        case Lift::gondola: return "gondola";
     }
     return "?";
 }

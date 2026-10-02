@@ -144,8 +144,7 @@ inline CircleStats circle_stats(double radius_cm) {
         throw std::domain_error("radius must be a positive finite number");
     }
     const double side = 2.0 * radius_cm;
-    return {std::numbers::pi * std::pow(radius_cm, 2), 2.0 * std::numbers::pi * radius_cm,
-            std::hypot(side, side)};
+    return {std::numbers::pi * std::pow(radius_cm, 2), 2.0 * std::numbers::pi * radius_cm, std::hypot(side, side)};
 }
 
 /// Format cents as "12.34".

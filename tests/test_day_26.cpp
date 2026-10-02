@@ -45,8 +45,7 @@ TEST_CASE("go_to_definition finds the declaring line") {
 
 TEST_CASE("rename_symbol leaves strings, comments and longer names alone") {
     const std::string code = "int total = 0;  // total so far\nint total_count = 1;\nprint(\"total\");\ntotal += 1;\n";
-    const std::string expected =
-        "int sum = 0;  // total so far\nint total_count = 1;\nprint(\"total\");\nsum += 1;\n";
+    const std::string expected = "int sum = 0;  // total so far\nint total_count = 1;\nprint(\"total\");\nsum += 1;\n";
     CHECK_EQ(rename_symbol(code, "total", "sum"), expected);
     CHECK_THROWS_AS(rename_symbol(code, "total", "two words"), std::invalid_argument);
     CHECK_THROWS_AS(rename_symbol(code, "total", "9lives"), std::invalid_argument);

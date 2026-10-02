@@ -20,7 +20,8 @@ struct Tool {
     std::string out;
     std::string err;
     std::map<std::string, std::string> env() const {
-        return {{"BUDGET_DATA_FILE", (dir.path() / "b.ledger").string()}, {"BUDGET_LOG_FILE", (dir.path() / "b.log").string()}};
+        return {{"BUDGET_DATA_FILE", (dir.path() / "b.ledger").string()},
+                {"BUDGET_LOG_FILE", (dir.path() / "b.log").string()}};
     }
     int operator()(std::vector<std::string> args, const std::string& config = "[limits]\ngroceries = 100\nfun = 50\n") {
         const auto ini = dir.write("budget.ini", config);
@@ -39,13 +40,15 @@ TEST_CASE("money: strict parsing and formatting") {
     CHECK_EQ(parse_money("12"), 1200);
     CHECK_EQ(parse_money("12.5"), 1250);
     CHECK_EQ(parse_money("-0.99"), -99);
-    for (const char* bad : {"", "12.", ".5", "1.234", "1,000", "abc", "--1"}) CHECK_THROWS_AS(parse_money(bad), std::invalid_argument);
+    for (const char* bad : {"", "12.", ".5", "1.234", "1,000", "abc", "--1"})
+        CHECK_THROWS_AS(parse_money(bad), std::invalid_argument);
     CHECK_EQ(format_money(123456, "$"), "$1,234.56");
     CHECK_EQ(format_money(-5, "€"), "-€0.05");
 }
 
 TEST_CASE("config: INI limits, comments and environment overrides") {
-    const auto s = load_settings("[general]\nsymbol = $  # dollars\n[limits]\nrent = 1200\n", {{"BUDGET_DATA_FILE", "/tmp/x"}});
+    const auto s =
+        load_settings("[general]\nsymbol = $  # dollars\n[limits]\nrent = 1200\n", {{"BUDGET_DATA_FILE", "/tmp/x"}});
     CHECK_EQ(s.symbol, "$");
     CHECK_EQ(s.monthly_limits.at("rent"), 120000);
     CHECK_EQ(s.data_file, "/tmp/x");
@@ -74,15 +77,19 @@ TEST_CASE("store: entries persist and a torn tail is dropped") {
 TEST_CASE("report: totals, warnings and CSV") {
     Settings s;
     s.monthly_limits = {{"groceries", 10000}, {"fun", 5000}, {"rent", 100000}};
-    const std::vector<Entry> entries{{1, "2026-06-01", 200000, "salary", ""}, {2, "2026-06-03", -9500, "groceries", ""},
-                                     {3, "2026-06-09", -6000, "fun", "=cinema, popcorn"}, {4, "2026-07-01", -999999, "fun", ""}};
+    const std::vector<Entry> entries{{1, "2026-06-01", 200000, "salary", ""},
+                                     {2, "2026-06-03", -9500, "groceries", ""},
+                                     {3, "2026-06-09", -6000, "fun", "=cinema, popcorn"},
+                                     {4, "2026-07-01", -999999, "fun", ""}};
     const auto r = build_month(entries, "2026-06", s);
     CHECK_EQ(r.income, 200000);
     CHECK_EQ(r.spent, 15500);
-    CHECK(r.warnings == std::vector<std::string>{"fun is over budget by €10.00", "groceries has used 95% of its budget"});
+    CHECK(r.warnings ==
+          std::vector<std::string>{"fun is over budget by €10.00", "groceries has used 95% of its budget"});
     CHECK(render_text(r, s).find("  balance  €1,845.00\n") != std::string::npos);
     CHECK_EQ(render_csv(entries, "2026-06"),
-             "id,date,amount,category,note\n1,2026-06-01,2000.00,salary,\n2,2026-06-03,-95.00,groceries,\n3,2026-06-09,-60.00,fun,\"'=cinema, popcorn\"\n");
+             "id,date,amount,category,note\n1,2026-06-01,2000.00,salary,\n2,2026-06-03,-95.00,groceries,\n3,2026-06-09,"
+             "-60.00,fun,\"'=cinema, popcorn\"\n");
 }
 
 TEST_CASE("cli: recording and listing money") {
@@ -121,7 +128,8 @@ TEST_CASE("cli: reports and exit codes") {
 
 TEST_CASE("the interactive demo keeps data between commands") {
     cppm::TempDir dir("day100");
-    std::istringstream in("earn 2026-06-01 1000 salary\nspend 2026-06-05 120 fun concert\nreport 2026-06\nspend bad 1 x\n\n");
+    std::istringstream in(
+        "earn 2026-06-01 1000 salary\nspend 2026-06-05 120 fun concert\nreport 2026-06\nspend bad 1 x\n\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out, dir.path()), 0);
     const auto text = out.str();

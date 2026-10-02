@@ -42,7 +42,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 enum class Roast { light, medium, dark };
 
 class RoastBatch {
-public:
+  public:
     /// Static member function: a question about the roastery, not about one batch.
     static bool is_known_bean(std::string_view origin) {
         return std::find(known_beans.begin(), known_beans.end(), origin) != known_beans.end();
@@ -58,7 +58,9 @@ public:
             return std::nullopt;
         }
         RoastBatch batch(origin);
-        batch.add_beans(grams).set_roast(roast == "light" ? Roast::light : roast == "dark" ? Roast::dark : Roast::medium);
+        batch.add_beans(grams).set_roast(roast == "light"  ? Roast::light
+                                         : roast == "dark" ? Roast::dark
+                                                           : Roast::medium);
         return batch;
     }
 
@@ -104,7 +106,7 @@ public:
     /// `this` points at the object the function was called on.
     bool same_origin_as(const RoastBatch& other) const { return this != &other && origin_ == other.origin_; }
 
-private:
+  private:
     static constexpr std::array<std::string_view, 4> known_beans{"ethiopia", "colombia", "brazil", "kenya"};
     static inline int next_number_ = 1;  // C++17 inline static: one counter for the whole program
 

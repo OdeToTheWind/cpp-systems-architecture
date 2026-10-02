@@ -44,15 +44,17 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// TCP delivers bytes, not messages. The framer collects bytes until "\n" and refuses lines
 /// longer than a limit, so one client cannot make the server buffer unbounded data.
 class LineFramer {
-public:
+  public:
     explicit LineFramer(std::size_t max_line = 512) : max_line_(max_line) {}
     /// Returns complete lines; an over-long line becomes std::nullopt and is skipped up to its end.
     std::vector<std::optional<std::string>> push(std::string_view bytes) {
         std::vector<std::optional<std::string>> lines;
         for (const char c : bytes) {
             if (c == '\n') {
-                if (overflow_) lines.emplace_back(std::nullopt);
-                else lines.emplace_back(buffer_);
+                if (overflow_)
+                    lines.emplace_back(std::nullopt);
+                else
+                    lines.emplace_back(buffer_);
                 buffer_.clear();
                 overflow_ = false;
             } else if (c != '\r' && !overflow_) {
@@ -66,7 +68,7 @@ public:
         return lines;
     }
 
-private:
+  private:
     std::size_t max_line_;
     std::string buffer_;
     bool overflow_ = false;
@@ -76,7 +78,7 @@ using ConnId = int;
 
 /// Where the core's output goes. A TCP server would write to sockets; tests record it.
 class Outbox {
-public:
+  public:
     virtual ~Outbox() = default;
     virtual void send(ConnId to, const std::string& line) = 0;
     virtual void close(ConnId conn) = 0;
@@ -97,7 +99,7 @@ struct Session {
 ///   WHO <#room>          list members
 ///   QUIT                 disconnect
 class ChatServer {
-public:
+  public:
     explicit ChatServer(Outbox& outbox) : outbox_(outbox) {}
 
     void on_connect(ConnId id) {
@@ -110,8 +112,10 @@ public:
         if (it == sessions_.end()) return;
         for (const auto& line : it->second.framer.push(bytes)) {
             if (!sessions_.contains(id)) return;  // a previous line was QUIT
-            if (line) on_line(id, *line);
-            else outbox_.send(id, "413 line too long");
+            if (line)
+                on_line(id, *line);
+            else
+                outbox_.send(id, "413 line too long");
         }
     }
     void on_line(ConnId id, const std::string& line) {
@@ -170,10 +174,11 @@ public:
     }
     std::size_t connections() const { return sessions_.size(); }
 
-private:
+  private:
     void nick(ConnId id, Session& s, const std::string& name) {
-        const bool valid = name.size() >= 2 && name.size() <= 16 &&
-                           std::all_of(name.begin(), name.end(), [](unsigned char c) { return std::isalnum(c) || c == '_'; });
+        const bool valid =
+            name.size() >= 2 && name.size() <= 16 &&
+            std::all_of(name.begin(), name.end(), [](unsigned char c) { return std::isalnum(c) || c == '_'; });
         if (!valid) return outbox_.send(id, "400 nicknames are 2-16 letters, digits or _");
         for (const auto& [other, session] : sessions_) {
             if (other != id && session.nick == name) return outbox_.send(id, "409 nickname in use");
@@ -196,7 +201,7 @@ private:
 
 /// An outbox that records everything – what a test (or the demo) uses instead of sockets.
 class RecordingOutbox : public Outbox {
-public:
+  public:
     void send(ConnId to, const std::string& line) override { lines.push_back({to, line}); }
     void close(ConnId conn) override { closed.push_back(conn); }
     std::vector<std::string> to(ConnId id) const {
@@ -222,10 +227,14 @@ inline int run(std::istream& in, std::ostream& out) {
         if (!(words >> conn)) break;
         std::string rest;
         std::getline(words >> std::ws, rest);
-        if (rest == "connect") server.on_connect(conn);
-        else if (rest == "drop") server.on_disconnect(conn);
-        else server.on_bytes(conn, rest + "\r\n");
-        for (; shown < outbox.lines.size(); ++shown) out << "  -> " << outbox.lines[shown].first << ": " << outbox.lines[shown].second << '\n';
+        if (rest == "connect")
+            server.on_connect(conn);
+        else if (rest == "drop")
+            server.on_disconnect(conn);
+        else
+            server.on_bytes(conn, rest + "\r\n");
+        for (; shown < outbox.lines.size(); ++shown)
+            out << "  -> " << outbox.lines[shown].first << ": " << outbox.lines[shown].second << '\n';
     }
     out << server.connections() << " connection(s) open\n";
     return 0;

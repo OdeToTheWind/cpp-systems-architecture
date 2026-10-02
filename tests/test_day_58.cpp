@@ -12,15 +12,17 @@ using namespace cppm::day58;
 using namespace std::chrono_literals;
 
 TEST_CASE("requests use the HTTP/1.1 wire format") {
-    const auto request = format_request("GET", "api.transit.example", "/departures?stop=7", {{"Accept", "application/json"}});
+    const auto request =
+        format_request("GET", "api.transit.example", "/departures?stop=7", {{"Accept", "application/json"}});
     CHECK_EQ(request,
              "GET /departures?stop=7 HTTP/1.1\r\nHost: api.transit.example\r\nAccept: application/json\r\n"
              "Connection: close\r\n\r\n");
 }
 
 TEST_CASE("responses are parsed into status, reason, headers and body") {
-    const auto response = parse_response("HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\nX-Trace:   abc\r\n"
-                                         "Content-Length: 4\r\n\r\nnopeEXTRA");
+    const auto response = parse_response(
+        "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\nX-Trace:   abc\r\n"
+        "Content-Length: 4\r\n\r\nnopeEXTRA");
     CHECK_EQ(response.status, 404);
     CHECK_EQ(response.reason, "Not Found");
     CHECK_EQ(response.header("content-type").value_or(""), "text/plain");
@@ -37,7 +39,8 @@ TEST_CASE("malformed responses are rejected") {
 }
 
 TEST_CASE("chunked bodies are reassembled") {
-    CHECK_EQ(decode_chunked("4\r\nWiki\r\n5\r\npedia\r\nE\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n"), "Wikipedia in\r\n\r\nchunks.");
+    CHECK_EQ(decode_chunked("4\r\nWiki\r\n5\r\npedia\r\nE\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n"),
+             "Wikipedia in\r\n\r\nchunks.");
     const auto response = parse_response("HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n3\r\nabc\r\n0\r\n\r\n");
     CHECK_EQ(response.body, "abc");
     CHECK_THROWS_AS(decode_chunked("zz\r\n"), std::runtime_error);
@@ -71,7 +74,8 @@ TEST_CASE("client errors are not retried; persistent failures give up") {
     HttpClient b(dead, "h", {}, [](auto) {});
     CHECK_THROWS_AS(b.get("/x"), ConnectionError);
     CHECK_EQ(dead.requests.size(), 3u);
-    ScriptedTransport busy({"HTTP/1.1 503 Busy\r\nContent-Length: 0\r\n\r\n", "HTTP/1.1 504 Gateway\r\nContent-Length: 0\r\n\r\n"});
+    ScriptedTransport busy(
+        {"HTTP/1.1 503 Busy\r\nContent-Length: 0\r\n\r\n", "HTTP/1.1 504 Gateway\r\nContent-Length: 0\r\n\r\n"});
     HttpClient c(busy, "h", {2, 10ms, 10ms}, [](auto) {});
     CHECK_EQ(c.get("/x").status, 504);
 }

@@ -10,7 +10,7 @@
 namespace cppm::day87 {
 
 class PluginRegistry {
-public:
+  public:
     /// One registry per program. A function-local static is created on first use, which avoids
     /// the "static initialisation order fiasco" when plugins register during start-up.
     static PluginRegistry& instance() {
@@ -42,7 +42,8 @@ public:
         const auto it = plugins_.find(name);
         if (it == plugins_.end()) {
             const auto why = rejected_.find(name);
-            throw std::invalid_argument("no plugin '" + name + "'" + (why == rejected_.end() ? "" : " (rejected: " + why->second + ")"));
+            throw std::invalid_argument("no plugin '" + name + "'" +
+                                        (why == rejected_.end() ? "" : " (rejected: " + why->second + ")"));
         }
         return it->second.create(options);
     }
@@ -53,7 +54,7 @@ public:
     }
     const std::map<std::string, std::string>& rejected() const { return rejected_; }
 
-private:
+  private:
     PluginRegistry() = default;
     std::map<std::string, PluginInfo> plugins_;
     std::map<std::string, std::string> rejected_;
@@ -61,6 +62,8 @@ private:
 
 /// Self-registration helper: `inline const bool registered = register_plugin({...});` in a plugin
 /// header runs add() during static initialisation of any program that includes the header.
-inline bool register_plugin(PluginInfo info) { return PluginRegistry::instance().add(std::move(info)); }
+inline bool register_plugin(PluginInfo info) {
+    return PluginRegistry::instance().add(std::move(info));
+}
 
 }  // namespace cppm::day87

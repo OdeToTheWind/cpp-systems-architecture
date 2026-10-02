@@ -64,7 +64,8 @@ TEST_CASE("same_origin_as compares this with another object") {
 }
 
 TEST_CASE("run tracks batches and spots shared origins") {
-    std::istringstream in("brazil 1000 dark 800\nkenya 500 light\nbrazil 400 medium\nmars 1 dark\nkenya 10 light 99\n\n");
+    std::istringstream in(
+        "brazil 1000 dark 800\nkenya 500 light\nbrazil 400 medium\nmars 1 dark\nkenya 10 light 99\n\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

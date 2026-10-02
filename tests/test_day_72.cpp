@@ -76,8 +76,9 @@ TEST_CASE("a failing command is not recorded") {
 }
 
 TEST_CASE("run edits and exports a note") {
-    std::istringstream in("add Shopping\nadd buy eggs\nadd buy milk\ndel 2\nundo\nreplace buy get\nexport markdown numbered count\n"
-                          "export pdf\nstop\n");
+    std::istringstream in(
+        "add Shopping\nadd buy eggs\nadd buy milk\ndel 2\nundo\nreplace buy get\nexport markdown numbered count\n"
+        "export pdf\nstop\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     CHECK(out.str().find("# 1. Shopping\n- 2. get eggs\n- 3. get milk\n(5 words)") != std::string::npos);

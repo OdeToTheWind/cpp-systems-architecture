@@ -52,7 +52,8 @@ TEST_CASE("a torn final write is discarded on recovery") {
         store.set("b", "2");
     }
     const auto good_size = std::filesystem::file_size(file);
-    std::ofstream(file, std::ios::binary | std::ios::app) << encode_record({'S', 0, "c", "3"}).substr(0, 12);  // crash mid-write
+    std::ofstream(file, std::ios::binary | std::ios::app)
+        << encode_record({'S', 0, "c", "3"}).substr(0, 12);  // crash mid-write
     KvStore store = KvStore::open(file);
     CHECK_EQ(store.size(), 2u);
     CHECK_EQ(store.recovery().discarded_bytes, 12u);

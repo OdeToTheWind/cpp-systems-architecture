@@ -89,7 +89,9 @@ std::unique_ptr<T> make_tracked(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
-inline double distance(double x, double y, double z) { return std::sqrt(x * x + y * y + z * z); }
+inline double distance(double x, double y, double z) {
+    return std::sqrt(x * x + y * y + z * z);
+}
 
 /// std::apply calls a function with the tuple's elements as separate arguments.
 inline double distance_from_origin(const std::tuple<double, double, double>& position) {

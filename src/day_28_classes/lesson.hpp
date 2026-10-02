@@ -41,7 +41,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Start time in minutes after midnight. `explicit` stops `TimeSlot slot = 1080;` from compiling.
 class TimeSlot {
-public:
+  public:
     explicit TimeSlot(int minutes_after_midnight) : minutes_(minutes_after_midnight) {
         if (minutes_ < 0 || minutes_ >= 24 * 60) {
             throw std::out_of_range("a time slot must be within one day");
@@ -51,7 +51,7 @@ public:
     int minute() const { return minutes_ % 60; }
     bool operator==(const TimeSlot&) const = default;
 
-private:
+  private:
     int minutes_;
 };
 
@@ -67,7 +67,7 @@ enum class BookingResult { booked, waitlisted, already_booked };
 
 /// Invariant: attendees.size() <= capacity, and nobody is listed twice (in either list).
 class FitnessClass {
-public:
+  public:
     FitnessClass(std::string name, TimeSlot start, int capacity)
         : name_(std::move(name)), start_(start), capacity_(capacity) {
         if (name_.empty()) {
@@ -127,7 +127,7 @@ public:
         return std::adjacent_find(everyone.begin(), everyone.end()) == everyone.end();
     }
 
-private:
+  private:
     static bool contains(const std::vector<std::string>& people, const std::string& member) {
         return std::find(people.begin(), people.end(), member) != people.end();
     }
@@ -141,8 +141,8 @@ private:
 
 /// "Spin 18:00 (2/3 booked, 1 waiting)".
 inline std::ostream& operator<<(std::ostream& out, const FitnessClass& fitness_class) {
-    return out << fitness_class.name() << ' ' << fitness_class.start() << " ("
-               << fitness_class.attendees().size() << '/' << fitness_class.attendees().size() + static_cast<std::size_t>(fitness_class.places_left())
+    return out << fitness_class.name() << ' ' << fitness_class.start() << " (" << fitness_class.attendees().size()
+               << '/' << fitness_class.attendees().size() + static_cast<std::size_t>(fitness_class.places_left())
                << " booked, " << fitness_class.waitlist().size() << " waiting)";
 }
 
@@ -160,9 +160,10 @@ inline int run(std::istream& in, std::ostream& out) {
         try {
             if (command == "book") {
                 const auto result = spin.book(member);
-                out << "  " << (result == BookingResult::booked       ? "booked"
-                                : result == BookingResult::waitlisted ? "class full – waiting list"
-                                                                      : "already booked")
+                out << "  "
+                    << (result == BookingResult::booked       ? "booked"
+                        : result == BookingResult::waitlisted ? "class full – waiting list"
+                                                              : "already booked")
                     << '\n';
             } else if (command == "cancel") {
                 const auto promoted = spin.cancel(member);

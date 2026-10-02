@@ -132,7 +132,9 @@ inline std::vector<Token> tokenize(std::string_view code) {
             while (i < code.size() && (std::isalnum(static_cast<unsigned char>(code[i])) || code[i] == '_')) advance(1);
         } else if (std::isdigit(static_cast<unsigned char>(c))) {
             kind = TokenKind::number;
-            while (i < code.size() && (std::isalnum(static_cast<unsigned char>(code[i])) || code[i] == '.' || code[i] == '\'')) advance(1);
+            while (i < code.size() &&
+                   (std::isalnum(static_cast<unsigned char>(code[i])) || code[i] == '.' || code[i] == '\''))
+                advance(1);
         } else if (c == '"' || c == '\'') {
             kind = TokenKind::string_literal;
             advance(1);
@@ -189,7 +191,8 @@ inline std::string rename_symbol(std::string_view code, std::string_view old_nam
     for (const auto& token : tokenize(code)) {
         const std::size_t at = code.find(token.text, offset);
         result.append(code.substr(copied, at - copied));
-        result.append(token.kind == TokenKind::identifier && token.text == old_name ? std::string(new_name) : token.text);
+        result.append(token.kind == TokenKind::identifier && token.text == old_name ? std::string(new_name)
+                                                                                    : token.text);
         copied = at + token.text.size();
         offset = copied;
     }

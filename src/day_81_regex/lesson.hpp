@@ -66,7 +66,8 @@ inline const std::regex& email_pattern() {
 /// Every e-mail address in @p text, in order.
 inline std::vector<std::string> find_emails(const std::string& text) {
     std::vector<std::string> found;
-    for (std::sregex_iterator it(text.begin(), text.end(), email_pattern()), end; it != end; ++it) found.push_back(it->str());
+    for (std::sregex_iterator it(text.begin(), text.end(), email_pattern()), end; it != end; ++it)
+        found.push_back(it->str());
     return found;
 }
 
@@ -111,10 +112,10 @@ inline std::string redact(const std::string& text) {
     // ECMAScript regex has no look-behind, so the character before a phone number is captured
     // as group 1 and put back: this stops a match starting inside a longer number.
     static const std::regex phone(R"((^|[^\d+])(?:\+\d{1,3}[ .-]?)?\(?\d{3}\)?[ .-]?\d{3}[ .-]?\d{3,4}\b)");
-    static const std::regex ipv4(R"(\b((?:25[0-5]|2[0-4]\d|1?\d?\d)\.(?:25[0-5]|2[0-4]\d|1?\d?\d)\.(?:25[0-5]|2[0-4]\d|1?\d?\d))\.(?:25[0-5]|2[0-4]\d|1?\d?\d)\b)");
-    std::string out = replace_with(text, email_pattern(), [](const std::smatch& m) {
-        return m[1].str().substr(0, 1) + "***@" + m[2].str();
-    });
+    static const std::regex ipv4(
+        R"(\b((?:25[0-5]|2[0-4]\d|1?\d?\d)\.(?:25[0-5]|2[0-4]\d|1?\d?\d)\.(?:25[0-5]|2[0-4]\d|1?\d?\d))\.(?:25[0-5]|2[0-4]\d|1?\d?\d)\b)");
+    std::string out = replace_with(text, email_pattern(),
+                                   [](const std::smatch& m) { return m[1].str().substr(0, 1) + "***@" + m[2].str(); });
     out = replace_with(out, card, [](const std::smatch& m) {
         std::string digits;
         for (const char c : m.str()) {

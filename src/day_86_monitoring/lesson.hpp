@@ -68,9 +68,11 @@ inline std::string json_escape(const std::string& s) {
 /// {"ts":"…","level":"…","msg":"…",<fields>} – fields keep their order; numbers stay unquoted.
 inline std::string json_log_line(const std::string& ts, const std::string& level, const std::string& message,
                                  const std::vector<std::pair<std::string, std::string>>& fields = {}) {
-    std::string line = "{\"ts\":\"" + json_escape(ts) + "\",\"level\":\"" + json_escape(level) + "\",\"msg\":\"" + json_escape(message) + "\"";
+    std::string line = "{\"ts\":\"" + json_escape(ts) + "\",\"level\":\"" + json_escape(level) + "\",\"msg\":\"" +
+                       json_escape(message) + "\"";
     for (const auto& [key, value] : fields) {
-        const bool number = !value.empty() && value.find_first_not_of("0123456789.-") == std::string::npos && value != "-" && value != ".";
+        const bool number = !value.empty() && value.find_first_not_of("0123456789.-") == std::string::npos &&
+                            value != "-" && value != ".";
         line += ",\"" + json_escape(key) + "\":" + (number ? value : "\"" + json_escape(value) + "\"");
     }
     return line + "}";
@@ -78,8 +80,9 @@ inline std::string json_log_line(const std::string& ts, const std::string& level
 
 /// app.log grows to max_bytes, then app.log -> app.log.1 -> app.log.2 …; only @p keep old files remain.
 class RotatingFile {
-public:
-    RotatingFile(fs::path path, std::uintmax_t max_bytes, int keep) : path_(std::move(path)), max_bytes_(max_bytes), keep_(keep) {
+  public:
+    RotatingFile(fs::path path, std::uintmax_t max_bytes, int keep)
+        : path_(std::move(path)), max_bytes_(max_bytes), keep_(keep) {
         if (max_bytes == 0 || keep < 0) throw std::invalid_argument("bad rotation settings");
     }
     void write(const std::string& line) {
@@ -89,7 +92,7 @@ public:
     }
     int rotations() const { return rotations_; }
 
-private:
+  private:
     fs::path numbered(int n) const { return path_.string() + "." + std::to_string(n); }
     void rotate() {
         std::error_code ignored;
@@ -97,8 +100,10 @@ private:
         for (int n = keep_ - 1; n >= 1; --n) {
             if (fs::exists(numbered(n))) fs::rename(numbered(n), numbered(n + 1));
         }
-        if (keep_ > 0) fs::rename(path_, numbered(1));
-        else fs::remove(path_);
+        if (keep_ > 0)
+            fs::rename(path_, numbered(1));
+        else
+            fs::remove(path_);
         ++rotations_;
     }
     fs::path path_;
@@ -109,7 +114,7 @@ private:
 
 /// Metric values keyed by name and a rendered label set such as {route="/r",status="200"}.
 class Registry {
-public:
+  public:
     using Labels = std::vector<std::pair<std::string, std::string>>;
 
     void counter_add(const std::string& name, const std::string& help, const Labels& labels = {}, double by = 1) {
@@ -123,8 +128,10 @@ public:
     void observe(const std::string& name, const std::string& help, double value, const std::vector<double>& bounds) {
         auto& series = declare(name, help, "histogram");
         for (const double b : bounds) {
-            if (value <= b) series["_bucket{le=\"" + number(b) + "\"}"] += 1;
-            else series["_bucket{le=\"" + number(b) + "\"}"] += 0;
+            if (value <= b)
+                series["_bucket{le=\"" + number(b) + "\"}"] += 1;
+            else
+                series["_bucket{le=\"" + number(b) + "\"}"] += 0;
         }
         series["_bucket{le=\"+Inf\"}"] += 1;
         series["_sum"] += value;
@@ -153,13 +160,15 @@ public:
                 std::vector<std::pair<double, std::string>> buckets;
                 for (const auto& [key, v] : metric.series) {
                     if (key.starts_with("_bucket") && key.find("+Inf") == std::string::npos) {
-                        buckets.emplace_back(std::stod(key.substr(key.find('"') + 1)), name + key + " " + number(v) + "\n");
+                        buckets.emplace_back(std::stod(key.substr(key.find('"') + 1)),
+                                             name + key + " " + number(v) + "\n");
                     }
                 }
                 std::sort(buckets.begin(), buckets.end());
                 for (const auto& [bound, sample] : buckets) out += sample;
                 out += name + "_bucket{le=\"+Inf\"} " + number(metric.series.at("_bucket{le=\"+Inf\"}")) + "\n";
-                out += name + "_sum " + number(metric.series.at("_sum")) + "\n" + name + "_count " + number(metric.series.at("_count")) + "\n";
+                out += name + "_sum " + number(metric.series.at("_sum")) + "\n" + name + "_count " +
+                       number(metric.series.at("_count")) + "\n";
             } else {
                 for (const auto& [labels, v] : metric.series) out += name + labels + " " + number(v) + "\n";
             }
@@ -167,7 +176,7 @@ public:
         return out;
     }
 
-private:
+  private:
     struct Metric {
         std::string help;
         std::string type;
@@ -181,7 +190,8 @@ private:
     static std::string render(const Labels& labels) {
         if (labels.empty()) return "";
         std::string out = "{";
-        for (std::size_t i = 0; i < labels.size(); ++i) out += (i ? "," : "") + labels[i].first + "=\"" + labels[i].second + "\"";
+        for (std::size_t i = 0; i < labels.size(); ++i)
+            out += (i ? "," : "") + labels[i].first + "=\"" + labels[i].second + "\"";
         return out + "}";
     }
     static std::string number(double v) {
@@ -201,7 +211,7 @@ struct AlertRule {
 /// Evaluates rules periodically. States: inactive -> pending -> firing -> (resolved) inactive.
 /// Only the transitions to firing and back are notified, so a flapping metric does not page anyone.
 class Alerter {
-public:
+  public:
     explicit Alerter(std::vector<AlertRule> rules) : rules_(std::move(rules)) {}
     std::vector<std::string> evaluate(const Registry& registry) {
         std::vector<std::string> notifications;
@@ -228,7 +238,7 @@ public:
         return it != states_.end() && it->second.firing;
     }
 
-private:
+  private:
     struct State {
         int streak = 0;
         bool firing = false;
@@ -245,7 +255,8 @@ inline double error_ratio(const Registry& r) {
 }
 
 /// The interactive demo: each line is one evaluation interval, "<ok> <errors> <latency_ms>".
-inline int run(std::istream& in, std::ostream& out, const fs::path& log = fs::temp_directory_path() / "cppm-shortener.log") {
+inline int run(std::istream& in, std::ostream& out,
+               const fs::path& log = fs::temp_directory_path() / "cppm-shortener.log") {
     out << "Day 86 – Capstone: Logging & Monitoring Toolkit\n";
     Registry registry;
     RotatingFile file(log, 4096, 3);
@@ -264,7 +275,8 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& log = fs::te
         }
         registry.observe("http_request_duration_ms", "Request latency.", latency, {50, 100, 250, 1000});
         const std::string ts = "2026-06-05T10:" + std::string(minute < 10 ? "0" : "") + std::to_string(minute) + ":00Z";
-        file.write(json_log_line(ts, errors ? "warn" : "info", "interval", {{"ok", std::to_string(ok)}, {"errors", std::to_string(errors)}}));
+        file.write(json_log_line(ts, errors ? "warn" : "info", "interval",
+                                 {{"ok", std::to_string(ok)}, {"errors", std::to_string(errors)}}));
         ++minute;
         for (const auto& n : alerter.evaluate(window)) out << "  ALERT " << n << '\n';
     }

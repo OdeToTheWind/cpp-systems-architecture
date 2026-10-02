@@ -14,7 +14,9 @@ std::vector<std::string> paths(const Result& r) {
     for (const auto& p : r.problems) out.push_back(p.path + ": " + p.message);
     return out;
 }
-Value attendee(const char* name, const char* mail) { return Value::Object{{"name", name}, {"email", mail}}; }
+Value attendee(const char* name, const char* mail) {
+    return Value::Object{{"name", name}, {"email", mail}};
+}
 }  // namespace
 
 TEST_CASE("text trims and checks length") {
@@ -40,16 +42,21 @@ TEST_CASE("e-mail validation normalises case") {
 }
 
 TEST_CASE("all_of pipes normalised values and stops at the first failure") {
-    const auto even_small = all_of({integer(0, 100), check([](const Value& v) { return static_cast<int>(*v.get<double>()) % 2 == 0; }, "must be even")});
+    const auto even_small =
+        all_of({integer(0, 100),
+                check([](const Value& v) { return static_cast<int>(*v.get<double>()) % 2 == 0; }, "must be even")});
     CHECK(validate(even_small, "8").value == Value(8));
     CHECK(paths(validate(even_small, "7")) == std::vector<std::string>{"(root): must be even"});
     CHECK_EQ(validate(even_small, "x").problems.size(), 1u);  // the check never ran
 }
 
 TEST_CASE("a valid order is normalised, with defaults filled in") {
-    const Value order = Value::Object{{"event", " RustConf "}, {"buyer_email", "BUYER@x.org"},
-                                      {"attendees", Value::List{attendee("Ana", "ANA@x.org"), Value::Object{{"name", "Ben"}, {"email", "ben@x.org"}, {"ticket", "vip"}}}},
-                                      {"donation_eur", "20"}};
+    const Value order = Value::Object{
+        {"event", " RustConf "},
+        {"buyer_email", "BUYER@x.org"},
+        {"attendees", Value::List{attendee("Ana", "ANA@x.org"),
+                                  Value::Object{{"name", "Ben"}, {"email", "ben@x.org"}, {"ticket", "vip"}}}},
+        {"donation_eur", "20"}};
     const auto r = validate(order_schema(), order);
     CHECK(r.problems.empty());
     CHECK(*r.value->field("event") == Value("RustConf"));
@@ -61,16 +68,20 @@ TEST_CASE("a valid order is normalised, with defaults filled in") {
 }
 
 TEST_CASE("every problem in a nested payload is reported with its path") {
-    const Value order = Value::Object{{"buyer_email", "nope"},
-                                      {"attendees", Value::List{attendee("Ana", "ana@x.org"), Value::Object{{"name", "B"}, {"email", "b@x"}, {"ticket", "free"}}}},
-                                      {"donation_eur", 13},
-                                      {"coupon", "HACK"}};
+    const Value order = Value::Object{
+        {"buyer_email", "nope"},
+        {"attendees",
+         Value::List{attendee("Ana", "ana@x.org"), Value::Object{{"name", "B"}, {"email", "b@x"}, {"ticket", "free"}}}},
+        {"donation_eur", 13},
+        {"coupon", "HACK"}};
     CHECK(paths(validate(order_schema(), order)) ==
           std::vector<std::string>{"event: is required", "buyer_email: must be an e-mail address",
-                                   "attendees[1].name: must be at least 2 characters", "attendees[1].email: must be an e-mail address",
-                                   "attendees[1].ticket: must be one of: standard, student, vip", "donation_eur: must not be 13 (we are superstitious)",
-                                   "coupon: is not allowed"});
-    CHECK(paths(validate(order_schema(), Value::Object{{"event", "x"}, {"buyer_email", "a@b.co"}, {"attendees", Value::List{}}})) ==
+                                   "attendees[1].name: must be at least 2 characters",
+                                   "attendees[1].email: must be an e-mail address",
+                                   "attendees[1].ticket: must be one of: standard, student, vip",
+                                   "donation_eur: must not be 13 (we are superstitious)", "coupon: is not allowed"});
+    CHECK(paths(validate(order_schema(),
+                         Value::Object{{"event", "x"}, {"buyer_email", "a@b.co"}, {"attendees", Value::List{}}})) ==
           std::vector<std::string>{"attendees: must have 1 to 10 items"});
     CHECK(paths(validate(order_schema(), "text")) == std::vector<std::string>{"(root): must be an object"});
 }
@@ -81,5 +92,6 @@ TEST_CASE("run validates orders typed on one line") {
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();
     CHECK(text.find("valid\n  Ana <ana@x.org> student\n  Ben <ben@x.org> standard\n") != std::string::npos);
-    CHECK(text.find("buyer_email: must be an e-mail address\nattendees[0].name: must be at least 2 characters") != std::string::npos);
+    CHECK(text.find("buyer_email: must be an e-mail address\nattendees[0].name: must be at least 2 characters") !=
+          std::string::npos);
 }

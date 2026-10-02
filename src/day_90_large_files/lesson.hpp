@@ -48,7 +48,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// Turns arbitrary chunks of bytes into complete lines. Whatever follows the last '\n' of a chunk
 /// is kept and prefixed to the next chunk; finish() returns the final line without a newline.
 class LineAssembler {
-public:
+  public:
     template <typename OnLine>
     void feed(std::string_view chunk, OnLine&& on_line) {
         std::size_t start = 0;
@@ -71,7 +71,7 @@ public:
     }
     std::size_t max_partial() const { return max_partial_; }
 
-private:
+  private:
     template <typename OnLine>
     static void emit(std::string_view line, OnLine& on_line) {
         if (!line.empty() && line.back() == '\r') line.remove_suffix(1);  // Windows line endings
@@ -83,7 +83,8 @@ private:
 
 /// Call @p on_line for every line of @p in, reading @p chunk_size bytes at a time.
 /// Returns the number of chunks read.
-inline std::size_t for_each_line(std::istream& in, std::size_t chunk_size, const std::function<void(std::string_view)>& on_line) {
+inline std::size_t for_each_line(std::istream& in, std::size_t chunk_size,
+                                 const std::function<void(std::string_view)>& on_line) {
     if (chunk_size == 0) throw std::invalid_argument("chunk size must be positive");
     std::string buffer(chunk_size, '\0');
     LineAssembler assembler;
@@ -136,7 +137,8 @@ using LineLess = std::function<bool(const std::string&, const std::string&)>;
 
 /// Phase 1 of the external sort: read at most @p max_lines lines at a time, sort them, write each
 /// batch to its own run file in @p temp_dir. Returns the run files.
-inline std::vector<fs::path> write_sorted_runs(std::istream& in, std::size_t max_lines, const fs::path& temp_dir, const LineLess& less) {
+inline std::vector<fs::path> write_sorted_runs(std::istream& in, std::size_t max_lines, const fs::path& temp_dir,
+                                               const LineLess& less) {
     if (max_lines == 0) throw std::invalid_argument("max_lines must be positive");
     std::vector<fs::path> runs;
     std::vector<std::string> batch;
@@ -193,7 +195,8 @@ struct SortReport {
     std::size_t lines = 0;
 };
 
-inline SortReport external_sort(std::istream& in, std::ostream& out, std::size_t max_lines, const fs::path& temp_dir, const LineLess& less) {
+inline SortReport external_sort(std::istream& in, std::ostream& out, std::size_t max_lines, const fs::path& temp_dir,
+                                const LineLess& less) {
     fs::create_directories(temp_dir);
     const auto runs = write_sorted_runs(in, max_lines, temp_dir, less);
     const std::size_t lines = merge_runs(runs, out, less);
@@ -223,7 +226,8 @@ inline std::string synthetic_log(int n) {
         seed = seed * 1103515245u + 12345u;
         const unsigned r = (seed >> 8) % 10000;
         const int status = r % 50 == 0 ? 500 : r % 10 == 0 ? 404 : 200;
-        log += "10.0.0." + std::to_string(r % 250) + " GET " + paths[r % 5] + " " + std::to_string(status) + " " + std::to_string(5 + r % 900) + "\n";
+        log += "10.0.0." + std::to_string(r % 250) + " GET " + paths[r % 5] + " " + std::to_string(status) + " " +
+               std::to_string(5 + r % 900) + "\n";
     }
     return log;
 }
@@ -240,12 +244,14 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& temp = fs::t
         const std::string log = synthetic_log(n);
         std::istringstream for_stats(log);
         auto stats = summarise_log(for_stats, chunk);  // non-const: operator[] fills in missing codes
-        out << "  " << stats.lines << " line(s): 200 x" << stats.by_status[200] << ", 404 x" << stats.by_status[404] << ", 500 x"
-            << stats.by_status[500] << "; slowest " << stats.slowest_ms << " ms on " << stats.slowest_path << '\n';
+        out << "  " << stats.lines << " line(s): 200 x" << stats.by_status[200] << ", 404 x" << stats.by_status[404]
+            << ", 500 x" << stats.by_status[500] << "; slowest " << stats.slowest_ms << " ms on " << stats.slowest_path
+            << '\n';
         std::istringstream for_sort(log);
         std::ostringstream sorted;
         const auto report = external_sort(for_sort, sorted, max_lines, temp, slower_first);
-        out << "  sorted with " << report.runs << " run(s); top: " << sorted.str().substr(0, sorted.str().find('\n')) << '\n';
+        out << "  sorted with " << report.runs << " run(s); top: " << sorted.str().substr(0, sorted.str().find('\n'))
+            << '\n';
     }
     return 0;
 }

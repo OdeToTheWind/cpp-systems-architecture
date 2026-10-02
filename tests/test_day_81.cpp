@@ -37,7 +37,8 @@ TEST_CASE("sregex_iterator finds every e-mail") {
 
 TEST_CASE("replace_with computes each replacement") {
     const std::regex number(R"(\d+)");
-    CHECK_EQ(replace_with("3 apples and 12 pears", number, [](const std::smatch& m) { return std::to_string(std::stoi(m.str()) * 2); }),
+    CHECK_EQ(replace_with("3 apples and 12 pears", number,
+                          [](const std::smatch& m) { return std::to_string(std::stoi(m.str()) * 2); }),
              "6 apples and 24 pears");
     CHECK_EQ(replace_with("none", number, [](const std::smatch&) { return std::string("x"); }), "none");
 }

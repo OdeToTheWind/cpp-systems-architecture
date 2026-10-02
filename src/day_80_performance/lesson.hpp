@@ -46,7 +46,9 @@ using Nanos = std::chrono::nanoseconds;
 using ClockFn = std::function<Nanos()>;
 
 /// The real clock: steady_clock never jumps backwards, unlike system_clock.
-inline Nanos steady_now() { return std::chrono::duration_cast<Nanos>(std::chrono::steady_clock::now().time_since_epoch()); }
+inline Nanos steady_now() {
+    return std::chrono::duration_cast<Nanos>(std::chrono::steady_clock::now().time_since_epoch());
+}
 
 struct BenchResult {
     Nanos min;
@@ -57,7 +59,8 @@ struct BenchResult {
 
 /// Time @p work @p repetitions times after @p warmup untimed runs and summarise. The median is
 /// robust against the occasional slow run caused by the OS; the clock is injectable for tests.
-inline BenchResult benchmark(const std::function<void()>& work, int repetitions, int warmup = 1, const ClockFn& clock = steady_now) {
+inline BenchResult benchmark(const std::function<void()>& work, int repetitions, int warmup = 1,
+                             const ClockFn& clock = steady_now) {
     if (repetitions <= 0) throw std::invalid_argument("need at least one repetition");
     for (int i = 0; i < warmup; ++i) work();  // fill caches, trigger lazy initialisation
     std::vector<Nanos> times;
@@ -167,7 +170,9 @@ inline std::vector<std::uint64_t> parcel_ids(std::size_t n, bool with_duplicate,
     return ids;
 }
 
-inline std::string micros(Nanos d) { return std::to_string(d.count() / 1000) + " us"; }
+inline std::string micros(Nanos d) {
+    return std::to_string(d.count() / 1000) + " us";
+}
 
 /// The interactive demo: enter n to time both duplicate checks and both loop orders on real data.
 inline int run(std::istream& in, std::ostream& out) {

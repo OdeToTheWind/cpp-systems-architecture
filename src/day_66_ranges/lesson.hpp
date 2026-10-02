@@ -99,7 +99,8 @@ inline std::vector<std::string> split_tags(std::string_view tags) {
 /// Tag counts across all orders, most frequent first.
 inline std::vector<std::pair<std::string, int>> tag_counts(const std::vector<Order>& orders) {
     std::map<std::string, int> counts;
-    for (const auto& tag : orders | std::views::transform(&Order::tags) | std::views::transform(split_tags) | std::views::join) {
+    for (const auto& tag :
+         orders | std::views::transform(&Order::tags) | std::views::transform(split_tags) | std::views::join) {
         ++counts[tag];
     }
     std::vector<std::pair<std::string, int>> ranked(counts.begin(), counts.end());
@@ -132,9 +133,10 @@ inline int run(std::istream& in, std::ostream& out) {
         orders.push_back(o);
     }
     const auto amounts = paid_amounts(orders, 5000);
-    out << amounts.size() << " paid order(s) of at least €50 worth " << euros(std::accumulate(amounts.begin(), amounts.end(), 0L))
-        << '\n';
-    for (const auto& [customer, cents] : top_customers(orders, 3)) out << "  top: " << customer << ' ' << euros(cents) << '\n';
+    out << amounts.size() << " paid order(s) of at least €50 worth "
+        << euros(std::accumulate(amounts.begin(), amounts.end(), 0L)) << '\n';
+    for (const auto& [customer, cents] : top_customers(orders, 3))
+        out << "  top: " << customer << ' ' << euros(cents) << '\n';
     for (const auto& [tag, count] : tag_counts(orders)) out << "  tag " << tag << " x" << count << '\n';
     if (const Order* best = largest_paid(orders)) out << "largest paid order: #" << best->id << '\n';
     return 0;

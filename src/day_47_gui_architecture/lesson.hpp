@@ -40,7 +40,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Exchange rates against EUR.
 class RatesModel {
-public:
+  public:
     RatesModel() : per_euro_{{"EUR", 1.0}, {"USD", 1.08}, {"GBP", 0.85}, {"JPY", 162.0}, {"INR", 90.0}} {}
     bool supports(const std::string& code) const { return per_euro_.contains(code); }
     std::vector<std::string> currencies() const {
@@ -59,13 +59,13 @@ public:
         per_euro_[code] = per_euro;
     }
 
-private:
+  private:
     std::map<std::string, double> per_euro_;
 };
 
 /// Everything the presenter needs from a screen – and nothing toolkit-specific.
 class ConverterView {
-public:
+  public:
     virtual ~ConverterView() = default;
     virtual std::string amount_text() const = 0;
     virtual std::string from_currency() const = 0;
@@ -94,7 +94,7 @@ inline std::optional<double> parse_amount(std::string text) {
 
 /// The presenter reacts to view events and decides what the view shows.
 class ConverterPresenter {
-public:
+  public:
     ConverterPresenter(ConverterView& view, const RatesModel& model) : view_(view), model_(model) {
         on_input_changed();
     }
@@ -121,18 +121,19 @@ public:
         std::ostringstream left;
         left << std::fixed << std::setprecision(2) << *amount;
         std::ostringstream right;
-        right << std::fixed << std::setprecision(view_.to_currency() == "JPY" ? 0 : 2) << converted;  // yen has no cents
+        right << std::fixed << std::setprecision(view_.to_currency() == "JPY" ? 0 : 2)
+              << converted;  // yen has no cents
         view_.show_result(left.str() + ' ' + view_.from_currency() + " = " + right.str() + ' ' + view_.to_currency());
     }
 
-private:
+  private:
     ConverterView& view_;
     const RatesModel& model_;
 };
 
 /// A text-mode implementation of the view; a Qt version would wrap QLineEdit/QComboBox instead.
 class ConsoleView final : public ConverterView {
-public:
+  public:
     explicit ConsoleView(std::ostream& out) : out_(out) {}
     void set_fields(std::string amount, std::string from, std::string to) {
         amount_ = std::move(amount);
@@ -147,7 +148,7 @@ public:
     void set_convert_enabled(bool enabled) override { enabled_ = enabled; }
     bool convert_enabled() const { return enabled_; }
 
-private:
+  private:
     std::ostream& out_;
     std::string amount_;
     std::string from_{"EUR"};

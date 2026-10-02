@@ -17,7 +17,7 @@ TEST_CASE("small integers are promoted to int before arithmetic") {
     CHECK_EQ(report[1], "short * double is double");
     CHECK(report[2].find("true") != std::string::npos);
     CHECK(!(static_cast<unsigned>(-1) < 1u));  // what `-1 < 1u` really compares
-    CHECK(std::cmp_less(-1, 1u));               // the value-preserving comparison
+    CHECK(std::cmp_less(-1, 1u));              // the value-preserving comparison
 }
 
 TEST_CASE("average_ticket divides in floating point") {

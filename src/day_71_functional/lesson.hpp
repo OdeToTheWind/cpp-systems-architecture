@@ -73,7 +73,9 @@ auto compose(F f) {
 }
 template <typename F, typename... Rest>
 auto compose(F f, Rest... rest) {
-    return [f, next = compose(rest...)](auto&&... args) { return next(std::invoke(f, std::forward<decltype(args)>(args)...)); };
+    return [f, next = compose(rest...)](auto&&... args) {
+        return next(std::invoke(f, std::forward<decltype(args)>(args)...));
+    };
 }
 
 /// Apply a list of rules in order – a higher-order function: it takes functions as data.
@@ -112,7 +114,7 @@ inline Rule regional_tax(const std::map<std::string, double>& rates, const std::
 /// Wraps a function and caches its results by argument. calls() counts real evaluations.
 template <typename Result, typename... Args>
 class Memoised {
-public:
+  public:
     explicit Memoised(std::function<Result(Args...)> function) : function_(std::move(function)) {}
     const Result& operator()(const Args&... args) {
         auto key = std::make_tuple(args...);
@@ -125,7 +127,7 @@ public:
     }
     int calls() const { return calls_; }
 
-private:
+  private:
     std::function<Result(Args...)> function_;
     std::map<std::tuple<Args...>, Result> cache_;
     int calls_ = 0;
@@ -153,8 +155,8 @@ inline int run(std::istream& in, std::ostream& out) {
         int grams = 0;
         if (!(words >> price >> campaign >> region >> grams)) break;
         try {
-            const auto pipeline = compose(
-                [&](double p) { return apply_rules(p, campaigns.at(campaign)); }, regional_tax(vat, region), round_to_cents());
+            const auto pipeline = compose([&](double p) { return apply_rules(p, campaigns.at(campaign)); },
+                                          regional_tax(vat, region), round_to_cents());
             const double total = pipeline(price) + shipping(region, grams);
             out << "  quote #" << ticket() << ": " << total << '\n';
         } catch (const std::out_of_range& error) {

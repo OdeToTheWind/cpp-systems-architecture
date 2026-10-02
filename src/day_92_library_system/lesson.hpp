@@ -89,7 +89,8 @@ inline int run(std::istream& in, std::ostream& out) {
         } catch (const LendingError& error) {
             out << "  refused: " << error.what() << '\n';
         }
-        for (; shown < lib.notifier.sent.size(); ++shown) out << "  email to " << lib.notifier.sent[shown].to << ": " << lib.notifier.sent[shown].text << '\n';
+        for (; shown < lib.notifier.sent.size(); ++shown)
+            out << "  email to " << lib.notifier.sent[shown].to << ": " << lib.notifier.sent[shown].text << '\n';
     }
     return 0;
 }

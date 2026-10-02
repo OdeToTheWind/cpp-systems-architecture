@@ -11,11 +11,11 @@ using namespace cppm::day45;
 namespace {
 std::vector<Record> season() {
     return {
-        {"ash", 3, 1, 0, 9, 3},     // 10 points, +6
-        {"bree", 3, 1, 0, 8, 2},    // 10 points, +6, fewer scored
-        {"cole", 1, 0, 3, 4, 9},    // 3 points
-        {"dax", 3, 1, 0, 10, 4},    // 10 points, +6, most scored
-        {"eve", 1, 0, 0, 2, 0},     // only one match
+        {"ash", 3, 1, 0, 9, 3},   // 10 points, +6
+        {"bree", 3, 1, 0, 8, 2},  // 10 points, +6, fewer scored
+        {"cole", 1, 0, 3, 4, 9},  // 3 points
+        {"dax", 3, 1, 0, 10, 4},  // 10 points, +6, most scored
+        {"eve", 1, 0, 0, 2, 0},   // only one match
         {"cheater", 4, 0, 0, 20, 0},
     };
 }
@@ -69,8 +69,9 @@ TEST_CASE("stable_partition separates zones and keeps the ranking inside them") 
 }
 
 TEST_CASE("run prints the ranked, filtered league") {
-    std::istringstream in("ash 3 1 0 9 3\nbree 3 1 0 8 2\ncole 1 0 3 4 9\ndax 3 1 0 10 4\neve 1 0 0 2 0\n"
-                          "cheater 4 0 0 20 0\nEND\n");
+    std::istringstream in(
+        "ash 3 1 0 9 3\nbree 3 1 0 8 2\ncole 1 0 3 4 9\ndax 3 1 0 10 4\neve 1 0 0 2 0\n"
+        "cheater 4 0 0 20 0\nEND\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

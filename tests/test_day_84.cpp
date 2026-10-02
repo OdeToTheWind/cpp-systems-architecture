@@ -49,13 +49,15 @@ TEST_CASE("dates and amounts are validated strictly") {
 }
 
 TEST_CASE("transform normalises dates, emails and currencies") {
-    const RawRow row{2, {{"order_id", "9"}, {"date", "31/12/2026"}, {"email", "X@Y.COM"}, {"amount", "10.00"}, {"currency", "USD"}}};
+    const RawRow row{
+        2, {{"order_id", "9"}, {"date", "31/12/2026"}, {"email", "X@Y.COM"}, {"amount", "10.00"}, {"currency", "USD"}}};
     const auto order = std::get<Order>(transform(row, demo_rates(), "mkt"));
     CHECK_EQ(order.id, "mkt:9");
     CHECK_EQ(order.date, "2026-12-31");
     CHECK_EQ(order.email, "x@y.com");
     CHECK_EQ(order.eur_cents, 920);
-    const RawRow missing{3, {{"order_id", "1"}, {"date", "2026-01-01"}, {"email", "a@b.c"}, {"amount", "1"}, {"currency", "XYZ"}}};
+    const RawRow missing{
+        3, {{"order_id", "1"}, {"date", "2026-01-01"}, {"email", "a@b.c"}, {"amount", "1"}, {"currency", "XYZ"}}};
     CHECK_EQ(std::get<Rejection>(transform(missing, demo_rates(), "mkt")).reason, "unknown currency XYZ");
 }
 

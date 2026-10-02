@@ -51,7 +51,8 @@ inline std::string_view level_name(Level level) {
 }
 
 inline std::string upper(std::string text) {
-    std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
+    std::transform(text.begin(), text.end(), text.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
     return text;
 }
 
@@ -74,13 +75,13 @@ struct Record {
 
 // ---- Formatters turn a record into one line ----
 class Formatter {
-public:
+  public:
     virtual ~Formatter() = default;
     virtual std::string format(const Record& record) const = 0;
 };
 
 class TextFormatter : public Formatter {
-public:
+  public:
     std::string format(const Record& r) const override {
         std::string line = r.time + " " + std::string(level_name(r.level)) + " [" + r.logger + "] " + r.message;
         for (const auto& [key, value] : r.fields) line += " " + key + "=" + value;
@@ -90,15 +91,15 @@ public:
 
 /// logfmt style: easy to grep and to parse by log shippers. Values with spaces are quoted.
 class KeyValueFormatter : public Formatter {
-public:
+  public:
     std::string format(const Record& r) const override {
-        std::string line = "time=" + r.time + " level=" + upper(std::string(level_name(r.level))) + " logger=" + r.logger +
-                           " msg=" + quote(r.message);
+        std::string line = "time=" + r.time + " level=" + upper(std::string(level_name(r.level))) +
+                           " logger=" + r.logger + " msg=" + quote(r.message);
         for (const auto& [key, value] : r.fields) line += " " + key + "=" + quote(value);
         return line;
     }
 
-private:
+  private:
     static std::string quote(const std::string& value) {
         if (value.find_first_of(" \"=") == std::string::npos && !value.empty()) return value;
         std::string out = "\"";
@@ -109,48 +110,49 @@ private:
 
 // ---- Sinks decide where lines go and filter by level ----
 class Sink {
-public:
-    Sink(Level minimum, std::shared_ptr<const Formatter> formatter) : minimum_(minimum), formatter_(std::move(formatter)) {}
+  public:
+    Sink(Level minimum, std::shared_ptr<const Formatter> formatter)
+        : minimum_(minimum), formatter_(std::move(formatter)) {}
     virtual ~Sink() = default;
     void accept(const Record& record) {
         if (record.level >= minimum_) write(formatter_->format(record));
     }
 
-protected:
+  protected:
     virtual void write(const std::string& line) = 0;
 
-private:
+  private:
     Level minimum_;
     std::shared_ptr<const Formatter> formatter_;
 };
 
 class StreamSink : public Sink {
-public:
+  public:
     StreamSink(std::ostream& out, Level minimum, std::shared_ptr<const Formatter> formatter)
         : Sink(minimum, std::move(formatter)), out_(out) {}
 
-protected:
+  protected:
     void write(const std::string& line) override { out_ << line << '\n'; }
 
-private:
+  private:
     std::ostream& out_;
 };
 
 /// Keeps lines in memory – for tests, or for an in-app "recent events" panel.
 class MemorySink : public Sink {
-public:
+  public:
     using Sink::Sink;
     const std::vector<std::string>& lines() const { return lines_; }
 
-protected:
+  protected:
     void write(const std::string& line) override { lines_.push_back(line); }
 
-private:
+  private:
     std::vector<std::string> lines_;
 };
 
 class Logger {
-public:
+  public:
     using Clock = std::function<std::string()>;
     Logger(std::string name, Clock clock) : name_(std::move(name)), clock_(std::move(clock)) {}
     void add_sink(std::shared_ptr<Sink> sink) { sinks_.push_back(std::move(sink)); }
@@ -161,7 +163,7 @@ public:
     void info(const std::string& message) { log(Level::info, message); }
     void error(const std::string& message) { log(Level::error, message); }
 
-private:
+  private:
     std::string name_;
     Clock clock_;
     std::vector<std::shared_ptr<Sink>> sinks_;
@@ -169,14 +171,16 @@ private:
 
 // ---- Configuration ----
 class Config {
-public:
+  public:
     /// Values are stored as text under "section.key".
     void set(const std::string& key, std::string value) { values_[key] = std::move(value); }
     std::optional<std::string> get(const std::string& key) const {
         const auto it = values_.find(key);
         return it == values_.end() ? std::nullopt : std::optional<std::string>(it->second);
     }
-    std::string get_or(const std::string& key, const std::string& fallback) const { return get(key).value_or(fallback); }
+    std::string get_or(const std::string& key, const std::string& fallback) const {
+        return get(key).value_or(fallback);
+    }
     int get_int(const std::string& key, int fallback) const {
         const auto text = get(key);
         if (!text) return fallback;
@@ -187,7 +191,8 @@ public:
         } catch (const std::exception&) {
             used = 0;
         }
-        if (used == 0 || used != text->size()) throw std::invalid_argument(key + " must be an integer, got '" + *text + "'");
+        if (used == 0 || used != text->size())
+            throw std::invalid_argument(key + " must be an integer, got '" + *text + "'");
         return value;
     }
     bool get_bool(const std::string& key, bool fallback) const {
@@ -213,7 +218,7 @@ public:
         return overridden;
     }
 
-private:
+  private:
     std::map<std::string, std::string> values_;
 };
 
@@ -232,12 +237,14 @@ inline Config parse_ini(std::istream& in) {
         const std::string line = trim(raw);
         if (line.empty() || line[0] == ';' || line[0] == '#') continue;
         if (line.front() == '[') {
-            if (line.back() != ']') throw std::runtime_error("line " + std::to_string(number) + ": unclosed section header");
+            if (line.back() != ']')
+                throw std::runtime_error("line " + std::to_string(number) + ": unclosed section header");
             section = trim(line.substr(1, line.size() - 2));
             continue;
         }
         const auto eq = line.find('=');
-        if (eq == std::string::npos) throw std::runtime_error("line " + std::to_string(number) + ": expected key = value");
+        if (eq == std::string::npos)
+            throw std::runtime_error("line " + std::to_string(number) + ": expected key = value");
         const std::string key = trim(line.substr(0, eq));
         if (key.empty()) throw std::runtime_error("line " + std::to_string(number) + ": empty key");
         std::string value = line.substr(eq + 1);
@@ -253,15 +260,19 @@ inline Config parse_ini(std::istream& in) {
 /// logs each "amount currency" payment line.
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 77 – Logging & Configuration\n";
-    std::istringstream file("[log]\nlevel = info\nformat = text\n\n[gateway]\nmax_amount = 5000 ; per payment\n"
-                            "currency = EUR\n");
+    std::istringstream file(
+        "[log]\nlevel = info\nformat = text\n\n[gateway]\nmax_amount = 5000 ; per payment\n"
+        "currency = EUR\n");
     Config config = parse_ini(file);
-    for (const auto& key : config.apply_env({{"PAYGATE_GATEWAY_MAX_AMOUNT", "1000"}}, "PAYGATE")) out << "override: " << key << '\n';
+    for (const auto& key : config.apply_env({{"PAYGATE_GATEWAY_MAX_AMOUNT", "1000"}}, "PAYGATE"))
+        out << "override: " << key << '\n';
     int clock = 0;
     Logger log("gateway", [&clock] { return "t+" + std::to_string(clock++) + "s"; });
     std::shared_ptr<const Formatter> formatter;
-    if (config.get_or("log.format", "text") == "kv") formatter = std::make_shared<KeyValueFormatter>();
-    else formatter = std::make_shared<TextFormatter>();
+    if (config.get_or("log.format", "text") == "kv")
+        formatter = std::make_shared<KeyValueFormatter>();
+    else
+        formatter = std::make_shared<TextFormatter>();
     log.add_sink(std::make_shared<StreamSink>(out, parse_level(config.get_or("log.level", "info")), formatter));
     const int limit = config.get_int("gateway.max_amount", 100);
     while (auto line = prompt_line(in, out, "amount currency> ")) {
@@ -273,7 +284,8 @@ inline int run(std::istream& in, std::ostream& out) {
         if (currency != config.get_or("gateway.currency", "EUR")) {
             log.log(Level::warning, "currency not supported", {{"currency", currency}});
         } else if (amount > limit) {
-            log.log(Level::error, "amount over limit", {{"amount", std::to_string(amount)}, {"limit", std::to_string(limit)}});
+            log.log(Level::error, "amount over limit",
+                    {{"amount", std::to_string(amount)}, {"limit", std::to_string(limit)}});
         } else {
             log.log(Level::info, "payment accepted", {{"amount", std::to_string(amount)}});
         }

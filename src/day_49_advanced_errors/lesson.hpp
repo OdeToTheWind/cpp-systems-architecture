@@ -42,23 +42,23 @@ inline constexpr Deliverable DELIVERABLES[] = {
 // ── Exceptions: for failures the immediate caller usually cannot fix ─────────────
 
 class BookingError : public std::runtime_error {
-public:
+  public:
     using std::runtime_error::runtime_error;
 };
 class SoldOut final : public BookingError {
-public:
+  public:
     SoldOut() : BookingError("the concert is sold out") {}
 };
 class SeatTaken final : public BookingError {
-public:
+  public:
     explicit SeatTaken(const std::string& seat) : BookingError("seat " + seat + " is already taken"), seat_(seat) {}
     const std::string& seat() const noexcept { return seat_; }
 
-private:
+  private:
     std::string seat_;
 };
 class PaymentDeclined final : public BookingError {
-public:
+  public:
     explicit PaymentDeclined(const std::string& reason) : BookingError("payment declined: " + reason) {}
 };
 
@@ -67,18 +67,14 @@ public:
 enum class seat_errc { empty = 1, bad_row, bad_number, out_of_range };
 
 class seat_category_impl final : public std::error_category {
-public:
+  public:
     const char* name() const noexcept override { return "seat"; }
     std::string message(int code) const override {
         switch (static_cast<seat_errc>(code)) {
-            case seat_errc::empty:
-                return "empty seat code";
-            case seat_errc::bad_row:
-                return "row must be a letter A-Z";
-            case seat_errc::bad_number:
-                return "seat number must be digits";
-            case seat_errc::out_of_range:
-                return "seat number must be 1-30";
+            case seat_errc::empty: return "empty seat code";
+            case seat_errc::bad_row: return "row must be a letter A-Z";
+            case seat_errc::bad_number: return "seat number must be digits";
+            case seat_errc::out_of_range: return "seat number must be 1-30";
         }
         return "unknown seat error";
     }
@@ -89,19 +85,22 @@ inline const std::error_category& seat_category() {
     return instance;
 }
 
-inline std::error_code make_error_code(seat_errc e) { return {static_cast<int>(e), seat_category()}; }
+inline std::error_code make_error_code(seat_errc e) {
+    return {static_cast<int>(e), seat_category()};
+}
 
 }  // namespace cppm::day49
 
 template <>
-struct std::is_error_code_enum<cppm::day49::seat_errc> : std::true_type {};  // enables `std::error_code ec = seat_errc::empty;`
+struct std::is_error_code_enum<cppm::day49::seat_errc> : std::true_type {
+};  // enables `std::error_code ec = seat_errc::empty;`
 
 namespace cppm::day49 {
 
 /// Either a value or an error code – a minimal version of C++23 std::expected.
 template <typename T>
 class Result {
-public:
+  public:
     Result(T value) : data_(std::move(value)) {}
     Result(std::error_code error) : data_(error) {}
     /// Lets `return seat_errc::empty;` work: enum -> error_code -> Result would be two conversions.
@@ -116,7 +115,7 @@ public:
     }
     std::error_code error() const { return ok() ? std::error_code{} : std::get<std::error_code>(data_); }
 
-private:
+  private:
     std::variant<T, std::error_code> data_;
 };
 
@@ -143,7 +142,7 @@ inline Result<Seat> parse_seat(const std::string& text) {
 
 /// The booking service: its public operations throw BookingError subclasses.
 class BoxOffice {
-public:
+  public:
     explicit BoxOffice(int capacity) : capacity_(capacity) {}
 
     /// Book @p seat_text for @p customer paying with @p card. Throws SoldOut, SeatTaken,
@@ -162,7 +161,7 @@ public:
     }
     std::size_t sold() const { return sold_.size(); }
 
-private:
+  private:
     int capacity_;
     std::map<std::string, std::string> sold_;
 };

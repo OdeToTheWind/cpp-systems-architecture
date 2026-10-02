@@ -64,7 +64,8 @@ inline Schedule parse_schedule(const std::string& spec) {
     std::string extra;
     if (!(words >> kind >> arg) || words >> extra) throw std::invalid_argument("bad schedule '" + spec + "'");
     auto number = [&](const std::string& text, int low, int high) {
-        if (text.empty() || text.size() > 4 || text.find_first_not_of("0123456789") != std::string::npos) throw std::invalid_argument("bad schedule '" + spec + "'");
+        if (text.empty() || text.size() > 4 || text.find_first_not_of("0123456789") != std::string::npos)
+            throw std::invalid_argument("bad schedule '" + spec + "'");
         const int v = std::stoi(text);
         if (v < low || v > high) throw std::invalid_argument("bad schedule '" + spec + "'");
         return v;
@@ -76,7 +77,8 @@ inline Schedule parse_schedule(const std::string& spec) {
         return Every{number(arg.substr(0, arg.size() - 1), 1, 9999) * scale};
     }
     if (kind == "hourly" && arg.size() == 3 && arg[0] == ':') return Hourly{number(arg.substr(1), 0, 59)};
-    if (kind == "daily" && arg.size() == 5 && arg[2] == ':') return Daily{number(arg.substr(0, 2), 0, 23), number(arg.substr(3), 0, 59)};
+    if (kind == "daily" && arg.size() == 5 && arg[2] == ':')
+        return Daily{number(arg.substr(0, 2), 0, 23), number(arg.substr(3), 0, 59)};
     throw std::invalid_argument("bad schedule '" + spec + "'");
 }
 
@@ -104,19 +106,20 @@ inline std::string format_time(Seconds t) {
     const auto day = static_cast<std::size_t>((t / DAY) % 7);
     const auto h = (t % DAY) / HOUR;
     const auto m = (t % HOUR) / MINUTE;
-    return std::string(days[day]) + " " + (h < 10 ? "0" : "") + std::to_string(h) + ":" + (m < 10 ? "0" : "") + std::to_string(m);
+    return std::string(days[day]) + " " + (h < 10 ? "0" : "") + std::to_string(h) + ":" + (m < 10 ? "0" : "") +
+           std::to_string(m);
 }
 
 /// The scheduler only *reads* time through this interface; tests and the demo move it by hand.
 class SimulatedClock {
-public:
+  public:
     Seconds now() const { return now_; }
     void advance_to(Seconds t) {
         if (t < now_) throw std::logic_error("time cannot go backwards");
         now_ = t;
     }
 
-private:
+  private:
     Seconds now_ = 0;
 };
 
@@ -130,7 +133,7 @@ struct RunRecord {
 };
 
 class Scheduler {
-public:
+  public:
     explicit Scheduler(SimulatedClock& clock) : clock_(clock) {}
 
     void add(const std::string& name, const std::string& spec, Job job, Seconds timeout) {
@@ -181,10 +184,12 @@ public:
 
     const std::vector<RunRecord>& history() const { return history_; }
     int count(const std::string& job, const std::string& outcome) const {
-        return static_cast<int>(std::count_if(history_.begin(), history_.end(), [&](const RunRecord& r) { return r.job == job && r.outcome == outcome; }));
+        return static_cast<int>(std::count_if(history_.begin(), history_.end(), [&](const RunRecord& r) {
+            return r.job == job && r.outcome == outcome;
+        }));
     }
 
-private:
+  private:
     struct Task {
         std::string name;
         Schedule schedule;

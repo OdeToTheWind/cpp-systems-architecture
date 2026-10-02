@@ -13,7 +13,7 @@ namespace cppm::day100 {
 struct Settings {
     std::string symbol = "€";
     std::string data_file = "budget.ledger";
-    std::string log_file;  // empty: no log
+    std::string log_file;                         // empty: no log
     std::map<std::string, Cents> monthly_limits;  // category -> limit
 };
 
@@ -38,12 +38,16 @@ inline Settings load_settings(const std::string& ini, const std::map<std::string
             continue;
         }
         const auto eq = line.find('=');
-        if (eq == std::string::npos) throw std::runtime_error("config line " + std::to_string(number) + ": expected key = value");
+        if (eq == std::string::npos)
+            throw std::runtime_error("config line " + std::to_string(number) + ": expected key = value");
         const std::string key = trim(line.substr(0, eq));
         const std::string value = trim(line.substr(eq + 1));
-        if (section == "general" && key == "symbol") s.symbol = value;
-        else if (section == "general" && key == "data_file") s.data_file = value;
-        else if (section == "general" && key == "log_file") s.log_file = value;
+        if (section == "general" && key == "symbol")
+            s.symbol = value;
+        else if (section == "general" && key == "data_file")
+            s.data_file = value;
+        else if (section == "general" && key == "log_file")
+            s.log_file = value;
         else if (section == "limits") {
             try {
                 s.monthly_limits[key] = parse_money(value);
@@ -51,7 +55,8 @@ inline Settings load_settings(const std::string& ini, const std::map<std::string
                 throw std::runtime_error("config line " + std::to_string(number) + ": " + e.what());
             }
         } else {
-            throw std::runtime_error("config line " + std::to_string(number) + ": unknown setting " + section + "." + key);
+            throw std::runtime_error("config line " + std::to_string(number) + ": unknown setting " + section + "." +
+                                     key);
         }
     }
     if (const auto it = env.find("BUDGET_DATA_FILE"); it != env.end()) s.data_file = it->second;

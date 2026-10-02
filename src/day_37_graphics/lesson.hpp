@@ -51,7 +51,7 @@ inline constexpr Color red{220, 30, 40};
 inline constexpr Color gold{240, 190, 40};
 
 class Canvas {
-public:
+  public:
     Canvas(int width, int height, Color background = white) : width_(width), height_(height) {
         if (width <= 0 || height <= 0 || width > 4096 || height > 4096) {
             throw std::invalid_argument("canvas size must be 1-4096 pixels per side");
@@ -108,7 +108,8 @@ public:
         int y = 0;
         int decision = 1 - radius;
         while (x >= y) {
-            for (const auto& [px, py] : {std::pair{x, y}, {y, x}, {-y, x}, {-x, y}, {-x, -y}, {-y, -x}, {y, -x}, {x, -y}}) {
+            for (const auto& [px, py] :
+                 {std::pair{x, y}, {y, x}, {-y, x}, {-x, y}, {-x, -y}, {-y, -x}, {y, -x}, {x, -y}}) {
                 set(cx + px, cy + py, color);
             }
             ++y;
@@ -162,7 +163,7 @@ public:
         return n;
     }
 
-private:
+  private:
     std::size_t index(int x, int y) const {
         return static_cast<std::size_t>(y) * static_cast<std::size_t>(width_) + static_cast<std::size_t>(x);
     }

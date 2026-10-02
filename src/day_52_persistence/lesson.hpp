@@ -91,8 +91,9 @@ inline GardenState deserialise(const std::string& text) {
         std::string tag;
         std::string name;
         Plant plant;
-        const bool ok = version == 1 ? static_cast<bool>(fields >> tag >> name >> plant.last_watered_day)
-                                     : static_cast<bool>(fields >> tag >> name >> plant.interval_days >> plant.last_watered_day);
+        const bool ok = version == 1
+                            ? static_cast<bool>(fields >> tag >> name >> plant.last_watered_day)
+                            : static_cast<bool>(fields >> tag >> name >> plant.interval_days >> plant.last_watered_day);
         if (!ok || tag != "plant" || plant.interval_days <= 0 || !(fields >> std::ws).eof()) {
             throw std::runtime_error("corrupt line " + std::to_string(number));
         }
@@ -118,8 +119,8 @@ inline void save_atomically(const fs::path& file, const GardenState& state) {
 /// What loading produced.
 struct LoadResult {
     GardenState state;
-    bool recovered{false};    // the file was corrupt and has been moved aside
-    fs::path quarantined;     // where the corrupt file went
+    bool recovered{false};  // the file was corrupt and has been moved aside
+    fs::path quarantined;   // where the corrupt file went
 };
 
 /// Missing file -> empty garden. Corrupt file -> renamed to "<file>.corrupt", empty garden, recovered = true.
@@ -139,7 +140,8 @@ inline LoadResult load_or_recover(const fs::path& file) {
 }
 
 /// The interactive demo: add/water/due commands; the garden is saved after every change.
-inline int run(std::istream& in, std::ostream& out, const fs::path& file = fs::temp_directory_path() / "cppm-garden.txt") {
+inline int run(std::istream& in, std::ostream& out,
+               const fs::path& file = fs::temp_directory_path() / "cppm-garden.txt") {
     out << "Day 52 – Local Persistence\nSave file: " << file.string() << '\n';
     auto [state, recovered, aside] = load_or_recover(file);
     if (recovered) out << "The save file was damaged; it was kept as " << aside.filename().string() << '\n';
@@ -160,9 +162,12 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& file = fs::t
             out << "  missing arguments\n";
             continue;
         }
-        if (command == "add") state.plants[name] = Plant{number, 0};
-        else if (command == "water" && state.plants.contains(name)) state.plants[name].last_watered_day = number;
-        else out << "  unknown command or plant\n";
+        if (command == "add")
+            state.plants[name] = Plant{number, 0};
+        else if (command == "water" && state.plants.contains(name))
+            state.plants[name].last_watered_day = number;
+        else
+            out << "  unknown command or plant\n";
         save_atomically(file, state);
     }
     return 0;

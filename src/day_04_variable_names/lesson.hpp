@@ -45,16 +45,20 @@ enum class Kind { variable, function, type, constant };
 enum class Style { snake_case, pascal_case, camel_case, upper_snake_case, other };
 
 inline constexpr std::array<std::string_view, 92> keywords = {
-    "alignas", "alignof", "and", "and_eq", "asm", "auto", "bitand", "bitor", "bool", "break", "case",
-    "catch", "char", "char8_t", "char16_t", "char32_t", "class", "compl", "concept", "const", "consteval",
-    "constexpr", "constinit", "const_cast", "continue", "co_await", "co_return", "co_yield", "decltype",
-    "default", "delete", "do", "double", "dynamic_cast", "else", "enum", "explicit", "export", "extern",
-    "false", "float", "for", "friend", "goto", "if", "inline", "int", "long", "mutable", "namespace", "new",
-    "noexcept", "not", "not_eq", "nullptr", "operator", "or", "or_eq", "private", "protected", "public",
-    "register", "reinterpret_cast", "requires", "return", "short", "signed", "sizeof", "static",
-    "static_assert", "static_cast", "struct", "switch", "template", "this", "thread_local", "throw", "true",
-    "try", "typedef", "typeid", "typename", "union", "unsigned", "using", "virtual", "void", "volatile",
-    "wchar_t", "while", "xor", "xor_eq"};
+    "alignas",     "alignof",   "and",        "and_eq",    "asm",      "auto",         "bitand",
+    "bitor",       "bool",      "break",      "case",      "catch",    "char",         "char8_t",
+    "char16_t",    "char32_t",  "class",      "compl",     "concept",  "const",        "consteval",
+    "constexpr",   "constinit", "const_cast", "continue",  "co_await", "co_return",    "co_yield",
+    "decltype",    "default",   "delete",     "do",        "double",   "dynamic_cast", "else",
+    "enum",        "explicit",  "export",     "extern",    "false",    "float",        "for",
+    "friend",      "goto",      "if",         "inline",    "int",      "long",         "mutable",
+    "namespace",   "new",       "noexcept",   "not",       "not_eq",   "nullptr",      "operator",
+    "or",          "or_eq",     "private",    "protected", "public",   "register",     "reinterpret_cast",
+    "requires",    "return",    "short",      "signed",    "sizeof",   "static",       "static_assert",
+    "static_cast", "struct",    "switch",     "template",  "this",     "thread_local", "throw",
+    "true",        "try",       "typedef",    "typeid",    "typename", "union",        "unsigned",
+    "using",       "virtual",   "void",       "volatile",  "wchar_t",  "while",        "xor",
+    "xor_eq"};
 
 /// True for every C++20 keyword and alternative operator token.
 inline bool is_keyword(std::string_view name) {
@@ -66,9 +70,8 @@ inline bool is_legal_identifier(std::string_view name) {
     if (name.empty() || std::isdigit(static_cast<unsigned char>(name.front()))) {
         return false;
     }
-    const bool valid_chars = std::all_of(name.begin(), name.end(), [](char c) {
-        return std::isalnum(static_cast<unsigned char>(c)) || c == '_';
-    });
+    const bool valid_chars = std::all_of(
+        name.begin(), name.end(), [](char c) { return std::isalnum(static_cast<unsigned char>(c)) || c == '_'; });
     return valid_chars && !is_keyword(name);
 }
 
@@ -125,7 +128,7 @@ inline std::string to_snake_case(std::string_view name) {
 
 /// Names that say nothing about intent, or encode the type (Hungarian notation).
 inline bool is_vague_name(std::string_view name) {
-    static constexpr std::array<std::string_view, 9> vague = {"data", "temp", "tmp", "flag", "foo",
+    static constexpr std::array<std::string_view, 9> vague = {"data", "temp",  "tmp",   "flag", "foo",
                                                               "bar",  "thing", "stuff", "val"};
     if (name.size() == 1 && name != "i" && name != "j" && name != "n") {
         return true;
@@ -178,11 +181,16 @@ inline Review review_name(std::string_view name, Kind kind) {
 
 /// Parse "variable", "function", "type" or "constant".
 inline bool parse_kind(std::string_view word, Kind& kind) {
-    if (word == "variable") kind = Kind::variable;
-    else if (word == "function") kind = Kind::function;
-    else if (word == "type") kind = Kind::type;
-    else if (word == "constant") kind = Kind::constant;
-    else return false;
+    if (word == "variable")
+        kind = Kind::variable;
+    else if (word == "function")
+        kind = Kind::function;
+    else if (word == "type")
+        kind = Kind::type;
+    else if (word == "constant")
+        kind = Kind::constant;
+    else
+        return false;
     return true;
 }
 

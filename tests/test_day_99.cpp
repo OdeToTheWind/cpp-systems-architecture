@@ -14,7 +14,8 @@ using namespace cppm::day99;
 TEST_CASE("the flight recorder keeps only the latest events") {
     FlightRecorder rec(3);
     for (int k = 1; k <= 5; ++k) rec.record("e" + std::to_string(k));
-    CHECK(std::vector<std::string>(rec.events().begin(), rec.events().end()) == std::vector<std::string>{"e3", "e4", "e5"});
+    CHECK(std::vector<std::string>(rec.events().begin(), rec.events().end()) ==
+          std::vector<std::string>{"e3", "e4", "e5"});
     CHECK_EQ(rec.total(), 5u);
 }
 
@@ -98,7 +99,8 @@ TEST_CASE("the checkout crash report has everything needed to debug it") {
     CHECK(report.find("error: order 2 failed\n  caused by: inventory went negative\n") != std::string::npos);
     CHECK(report.find("open spans:\n") != std::string::npos);  // all spans closed during unwinding
     CHECK(report.find("watch stock[sku-42]: 1 -> -1") != std::string::npos);
-    CHECK(report.find("checkout#2 130-250ms error qty=2\n  reserve 130-150ms ok\n  charge 150-250ms error\n") != std::string::npos);
+    CHECK(report.find("checkout#2 130-250ms error qty=2\n  reserve 130-150ms ok\n  charge 150-250ms error\n") !=
+          std::string::npos);
     CHECK_EQ(service.breaks.size(), 1u);
     std::istringstream in("order 1 1\norder 2 5\n");
     std::ostringstream out;

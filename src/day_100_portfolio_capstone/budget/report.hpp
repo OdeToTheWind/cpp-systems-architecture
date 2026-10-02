@@ -44,9 +44,10 @@ inline MonthReport build_month(const std::vector<Entry>& entries, const std::str
 }
 
 inline std::string render_text(const MonthReport& r, const Settings& s) {
-    std::string out = "Report " + r.month + "\n  income   " + format_money(r.income, s.symbol) + "\n  spent    " + format_money(r.spent, s.symbol) +
-                      "\n  balance  " + format_money(r.balance(), s.symbol) + "\n";
-    for (const auto& [category, cents] : r.spent_by_category) out += "    " + category + ": " + format_money(cents, s.symbol) + "\n";
+    std::string out = "Report " + r.month + "\n  income   " + format_money(r.income, s.symbol) + "\n  spent    " +
+                      format_money(r.spent, s.symbol) + "\n  balance  " + format_money(r.balance(), s.symbol) + "\n";
+    for (const auto& [category, cents] : r.spent_by_category)
+        out += "    " + category + ": " + format_money(cents, s.symbol) + "\n";
     for (const auto& w : r.warnings) out += "  ! " + w + "\n";
     return out;
 }
@@ -65,8 +66,10 @@ inline std::string render_csv(const std::vector<Entry>& entries, const std::stri
     for (const auto& e : entries) {
         if (e.month() != month) continue;
         const Cents abs = e.cents < 0 ? -e.cents : e.cents;
-        const std::string amount = (e.cents < 0 ? "-" : "") + std::to_string(abs / 100) + "." + (abs % 100 < 10 ? "0" : "") + std::to_string(abs % 100);
-        out += std::to_string(e.id) + "," + e.date + "," + amount + "," + csv_cell(e.category) + "," + csv_cell(e.note) + "\n";
+        const std::string amount = (e.cents < 0 ? "-" : "") + std::to_string(abs / 100) + "." +
+                                   (abs % 100 < 10 ? "0" : "") + std::to_string(abs % 100);
+        out += std::to_string(e.id) + "," + e.date + "," + amount + "," + csv_cell(e.category) + "," +
+               csv_cell(e.note) + "\n";
     }
     return out;
 }

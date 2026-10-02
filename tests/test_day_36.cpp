@@ -69,8 +69,9 @@ TEST_CASE("instances in a network keep independent state") {
 }
 
 TEST_CASE("run drives several parcels through their lifecycles") {
-    std::istringstream in("add P1 11\nadd P2 22\nship P1 1\ndeliver P1 2\ncollect P1 99 2\ncollect P1 11 3\n"
-                          "ship P2 1\ndeliver P2 1\nnight 9\ncollect P9 1 1\nship P1 4\nfly\n\n");
+    std::istringstream in(
+        "add P1 11\nadd P2 22\nship P1 1\ndeliver P1 2\ncollect P1 99 2\ncollect P1 11 3\n"
+        "ship P2 1\ndeliver P2 1\nnight 9\ncollect P9 1 1\nship P1 4\nfly\n\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

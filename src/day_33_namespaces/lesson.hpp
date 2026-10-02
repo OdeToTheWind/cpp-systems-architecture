@@ -52,7 +52,9 @@ inline Reading parse(std::string_view line) {
     }
     return r;
 }
-inline int api_version() { return 1; }
+inline int api_version() {
+    return 1;
+}
 }  // namespace v1
 
 /// Current stations send "temperature_c,wind_ms". `inline` makes weather::parse mean weather::v2::parse.
@@ -70,16 +72,24 @@ inline Reading parse(std::string_view line) {
     }
     return r;
 }
-inline int api_version() { return 2; }
+inline int api_version() {
+    return 2;
+}
 }  // namespace v2
 
 namespace units::metric {  // nested namespace definition (C++17)
-inline double to_kmh(double metres_per_second) { return metres_per_second * 3.6; }
+inline double to_kmh(double metres_per_second) {
+    return metres_per_second * 3.6;
+}
 }  // namespace units::metric
 
 namespace units::imperial {
-inline double to_fahrenheit(double celsius) { return celsius * 9.0 / 5.0 + 32.0; }
-inline double to_celsius(double fahrenheit) { return (fahrenheit - 32.0) * 5.0 / 9.0; }
+inline double to_fahrenheit(double celsius) {
+    return celsius * 9.0 / 5.0 + 32.0;
+}
+inline double to_celsius(double fahrenheit) {
+    return (fahrenheit - 32.0) * 5.0 / 9.0;
+}
 }  // namespace units::imperial
 
 }  // namespace weather
@@ -131,8 +141,8 @@ inline double wind_in_kmh(const weather::Reading& reading) {
 inline std::string describe_reading(const std::string& station, const weather::Reading& reading) {
     namespace imperial = weather::units::imperial;
     std::ostringstream out;
-    out << station_prefix << station << ": " << reading.temperature_c << " C (" << imperial::to_fahrenheit(reading.temperature_c)
-        << " F), wind " << wind_in_kmh(reading) << " km/h";
+    out << station_prefix << station << ": " << reading.temperature_c << " C ("
+        << imperial::to_fahrenheit(reading.temperature_c) << " F), wind " << wind_in_kmh(reading) << " km/h";
     return out.str();
 }
 

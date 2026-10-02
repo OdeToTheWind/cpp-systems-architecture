@@ -43,13 +43,13 @@ using Lines = std::vector<std::string>;
 
 // ---- Strategy: one interface, several algorithms chosen at run time ----
 class Exporter {
-public:
+  public:
     virtual ~Exporter() = default;
     virtual std::string render(const Lines& lines) const = 0;
 };
 
 class PlainExporter : public Exporter {
-public:
+  public:
     std::string render(const Lines& lines) const override {
         std::string out;
         for (const auto& line : lines) out += line + "\n";
@@ -58,7 +58,7 @@ public:
 };
 
 class MarkdownExporter : public Exporter {
-public:
+  public:
     std::string render(const Lines& lines) const override {
         std::string out;
         for (std::size_t i = 0; i < lines.size(); ++i) out += (i == 0 ? "# " : "- ") + lines[i] + "\n";
@@ -67,21 +67,25 @@ public:
 };
 
 class HtmlExporter : public Exporter {
-public:
+  public:
     std::string render(const Lines& lines) const override {
         std::string out = "<ul>\n";
         for (const auto& line : lines) out += "  <li>" + escape(line) + "</li>\n";
         return out + "</ul>\n";
     }
 
-private:
+  private:
     static std::string escape(const std::string& text) {
         std::string out;
         for (const char c : text) {
-            if (c == '<') out += "&lt;";
-            else if (c == '>') out += "&gt;";
-            else if (c == '&') out += "&amp;";
-            else out += c;
+            if (c == '<')
+                out += "&lt;";
+            else if (c == '>')
+                out += "&gt;";
+            else if (c == '&')
+                out += "&amp;";
+            else
+                out += c;
         }
         return out;
     }
@@ -106,7 +110,7 @@ inline std::unique_ptr<Exporter> make_exporter(const std::string& name) {
 
 // ---- Decorator: wraps an Exporter and is itself an Exporter, so decorators stack ----
 class WithLineNumbers : public Exporter {
-public:
+  public:
     explicit WithLineNumbers(std::unique_ptr<Exporter> inner) : inner_(std::move(inner)) {}
     std::string render(const Lines& lines) const override {
         Lines numbered;
@@ -114,12 +118,12 @@ public:
         return inner_->render(numbered);
     }
 
-private:
+  private:
     std::unique_ptr<Exporter> inner_;
 };
 
 class WithWordCount : public Exporter {
-public:
+  public:
     explicit WithWordCount(std::unique_ptr<Exporter> inner) : inner_(std::move(inner)) {}
     std::string render(const Lines& lines) const override {
         std::size_t words = 0;
@@ -130,13 +134,13 @@ public:
         return inner_->render(lines) + "(" + std::to_string(words) + " words)\n";
     }
 
-private:
+  private:
     std::unique_ptr<Exporter> inner_;
 };
 
 // ---- Command: each edit knows how to do and undo itself ----
 class Command {
-public:
+  public:
     virtual ~Command() = default;
     virtual void execute(Lines& lines) = 0;
     virtual void undo(Lines& lines) = 0;
@@ -144,18 +148,18 @@ public:
 };
 
 class AppendLine : public Command {
-public:
+  public:
     explicit AppendLine(std::string text) : text_(std::move(text)) {}
     void execute(Lines& lines) override { lines.push_back(text_); }
     void undo(Lines& lines) override { lines.pop_back(); }
     std::string name() const override { return "append"; }
 
-private:
+  private:
     std::string text_;
 };
 
 class DeleteLine : public Command {
-public:
+  public:
     explicit DeleteLine(std::size_t index) : index_(index) {}
     void execute(Lines& lines) override {
         if (index_ >= lines.size()) throw std::out_of_range("no line " + std::to_string(index_ + 1));
@@ -165,13 +169,13 @@ public:
     void undo(Lines& lines) override { lines.insert(lines.begin() + static_cast<std::ptrdiff_t>(index_), removed_); }
     std::string name() const override { return "delete"; }
 
-private:
+  private:
     std::size_t index_;
     std::string removed_;  // remembered so undo can restore it
 };
 
 class ReplaceAll : public Command {
-public:
+  public:
     ReplaceAll(std::string from, std::string to) : from_(std::move(from)), to_(std::move(to)) {}
     void execute(Lines& lines) override {
         before_ = lines;
@@ -185,7 +189,7 @@ public:
     void undo(Lines& lines) override { lines = before_; }
     std::string name() const override { return "replace"; }
 
-private:
+  private:
     std::string from_;
     std::string to_;
     Lines before_;
@@ -193,7 +197,7 @@ private:
 
 /// Runs commands and keeps undo/redo stacks. A new command clears the redo stack.
 class History {
-public:
+  public:
     explicit History(Lines& lines) : lines_(lines) {}
     void run(std::unique_ptr<Command> command) {
         command->execute(lines_);  // if this throws, nothing is recorded
@@ -216,7 +220,7 @@ public:
     }
     std::size_t undo_depth() const { return done_.size(); }
 
-private:
+  private:
     Lines& lines_;
     std::vector<std::unique_ptr<Command>> done_;
     std::vector<std::unique_ptr<Command>> undone_;

@@ -43,7 +43,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Columns stored separately (one vector per column): scanning one column touches only its data.
 class Table {
-public:
+  public:
     /// A view of one row, used by predicates and derivations.
     struct Row {
         const Table* table;
@@ -52,8 +52,12 @@ public:
         const std::string& text(const std::string& column) const { return table->texts(column)[index]; }
     };
 
-    void add_numeric(const std::string& name, std::vector<double> values) { check_and_store(name, numeric_, std::move(values)); }
-    void add_text(const std::string& name, std::vector<std::string> values) { check_and_store(name, text_, std::move(values)); }
+    void add_numeric(const std::string& name, std::vector<double> values) {
+        check_and_store(name, numeric_, std::move(values));
+    }
+    void add_text(const std::string& name, std::vector<std::string> values) {
+        check_and_store(name, text_, std::move(values));
+    }
 
     std::size_t rows() const { return rows_; }
     const std::vector<double>& numbers(const std::string& column) const { return find(numeric_, column); }
@@ -92,7 +96,7 @@ public:
         add_numeric(name, std::move(values));
     }
 
-private:
+  private:
     template <typename T>
     void check_and_store(const std::string& name, std::map<std::string, std::vector<T>>& store, std::vector<T> values) {
         if (numeric_.contains(name) || text_.contains(name)) {
@@ -203,7 +207,8 @@ inline int run(std::istream& in, std::ostream& out) {
         return 0;
     }
     trips.derive("kmh", [](const Table::Row& r) { return r.number("km") / (r.number("minutes") / 60.0); });
-    const Table rides = trips.filter([](const Table::Row& r) { return r.number("minutes") >= 2; });  // drop docking errors
+    const Table rides =
+        trips.filter([](const Table::Row& r) { return r.number("minutes") >= 2; });  // drop docking errors
     out << std::fixed << std::setprecision(1);
     out << rides.rows() << " of " << trips.rows() << " trips kept\n";
     for (const auto& [station, mean] : group_mean(rides, "station", "kmh")) {

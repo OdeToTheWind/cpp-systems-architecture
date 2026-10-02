@@ -45,8 +45,9 @@ TEST_CASE("each sink filters by its own minimum level") {
 }
 
 TEST_CASE("INI files are parsed into section.key settings") {
-    std::istringstream file("; payment gateway\n[database]\nhost = db.internal\n pool_size=8 \n\n[log]\n# comment\nlevel=debug\n"
-                            "verbose = yes\nempty =\n");
+    std::istringstream file(
+        "; payment gateway\n[database]\nhost = db.internal\n pool_size=8 \n\n[log]\n# comment\nlevel=debug\n"
+        "verbose = yes\nempty =\n");
     const Config config = parse_ini(file);
     CHECK_EQ(config.get_or("database.host", ""), "db.internal");
     CHECK_EQ(config.get_int("database.pool_size", 1), 8);
@@ -79,7 +80,8 @@ TEST_CASE("bad INI lines and bad values are reported precisely") {
 TEST_CASE("environment variables override file values") {
     std::istringstream file("[database]\npool_size = 8\nhost = localhost\n");
     Config config = parse_ini(file);
-    const auto overridden = config.apply_env({{"PAYGATE_DATABASE_POOL_SIZE", "32"}, {"OTHER_DATABASE_HOST", "x"}}, "PAYGATE");
+    const auto overridden =
+        config.apply_env({{"PAYGATE_DATABASE_POOL_SIZE", "32"}, {"OTHER_DATABASE_HOST", "x"}}, "PAYGATE");
     CHECK(overridden == std::vector<std::string>{"database.pool_size"});
     CHECK_EQ(config.get_int("database.pool_size", 0), 32);
     CHECK_EQ(config.get_or("database.host", ""), "localhost");

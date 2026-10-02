@@ -18,8 +18,8 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
 #include <cstdint>
+#include <cstdio>
 #include <istream>
 #include <ostream>
 #include <random>
@@ -46,7 +46,9 @@ struct State {
     double r;  // recovered
 };
 
-inline double total(const State& x) { return x.s + x.i + x.r; }
+inline double total(const State& x) {
+    return x.s + x.i + x.r;
+}
 
 /// beta: infections per infected person per day in a fully susceptible population; gamma: 1 / infectious period.
 /// dS/dt = -beta S I / N, dI/dt = beta S I / N - gamma I, dR/dt = gamma I.
@@ -56,9 +58,13 @@ inline State derivative(const State& x, double beta, double gamma) {
     return {-infections, infections - recoveries, recoveries};
 }
 
-inline State add(const State& a, const State& b, double k) { return {a.s + k * b.s, a.i + k * b.i, a.r + k * b.r}; }
+inline State add(const State& a, const State& b, double k) {
+    return {a.s + k * b.s, a.i + k * b.i, a.r + k * b.r};
+}
 
-inline State euler_step(const State& x, double beta, double gamma, double dt) { return add(x, derivative(x, beta, gamma), dt); }
+inline State euler_step(const State& x, double beta, double gamma, double dt) {
+    return add(x, derivative(x, beta, gamma), dt);
+}
 
 /// Classic RK4: four slope evaluations per step; error shrinks like dt^4 instead of Euler's dt.
 inline State rk4_step(const State& x, double beta, double gamma, double dt) {
@@ -73,14 +79,16 @@ inline State rk4_step(const State& x, double beta, double gamma, double dt) {
 enum class Method { euler, rk4 };
 
 /// Integrate for @p days with step @p dt; returns the state at the end of every day.
-inline std::vector<State> simulate(State start, double beta, double gamma, int days, double dt, Method method = Method::rk4) {
+inline std::vector<State> simulate(State start, double beta, double gamma, int days, double dt,
+                                   Method method = Method::rk4) {
     if (dt <= 0 || dt > 1) throw std::invalid_argument("dt must be in (0, 1]");
     const int steps_per_day = static_cast<int>(std::lround(1.0 / dt));
     if (std::abs(steps_per_day * dt - 1.0) > 1e-9) throw std::invalid_argument("1 / dt must be a whole number");
     std::vector<State> daily{start};
     State x = start;
     for (int d = 0; d < days; ++d) {
-        for (int k = 0; k < steps_per_day; ++k) x = method == Method::rk4 ? rk4_step(x, beta, gamma, dt) : euler_step(x, beta, gamma, dt);
+        for (int k = 0; k < steps_per_day; ++k)
+            x = method == Method::rk4 ? rk4_step(x, beta, gamma, dt) : euler_step(x, beta, gamma, dt);
         daily.push_back(x);
     }
     return daily;
@@ -114,7 +122,9 @@ inline double final_size_fraction(double r0) {
 
 /// Uniform in [0, 1) from the engine's raw bits. std::mt19937_64 produces the same numbers on every
 /// platform, but std::uniform_real_distribution may not – so seeded results are portable only this way.
-inline double uniform01(std::mt19937_64& rng) { return static_cast<double>(rng() >> 11) * (1.0 / 9007199254740992.0); }
+inline double uniform01(std::mt19937_64& rng) {
+    return static_cast<double>(rng() >> 11) * (1.0 / 9007199254740992.0);
+}
 
 struct Outbreak {
     int total_infected;
@@ -173,17 +183,21 @@ inline int run(std::istream& in, std::ostream& out) {
         double r0 = 0;
         double infectious_days = 0;
         int initial = 0;
-        if (!(words >> population >> r0 >> infectious_days >> initial) || population <= initial || initial <= 0 || infectious_days <= 0) break;
+        if (!(words >> population >> r0 >> infectious_days >> initial) || population <= initial || initial <= 0 ||
+            infectious_days <= 0)
+            break;
         const double gamma = 1 / infectious_days;
         const auto series = simulate({double(population - initial), double(initial), 0}, r0 * gamma, gamma, 365, 0.1);
         const auto p = peak(series);
         char text[200];
-        std::snprintf(text, sizeof text, "  peak on day %d with %.0f infected; %.1f%% infected in total (theory %.1f%%)\n", p.day, p.infected,
-                      100 * series.back().r / population, 100 * final_size_fraction(r0));
+        std::snprintf(text, sizeof text,
+                      "  peak on day %d with %.0f infected; %.1f%% infected in total (theory %.1f%%)\n", p.day,
+                      p.infected, 100 * series.back().r / population, 100 * final_size_fraction(r0));
         out << text;
         const auto mc = monte_carlo(400, 300, 1, 1 - std::exp(-r0 / 300), 98);  // one imported case
-        std::snprintf(text, sizeof text, "  town of 300, one imported case: P(major outbreak) = %.2f (95%% CI %.2f-%.2f)\n", mc.major_outbreak_probability,
-                      mc.ci95_low, mc.ci95_high);
+        std::snprintf(text, sizeof text,
+                      "  town of 300, one imported case: P(major outbreak) = %.2f (95%% CI %.2f-%.2f)\n",
+                      mc.major_outbreak_probability, mc.ci95_low, mc.ci95_high);
         out << text;
     }
     return 0;

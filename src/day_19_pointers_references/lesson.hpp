@@ -64,7 +64,7 @@ struct Bed {
 
 /// A ward of eight beds, stored in a std::array so their addresses never change.
 class Ward {
-public:
+  public:
     Ward() {
         for (std::size_t i = 0; i < beds_.size(); ++i) {
             beds_[i].number = static_cast<int>(i) + 1;
@@ -93,13 +93,13 @@ public:
 
     Bed* bed_number(int number) {
         return (number >= 1 && number <= static_cast<int>(beds_.size())) ? &beds_[static_cast<std::size_t>(number) - 1]
-                                                                          : nullptr;
+                                                                         : nullptr;
     }
 
     const Bed* begin() const { return beds_.data(); }
     const Bed* end() const { return beds_.data() + beds_.size(); }
 
-private:
+  private:
     std::array<Bed, 8> beds_{};
 };
 

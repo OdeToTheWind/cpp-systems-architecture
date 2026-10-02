@@ -57,7 +57,10 @@ TEST_CASE("overrides replace defaults") {
 }
 
 TEST_CASE("every problem is reported in one go") {
-    Env env{{"DISPATCH_WORKERS", "100"}, {"DISPATCH_DRY_RUN", "maybe"}, {"DISPATCH_MAPS_API_KEY", "short"}, {"DISPATCH_REGION", "LIS"}};
+    Env env{{"DISPATCH_WORKERS", "100"},
+            {"DISPATCH_DRY_RUN", "maybe"},
+            {"DISPATCH_MAPS_API_KEY", "short"},
+            {"DISPATCH_REGION", "LIS"}};
     try {
         dispatch_schema().load(env);
         CHECK(false);
@@ -68,7 +71,7 @@ TEST_CASE("every problem is reported in one go") {
         CHECK_EQ(p[1], "DISPATCH_WORKERS: must be between 1 and 64");
         CHECK_EQ(p[2], "DISPATCH_DRY_RUN: expected true/false, got 'maybe'");
         CHECK_EQ(p[4], "DISPATCH_MAPS_API_KEY: must be at least 8 characters");
-        CHECK_EQ(p[5], "DISPATCH_REGION: unknown setting");  // probably meant REGIONS
+        CHECK_EQ(p[5], "DISPATCH_REGION: unknown setting");               // probably meant REGIONS
         CHECK(std::string(e.what()).find("short") == std::string::npos);  // the bad secret is not echoed
     }
 }
@@ -88,7 +91,8 @@ TEST_CASE("the schema documents itself") {
 }
 
 TEST_CASE("run loads or explains") {
-    std::istringstream ok("DISPATCH_DATABASE_URL=postgres://x/y\nDISPATCH_REGIONS=LIS\nDISPATCH_MAPS_API_KEY=abcdefghij\n\n");
+    std::istringstream ok(
+        "DISPATCH_DATABASE_URL=postgres://x/y\nDISPATCH_REGIONS=LIS\nDISPATCH_MAPS_API_KEY=abcdefghij\n\n");
     std::ostringstream out;
     CHECK_EQ(run(ok, out), 0);
     CHECK(out.str().find("loaded: 4 worker(s), timeout 45000 ms, 1 region(s)") != std::string::npos);

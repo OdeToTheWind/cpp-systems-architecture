@@ -34,17 +34,14 @@
 namespace cppm::day51 {
 
 inline constexpr Deliverable DELIVERABLES[] = {
-    {"a JSON value model built on std::variant", "Json"},
-    {"a recursive-descent parser", "Parser"},
-    {"syntax errors with line and column", "JsonError"},
-    {"escaping strings for output", "escape"},
-    {"compact and pretty serialisation", "dump"},
-    {"reading typed settings from parsed JSON", "load_zones"},
+    {"a JSON value model built on std::variant", "Json"}, {"a recursive-descent parser", "Parser"},
+    {"syntax errors with line and column", "JsonError"},  {"escaping strings for output", "escape"},
+    {"compact and pretty serialisation", "dump"},         {"reading typed settings from parsed JSON", "load_zones"},
 };
 
 /// One JSON value. Objects keep their keys in insertion order (like nlohmann::ordered_json).
 class Json {
-public:
+  public:
     using Array = std::vector<Json>;
     using Object = std::vector<std::pair<std::string, Json>>;
     using Value = std::variant<std::nullptr_t, bool, double, std::string, Array, Object>;
@@ -85,7 +82,7 @@ public:
     }
     bool operator==(const Json&) const = default;
 
-private:
+  private:
     template <typename T>
     const T& get(const char* what) const {
         if (const T* found = std::get_if<T>(&value_)) return *found;
@@ -96,7 +93,7 @@ private:
 
 /// A syntax error with its position, so an editor can jump straight to it.
 class JsonError : public std::runtime_error {
-public:
+  public:
     JsonError(const std::string& message, int line, int column)
         : std::runtime_error("line " + std::to_string(line) + ", column " + std::to_string(column) + ": " + message),
           line_(line),
@@ -104,14 +101,14 @@ public:
     int line() const noexcept { return line_; }
     int column() const noexcept { return column_; }
 
-private:
+  private:
     int line_;
     int column_;
 };
 
 /// Recursive descent: one member function per grammar rule (value, object, array, string, number).
 class Parser {
-public:
+  public:
     explicit Parser(std::string_view text) : text_(text) {}
 
     Json parse_document() {
@@ -121,7 +118,7 @@ public:
         return value;
     }
 
-private:
+  private:
     static constexpr int max_depth = 64;  // deeply nested input must not overflow the stack
 
     [[noreturn]] void fail(const std::string& message) const {
@@ -248,10 +245,14 @@ private:
         for (int i = 0; i < 4; ++i) {
             const char h = text_[position_++];
             code <<= 4;
-            if (h >= '0' && h <= '9') code |= static_cast<unsigned>(h - '0');
-            else if (h >= 'a' && h <= 'f') code |= static_cast<unsigned>(h - 'a' + 10);
-            else if (h >= 'A' && h <= 'F') code |= static_cast<unsigned>(h - 'A' + 10);
-            else fail("bad hex digit in \\u escape");
+            if (h >= '0' && h <= '9')
+                code |= static_cast<unsigned>(h - '0');
+            else if (h >= 'a' && h <= 'f')
+                code |= static_cast<unsigned>(h - 'a' + 10);
+            else if (h >= 'A' && h <= 'F')
+                code |= static_cast<unsigned>(h - 'A' + 10);
+            else
+                fail("bad hex digit in \\u escape");
         }
         if (code < 0x80) return std::string(1, static_cast<char>(code));
         if (code < 0x800) {
@@ -264,7 +265,8 @@ private:
         const std::size_t start = position_;
         if (peek() == '-') ++position_;
         if (!std::isdigit(static_cast<unsigned char>(peek()))) fail("digit expected");
-        if (peek() == '0' && position_ + 1 < text_.size() && std::isdigit(static_cast<unsigned char>(text_[position_ + 1]))) {
+        if (peek() == '0' && position_ + 1 < text_.size() &&
+            std::isdigit(static_cast<unsigned char>(text_[position_ + 1]))) {
             fail("leading zeros are not allowed");
         }
         while (std::isdigit(static_cast<unsigned char>(peek())) || peek() == '.' || peek() == 'e' || peek() == 'E' ||
@@ -285,7 +287,9 @@ private:
     std::size_t position_{0};
 };
 
-inline Json parse(std::string_view text) { return Parser(text).parse_document(); }
+inline Json parse(std::string_view text) {
+    return Parser(text).parse_document();
+}
 
 /// Quote and escape a string for JSON output; control characters become \u00XX.
 inline std::string escape(std::string_view text) {
@@ -313,7 +317,9 @@ inline std::string escape(std::string_view text) {
 /// Serialise; @p indent < 0 gives compact output, otherwise that many spaces per level.
 inline std::string dump(const Json& json, int indent = -1, int level = 0) {
     const std::string newline = indent < 0 ? "" : "\n";
-    const auto pad = [&](int depth) { return indent < 0 ? std::string() : std::string(static_cast<std::size_t>(indent * depth), ' '); };
+    const auto pad = [&](int depth) {
+        return indent < 0 ? std::string() : std::string(static_cast<std::size_t>(indent * depth), ' ');
+    };
     const std::string colon = indent < 0 ? ":" : ": ";
     return std::visit(
         [&](const auto& v) -> std::string {

@@ -44,7 +44,8 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// "€1,299.00" or "€12.99" inside <span class="price">…</span> -> cents.
 inline std::optional<std::int64_t> extract_price(const std::string& html) {
-    static const std::regex price(R"re(<span class="price">\s*(?:€|&euro;|EUR\s*)?([0-9][0-9,]*)\.([0-9]{2})\s*</span>)re");
+    static const std::regex price(
+        R"re(<span class="price">\s*(?:€|&euro;|EUR\s*)?([0-9][0-9,]*)\.([0-9]{2})\s*</span>)re");
     std::smatch m;
     if (!std::regex_search(html, m, price)) return std::nullopt;
     std::string whole = m[1].str();
@@ -70,7 +71,8 @@ inline std::vector<Subscription> parse_wishlist(const std::string& json) {
         for (std::sregex_iterator fi(body.begin(), body.end(), field); fi != end; ++fi) {
             f[(*fi)[1].str()] = (*fi)[2].matched ? (*fi)[2].str() : (*fi)[3].str();
         }
-        if (!f.contains("user") || !f.contains("url") || !f.contains("target_cents")) throw std::runtime_error("wishlist entry is missing a field");
+        if (!f.contains("user") || !f.contains("url") || !f.contains("target_cents"))
+            throw std::runtime_error("wishlist entry is missing a field");
         subs.push_back({f["user"], f["url"], std::stoll(f["target_cents"])});
     }
     return subs;
@@ -102,13 +104,13 @@ auto with_retries(Fn fn, int attempts, std::chrono::milliseconds first_delay, co
 /// Remembers which notifications were sent. A price that drops, rises and drops to the same value
 /// again is not re-announced; a new lower price is.
 class Deduplicator {
-public:
+  public:
     bool first_time(const std::string& user, const std::string& url, std::int64_t cents) {
         return sent_.insert(user + "|" + url + "|" + std::to_string(cents)).second;
     }
     std::size_t size() const { return sent_.size(); }
 
-private:
+  private:
     std::set<std::string> sent_;
 };
 
@@ -123,12 +125,15 @@ struct BotStats {
 };
 
 class PriceBot {
-public:
+  public:
     PriceBot(Fetch fetch, Notify notify, Sleep sleep, std::chrono::minutes interval)
         : fetch_(std::move(fetch)), notify_(std::move(notify)), sleep_(std::move(sleep)), interval_(interval) {}
 
     /// Refresh subscriptions from the wishlist API (GET /api/wishlist).
-    void sync_wishlist() { subscriptions_ = parse_wishlist(with_retries([&] { return fetch_("/api/wishlist"); }, 3, std::chrono::milliseconds(500), sleep_)); }
+    void sync_wishlist() {
+        subscriptions_ = parse_wishlist(
+            with_retries([&] { return fetch_("/api/wishlist"); }, 3, std::chrono::milliseconds(500), sleep_));
+    }
 
     /// Check every product that is due at @p now (minutes since start).
     void tick(std::chrono::minutes now) {
@@ -141,7 +146,8 @@ public:
             ++stats_.checks;
             std::optional<std::int64_t> price;
             try {
-                price = extract_price(with_retries([&] { return fetch_(url); }, 3, std::chrono::milliseconds(500), sleep_));
+                price =
+                    extract_price(with_retries([&] { return fetch_(url); }, 3, std::chrono::milliseconds(500), sleep_));
             } catch (const std::exception&) {
                 ++stats_.failures;  // give up on this product until its next scheduled check
                 continue;
@@ -157,7 +163,8 @@ public:
                     ++stats_.duplicates_suppressed;
                     continue;
                 }
-                notify_(s.user, url + " is now " + format_cents(*price) + " (your target " + format_cents(s.target_cents) + ")");
+                notify_(s.user, url + " is now " + format_cents(*price) + " (your target " +
+                                    format_cents(s.target_cents) + ")");
                 ++stats_.notifications;
             }
         }
@@ -167,9 +174,11 @@ public:
         const auto it = last_price_.find(url);
         return it == last_price_.end() ? std::nullopt : std::optional<std::int64_t>(it->second);
     }
-    static std::string format_cents(std::int64_t c) { return "€" + std::to_string(c / 100) + "." + (c % 100 < 10 ? "0" : "") + std::to_string(c % 100); }
+    static std::string format_cents(std::int64_t c) {
+        return "€" + std::to_string(c / 100) + "." + (c % 100 < 10 ? "0" : "") + std::to_string(c % 100);
+    }
 
-private:
+  private:
     Fetch fetch_;
     Notify notify_;
     Sleep sleep_;
@@ -206,7 +215,9 @@ inline int run(std::istream& in, std::ostream& out) {
     out << "Day 97 – Capstone: Automation Bot\n";
     FakeShop shop;
     PriceBot bot([&shop](const std::string& p) { return shop.fetch(p); },
-                 [&out](const std::string& user, const std::string& message) { out << "  notify " << user << ": " << message << '\n'; },
+                 [&out](const std::string& user, const std::string& message) {
+                     out << "  notify " << user << ": " << message << '\n';
+                 },
                  [](std::chrono::milliseconds) {}, std::chrono::minutes(30));
     bot.sync_wishlist();
     std::chrono::minutes now{0};
@@ -229,8 +240,8 @@ inline int run(std::istream& in, std::ostream& out) {
             words >> minutes;
             for (const auto end = now + std::chrono::minutes(minutes); now < end; ++now) bot.tick(now);
             const auto& s = bot.stats();
-            out << "  checks " << s.checks << ", failures " << s.failures << ", notifications " << s.notifications << ", suppressed "
-                << s.duplicates_suppressed << '\n';
+            out << "  checks " << s.checks << ", failures " << s.failures << ", notifications " << s.notifications
+                << ", suppressed " << s.duplicates_suppressed << '\n';
         }
     }
     return 0;

@@ -59,13 +59,14 @@ inline std::optional<chr::year_month_day> parse_date(std::string_view text) {
 
 inline std::string format_date(chr::year_month_day date) {
     char buffer[16];
-    std::snprintf(buffer, sizeof buffer, "%04d-%02u-%02u", static_cast<int>(date.year()), static_cast<unsigned>(date.month()),
-                  static_cast<unsigned>(date.day()));
+    std::snprintf(buffer, sizeof buffer, "%04d-%02u-%02u", static_cast<int>(date.year()),
+                  static_cast<unsigned>(date.month()), static_cast<unsigned>(date.day()));
     return buffer;
 }
 
 inline std::string_view weekday_name(chr::year_month_day date) {
-    static constexpr std::string_view names[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    static constexpr std::string_view names[] = {"Sunday",   "Monday", "Tuesday", "Wednesday",
+                                                 "Thursday", "Friday", "Saturday"};
     return names[chr::weekday{chr::sys_days{date}}.c_encoding()];
 }
 
@@ -75,7 +76,8 @@ inline bool is_business_day(chr::sys_days day, const std::set<chr::sys_days>& ho
 }
 
 /// Move forward @p days business days (0 = the same day if it is a business day, else the next one).
-inline chr::year_month_day add_business_days(chr::year_month_day start, int days, const std::set<chr::sys_days>& holidays) {
+inline chr::year_month_day add_business_days(chr::year_month_day start, int days,
+                                             const std::set<chr::sys_days>& holidays) {
     if (days < 0) throw std::invalid_argument("days must not be negative");
     chr::sys_days current{start};
     while (!is_business_day(current, holidays)) current += chr::days{1};
@@ -124,7 +126,8 @@ inline chr::sys_time<chr::minutes> at(chr::year_month_day date, int hour, int mi
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 54 – Date and Time with chrono\n";
     using namespace std::chrono_literals;
-    const std::set<chr::sys_days> holidays{chr::sys_days{2026y / chr::May / 25}, chr::sys_days{2026y / chr::December / 25}};
+    const std::set<chr::sys_days> holidays{chr::sys_days{2026y / chr::May / 25},
+                                           chr::sys_days{2026y / chr::December / 25}};
     while (auto line = prompt_line(in, out, "order date HH:MM transit_days> ")) {
         std::istringstream words(*line);
         std::string date_text;
@@ -144,8 +147,8 @@ inline int run(std::istream& in, std::ostream& out) {
         const auto pickup = at(arrives, 9, 0);
         out << "  ships " << format_date(ships) << " (" << weekday_name(ships) << "), arrives " << format_date(arrives)
             << " (" << weekday_name(arrives) << ")\n"
-            << "  pick-up 09:00 UTC = New York " << local_time(pickup, -4h) << ", Mumbai " << local_time(pickup, 5h + 30min)
-            << ", Tokyo " << local_time(pickup, 9h) << '\n'
+            << "  pick-up 09:00 UTC = New York " << local_time(pickup, -4h) << ", Mumbai "
+            << local_time(pickup, 5h + 30min) << ", Tokyo " << local_time(pickup, 9h) << '\n'
             << "  door to door: " << format_duration(chr::duration_cast<chr::minutes>(pickup - ordered)) << '\n';
     }
     return 0;

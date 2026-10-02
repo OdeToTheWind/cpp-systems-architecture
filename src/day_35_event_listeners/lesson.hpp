@@ -44,7 +44,7 @@ struct Event {
 };
 
 class EventBus {
-public:
+  public:
     using Listener = std::function<void(const Event&)>;
     using Handle = std::size_t;
 
@@ -76,7 +76,8 @@ public:
         int delivered = 0;
         const std::size_t count = subscriptions_.size();  // listeners added during delivery wait for the next event
         for (std::size_t i = 0; i < count; ++i) {
-            if (subscriptions_[i].active && (subscriptions_[i].topic == event.topic || subscriptions_[i].topic == "*")) {
+            if (subscriptions_[i].active &&
+                (subscriptions_[i].topic == event.topic || subscriptions_[i].topic == "*")) {
                 const Listener listener = subscriptions_[i].listener;  // copy: the listener may unsubscribe itself
                 listener(event);
                 ++delivered;
@@ -89,11 +90,11 @@ public:
     }
 
     std::size_t listener_count() const {
-        return static_cast<std::size_t>(std::count_if(subscriptions_.begin(), subscriptions_.end(),
-                                                      [](const auto& s) { return s.active; }));
+        return static_cast<std::size_t>(
+            std::count_if(subscriptions_.begin(), subscriptions_.end(), [](const auto& s) { return s.active; }));
     }
 
-private:
+  private:
     struct Subscription {
         Handle handle;
         std::string topic;
@@ -111,14 +112,14 @@ private:
 
 /// Unsubscribes in its destructor, so a listener can never outlive the object it captures.
 class ScopedSubscription {
-public:
+  public:
     ScopedSubscription(EventBus& bus, const std::string& topic, EventBus::Listener listener)
         : bus_(&bus), handle_(bus.subscribe(topic, std::move(listener))) {}
     ~ScopedSubscription() { bus_->unsubscribe(handle_); }
     ScopedSubscription(const ScopedSubscription&) = delete;
     ScopedSubscription& operator=(const ScopedSubscription&) = delete;
 
-private:
+  private:
     EventBus* bus_;
     EventBus::Handle handle_;
 };
@@ -130,7 +131,8 @@ inline int run(std::istream& in, std::ostream& out) {
     std::map<std::string, int> counts;
     bus.subscribe("*", [&](const Event& e) { ++counts[e.topic]; });
     bus.subscribe("doorbell", [&](const Event& e) { out << "  phone: someone is at the " << e.detail << '\n'; });
-    bus.subscribe("smoke", [&](const Event& e) { out << "  siren on, calling the fire service (" << e.detail << ")\n"; });
+    bus.subscribe("smoke",
+                  [&](const Event& e) { out << "  siren on, calling the fire service (" << e.detail << ")\n"; });
     EventBus::Handle lights = 0;
     lights = bus.subscribe("motion", [&](const Event& e) {
         out << "  lights on in the " << e.detail << '\n';

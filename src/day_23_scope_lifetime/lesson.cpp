@@ -18,7 +18,7 @@ std::string two_digits(int number) {
 
 /// Logs its own birth and death into a shared log.
 class Tracked {
-public:
+  public:
     Tracked(std::vector<std::string>& log, std::string name) : log_(&log), name_(std::move(name)) {
         log_->push_back("construct " + name_);
     }
@@ -26,7 +26,7 @@ public:
     Tracked(const Tracked&) = delete;
     Tracked& operator=(const Tracked&) = delete;
 
-private:
+  private:
     std::vector<std::string>* log_;
     std::string name_;
 };
@@ -45,9 +45,13 @@ int next_ticket() {
     return counter;
 }
 
-int tickets_issued() { return issued; }
+int tickets_issued() {
+    return issued;
+}
 
-std::string format_ticket(int number) { return std::string(shop::counter_name) + " #" + two_digits(number); }
+std::string format_ticket(int number) {
+    return std::string(shop::counter_name) + " #" + two_digits(number);
+}
 
 std::pair<int, int> shadowing_demo() {
     const int waiting = 3;  // outer

@@ -31,7 +31,8 @@ TEST_CASE("reading a missing file is reported, not ignored") {
 TEST_CASE("binary samples round-trip exactly, including negative altitudes") {
     cppm::TempDir dir("day41");
     const auto file = dir.path() / "t.bin";
-    const std::vector<Sample> samples{{0, 0, 12'600}, {100, 250, 12'480}, {200, -35, 12'470}, {4'000'000'000u, 2'000'000, 65'535}};
+    const std::vector<Sample> samples{
+        {0, 0, 12'600}, {100, 250, 12'480}, {200, -35, 12'470}, {4'000'000'000u, 2'000'000, 65'535}};
     write_samples(file, samples);
     CHECK(read_samples(file) == samples);
     CHECK_EQ(measured_size(file), samples.size() * record_size);

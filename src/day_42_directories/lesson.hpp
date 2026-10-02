@@ -44,7 +44,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// All operations happen inside one root folder; anything that would leave it is refused.
 class Sandbox {
-public:
+  public:
     explicit Sandbox(const fs::path& root) : root_(fs::weakly_canonical(root)) {
         if (!fs::is_directory(root_)) {
             throw std::invalid_argument("sandbox root must be an existing directory");
@@ -65,7 +65,7 @@ public:
         return candidate;
     }
 
-private:
+  private:
     fs::path root_;
 };
 
@@ -79,8 +79,8 @@ inline std::string lower_extension(const fs::path& file) {
 /// raw, jpeg, video, sidecar or other – decided by the (case-insensitive) extension.
 inline std::string category_for(const fs::path& file) {
     static const std::map<std::string, std::string> categories{
-        {".cr2", "raw"},    {".nef", "raw"},   {".arw", "raw"},   {".dng", "raw"},     {".jpg", "jpeg"},
-        {".jpeg", "jpeg"},  {".mp4", "video"}, {".mov", "video"}, {".xmp", "sidecar"},
+        {".cr2", "raw"},   {".nef", "raw"},   {".arw", "raw"},   {".dng", "raw"},     {".jpg", "jpeg"},
+        {".jpeg", "jpeg"}, {".mp4", "video"}, {".mov", "video"}, {".xmp", "sidecar"},
     };
     const auto found = categories.find(lower_extension(file));
     return found == categories.end() ? "other" : found->second;
@@ -113,8 +113,8 @@ inline std::vector<Move> plan_ingest(const Sandbox& sandbox, const fs::path& inb
     std::vector<fs::path> taken;
     for (const auto& file : find_files(source)) {
         fs::path destination = target / category_for(file) / file.filename();
-        for (int suffix = 1; fs::exists(destination) || std::find(taken.begin(), taken.end(), destination) != taken.end();
-             ++suffix) {
+        for (int suffix = 1;
+             fs::exists(destination) || std::find(taken.begin(), taken.end(), destination) != taken.end(); ++suffix) {
             destination = target / category_for(file) /
                           (file.stem().string() + "_" + std::to_string(suffix) + file.extension().string());
         }
@@ -159,13 +159,15 @@ inline std::string tree(const fs::path& folder, int depth = 0) {
 inline int run(std::istream& in, std::ostream& out, const fs::path& root = fs::temp_directory_path() / "cppm-day42") {
     out << "Day 42 – Working with Directories\nSandbox: " << root.string() << '\n';
     fs::create_directories(root / "inbox" / "DCIM" / "100CANON");
-    for (const char* name : {"IMG_0001.CR2", "IMG_0001.JPG", "IMG_0002.jpg", "MVI_0003.MOV", "IMG_0001.xmp", "notes.txt"}) {
+    for (const char* name :
+         {"IMG_0001.CR2", "IMG_0001.JPG", "IMG_0002.jpg", "MVI_0003.MOV", "IMG_0001.xmp", "notes.txt"}) {
         std::ofstream(root / "inbox" / "DCIM" / "100CANON" / name) << name;
     }
     const Sandbox sandbox(root);
     const auto plan = plan_ingest(sandbox);
     for (const auto& move : plan) {
-        out << "  " << move.from.filename().string() << " -> " << move.to.lexically_relative(root).generic_string() << '\n';
+        out << "  " << move.from.filename().string() << " -> " << move.to.lexically_relative(root).generic_string()
+            << '\n';
     }
     auto answer = prompt_line(in, out, "Apply this plan? (y/n): ");
     if (answer && *answer == "y") {

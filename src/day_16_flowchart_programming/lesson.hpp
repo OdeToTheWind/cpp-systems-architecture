@@ -92,7 +92,7 @@ inline int baggage_fee_cents(double weight_kg, Cabin cabin, bool frequent_flyer)
         return 0;
     }
     int fee = weight_kg > 23 ? 7'500 : 3'000;  // diamond D and rectangles G/H
-    if (frequent_flyer) {                       // diamond I
+    if (frequent_flyer) {                      // diamond I
         fee /= 2;
     }
     return fee;
@@ -138,13 +138,9 @@ inline QueueSummary process_queue(std::vector<Passenger> queue) {
         const Passenger& p = queue[next];  // rectangle C
         ++next;
         switch (boarding_check(p)) {  // rectangle D
-            case Boarding::boarding_pass:
-                ++summary.boarding_passes;
-                break;
+            case Boarding::boarding_pass: ++summary.boarding_passes; break;
             case Boarding::deny_passport:
-            case Boarding::deny_visa:
-                ++summary.denied;
-                break;
+            case Boarding::deny_visa: ++summary.denied; break;
             case Boarding::see_desk:
                 ++summary.sent_to_desk;
                 summary.desk_names.push_back(p.name);
@@ -178,9 +174,10 @@ inline int run(std::istream& in, std::ostream& out) {
             out << "  fee " << fee / 100 << '.' << (fee % 100 < 10 ? "0" : "") << fee % 100 << '\n';
         }
     }
-    const auto summary = process_queue({{"Ada"}, {"Bo", false}, {"Cy", true, true, false}, {"Di", true, false, false, 30}});
-    out << "Queue: " << summary.boarding_passes << " boarded, " << summary.denied << " denied, "
-        << summary.sent_to_desk << " sent to the desk\n";
+    const auto summary =
+        process_queue({{"Ada"}, {"Bo", false}, {"Cy", true, true, false}, {"Di", true, false, false, 30}});
+    out << "Queue: " << summary.boarding_passes << " boarded, " << summary.denied << " denied, " << summary.sent_to_desk
+        << " sent to the desk\n";
     return 0;
 }
 

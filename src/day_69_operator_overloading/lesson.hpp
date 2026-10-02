@@ -41,7 +41,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// An exact fraction. Invariant: the denominator is positive and gcd(numerator, denominator) == 1,
 /// so equal values always have equal members and == can be defaulted.
 class Rational {
-public:
+  public:
     constexpr Rational(std::int64_t whole = 0) : num_(whole), den_(1) {}  // implicit: 2 means 2/1
     constexpr Rational(std::int64_t num, std::int64_t den) : num_(num), den_(den) {
         if (den == 0) throw std::invalid_argument("denominator must not be zero");
@@ -82,7 +82,7 @@ public:
     /// Conversions that lose precision are explicit.
     explicit constexpr operator double() const { return static_cast<double>(num_) / static_cast<double>(den_); }
 
-private:
+  private:
     constexpr void normalise() {
         if (den_ < 0) {
             num_ = -num_;
@@ -165,7 +165,8 @@ inline int run(std::istream& in, std::ostream& out) {
             out << "  the factor must be positive\n";
             continue;
         }
-        for (const auto& item : scale(shortbread, factor)) out << "  " << item.amount << ' ' << item.unit << ' ' << item.name << '\n';
+        for (const auto& item : scale(shortbread, factor))
+            out << "  " << item.amount << ' ' << item.unit << ' ' << item.name << '\n';
     }
     return 0;
 }

@@ -44,7 +44,8 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// Header names are case-insensitive, so they are stored lower-cased.
 inline std::string lower(std::string_view text) {
     std::string out(text);
-    std::transform(out.begin(), out.end(), out.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    std::transform(out.begin(), out.end(), out.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
     return out;
 }
 
@@ -127,19 +128,20 @@ inline HttpResponse parse_response(std::string_view raw) {
 }
 
 class TimeoutError : public std::runtime_error {
-public:
+  public:
     using std::runtime_error::runtime_error;
 };
 class ConnectionError : public std::runtime_error {
-public:
+  public:
     using std::runtime_error::runtime_error;
 };
 
 /// Sends raw request bytes and returns raw response bytes; may throw TimeoutError or ConnectionError.
 class Transport {
-public:
+  public:
     virtual ~Transport() = default;
-    virtual std::string exchange(const std::string& host, const std::string& request, std::chrono::milliseconds timeout) = 0;
+    virtual std::string exchange(const std::string& host, const std::string& request,
+                                 std::chrono::milliseconds timeout) = 0;
 };
 
 struct RetryPolicy {
@@ -149,7 +151,7 @@ struct RetryPolicy {
 };
 
 class HttpClient {
-public:
+  public:
     using Sleeper = std::function<void(std::chrono::milliseconds)>;
 
     HttpClient(Transport& transport, std::string host, RetryPolicy policy, Sleeper sleep)
@@ -163,7 +165,9 @@ public:
             std::optional<std::chrono::milliseconds> wait;
             try {
                 const auto raw = transport_.exchange(
-                    host_, format_request("GET", host_, target, {{"Accept", "application/json"}, {"User-Agent", "departures/1.0"}}),
+                    host_,
+                    format_request("GET", host_, target,
+                                   {{"Accept", "application/json"}, {"User-Agent", "departures/1.0"}}),
                     policy_.timeout);
                 HttpResponse response = parse_response(raw);
                 if (response.status != 502 && response.status != 503 && response.status != 504) return response;
@@ -179,7 +183,7 @@ public:
         }
     }
 
-private:
+  private:
     Transport& transport_;
     std::string host_;
     RetryPolicy policy_;
@@ -188,7 +192,7 @@ private:
 
 /// A canned server for the demo and the tests: replays scripted outcomes in order.
 class ScriptedTransport final : public Transport {
-public:
+  public:
     explicit ScriptedTransport(std::vector<std::string> script) : script_(std::move(script)) {}
     std::string exchange(const std::string&, const std::string& request, std::chrono::milliseconds) override {
         requests.push_back(request);
@@ -200,13 +204,14 @@ public:
     }
     std::vector<std::string> requests;
 
-private:
+  private:
     std::vector<std::string> script_;
     std::size_t next_{0};
 };
 
 inline std::string ok_json(const std::string& body) {
-    return "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: " + std::to_string(body.size()) + "\r\n\r\n" + body;
+    return "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: " + std::to_string(body.size()) +
+           "\r\n\r\n" + body;
 }
 
 /// The interactive demo: describe a sequence of server behaviours, then fetch departures through them.
@@ -216,9 +221,12 @@ inline int run(std::istream& in, std::ostream& out) {
     if (auto line = prompt_line(in, out, "")) {
         std::istringstream words(*line);
         for (std::string step; words >> step;) {
-            if (step == "OK") script.push_back(ok_json(R"([{"line":"S1","in_min":3}])"));
-            else if (step == "503") script.push_back("HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\n\r\n");
-            else script.push_back(step);
+            if (step == "OK")
+                script.push_back(ok_json(R"([{"line":"S1","in_min":3}])"));
+            else if (step == "503")
+                script.push_back("HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\n\r\n");
+            else
+                script.push_back(step);
         }
     }
     if (script.empty()) script.push_back(ok_json(R"([{"line":"S1","in_min":3}])"));

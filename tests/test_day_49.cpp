@@ -75,7 +75,8 @@ TEST_CASE("a bad seat code becomes a system_error carrying the parser's code") {
 
 TEST_CASE("run reports each kind of failure differently") {
     std::istringstream in("A1 Ada " + good_card + "\nA1 Bo " + good_card + "\nZ99 Cy " + good_card +
-                          "\nB1 Di 1234\nB2 Ed " + good_card + "\nB3 Fi " + good_card + "\nB4 Gu " + good_card + "\nstop\n");
+                          "\nB1 Di 1234\nB2 Ed " + good_card + "\nB3 Fi " + good_card + "\nB4 Gu " + good_card +
+                          "\nstop\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

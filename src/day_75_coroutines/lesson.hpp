@@ -45,7 +45,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 /// can be used in a range-for. Each ++ resumes the coroutine until its next co_yield.
 template <typename T>
 class Generator {
-public:
+  public:
     struct promise_type {
         std::optional<T> current;
         std::exception_ptr error;
@@ -61,7 +61,7 @@ public:
     };
 
     class iterator {
-    public:
+      public:
         using value_type = T;
         using difference_type = std::ptrdiff_t;
         iterator() = default;
@@ -74,7 +74,7 @@ public:
         void operator++(int) { advance(); }
         bool operator==(std::default_sentinel_t) const { return !handle_ || handle_.done(); }
 
-    private:
+      private:
         void advance() {
             handle_.resume();
             if (handle_.done() && handle_.promise().error) std::rethrow_exception(handle_.promise().error);
@@ -99,7 +99,7 @@ public:
     iterator begin() { return iterator(handle_); }
     std::default_sentinel_t end() { return {}; }
 
-private:
+  private:
     explicit Generator(std::coroutine_handle<promise_type> h) : handle_(h) {}
     std::coroutine_handle<promise_type> handle_;
 };
@@ -137,7 +137,7 @@ class Director;
 
 /// The coroutine type of a scene. It starts suspended; start() runs it to its first co_await.
 class Scene {
-public:
+  public:
     struct promise_type {
         std::exception_ptr error;
         Scene get_return_object() { return Scene(std::coroutine_handle<promise_type>::from_promise(*this)); }
@@ -159,14 +159,14 @@ public:
         if (handle_.done() && handle_.promise().error) std::rethrow_exception(handle_.promise().error);
     }
 
-private:
+  private:
     explicit Scene(std::coroutine_handle<promise_type> h) : handle_(h) {}
     std::coroutine_handle<promise_type> handle_;
 };
 
 /// Runs scenes: keeps the script output and resumes scenes waiting for a posted event.
 class Director {
-public:
+  public:
     /// The awaitable returned by wait_for. co_await calls await_ready (false: always pause),
     /// then await_suspend with the paused coroutine, which the director parks under the event.
     struct EventAwaiter {
@@ -191,7 +191,7 @@ public:
     }
     const std::vector<std::string>& script() const { return script_; }
 
-private:
+  private:
     std::map<std::string, std::vector<std::coroutine_handle<>>> waiting_;
     std::vector<std::string> script_;
 };

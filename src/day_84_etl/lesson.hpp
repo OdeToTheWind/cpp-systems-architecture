@@ -85,7 +85,8 @@ inline std::vector<std::variant<RawRow, Rejection>> extract(std::istream& in) {
     if (!std::getline(in, text)) return rows;
     std::vector<std::string> header = parse_csv_line(text);
     for (auto& h : header) {
-        std::transform(h.begin(), h.end(), h.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+        std::transform(h.begin(), h.end(), h.begin(),
+                       [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
         h.erase(0, h.find_first_not_of(' '));
     }
     for (int line = 2; std::getline(in, text); ++line) {
@@ -93,7 +94,8 @@ inline std::vector<std::variant<RawRow, Rejection>> extract(std::istream& in) {
         try {
             const auto values = parse_csv_line(text);
             if (values.size() != header.size()) {
-                rows.emplace_back(Rejection{line, "expected " + std::to_string(header.size()) + " fields, got " + std::to_string(values.size())});
+                rows.emplace_back(Rejection{line, "expected " + std::to_string(header.size()) + " fields, got " +
+                                                      std::to_string(values.size())});
                 continue;
             }
             RawRow row{line, {}};
@@ -135,8 +137,8 @@ inline std::int64_t parse_cents(std::string text) {
     const auto dot = text.find('.');
     const std::string whole = text.substr(0, dot);
     std::string frac = dot == std::string::npos ? "" : text.substr(dot + 1);
-    if (whole.empty() || whole.size() > 12 || whole.find_first_not_of("0123456789") != std::string::npos || frac.size() > 2 ||
-        frac.find_first_not_of("0123456789") != std::string::npos) {
+    if (whole.empty() || whole.size() > 12 || whole.find_first_not_of("0123456789") != std::string::npos ||
+        frac.size() > 2 || frac.find_first_not_of("0123456789") != std::string::npos) {
         throw std::invalid_argument("bad amount '" + text + "'");
     }
     frac.resize(2, '0');
@@ -144,8 +146,9 @@ inline std::int64_t parse_cents(std::string text) {
 }
 
 /// Transform: validate and normalise one row. Rates are cents of EUR per 100 cents of a currency.
-inline std::variant<Order, Rejection> transform(const RawRow& row, const std::map<std::string, std::int64_t>& eur_per_100,
-                                               const std::string& source) {
+inline std::variant<Order, Rejection> transform(const RawRow& row,
+                                                const std::map<std::string, std::int64_t>& eur_per_100,
+                                                const std::string& source) {
     auto get = [&](const char* name) {
         const auto it = row.field.find(name);
         return it == row.field.end() ? std::string() : it->second;
@@ -153,10 +156,12 @@ inline std::variant<Order, Rejection> transform(const RawRow& row, const std::ma
     const std::string id = get("order_id");
     if (id.empty()) return Rejection{row.line, "missing order_id"};
     std::string date = get("date");
-    if (date.size() == 10 && date[2] == '/' && date[5] == '/') date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2);  // DD/MM/YYYY
+    if (date.size() == 10 && date[2] == '/' && date[5] == '/')
+        date = date.substr(6, 4) + "-" + date.substr(3, 2) + "-" + date.substr(0, 2);  // DD/MM/YYYY
     if (!valid_date(date)) return Rejection{row.line, "invalid date '" + get("date") + "'"};
     std::string email = get("email");
-    std::transform(email.begin(), email.end(), email.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    std::transform(email.begin(), email.end(), email.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
     if (email.find('@') == std::string::npos) return Rejection{row.line, "invalid email '" + get("email") + "'"};
     std::string currency = get("currency");
     if (currency.empty()) currency = "EUR";
@@ -174,7 +179,7 @@ inline std::variant<Order, Rejection> transform(const RawRow& row, const std::ma
 
 /// The warehouse table. Loading is idempotent: re-running last night's file changes nothing.
 class Warehouse {
-public:
+  public:
     enum class Outcome { inserted, unchanged, updated };
     Outcome load(const Order& order) {
         const auto it = orders_.find(order.id);
@@ -197,7 +202,7 @@ public:
         return it == orders_.end() ? nullptr : &it->second;
     }
 
-private:
+  private:
     std::map<std::string, Order> orders_;
 };
 
@@ -211,8 +216,8 @@ struct RunSummary {
 
     std::string report() const {
         std::ostringstream out;
-        out << source << ": read " << read << ", inserted " << inserted << ", updated " << updated << ", unchanged " << unchanged
-            << ", quarantined " << quarantine.size() << '\n';
+        out << source << ": read " << read << ", inserted " << inserted << ", updated " << updated << ", unchanged "
+            << unchanged << ", quarantined " << quarantine.size() << '\n';
         for (const auto& r : quarantine) out << "  line " << r.line << ": " << r.reason << '\n';
         return out.str();
     }
@@ -260,8 +265,8 @@ inline int run(std::istream& in, std::ostream& out) {
         std::istringstream file(csv);
         out << run_pipeline(file, "shop", warehouse, demo_rates()).report();
     }
-    out << "warehouse: " << warehouse.size() << " order(s), EUR " << warehouse.revenue_cents() / 100 << "." << (warehouse.revenue_cents() % 100 < 10 ? "0" : "")
-        << warehouse.revenue_cents() % 100 << '\n';
+    out << "warehouse: " << warehouse.size() << " order(s), EUR " << warehouse.revenue_cents() / 100 << "."
+        << (warehouse.revenue_cents() % 100 < 10 ? "0" : "") << warehouse.revenue_cents() % 100 << '\n';
     return 0;
 }
 

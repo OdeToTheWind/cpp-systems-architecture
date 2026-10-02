@@ -94,8 +94,9 @@ inline std::vector<Job> schedule_matrix(const std::string& name, const std::stri
 
 /// Required values go to the constructor; optional ones have named setters; build() validates once.
 class JobBuilder {
-public:
-    JobBuilder(std::string name, std::string command) : job_{std::move(name), std::move(command), 30, "*", project_default_retries, {}} {}
+  public:
+    JobBuilder(std::string name, std::string command)
+        : job_{std::move(name), std::move(command), 30, "*", project_default_retries, {}} {}
     JobBuilder& timeout(int minutes) {
         job_.timeout_minutes = minutes;
         return *this;
@@ -117,7 +118,7 @@ public:
         return job_;
     }
 
-private:
+  private:
     Job job_;
 };
 

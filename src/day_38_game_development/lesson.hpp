@@ -40,9 +40,13 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Anything with health that can attack and be attacked.
 class Combatant {
-public:
+  public:
     Combatant(std::string name, int health, int min_damage, int max_damage)
-        : name_(std::move(name)), health_(health), max_health_(health), min_damage_(min_damage), max_damage_(max_damage) {
+        : name_(std::move(name)),
+          health_(health),
+          max_health_(health),
+          min_damage_(min_damage),
+          max_damage_(max_damage) {
         if (health <= 0 || min_damage < 0 || max_damage < min_damage) {
             throw std::invalid_argument("invalid combatant stats");
         }
@@ -61,10 +65,10 @@ public:
     }
     void take_damage(int amount) { health_ = std::max(0, health_ - std::max(0, amount)); }
 
-protected:
+  protected:
     void restore(int amount) { health_ = std::min(max_health_, health_ + amount); }
 
-private:
+  private:
     std::string name_;
     int health_;
     int max_health_;
@@ -73,7 +77,7 @@ private:
 };
 
 class Hero final : public Combatant {
-public:
+  public:
     Hero(std::string name, int potions) : Combatant(std::move(name), 40, 4, 9), potions_(potions) {}
     int potions() const { return potions_; }
     /// Drink a potion (+15 health); false when none are left or health is already full.
@@ -86,18 +90,18 @@ public:
         return true;
     }
 
-private:
+  private:
     int potions_;
 };
 
 class Monster : public Combatant {
-public:
+  public:
     using Combatant::Combatant;
 };
 
 /// Ogres hit hard but often miss.
 class Ogre final : public Monster {
-public:
+  public:
     Ogre() : Monster("Ogre", 30, 6, 12) {}
     int roll_damage(std::mt19937& engine) const override {
         std::bernoulli_distribution miss(0.3);
@@ -109,7 +113,7 @@ enum class Action { attack, potion, flee };
 enum class Outcome { ongoing, victory, defeat, fled };
 
 class Battle {
-public:
+  public:
     /// The engine is passed in: a fixed seed replays exactly the same battle.
     Battle(Hero hero, std::vector<std::unique_ptr<Monster>> monsters, std::uint32_t seed)
         : hero_(std::move(hero)), monsters_(std::move(monsters)), engine_(seed) {
@@ -147,7 +151,8 @@ public:
         }
         const int damage = enemy.roll_damage(engine_);
         hero_.take_damage(damage);
-        log.push_back(damage == 0 ? enemy.name() + " misses" : enemy.name() + " hits back for " + std::to_string(damage));
+        log.push_back(damage == 0 ? enemy.name() + " misses"
+                                  : enemy.name() + " hits back for " + std::to_string(damage));
         return log;
     }
 
@@ -161,7 +166,7 @@ public:
     const Hero& hero() const { return hero_; }
     const Monster* current_monster() const { return current_ < monsters_.size() ? monsters_[current_].get() : nullptr; }
 
-private:
+  private:
     Hero hero_;
     std::vector<std::unique_ptr<Monster>> monsters_;
     std::mt19937 engine_;
@@ -195,7 +200,7 @@ inline int run(std::istream& in, std::ostream& out) {
         }
     }
     const Outcome result = battle.outcome();
-    out << (result == Outcome::victory   ? "Victory!\n"
+    out << (result == Outcome::victory  ? "Victory!\n"
             : result == Outcome::defeat ? "Defeat...\n"
             : result == Outcome::fled   ? "You escaped.\n"
                                         : "Game paused.\n");

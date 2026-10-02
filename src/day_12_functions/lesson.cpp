@@ -17,12 +17,9 @@ const std::map<std::string, long long>& price_list() {
 
 long long size_factor_percent(Size size) {
     switch (size) {
-        case Size::small:
-            return 80;
-        case Size::medium:
-            return 100;
-        case Size::large:
-            return 130;
+        case Size::small: return 80;
+        case Size::medium: return 100;
+        case Size::large: return 130;
     }
     return 100;
 }

@@ -49,8 +49,8 @@ TEST_CASE("integers and enums are written little-endian") {
 
 TEST_CASE("floats become rounded centi-units and strings are length-prefixed") {
     std::vector<std::uint8_t> out;
-    serialise(out, 21.456f);   // 2146 = 0x0862
-    serialise(out, -0.0151);   // -1.51 rounds to -2
+    serialise(out, 21.456f);  // 2146 = 0x0862
+    serialise(out, -0.0151);  // -1.51 rounds to -2
     serialise(out, std::string("ok"));
     CHECK(out == std::vector<std::uint8_t>{0x62, 0x08, 0xFE, 0xFF, 0x02, 'o', 'k'});
     static_assert(Serialisable<std::array<float, 2>> && Serialisable<const char*>);

@@ -58,10 +58,14 @@ inline std::uint32_t fnv1a(const std::string& data) {
 inline std::string escape(const std::string& text) {
     std::string out;
     for (const char c : text) {
-        if (c == '\\') out += "\\\\";
-        else if (c == '|') out += "\\p";
-        else if (c == '\n') out += "\\n";
-        else out += c;
+        if (c == '\\')
+            out += "\\\\";
+        else if (c == '|')
+            out += "\\p";
+        else if (c == '\n')
+            out += "\\n";
+        else
+            out += c;
     }
     return out;
 }
@@ -80,15 +84,16 @@ inline std::string unescape(const std::string& text) {
 }
 
 struct Record {
-    char op;            // 'S' set, 'D' delete, 'C' commit
-    std::uint64_t tx;   // 0 = not in a transaction
+    char op;           // 'S' set, 'D' delete, 'C' commit
+    std::uint64_t tx;  // 0 = not in a transaction
     std::string key;
     std::string value;
 };
 
 /// One line per record: "<checksum hex>|<op>|<tx>|<key>|<value>\n" with | and newlines escaped.
 inline std::string encode_record(const Record& r) {
-    const std::string payload = std::string(1, r.op) + "|" + std::to_string(r.tx) + "|" + escape(r.key) + "|" + escape(r.value);
+    const std::string payload =
+        std::string(1, r.op) + "|" + std::to_string(r.tx) + "|" + escape(r.key) + "|" + escape(r.value);
     char crc[9];
     std::snprintf(crc, sizeof crc, "%08x", static_cast<unsigned>(fnv1a(payload)));
     return std::string(crc) + "|" + payload + "\n";
@@ -103,7 +108,8 @@ inline std::optional<Record> decode_record(const std::string& line) {
     if (line.compare(0, 8, expected) != 0) return std::nullopt;
     std::vector<std::string> parts;
     std::size_t start = 0;
-    for (std::size_t bar; (bar = payload.find('|', start)) != std::string::npos; start = bar + 1) parts.push_back(payload.substr(start, bar - start));
+    for (std::size_t bar; (bar = payload.find('|', start)) != std::string::npos; start = bar + 1)
+        parts.push_back(payload.substr(start, bar - start));
     parts.push_back(payload.substr(start));
     if (parts.size() != 4 || parts[0].size() != 1) return std::nullopt;
     return Record{parts[0][0], std::stoull(parts[1]), unescape(parts[2]), unescape(parts[3])};
@@ -120,7 +126,7 @@ class KvStore;
 /// Buffers changes; nothing reaches the log until commit(), which appends all of them followed by
 /// a commit marker in one write. Recovery ignores a transaction whose marker is missing.
 class Transaction {
-public:
+  public:
     Transaction(KvStore& store, std::uint64_t id) : store_(store), id_(id) {}
     Transaction& set(const std::string& key, const std::string& value) {
         records_.push_back({'S', id_, key, value});
@@ -134,14 +140,14 @@ public:
     /// Simulate a crash during commit: only the first @p records reach the disk, no marker.
     void crash_after(std::size_t records);
 
-private:
+  private:
     KvStore& store_;
     std::uint64_t id_;
     std::vector<Record> records_;
 };
 
 class KvStore {
-public:
+  public:
     /// Open (or create) the log at @p path and rebuild the index by replaying it.
     static KvStore open(const fs::path& path) {
         KvStore store(path);
@@ -183,7 +189,7 @@ public:
     std::uintmax_t file_bytes() const { return fs::exists(path_) ? fs::file_size(path_) : 0; }
     const RecoveryReport& recovery() const { return report_; }
 
-private:
+  private:
     friend class Transaction;
     explicit KvStore(fs::path path) : path_(std::move(path)) {}
 
@@ -204,8 +210,10 @@ private:
         records_in_log_ += records.size();
         if (!apply) return;
         for (const auto& [r, at] : placed) {
-            if (r->op == 'S') index_[r->key] = at;
-            else if (r->op == 'D') index_.erase(r->key);
+            if (r->op == 'S')
+                index_[r->key] = at;
+            else if (r->op == 'D')
+                index_.erase(r->key);
         }
     }
 
@@ -246,8 +254,10 @@ private:
     }
 
     void apply(const Record& r, std::streamoff offset) {
-        if (r.op == 'S') index_[r.key] = offset;
-        else if (r.op == 'D') index_.erase(r.key);
+        if (r.op == 'S')
+            index_[r.key] = offset;
+        else if (r.op == 'D')
+            index_.erase(r.key);
     }
 
     fs::path path_;
@@ -265,13 +275,15 @@ inline void Transaction::commit() {
 }
 
 inline void Transaction::crash_after(std::size_t records) {
-    std::vector<Record> written(records_.begin(), records_.begin() + static_cast<std::ptrdiff_t>(std::min(records, records_.size())));
+    std::vector<Record> written(records_.begin(),
+                                records_.begin() + static_cast<std::ptrdiff_t>(std::min(records, records_.size())));
     store_.append(written, false);  // reached the disk, but the process "died" before the marker
     records_.clear();
 }
 
 /// The interactive demo on a persistent log: set k v | del k | get k | book <seat> <name> | compact | stats
-inline int run(std::istream& in, std::ostream& out, const fs::path& file = fs::temp_directory_path() / "cppm-sessions.log") {
+inline int run(std::istream& in, std::ostream& out,
+               const fs::path& file = fs::temp_directory_path() / "cppm-sessions.log") {
     out << "Day 82 – Building a Storage Engine\n";
     KvStore store = KvStore::open(file);
     out << "opened " << file.filename().string() << ": " << store.size() << " key(s), " << store.recovery().records
@@ -297,7 +309,8 @@ inline int run(std::istream& in, std::ostream& out, const fs::path& file = fs::t
             store.compact();
             out << "  compacted " << before << " -> " << store.file_bytes() << " bytes\n";
         } else if (command == "stats") {
-            out << "  " << store.size() << " key(s), " << store.log_records() << " record(s), " << store.file_bytes() << " bytes\n";
+            out << "  " << store.size() << " key(s), " << store.log_records() << " record(s), " << store.file_bytes()
+                << " bytes\n";
         }
     }
     return 0;

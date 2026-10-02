@@ -34,7 +34,8 @@ Loan LendingService::borrow(const std::string& member_id, const std::string& isb
     const int free = available(isbn);
     const auto position = std::find(queue.begin(), queue.end(), member_id);
     const auto ahead = static_cast<int>(std::distance(queue.begin(), position));  // whole queue if not in it
-    if (free - ahead <= 0) throw LendingError(free > 0 ? "copies are held for earlier reservations" : "no copy available");
+    if (free - ahead <= 0)
+        throw LendingError(free > 0 ? "copies are held for earlier reservations" : "no copy available");
     if (position != queue.end()) queue.erase(position);
     Loan loan{0, isbn, member_id, clock_.today() + policy_.loan_days, 0};
     loan.id = repo_.add_loan(loan);

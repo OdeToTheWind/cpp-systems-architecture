@@ -69,7 +69,8 @@ TEST_CASE("run prints masked search requests and a JSON booking") {
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();
-    CHECK(text.find("GET /v2/search?city=Lisbon&check_in=2026-08-01&guests=3&amenity=pool HTTP/1.1") != std::string::npos);
+    CHECK(text.find("GET /v2/search?city=Lisbon&check_in=2026-08-01&guests=3&amenity=pool HTTP/1.1") !=
+          std::string::npos);
     CHECK(text.find("X-Api-Key: ***") != std::string::npos);
     CHECK(text.find("sk_live") == std::string::npos);
     CHECK(text.find("Content-Length: 26") != std::string::npos);

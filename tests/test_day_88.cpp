@@ -18,7 +18,7 @@ TEST_CASE("money formats with separators and keeps exact cents") {
 }
 
 TEST_CASE("scaling rounds half away from zero") {
-    CHECK_EQ(Money(250).scaled(1, 100).cents(), 3);   // 2.5 -> 3
+    CHECK_EQ(Money(250).scaled(1, 100).cents(), 3);  // 2.5 -> 3
     CHECK_EQ(Money(-250).scaled(1, 100).cents(), -3);
     CHECK_EQ(Money(9000).scaled(50, 60).cents(), 7500);
     CHECK_EQ(Money(1000).scaled(23, 100).cents(), 230);
@@ -50,8 +50,10 @@ TEST_CASE("CSV fields are quoted and defused") {
 }
 
 TEST_CASE("the report adds up exactly as printed") {
-    const auto report = build_report("2026-06", {{"Acme", "Logo", 90, Money(8000)}, {"Acme", "Fonts", 20, Money(8000)},
-                                                  {"Bolt <Ltd>", "Site", 50, Money(9000)}},
+    const auto report = build_report("2026-06",
+                                     {{"Acme", "Logo", 90, Money(8000)},
+                                      {"Acme", "Fonts", 20, Money(8000)},
+                                      {"Bolt <Ltd>", "Site", 50, Money(9000)}},
                                      23);
     CHECK_EQ(report.lines[1].net.cents(), 2667);  // 80 * 20/60 = 26.666… -> 26.67
     CHECK_EQ(report.net_by_client.at("Acme").cents(), 12000 + 2667);

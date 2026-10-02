@@ -105,9 +105,9 @@ inline void add(std::vector<Finding>& findings, bool good, Severity if_bad, cons
 /// -Wall/-Wextra (or /W4) must be on, and an option must exist to turn warnings into errors.
 inline std::vector<Finding> check_warnings(std::string_view cmake_text) {
     std::vector<Finding> findings;
-    const bool strict = (cmake_text.find("-Wall") != std::string_view::npos &&
-                         cmake_text.find("-Wextra") != std::string_view::npos) ||
-                        cmake_text.find("/W4") != std::string_view::npos;
+    const bool strict =
+        (cmake_text.find("-Wall") != std::string_view::npos && cmake_text.find("-Wextra") != std::string_view::npos) ||
+        cmake_text.find("/W4") != std::string_view::npos;
     const bool werror = cmake_text.find("-Werror") != std::string_view::npos ||
                         cmake_text.find("/WX") != std::string_view::npos ||
                         cmake_text.find("COMPILE_WARNING_AS_ERROR") != std::string_view::npos;
@@ -149,7 +149,8 @@ inline std::vector<Finding> diagnose(const std::filesystem::path& root, const Co
     for (auto& finding : check_layout(root)) findings.push_back(finding);
     const std::string cmake = read_file(root / "CMakeLists.txt");
     const auto presets = preset_names(read_file(root / "CMakePresets.json"));
-    add(findings, presets.contains("dev"), Severity::warning, "a 'dev' preset exists", "add CMakePresets.json with a 'dev' preset");
+    add(findings, presets.contains("dev"), Severity::warning, "a 'dev' preset exists",
+        "add CMakePresets.json with a 'dev' preset");
     for (auto& finding : check_warnings(cmake)) findings.push_back(finding);
     for (auto& finding : check_sanitizers(cmake, presets)) findings.push_back(finding);
     return findings;
@@ -161,11 +162,13 @@ inline int run(std::istream& in, std::ostream& out) {
     out << "Day 25 – Local Development Environment Setup\n"
         << "Compiler: " << compiler.name << ' ' << compiler.version << ", " << standard_name(compiler.standard) << '\n';
     auto folder = prompt_line(in, out, "Project folder (blank = current directory): ");
-    const std::filesystem::path root = (folder && !folder->empty()) ? std::filesystem::path(*folder)
-                                                                    : std::filesystem::current_path();
+    const std::filesystem::path root =
+        (folder && !folder->empty()) ? std::filesystem::path(*folder) : std::filesystem::current_path();
     int problems = 0;
     for (const auto& finding : diagnose(root, compiler)) {
-        const char* tag = finding.severity == Severity::ok ? "  ok   " : finding.severity == Severity::warning ? "  WARN " : "  FAIL ";
+        const char* tag = finding.severity == Severity::ok        ? "  ok   "
+                          : finding.severity == Severity::warning ? "  WARN "
+                                                                  : "  FAIL ";
         problems += finding.severity == Severity::ok ? 0 : 1;
         out << tag << finding.message << '\n';
     }

@@ -38,7 +38,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Logs its construction and destruction so the end of a block becomes visible.
 class ScopeProbe {
-public:
+  public:
     ScopeProbe(std::vector<std::string>& log, std::string name) : log_(log), name_(std::move(name)) {
         log_.push_back("enter " + name_);
     }
@@ -46,7 +46,7 @@ public:
     ScopeProbe(const ScopeProbe&) = delete;
     ScopeProbe& operator=(const ScopeProbe&) = delete;
 
-private:
+  private:
     std::vector<std::string>& log_;
     std::string name_;
 };

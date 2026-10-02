@@ -57,8 +57,8 @@ TEST_CASE("floats cannot represent every integer above 2^24") {
 
 TEST_CASE("memory_plan totals bytes per reading times readings") {
     std::size_t total = 0;
-    const auto plan = memory_plan({{"temperature", -40, 85}, {"humidity", 0, 100}, {"pressure", 30'000, 110'000}},
-                                  total, 1000);
+    const auto plan =
+        memory_plan({{"temperature", -40, 85}, {"humidity", 0, 100}, {"pressure", 30'000, 110'000}}, total, 1000);
     REQUIRE_EQ(plan.size(), 3u);
     CHECK_EQ(plan[2].type, "std::uint32_t");
     CHECK_EQ(total, 6000u);

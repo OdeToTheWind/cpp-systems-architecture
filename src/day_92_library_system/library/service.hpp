@@ -11,7 +11,7 @@ namespace cppm::day92 {
 
 /// A request the rules refuse – distinct from bugs and infrastructure failures.
 class LendingError : public std::runtime_error {
-public:
+  public:
     using std::runtime_error::runtime_error;
 };
 
@@ -21,7 +21,7 @@ struct ReturnResult {
 };
 
 class LendingService {
-public:
+  public:
     LendingService(Repository& repo, Notifier& notifier, const Clock& clock, Policy policy = {})
         : repo_(repo), notifier_(notifier), clock_(clock), policy_(policy) {}
 
@@ -33,7 +33,7 @@ public:
     int fine_for(const Loan& loan) const;
     int available(const std::string& isbn) const;
 
-private:
+  private:
     Member require_member(const std::string& id) const;
     Book require_book(const std::string& isbn) const;
     Repository& repo_;

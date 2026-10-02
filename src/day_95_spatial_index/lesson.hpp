@@ -56,10 +56,13 @@ inline double dist2(double ax, double ay, double bx, double by) {
 }
 
 /// Closer is better; on an exact tie the smaller id wins, so both implementations agree.
-inline bool better(double d, int id, double best_d, int best_id) { return d < best_d || (d == best_d && id < best_id); }
+inline bool better(double d, int id, double best_d, int best_id) {
+    return d < best_d || (d == best_d && id < best_id);
+}
 
 /// O(n) per query. @p distance_checks counts the work.
-inline std::optional<int> nearest_naive(const std::vector<Driver>& drivers, double x, double y, std::uint64_t& distance_checks) {
+inline std::optional<int> nearest_naive(const std::vector<Driver>& drivers, double x, double y,
+                                        std::uint64_t& distance_checks) {
     std::optional<int> best;
     double best_d = 0;
     for (const auto& d : drivers) {
@@ -76,13 +79,14 @@ inline std::optional<int> nearest_naive(const std::vector<Driver>& drivers, doub
 /// Drivers bucketed into square cells of side @p cell_km. A query looks at the query's cell,
 /// then rings of cells around it, and stops once no unvisited cell can hold anything closer.
 class GridIndex {
-public:
+  public:
     explicit GridIndex(double cell_km) : cell_(cell_km) {
         if (!(cell_km > 0)) throw std::invalid_argument("cell size must be positive");
     }
 
     void insert(const Driver& d) {
-        if (positions_.contains(d.id)) throw std::invalid_argument("driver " + std::to_string(d.id) + " already indexed");
+        if (positions_.contains(d.id))
+            throw std::invalid_argument("driver " + std::to_string(d.id) + " already indexed");
         positions_[d.id] = d;
         cells_[key(cell_of(d.x), cell_of(d.y))].push_back(d.id);
     }
@@ -141,7 +145,7 @@ public:
     }
     std::size_t size() const { return positions_.size(); }
 
-private:
+  private:
     std::int64_t cell_of(double v) const { return static_cast<std::int64_t>(std::floor(v / cell_)); }
     static std::uint64_t key(std::int64_t gx, std::int64_t gy) {
         return (static_cast<std::uint64_t>(gx) << 32) ^ (static_cast<std::uint64_t>(gy) & 0xFFFFFFFFu);
@@ -162,7 +166,8 @@ inline std::vector<Driver> random_drivers(int n, std::uint32_t seed) {
     std::vector<Driver> drivers;
     for (int i = 0; i < n; ++i) {
         const auto h = static_cast<std::size_t>(hub(rng));
-        drivers.push_back({i, std::clamp(hubs[h][0] + spread(rng), -20.0, 20.0), std::clamp(hubs[h][1] + spread(rng), -20.0, 20.0)});
+        drivers.push_back(
+            {i, std::clamp(hubs[h][0] + spread(rng), -20.0, 20.0), std::clamp(hubs[h][1] + spread(rng), -20.0, 20.0)});
     }
     return drivers;
 }
@@ -185,7 +190,8 @@ inline CrossCheck cross_check(int drivers, int queries, double cell_km, std::uin
     for (int q = 0; q < queries; ++q) {
         const double x = coord(rng);
         const double y = coord(rng);
-        if (nearest_naive(fleet, x, y, result.naive_checks) != index.nearest(x, y, result.grid_checks)) ++result.mismatches;
+        if (nearest_naive(fleet, x, y, result.naive_checks) != index.nearest(x, y, result.grid_checks))
+            ++result.mismatches;
         ++result.queries;
     }
     return result;
@@ -198,7 +204,8 @@ long long median_micros(Work work, int reps) {
     for (int i = 0; i < reps; ++i) {
         const auto start = std::chrono::steady_clock::now();
         work();
-        times.push_back(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count());
+        times.push_back(
+            std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count());
     }
     std::sort(times.begin(), times.end());
     return times[times.size() / 2];

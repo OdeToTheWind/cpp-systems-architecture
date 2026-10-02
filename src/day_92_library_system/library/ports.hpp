@@ -13,13 +13,13 @@
 namespace cppm::day92 {
 
 class Clock {
-public:
+  public:
     virtual ~Clock() = default;
     virtual Date today() const = 0;
 };
 
 class Repository {
-public:
+  public:
     virtual ~Repository() = default;
     virtual std::optional<Book> book(const std::string& isbn) const = 0;
     virtual std::optional<Member> member(const std::string& id) const = 0;
@@ -35,7 +35,7 @@ public:
 };
 
 class Notifier {
-public:
+  public:
     virtual ~Notifier() = default;
     virtual void notify(const Member& member, const std::string& message) = 0;
 };
@@ -43,17 +43,17 @@ public:
 // ---- Test doubles ----
 
 class FixedClock : public Clock {
-public:
+  public:
     explicit FixedClock(Date today) : today_(today) {}
     Date today() const override { return today_; }
     void advance(int days) { today_ = today_ + days; }
 
-private:
+  private:
     Date today_;
 };
 
 class InMemoryRepository : public Repository {
-public:
+  public:
     std::optional<Book> book(const std::string& isbn) const override { return find(books_, isbn); }
     std::optional<Member> member(const std::string& id) const override { return find(members_, id); }
     void add_book(const Book& book) override { books_[book.isbn] = book; }
@@ -66,7 +66,7 @@ public:
     std::vector<Loan> loans_of_member(const std::string& member) const override;
     std::vector<std::string>& reservations(const std::string& isbn) override { return reservations_[isbn]; }
 
-private:
+  private:
     template <typename Map, typename Key>
     static std::optional<typename Map::mapped_type> find(const Map& map, const Key& key) {
         const auto it = map.find(key);
@@ -80,7 +80,7 @@ private:
 };
 
 class RecordingNotifier : public Notifier {
-public:
+  public:
     struct Message {
         std::string to;
         std::string text;

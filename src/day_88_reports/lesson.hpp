@@ -38,7 +38,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// An amount in cents. Arithmetic stays in integers; only division needs a rounding rule.
 class Money {
-public:
+  public:
     constexpr Money() = default;  // not explicit, so aggregates holding Money can be value-initialised
     constexpr explicit Money(std::int64_t cents) : cents_(cents) {}
     constexpr std::int64_t cents() const { return cents_; }
@@ -59,17 +59,19 @@ public:
     std::string str() const {
         const std::int64_t abs = cents_ < 0 ? -cents_ : cents_;
         std::string whole = std::to_string(abs / 100);
-        for (auto i = static_cast<std::ptrdiff_t>(whole.size()) - 3; i > 0; i -= 3) whole.insert(static_cast<std::size_t>(i), ",");
+        for (auto i = static_cast<std::ptrdiff_t>(whole.size()) - 3; i > 0; i -= 3)
+            whole.insert(static_cast<std::size_t>(i), ",");
         const auto rest = abs % 100;
         return (cents_ < 0 ? "-" : "") + std::string("€") + whole + "." + (rest < 10 ? "0" : "") + std::to_string(rest);
     }
     /// "1234.56" for machines (CSV): no currency sign, no thousands separators.
     std::string plain() const {
         const std::int64_t abs = cents_ < 0 ? -cents_ : cents_;
-        return (cents_ < 0 ? "-" : "") + std::to_string(abs / 100) + "." + (abs % 100 < 10 ? "0" : "") + std::to_string(abs % 100);
+        return (cents_ < 0 ? "-" : "") + std::to_string(abs / 100) + "." + (abs % 100 < 10 ? "0" : "") +
+               std::to_string(abs % 100);
     }
 
-private:
+  private:
     std::int64_t cents_ = 0;
 };
 
@@ -126,9 +128,12 @@ inline std::string render_template(const std::string& tpl, const Context& ctx,
         const bool raw = tag.starts_with('&');
         if (raw) tag.erase(0, 1);
         std::string value;
-        if (row && row->contains(tag)) value = row->at(tag);
-        else if (ctx.values.contains(tag)) value = ctx.values.at(tag);
-        else throw std::runtime_error("unknown key " + tag);
+        if (row && row->contains(tag))
+            value = row->at(tag);
+        else if (ctx.values.contains(tag))
+            value = ctx.values.at(tag);
+        else
+            throw std::runtime_error("unknown key " + tag);
         out += raw ? value : html_escape(value);
     }
     return out;
@@ -196,10 +201,13 @@ inline std::string hours(int minutes) {
 
 inline std::string to_html(const Report& report) {
     Context ctx;
-    ctx.values = {{"month", report.month}, {"net_total", report.net_total.str()}, {"vat_total", report.vat_total.str()},
+    ctx.values = {{"month", report.month},
+                  {"net_total", report.net_total.str()},
+                  {"vat_total", report.vat_total.str()},
                   {"gross_total", report.gross_total().str()}};
     for (const auto& l : report.lines) {
-        ctx.lists["lines"].push_back({{"client", l.client}, {"task", l.task}, {"hours", hours(l.minutes)}, {"net", l.net.str()}});
+        ctx.lists["lines"].push_back(
+            {{"client", l.client}, {"task", l.task}, {"hours", hours(l.minutes)}, {"net", l.net.str()}});
     }
     ctx.lists.try_emplace("lines");
     return render_template(REPORT_TEMPLATE, ctx);
@@ -208,7 +216,8 @@ inline std::string to_html(const Report& report) {
 inline std::string to_csv(const Report& report) {
     std::string out = "client,task,minutes,net,vat\r\n";  // RFC 4180 line endings
     for (const auto& l : report.lines) {
-        out += csv_field(l.client) + "," + csv_field(l.task) + "," + std::to_string(l.minutes) + "," + l.net.plain() + "," + l.vat.plain() + "\r\n";
+        out += csv_field(l.client) + "," + csv_field(l.task) + "," + std::to_string(l.minutes) + "," + l.net.plain() +
+               "," + l.vat.plain() + "\r\n";
     }
     return out;
 }

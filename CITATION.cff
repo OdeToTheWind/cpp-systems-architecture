@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use or reference this project, please cite it as below."
+title: "C++ Systems Architecture: 100 Days of Professional C++"
+type: software
+authors:
+  - family-names: Badal
+    given-names: Bhargavi
+repository-code: "https://github.com/OdeToTheWind/cpp-systems-architecture"
+license: MIT
+version: 1.0.0
+date-released: 2026-10-02
+keywords: [cpp, cpp20, course, education, testing, cmake, curriculum]

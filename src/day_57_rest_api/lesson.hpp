@@ -55,7 +55,9 @@ using Fields = std::map<std::string, std::string>;  // values kept as text; numb
 /// Parse `{"key": "text", "n": 3}` – one level, string and integer values only. std::nullopt if malformed.
 inline std::optional<Fields> parse_object(std::string_view text) {
     std::size_t i = 0;
-    const auto skip = [&] { while (i < text.size() && std::isspace(static_cast<unsigned char>(text[i]))) ++i; };
+    const auto skip = [&] {
+        while (i < text.size() && std::isspace(static_cast<unsigned char>(text[i]))) ++i;
+    };
     const auto read_string = [&]() -> std::optional<std::string> {
         if (i >= text.size() || text[i] != '"') return std::nullopt;
         std::string out;
@@ -123,8 +125,8 @@ struct Book {
 
 /// `{"id":1,"title":"…","author":"…","year":1990}`
 inline std::string to_json(const Book& book) {
-    return "{\"id\":" + std::to_string(book.id) + ",\"title\":" + quote(book.title) + ",\"author\":" + quote(book.author) +
-           ",\"year\":" + std::to_string(book.year) + "}";
+    return "{\"id\":" + std::to_string(book.id) + ",\"title\":" + quote(book.title) +
+           ",\"author\":" + quote(book.author) + ",\"year\":" + std::to_string(book.year) + "}";
 }
 inline std::string to_json(const std::vector<Book>& books) {
     std::string out = "[";
@@ -144,11 +146,13 @@ struct HttpResponse {
     std::map<std::string, std::string> headers;
 };
 
-inline HttpResponse error(int status, const std::string& message) { return {status, "{\"error\":" + quote(message) + "}", {}}; }
+inline HttpResponse error(int status, const std::string& message) {
+    return {status, "{\"error\":" + quote(message) + "}", {}};
+}
 
 /// The resource-oriented API: the URL names the thing, the method says what to do with it.
 class BookApi {
-public:
+  public:
     HttpResponse handle(const HttpRequest& request) {
         if (!method_semantics(request.method)) return error(405, "unsupported method");
         if (request.path == "/books") {
@@ -183,7 +187,7 @@ public:
         return {201, to_json(created), {{"Location", "/books/" + std::to_string(created.id)}}};
     }
 
-private:
+  private:
     static std::optional<int> parse_id(const std::string& text) {
         if (text.empty() || text.size() > 9) return std::nullopt;
         for (const char c : text) {

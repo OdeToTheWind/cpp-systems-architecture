@@ -47,9 +47,9 @@ TEST_CASE("the cooldown allows one notification per key per period") {
 TEST_CASE("unchanged bad states are rate-limited; changes always notify") {
     Recorder recorder;
     Notifier notifier({{"disk", {80, 95}}}, recorder.sink(), 900s);
-    CHECK(notifier.observe("disk", 85, 0s));      // ok -> warning
-    CHECK(!notifier.observe("disk", 86, 60s));    // still warning, in cooldown
-    CHECK(notifier.observe("disk", 96, 120s));    // escalation
+    CHECK(notifier.observe("disk", 85, 0s));    // ok -> warning
+    CHECK(!notifier.observe("disk", 86, 60s));  // still warning, in cooldown
+    CHECK(notifier.observe("disk", 96, 120s));  // escalation
     CHECK(!notifier.observe("disk", 97, 300s));
     CHECK(notifier.observe("disk", 97, 1020s));   // cooldown elapsed: reminder
     CHECK(notifier.observe("disk", 50, 1100s));   // recovery

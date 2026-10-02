@@ -61,14 +61,16 @@ template <typename T, std::size_t Capacity>
 class RingBuffer {
     static_assert(Capacity > 0, "a RingBuffer needs room for at least one value");
 
-public:
+  public:
     using value_type = T;
     using size_type = std::size_t;
 
     void push(T value) {
         data_[(start_ + size_) % Capacity] = std::move(value);
-        if (size_ < Capacity) ++size_;
-        else start_ = (start_ + 1) % Capacity;
+        if (size_ < Capacity)
+            ++size_;
+        else
+            start_ = (start_ + 1) % Capacity;
     }
     size_type size() const { return size_; }
     static constexpr size_type capacity() { return Capacity; }
@@ -84,7 +86,7 @@ public:
         return out;
     }
 
-private:
+  private:
     std::array<T, Capacity> data_{};
     size_type start_ = 0;
     size_type size_ = 0;
@@ -154,7 +156,8 @@ std::optional<Summary<Container>> summarise(const Container& values) {
         if (hi < values[i]) hi = values[i];
         total += static_cast<double>(values[i]);
     }
-    return Summary<Container>{lo, hi, total / static_cast<double>(values.size()), static_cast<std::size_t>(values.size())};
+    return Summary<Container>{lo, hi, total / static_cast<double>(values.size()),
+                              static_cast<std::size_t>(values.size())};
 }
 
 /// Format any summary; works for ints, doubles and anything streamable.
@@ -176,9 +179,12 @@ inline int run(std::istream& in, std::ostream& out) {
         std::string kind;
         double value = 0;
         if (!(words >> kind >> value)) break;
-        if (kind == "temp") temperatures.push(value);
-        else if (kind == "wind") wind.push(static_cast<int>(value));
-        else out << "  unknown sensor " << kind << '\n';
+        if (kind == "temp")
+            temperatures.push(value);
+        else if (kind == "wind")
+            wind.push(static_cast<int>(value));
+        else
+            out << "  unknown sensor " << kind << '\n';
     }
     if (const auto s = summarise(temperatures)) out << "temperature: " << describe(*s) << '\n';
     if (const auto s = summarise(wind)) out << "wind: " << describe(*s) << '\n';

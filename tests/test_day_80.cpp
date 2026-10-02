@@ -62,7 +62,7 @@ TEST_CASE("the naive check grows quadratically, the hashed one linearly") {
     CHECK_EQ(naive_small, 499500u);  // n(n-1)/2
     CHECK_EQ(naive_big, 1999000u);   // twice the input, four times the work
     CHECK_EQ(hashed_small, 1000u);
-    CHECK_EQ(hashed_big, 2000u);     // twice the input, twice the work
+    CHECK_EQ(hashed_big, 2000u);  // twice the input, twice the work
 }
 
 TEST_CASE("layouts give the same answer; SoA stores the hot field contiguously") {

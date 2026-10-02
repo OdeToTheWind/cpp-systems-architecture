@@ -76,6 +76,7 @@ TEST_CASE("run draws a line per series") {
     std::istringstream in("100 200 300\n\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
-    CHECK(out.str().find("orders today: 1,234,567, queue: 42 (count), cpu: 73.4%, host: [web-1@3]") != std::string::npos);
+    CHECK(out.str().find("orders today: 1,234,567, queue: 42 (count), cpu: 73.4%, host: [web-1@3]") !=
+          std::string::npos);
     CHECK(out.str().find("▁▅█  avg 200.0 ms, max 300 ms") != std::string::npos);
 }

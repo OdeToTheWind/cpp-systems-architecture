@@ -48,8 +48,7 @@ struct TestCase {
 std::vector<TestCase>& registry();
 
 /// Records the outcome of one check; failures are printed immediately.
-void report_check(bool passed, std::string_view expression, std::string_view detail, const char* file,
-                  int line);
+void report_check(bool passed, std::string_view expression, std::string_view detail, const char* file, int line);
 
 /// Thrown by REQUIRE to abort the current test case (never escapes the runner).
 struct RequireFailed {};
@@ -90,9 +89,8 @@ std::string describe(const T& value) {
 /// Integer types that std::cmp_equal accepts (not bool and not the character types).
 template <typename T>
 concept StandardInteger =
-    std::is_integral_v<T> && !std::is_same_v<T, bool> && !std::is_same_v<T, char> &&
-    !std::is_same_v<T, wchar_t> && !std::is_same_v<T, char8_t> && !std::is_same_v<T, char16_t> &&
-    !std::is_same_v<T, char32_t>;
+    std::is_integral_v<T> && !std::is_same_v<T, bool> && !std::is_same_v<T, char> && !std::is_same_v<T, wchar_t> &&
+    !std::is_same_v<T, char8_t> && !std::is_same_v<T, char16_t> && !std::is_same_v<T, char32_t>;
 
 /// Equality that compares mixed signed/unsigned integers by value instead of by conversion.
 template <typename A, typename B>
@@ -113,8 +111,7 @@ void check_eq(const A& a, const B& b, std::string_view expression, const char* f
     }
 }
 
-inline void check_near(double a, double b, double tolerance, std::string_view expression, const char* file,
-                       int line) {
+inline void check_near(double a, double b, double tolerance, std::string_view expression, const char* file, int line) {
     const bool passed = std::fabs(a - b) <= tolerance;
     std::ostringstream detail;
     if (!passed) {
@@ -130,53 +127,52 @@ inline void check_near(double a, double b, double tolerance, std::string_view ex
 #define CPPM_CONCAT(a, b) CPPM_CONCAT_INNER(a, b)
 
 /// Define a test case: `TEST_CASE("what it proves") { ... }`.
-#define TEST_CASE(name)                                                                              \
-    static void CPPM_CONCAT(cppm_test_fn_, __LINE__)();                                              \
-    static const ::cppm::testing::Registrar CPPM_CONCAT(cppm_test_reg_, __LINE__){                   \
-        name, &CPPM_CONCAT(cppm_test_fn_, __LINE__), __FILE__, __LINE__};                            \
+#define TEST_CASE(name)                                                            \
+    static void CPPM_CONCAT(cppm_test_fn_, __LINE__)();                            \
+    static const ::cppm::testing::Registrar CPPM_CONCAT(cppm_test_reg_, __LINE__){ \
+        name, &CPPM_CONCAT(cppm_test_fn_, __LINE__), __FILE__, __LINE__};          \
     static void CPPM_CONCAT(cppm_test_fn_, __LINE__)()
 
 /// Record a failure but keep running the test.
 #define CHECK(...) ::cppm::testing::report_check(static_cast<bool>(__VA_ARGS__), #__VA_ARGS__, "", __FILE__, __LINE__)
 
 /// Stop the current test case if the condition is false.
-#define REQUIRE(...)                                                                                  \
-    do {                                                                                              \
-        const bool cppm_ok = static_cast<bool>(__VA_ARGS__);                                          \
-        ::cppm::testing::report_check(cppm_ok, #__VA_ARGS__, "", __FILE__, __LINE__);                 \
-        if (!cppm_ok) throw ::cppm::testing::RequireFailed{};                                         \
+#define REQUIRE(...)                                                                  \
+    do {                                                                              \
+        const bool cppm_ok = static_cast<bool>(__VA_ARGS__);                          \
+        ::cppm::testing::report_check(cppm_ok, #__VA_ARGS__, "", __FILE__, __LINE__); \
+        if (!cppm_ok) throw ::cppm::testing::RequireFailed{};                         \
     } while (false)
 
 #define CHECK_EQ(a, b) ::cppm::testing::check_eq((a), (b), #a " == " #b, __FILE__, __LINE__, false)
 #define REQUIRE_EQ(a, b) ::cppm::testing::check_eq((a), (b), #a " == " #b, __FILE__, __LINE__, true)
-#define CHECK_NEAR(a, b, tolerance)                                                                   \
-    ::cppm::testing::check_near(static_cast<double>(a), static_cast<double>(b), (tolerance),          \
-                                #a " ~= " #b, __FILE__, __LINE__)
+#define CHECK_NEAR(a, b, tolerance)                                                                                  \
+    ::cppm::testing::check_near(static_cast<double>(a), static_cast<double>(b), (tolerance), #a " ~= " #b, __FILE__, \
+                                __LINE__)
 
 /// Passes only if evaluating the expression throws an exception of the given type.
-#define CHECK_THROWS_AS(expression, exception_type)                                                   \
-    do {                                                                                              \
-        bool cppm_thrown = false;                                                                     \
-        try {                                                                                         \
-            static_cast<void>(expression);                                                            \
-        } catch (const exception_type&) {                                                             \
-            cppm_thrown = true;                                                                       \
-        } catch (...) {                                                                               \
-        }                                                                                             \
-        ::cppm::testing::report_check(cppm_thrown, #expression " throws " #exception_type,            \
-                                      cppm_thrown ? "" : "a different exception or none was thrown",  \
-                                      __FILE__, __LINE__);                                            \
+#define CHECK_THROWS_AS(expression, exception_type)                                                            \
+    do {                                                                                                       \
+        bool cppm_thrown = false;                                                                              \
+        try {                                                                                                  \
+            static_cast<void>(expression);                                                                     \
+        } catch (const exception_type&) {                                                                      \
+            cppm_thrown = true;                                                                                \
+        } catch (...) {                                                                                        \
+        }                                                                                                      \
+        ::cppm::testing::report_check(cppm_thrown, #expression " throws " #exception_type,                     \
+                                      cppm_thrown ? "" : "a different exception or none was thrown", __FILE__, \
+                                      __LINE__);                                                               \
     } while (false)
 
 /// Passes only if evaluating the expression throws nothing.
-#define CHECK_NOTHROW(expression)                                                                     \
-    do {                                                                                              \
-        bool cppm_clean = true;                                                                       \
-        try {                                                                                         \
-            static_cast<void>(expression);                                                            \
-        } catch (...) {                                                                               \
-            cppm_clean = false;                                                                       \
-        }                                                                                             \
-        ::cppm::testing::report_check(cppm_clean, #expression " does not throw", "", __FILE__,        \
-                                      __LINE__);                                                      \
+#define CHECK_NOTHROW(expression)                                                                         \
+    do {                                                                                                  \
+        bool cppm_clean = true;                                                                           \
+        try {                                                                                             \
+            static_cast<void>(expression);                                                                \
+        } catch (...) {                                                                                   \
+            cppm_clean = false;                                                                           \
+        }                                                                                                 \
+        ::cppm::testing::report_check(cppm_clean, #expression " does not throw", "", __FILE__, __LINE__); \
     } while (false)

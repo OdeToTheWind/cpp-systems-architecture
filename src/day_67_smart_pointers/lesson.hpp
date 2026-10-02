@@ -55,7 +55,7 @@ struct Image : Counted<Image> {
 
 /// Hands out shared images; holds only weak_ptrs, so the cache never keeps an image alive.
 class AssetCache {
-public:
+  public:
     std::shared_ptr<Image> load(const std::string& path) {
         if (auto cached = cache_[path].lock()) {
             ++hits_;
@@ -69,7 +69,7 @@ public:
     int loads() const { return loads_; }
     int hits() const { return hits_; }
 
-private:
+  private:
     std::map<std::string, std::weak_ptr<Image>> cache_;
     int loads_ = 0;
     int hits_ = 0;
@@ -84,7 +84,7 @@ struct Slide : Counted<Slide> {
 /// The deck owns its slides: when the deck goes, they go. Callers get plain pointers or
 /// references for *viewing*, which never imply ownership.
 class Deck {
-public:
+  public:
     // Spelled out: std::is_copy_constructible says "yes" for vector<unique_ptr<T>> even though
     // the copy would not compile, so deleting the copy makes the move-only intent checkable.
     Deck() = default;
@@ -108,7 +108,8 @@ public:
     /// Take ownership of a slide created elsewhere, e.g. restored by undo.
     void insert_slide(std::size_t index, std::unique_ptr<Slide> slide) {
         if (!slide) throw std::invalid_argument("cannot insert a null slide");
-        slides_.insert(slides_.begin() + static_cast<std::ptrdiff_t>(std::min(index, slides_.size())), std::move(slide));
+        slides_.insert(slides_.begin() + static_cast<std::ptrdiff_t>(std::min(index, slides_.size())),
+                       std::move(slide));
     }
     const Slide* find(const std::string& title) const {
         for (const auto& s : slides_) {
@@ -118,14 +119,14 @@ public:
     }
     std::size_t size() const { return slides_.size(); }
 
-private:
+  private:
     std::vector<std::unique_ptr<Slide>> slides_;
 };
 
 /// A shape in a tree of groups. Children are owned (shared_ptr); the parent link is weak,
 /// otherwise parent and child would keep each other alive forever.
 class Shape : public Counted<Shape>, public std::enable_shared_from_this<Shape> {
-public:
+  public:
     explicit Shape(std::string name) : name_(std::move(name)) {}
     std::shared_ptr<Shape> add_child(const std::string& name) {
         auto child = std::make_shared<Shape>(name);
@@ -142,7 +143,7 @@ public:
     }
     std::size_t child_count() const { return children_.size(); }
 
-private:
+  private:
     std::string name_;
     std::weak_ptr<Shape> parent_;
     bool has_parent_ = false;

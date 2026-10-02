@@ -52,7 +52,7 @@ inline std::string where(const std::source_location& loc) {
 
 /// Keeps only the last N events – cheap enough to leave on in production.
 class FlightRecorder {
-public:
+  public:
     explicit FlightRecorder(std::size_t capacity) : capacity_(capacity) {}
     void record(std::string event) {
         if (events_.size() == capacity_) events_.pop_front();
@@ -62,7 +62,7 @@ public:
     const std::deque<std::string>& events() const { return events_; }
     std::size_t total() const { return total_; }
 
-private:
+  private:
     std::size_t capacity_;
     std::deque<std::string> events_;
     std::size_t total_ = 0;
@@ -70,7 +70,8 @@ private:
 
 /// Record "file:line note". The default argument is evaluated at the *call site*, so callers
 /// write `trace_call(rec, "charging card")` and the location is filled in for them.
-inline void trace_call(FlightRecorder& recorder, const std::string& note, std::source_location loc = std::source_location::current()) {
+inline void trace_call(FlightRecorder& recorder, const std::string& note,
+                       std::source_location loc = std::source_location::current()) {
     recorder.record(where(loc) + " " + note);
 }
 
@@ -88,7 +89,7 @@ struct SpanRecord {
 
 /// Collects spans; the currently open spans form a stack, so new spans get the right parent.
 class Tracer {
-public:
+  public:
     explicit Tracer(std::function<Millis()> clock) : clock_(std::move(clock)) {}
     int open(const std::string& name) {
         const int id = static_cast<int>(spans_.size()) + 1;
@@ -115,15 +116,15 @@ public:
         for (const auto& s : spans_) {
             int depth = 0;
             for (int p = s.parent; p != 0; p = spans_.at(static_cast<std::size_t>(p - 1)).parent) ++depth;
-            out += std::string(static_cast<std::size_t>(depth) * 2, ' ') + s.name + " " + std::to_string(s.start) + "-" +
-                   (s.end < 0 ? std::string("?") : std::to_string(s.end)) + "ms " + s.status;
+            out += std::string(static_cast<std::size_t>(depth) * 2, ' ') + s.name + " " + std::to_string(s.start) +
+                   "-" + (s.end < 0 ? std::string("?") : std::to_string(s.end)) + "ms " + s.status;
             for (const auto& [k, v] : s.attributes) out += " " + k + "=" + v;
             out += "\n";
         }
         return out;
     }
 
-private:
+  private:
     std::function<Millis()> clock_;
     std::vector<SpanRecord> spans_;
     std::vector<int> stack_;
@@ -131,14 +132,17 @@ private:
 
 /// RAII: the span closes when the scope ends – with status "error" if it ends by an exception.
 class Span {
-public:
-    Span(Tracer& tracer, const std::string& name) : tracer_(tracer), id_(tracer.open(name)), exceptions_(std::uncaught_exceptions()) {}
+  public:
+    Span(Tracer& tracer, const std::string& name)
+        : tracer_(tracer), id_(tracer.open(name)), exceptions_(std::uncaught_exceptions()) {}
     Span(const Span&) = delete;
     Span& operator=(const Span&) = delete;
     ~Span() { tracer_.close(id_, std::uncaught_exceptions() > exceptions_ ? "error" : "ok"); }
-    void attribute(const std::string& key, const std::string& value) { tracer_.span(id_).attributes.emplace_back(key, value); }
+    void attribute(const std::string& key, const std::string& value) {
+        tracer_.span(id_).attributes.emplace_back(key, value);
+    }
 
-private:
+  private:
     Tracer& tracer_;
     int id_;
     int exceptions_;
@@ -148,8 +152,9 @@ private:
 /// location, and an optional condition can trigger a callback ("break when stock goes negative").
 template <typename T>
 class Watched {
-public:
-    Watched(std::string name, T value, FlightRecorder& recorder) : name_(std::move(name)), value_(std::move(value)), recorder_(recorder) {}
+  public:
+    Watched(std::string name, T value, FlightRecorder& recorder)
+        : name_(std::move(name)), value_(std::move(value)), recorder_(recorder) {}
     void set(T value, std::source_location loc = std::source_location::current()) {
         std::ostringstream event;
         event << where(loc) << " watch " << name_ << ": " << value_ << " -> " << value;
@@ -163,7 +168,7 @@ public:
         on_trigger_ = std::move(action);
     }
 
-private:
+  private:
     std::string name_;
     T value_;
     FlightRecorder& recorder_;
@@ -198,10 +203,12 @@ inline std::vector<std::string> exception_chain(const std::exception_ptr& error)
 inline std::string crash_report(const std::exception_ptr& error, const Tracer& tracer, const FlightRecorder& recorder) {
     std::string out = "=== crash report ===\n";
     const auto chain = exception_chain(error);
-    for (std::size_t k = 0; k < chain.size(); ++k) out += (k == 0 ? "error: " : std::string(k * 2, ' ') + "caused by: ") + chain[k] + "\n";
+    for (std::size_t k = 0; k < chain.size(); ++k)
+        out += (k == 0 ? "error: " : std::string(k * 2, ' ') + "caused by: ") + chain[k] + "\n";
     out += "open spans:";
     for (const auto& name : tracer.open_stack()) out += " " + name;
-    out += "\nlast " + std::to_string(recorder.events().size()) + " of " + std::to_string(recorder.total()) + " events:\n";
+    out +=
+        "\nlast " + std::to_string(recorder.events().size()) + " of " + std::to_string(recorder.total()) + " events:\n";
     for (const auto& e : recorder.events()) out += "  " + e + "\n";
     return out + "trace:\n" + tracer.timeline();
 }

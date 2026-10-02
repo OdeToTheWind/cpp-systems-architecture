@@ -31,7 +31,7 @@ using Options = std::map<std::string, std::string>;
 
 /// The interface every filter plugin implements.
 class Filter {
-public:
+  public:
     virtual ~Filter() = default;
     virtual void apply(Image& image) const = 0;
 };
@@ -56,7 +56,8 @@ inline int int_option(const Options& options, const std::string& key, int fallba
         used = 0;
     }
     if (used == 0 || used != it->second.size() || value < low || value > high) {
-        throw std::invalid_argument(key + " must be an integer from " + std::to_string(low) + " to " + std::to_string(high));
+        throw std::invalid_argument(key + " must be an integer from " + std::to_string(low) + " to " +
+                                    std::to_string(high));
     }
     return value;
 }

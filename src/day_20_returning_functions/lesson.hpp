@@ -47,9 +47,15 @@ struct Quote {
 };
 
 /// Carrier tariffs: ordinary functions with the same signature.
-inline long long post_rate(int grams) { return 450 + 3LL * grams / 10; }       // 4.50 + 0.03 per 10 g
-inline long long courier_rate(int grams) { return 900 + grams / 100 * 30LL; }  // 9.00 + 0.30 per 100 g
-inline long long freight_rate(int grams) { return grams < 5'000 ? 4'000 : 4'000 + (grams - 5'000) / 1'000 * 150LL; }
+inline long long post_rate(int grams) {
+    return 450 + 3LL * grams / 10;
+}  // 4.50 + 0.03 per 10 g
+inline long long courier_rate(int grams) {
+    return 900 + grams / 100 * 30LL;
+}  // 9.00 + 0.30 per 100 g
+inline long long freight_rate(int grams) {
+    return grams < 5'000 ? 4'000 : 4'000 + (grams - 5'000) / 1'000 * 150LL;
+}
 
 /// A pointer to any function taking grams and returning cents.
 using RateFunction = long long (*)(int);
@@ -62,7 +68,9 @@ inline RateFunction rate_function_for(std::string_view carrier) {
     return nullptr;
 }
 
-inline int delivery_days(std::string_view carrier) { return carrier == "courier" ? 1 : carrier == "post" ? 3 : 5; }
+inline int delivery_days(std::string_view carrier) {
+    return carrier == "courier" ? 1 : carrier == "post" ? 3 : 5;
+}
 
 /// A pricing rule maps cents to cents.
 using PriceRule = std::function<long long(long long)>;

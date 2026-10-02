@@ -52,7 +52,7 @@ inline bool update_max(std::atomic<std::uint64_t>& target, std::uint64_t value) 
 /// Counters that only need to be *eventually* correct totals use memory_order_relaxed: each
 /// increment is atomic, but it orders nothing else, which makes it the cheapest choice.
 class Metrics {
-public:
+  public:
     void record(std::uint64_t latency_us, bool error) {
         requests_.fetch_add(1, std::memory_order_relaxed);
         if (error) errors_.fetch_add(1, std::memory_order_relaxed);
@@ -64,10 +64,11 @@ public:
     std::uint64_t slowest() const { return slowest_.load(std::memory_order_relaxed); }
     double mean_latency() const {
         const auto n = requests();
-        return n == 0 ? 0.0 : static_cast<double>(total_latency_.load(std::memory_order_relaxed)) / static_cast<double>(n);
+        return n == 0 ? 0.0
+                      : static_cast<double>(total_latency_.load(std::memory_order_relaxed)) / static_cast<double>(n);
     }
 
-private:
+  private:
     std::atomic<std::uint64_t> requests_{0};
     std::atomic<std::uint64_t> errors_{0};
     std::atomic<std::uint64_t> total_latency_{0};
@@ -78,16 +79,17 @@ private:
 /// clear with *release* publishes ours to the next owner. Meets the Lockable requirements, so
 /// it works with std::lock_guard. Spinning wastes CPU – only for very short critical sections.
 class SpinLock {
-public:
+  public:
     void lock() noexcept {
         while (flag_.test_and_set(std::memory_order_acquire)) {
-            while (flag_.test(std::memory_order_relaxed)) std::this_thread::yield();  // wait without hammering the cache line
+            while (flag_.test(std::memory_order_relaxed))
+                std::this_thread::yield();  // wait without hammering the cache line
         }
     }
     bool try_lock() noexcept { return !flag_.test_and_set(std::memory_order_acquire); }
     void unlock() noexcept { flag_.clear(std::memory_order_release); }
 
-private:
+  private:
     std::atomic_flag flag_;  // C++20: default-initialised to clear
 };
 
@@ -100,7 +102,7 @@ struct Config {
 /// The release store on `ready_` orders the plain write to `value_` before it; a reader that
 /// sees ready_ == true through an acquire load therefore also sees the finished value.
 class Mailbox {
-public:
+  public:
     void publish(Config config) {
         value_ = std::move(config);                     // 1. plain write
         ready_.store(true, std::memory_order_release);  // 2. publish
@@ -110,7 +112,7 @@ public:
         return value_;  // safe: happens-after the write in publish()
     }
 
-private:
+  private:
     Config value_;
     std::atomic<bool> ready_{false};
 };
@@ -132,7 +134,8 @@ inline void simulate_traffic(Metrics& metrics, int threads, int per_thread) {
 /// The interactive demo: "threads requests" simulates traffic and prints the dashboard.
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 76 – Atomics & Memory Order\n";
-    out << "lock-free 64-bit atomics on this platform: " << std::boolalpha << std::atomic<std::uint64_t>::is_always_lock_free << '\n';
+    out << "lock-free 64-bit atomics on this platform: " << std::boolalpha
+        << std::atomic<std::uint64_t>::is_always_lock_free << '\n';
     while (auto line = prompt_line(in, out, "threads requests-per-thread> ")) {
         std::istringstream words(*line);
         int threads = 0;
@@ -140,8 +143,8 @@ inline int run(std::istream& in, std::ostream& out) {
         if (!(words >> threads >> per_thread) || threads <= 0 || per_thread < 0) break;
         Metrics metrics;
         simulate_traffic(metrics, threads, per_thread);
-        out << "  " << metrics.requests() << " request(s), " << metrics.errors() << " error(s), slowest " << metrics.slowest()
-            << " us\n";
+        out << "  " << metrics.requests() << " request(s), " << metrics.errors() << " error(s), slowest "
+            << metrics.slowest() << " us\n";
     }
     return 0;
 }

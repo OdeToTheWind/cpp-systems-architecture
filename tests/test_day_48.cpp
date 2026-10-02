@@ -50,7 +50,8 @@ TEST_CASE("display handles every alternative through std::visit") {
 }
 
 TEST_CASE("sum_numbers skips text and propagates errors") {
-    CHECK(std::get<double>(sum_numbers({parse_cell("10"), parse_cell("Rent"), parse_cell(""), parse_cell("=5/2")})) == 12.5);
+    CHECK(std::get<double>(sum_numbers({parse_cell("10"), parse_cell("Rent"), parse_cell(""), parse_cell("=5/2")})) ==
+          12.5);
     CHECK(std::holds_alternative<CellError>(sum_numbers({parse_cell("1"), parse_cell("=1/0")})));
     CHECK(std::get<double>(sum_numbers({})) == 0.0);
 }

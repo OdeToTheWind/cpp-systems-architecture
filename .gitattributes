@@ -1,0 +1,6 @@
+# One line-ending style in the repository, whatever the contributor's OS.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.png binary
+*.svg text eol=lf
+*.sh text eol=lf

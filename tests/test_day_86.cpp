@@ -13,8 +13,11 @@
 using namespace cppm::day86;
 
 TEST_CASE("log lines are single-line JSON with typed fields") {
-    const auto line = json_log_line("2026-06-05T10:00:00Z", "info", "redirect \"x\"\nnext", {{"code", "abc"}, {"ms", "12.5"}, {"user", "-"}});
-    CHECK_EQ(line, R"({"ts":"2026-06-05T10:00:00Z","level":"info","msg":"redirect \"x\"\nnext","code":"abc","ms":12.5,"user":"-"})");
+    const auto line = json_log_line("2026-06-05T10:00:00Z", "info", "redirect \"x\"\nnext",
+                                    {{"code", "abc"}, {"ms", "12.5"}, {"user", "-"}});
+    CHECK_EQ(
+        line,
+        R"({"ts":"2026-06-05T10:00:00Z","level":"info","msg":"redirect \"x\"\nnext","code":"abc","ms":12.5,"user":"-"})");
     CHECK(line.find('\n') == std::string::npos);
 }
 
@@ -57,8 +60,9 @@ TEST_CASE("histogram buckets are cumulative") {
     CHECK_EQ(r.histogram_value("latency_ms", "_bucket{le=\"100\"}"), 3.0);
     CHECK_EQ(r.histogram_value("latency_ms", "_count"), 4.0);
     const auto text = r.expose();
-    CHECK(text.find("latency_ms_bucket{le=\"50\"} 1\nlatency_ms_bucket{le=\"100\"} 3\nlatency_ms_bucket{le=\"+Inf\"} 4\n"
-                    "latency_ms_sum 580\nlatency_ms_count 4\n") != std::string::npos);
+    CHECK(
+        text.find("latency_ms_bucket{le=\"50\"} 1\nlatency_ms_bucket{le=\"100\"} 3\nlatency_ms_bucket{le=\"+Inf\"} 4\n"
+                  "latency_ms_sum 580\nlatency_ms_count 4\n") != std::string::npos);
 }
 
 TEST_CASE("alerts fire after their duration and resolve once") {

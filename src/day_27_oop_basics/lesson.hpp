@@ -48,12 +48,12 @@ struct Receipt {
 
 /// Abstraction: what every payment method can do, with no hint of how.
 class PaymentMethod {
-public:
+  public:
     virtual ~PaymentMethod() = default;  // deleting through a base pointer must run the derived destructor
     virtual std::string describe() const = 0;
     virtual Receipt charge(long long cents) = 0;
 
-protected:
+  protected:
     PaymentMethod() = default;
     PaymentMethod(const PaymentMethod&) = default;
     PaymentMethod& operator=(const PaymentMethod&) = default;
@@ -61,9 +61,8 @@ protected:
 
 /// The Luhn checksum every card number satisfies; it catches single-digit typos.
 inline bool luhn_valid(std::string_view digits) {
-    if (digits.size() < 12 || !std::all_of(digits.begin(), digits.end(), [](char c) {
-            return std::isdigit(static_cast<unsigned char>(c)) != 0;
-        })) {
+    if (digits.size() < 12 || !std::all_of(digits.begin(), digits.end(),
+                                           [](char c) { return std::isdigit(static_cast<unsigned char>(c)) != 0; })) {
         return false;
     }
     int sum = 0;
@@ -84,7 +83,7 @@ inline bool luhn_valid(std::string_view digits) {
 
 /// Holds a card number privately and exposes only a masked form.
 class CardPayment final : public PaymentMethod {
-public:
+  public:
     CardPayment(std::string number, long long limit_cents) : number_(std::move(number)), limit_cents_(limit_cents) {
         number_.erase(std::remove(number_.begin(), number_.end(), ' '), number_.end());
         if (!luhn_valid(number_)) {
@@ -100,14 +99,14 @@ public:
         return {true, cents, describe(), ""};
     }
 
-private:
+  private:
     std::string number_;  // private: no getter exists, so it cannot leak into logs
     long long limit_cents_;
 };
 
 /// A prepaid wallet: the balance can only change through top_up() and charge().
 class WalletPayment final : public PaymentMethod {
-public:
+  public:
     explicit WalletPayment(std::string owner) : owner_(std::move(owner)) {}
     void top_up(long long cents) {
         if (cents <= 0) {
@@ -125,14 +124,14 @@ public:
         return {true, cents, describe(), ""};
     }
 
-private:
+  private:
     std::string owner_;
     long long balance_cents_{0};
 };
 
 /// A gift voucher with a fixed value that can be used exactly once.
 class VoucherPayment final : public PaymentMethod {
-public:
+  public:
     VoucherPayment(std::string code, long long value_cents) : code_(std::move(code)), value_cents_(value_cents) {}
     std::string describe() const override { return "voucher " + code_; }
     Receipt charge(long long cents) override {
@@ -146,7 +145,7 @@ public:
         return {true, cents, describe(), ""};
     }
 
-private:
+  private:
     std::string code_;
     long long value_cents_;
     bool used_{false};
@@ -154,7 +153,7 @@ private:
 
 /// The kiosk talks to PaymentMethod only; adding a new method needs no change here.
 class Gateway {
-public:
+  public:
     /// One call, many behaviours: the right charge() runs through virtual dispatch.
     Receipt process(PaymentMethod& method, long long cents) {
         if (cents <= 0) {
@@ -174,7 +173,7 @@ public:
         return total;
     }
 
-private:
+  private:
     std::vector<Receipt> history_;
 };
 
@@ -197,8 +196,8 @@ inline int run(std::istream& in, std::ostream& out) {
             out << "  e.g. wallet 1200\n";
             continue;
         }
-        PaymentMethod* method = which == "card" ? static_cast<PaymentMethod*>(&card)
-                                : which == "wallet" ? static_cast<PaymentMethod*>(&wallet)
+        PaymentMethod* method = which == "card"      ? static_cast<PaymentMethod*>(&card)
+                                : which == "wallet"  ? static_cast<PaymentMethod*>(&wallet)
                                 : which == "voucher" ? static_cast<PaymentMethod*>(&voucher)
                                                      : nullptr;
         if (method == nullptr) {

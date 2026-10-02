@@ -7,7 +7,7 @@ namespace cppm::day92 {
 
 /// A calendar date stored as days since 1970-01-01, so date arithmetic is integer arithmetic.
 class Date {
-public:
+  public:
     constexpr Date() = default;
     constexpr explicit Date(int days_since_epoch) : days_(days_since_epoch) {}
     static Date from_ymd(int year, int month, int day);
@@ -17,7 +17,7 @@ public:
     constexpr int operator-(Date other) const { return days_ - other.days_; }
     constexpr auto operator<=>(const Date&) const = default;
 
-private:
+  private:
     int days_ = 0;
 };
 

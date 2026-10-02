@@ -54,10 +54,19 @@ struct Locator {
 };
 
 // The commands a test sends, and their wire form.
-struct Navigate { std::string url; };
-struct FindElement { Locator locator; };
-struct Click { std::string element; };
-struct SendKeys { std::string element; std::string text; };
+struct Navigate {
+    std::string url;
+};
+struct FindElement {
+    Locator locator;
+};
+struct Click {
+    std::string element;
+};
+struct SendKeys {
+    std::string element;
+    std::string text;
+};
 using Command = std::variant<Navigate, FindElement, Click, SendKeys>;
 
 struct WireRequest {
@@ -71,12 +80,16 @@ inline WireRequest to_wire(const std::string& session, const Command& command) {
     const std::string base = "/session/" + session;
     struct Visitor {
         const std::string& base;
-        WireRequest operator()(const Navigate& c) const { return {"POST", base + "/url", R"({"url":")" + c.url + "\"}"}; }
+        WireRequest operator()(const Navigate& c) const {
+            return {"POST", base + "/url", R"({"url":")" + c.url + "\"}"};
+        }
         WireRequest operator()(const FindElement& c) const {
             return {"POST", base + "/element",
                     R"({"using":")" + c.locator.strategy() + R"(","value":")" + c.locator.selector() + "\"}"};
         }
-        WireRequest operator()(const Click& c) const { return {"POST", base + "/element/" + c.element + "/click", "{}"}; }
+        WireRequest operator()(const Click& c) const {
+            return {"POST", base + "/element/" + c.element + "/click", "{}"};
+        }
         WireRequest operator()(const SendKeys& c) const {
             return {"POST", base + "/element/" + c.element + "/value", R"({"text":")" + c.text + "\"}"};
         }
@@ -93,7 +106,7 @@ class TimeoutError : public std::runtime_error {
 
 /// The part of WebDriver the tests need. Element handles are opaque strings, as in the protocol.
 class Driver {
-public:
+  public:
     virtual ~Driver() = default;
     virtual void navigate(const std::string& url) = 0;
     virtual std::optional<std::string> find(const Locator& locator) = 0;  // nullopt: not (yet) present
@@ -107,11 +120,13 @@ public:
 
 /// Poll @p condition until it holds or @p timeout passes – never a fixed sleep.
 template <typename Condition>
-auto wait_until(Driver& driver, Condition condition, Millis timeout, Millis poll = 100ms, const std::string& what = "condition") {
+auto wait_until(Driver& driver, Condition condition, Millis timeout, Millis poll = 100ms,
+                const std::string& what = "condition") {
     const Millis deadline = driver.now() + timeout;
     while (true) {
         if (auto result = condition()) return *result;
-        if (driver.now() >= deadline) throw TimeoutError("timed out after " + std::to_string(timeout.count()) + " ms waiting for " + what);
+        if (driver.now() >= deadline)
+            throw TimeoutError("timed out after " + std::to_string(timeout.count()) + " ms waiting for " + what);
         driver.sleep(poll);
     }
 }
@@ -119,7 +134,7 @@ auto wait_until(Driver& driver, Condition condition, Millis timeout, Millis poll
 /// A fake browser running a tiny shop: /login -> /shop -> /done. Elements can appear late,
 /// like content loaded by JavaScript, and every command is logged in its wire form.
 class FakeShop : public Driver {
-public:
+  public:
     explicit FakeShop(Millis login_delay = 1500ms, Millis confirm_delay = 800ms)
         : login_delay_(login_delay), confirm_delay_(confirm_delay) {}
 
@@ -155,7 +170,7 @@ public:
     void sleep(Millis duration) override { clock_ += duration; }
     const std::vector<WireRequest>& wire_log() const { return wire_; }
 
-private:
+  private:
     struct Element {
         std::string id;
         std::string css_class;
@@ -166,7 +181,9 @@ private:
         std::string value;
     };
 
-    std::string handle(std::size_t index) const { return "e" + std::to_string(generation_) + "-" + std::to_string(index); }
+    std::string handle(std::size_t index) const {
+        return "e" + std::to_string(generation_) + "-" + std::to_string(index);
+    }
     Element& at(const std::string& handle_text) {
         const std::string prefix = "e" + std::to_string(generation_) + "-";
         if (!handle_text.starts_with(prefix)) throw NoSuchElement("stale element reference " + handle_text);
@@ -190,13 +207,19 @@ private:
                          {"pass", "", "", false, 0ms, {}, ""},
                          {"login", "button", "Log in", false, 0ms, [this] { submit_login(); }, ""}};
         } else if (url == "/shop") {
-            elements_ = {{"add-dune", "add-to-cart", "Add Dune", false, clock_ + login_delay_, [this] { add("Dune"); }, ""},
-                         {"add-emma", "add-to-cart", "Add Emma", false, clock_ + login_delay_, [this] { add("Emma"); }, ""},
-                         {"cart-count", "", std::to_string(cart_.size()), false, clock_ + login_delay_, {}, ""},
-                         {"", "", "Checkout", true, clock_ + login_delay_, [this] { checkout(); }, ""}};
+            elements_ = {
+                {"add-dune", "add-to-cart", "Add Dune", false, clock_ + login_delay_, [this] { add("Dune"); }, ""},
+                {"add-emma", "add-to-cart", "Add Emma", false, clock_ + login_delay_, [this] { add("Emma"); }, ""},
+                {"cart-count", "", std::to_string(cart_.size()), false, clock_ + login_delay_, {}, ""},
+                {"", "", "Checkout", true, clock_ + login_delay_, [this] { checkout(); }, ""}};
         } else if (url == "/done") {
-            elements_ = {{"confirmation", "", "Order #1001 confirmed: " + std::to_string(cart_.size()) + " item(s)", false,
-                          clock_ + confirm_delay_, {}, ""}};
+            elements_ = {{"confirmation",
+                          "",
+                          "Order #1001 confirmed: " + std::to_string(cart_.size()) + " item(s)",
+                          false,
+                          clock_ + confirm_delay_,
+                          {},
+                          ""}};
         } else if (url == "/login?error") {
             elements_ = {{"error", "alert", "Wrong user name or password", false, 0ms, {}, ""}};
         }
@@ -227,7 +250,7 @@ inline std::string wait_for(Driver& driver, const Locator& locator, Millis timeo
 
 // Page objects: tests talk about "log in" and "add to cart", never about selectors.
 class ShopPage {
-public:
+  public:
     explicit ShopPage(Driver& driver) : driver_(driver) { wait_for(driver_, Locator::id("cart-count")); }
     /// Each book has an "add-<slug>" button, e.g. add-dune.
     ShopPage& add(const std::string& title) {
@@ -243,12 +266,12 @@ public:
         return driver_.text(wait_for(driver_, Locator::id("confirmation"), timeout));
     }
 
-private:
+  private:
     Driver& driver_;
 };
 
 class LoginPage {
-public:
+  public:
     explicit LoginPage(Driver& driver) : driver_(driver) { driver_.navigate("/login"); }
     /// Fill in the form and wait for the shop. A rejected login throws with the page's message.
     ShopPage login(const std::string& user, const std::string& password) {
@@ -259,7 +282,7 @@ public:
         return ShopPage(driver_);
     }
 
-private:
+  private:
     Driver& driver_;
 };
 
@@ -281,8 +304,9 @@ inline int run(std::istream& in, std::ostream& out) {
         } catch (const std::exception& error) {
             out << "  FAILED: " << error.what() << '\n';
         }
-        out << "  " << browser.wire_log().size() << " WebDriver command(s), first: " << browser.wire_log().front().method
-            << ' ' << browser.wire_log().front().path << '\n';
+        out << "  " << browser.wire_log().size()
+            << " WebDriver command(s), first: " << browser.wire_log().front().method << ' '
+            << browser.wire_log().front().path << '\n';
     }
     return 0;
 }

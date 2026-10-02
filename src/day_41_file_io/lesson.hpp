@@ -141,7 +141,8 @@ inline std::uintmax_t measured_size(const std::filesystem::path& file) {
 }
 
 /// The interactive demo: "event <text>" or "sample <ms> <cm> <mV>" into files in @p folder.
-inline int run(std::istream& in, std::ostream& out, const std::filesystem::path& folder = std::filesystem::temp_directory_path()) {
+inline int run(std::istream& in, std::ostream& out,
+               const std::filesystem::path& folder = std::filesystem::temp_directory_path()) {
     out << "Day 41 – File I/O with fstream\nFiles in " << folder.string() << '\n';
     const auto log = folder / "flight-events.log";
     const auto data = folder / "flight-telemetry.bin";

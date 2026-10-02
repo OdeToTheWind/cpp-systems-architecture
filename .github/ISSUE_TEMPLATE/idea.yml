@@ -1,0 +1,22 @@
+name: Idea – new exercise or scenario
+description: Propose an exercise, scenario or improvement before writing code.
+labels: ["idea"]
+body:
+  - type: input
+    id: day
+    attributes:
+      label: Related day(s)
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What would a learner build or practise, and why does it help?
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: The scenario is different from every existing day's scenario.
+          required: true

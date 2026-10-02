@@ -1,0 +1,32 @@
+name: Bug report
+description: Code fails, a test fails, or a demo crashes.
+labels: ["bug"]
+body:
+  - type: input
+    id: day
+    attributes:
+      label: Day (or file)
+      placeholder: "e.g. 89 or include/cppm/testing.hpp"
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Full output
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS, compiler and CMake version
+      placeholder: "e.g. Ubuntu 24.04, GCC 13.3, CMake 3.28"
+    validations:
+      required: true

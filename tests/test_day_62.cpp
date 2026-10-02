@@ -32,7 +32,8 @@ TEST_CASE("script bodies, comments and unknown entities are handled") {
 }
 
 TEST_CASE("select matches tag and class and collects nested text") {
-    const auto tokens = tokenize(R"(<div class="card sale"><div>Inner <b>bold</b></div> tail</div><div class="card">B</div>)");
+    const auto tokens =
+        tokenize(R"(<div class="card sale"><div>Inner <b>bold</b></div> tail</div><div class="card">B</div>)");
     const auto cards = select(tokens, "div", "card");
     CHECK_EQ(cards.size(), 2u);
     CHECK_EQ(cards[0].text, "Inner bold tail");
@@ -42,8 +43,9 @@ TEST_CASE("select matches tag and class and collects nested text") {
 }
 
 TEST_CASE("robots.txt uses the agent's own group and longest-match rules") {
-    const auto text = "User-agent: *\nDisallow: /\n\nUser-agent: PriceWatch\nUser-agent: other\nDisallow: /private\n"
-                      "Allow: /private/public\nCrawl-delay: 5 # be nice\n";
+    const auto text =
+        "User-agent: *\nDisallow: /\n\nUser-agent: PriceWatch\nUser-agent: other\nDisallow: /private\n"
+        "Allow: /private/public\nCrawl-delay: 5 # be nice\n";
     const auto rules = RobotsRules::parse(text, "pricewatch");
     CHECK(rules.allowed("/catalogue"));
     CHECK(!rules.allowed("/private/x"));
@@ -58,7 +60,9 @@ TEST_CASE("the crawler follows pagination politely and respects robots.txt") {
     const auto result = crawl(demo_site, [&](auto d) { sleeps.push_back(d); }, "/catalogue/page-1");
     CHECK_EQ(result.books.size(), 3u);
     CHECK_EQ(result.books[1].title, "Emma & Persuasion");
-    CHECK_EQ(result.books[0].price, "\xC2\xA3" "4.50");
+    CHECK_EQ(result.books[0].price,
+             "\xC2\xA3"
+             "4.50");
     CHECK_EQ(result.books[2].url, "/book/ulysses");
     CHECK(result.skipped == std::vector<std::string>{"/catalogue/page-3"});
     CHECK(sleeps == std::vector<std::chrono::seconds>{2s});
@@ -79,6 +83,7 @@ TEST_CASE("run prints the books found") {
     std::istringstream in("\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
-    CHECK(out.str().find("Dune – \xC2\xA3" "4.50 (/book/dune)") != std::string::npos);
+    CHECK(out.str().find("Dune – \xC2\xA3"
+                         "4.50 (/book/dune)") != std::string::npos);
     CHECK(out.str().find("2 page(s), 3 book(s), waited 2 s") != std::string::npos);
 }

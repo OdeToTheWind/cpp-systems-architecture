@@ -61,27 +61,27 @@ struct Customer {
 
 // ---- The seams: interfaces for everything outside the business logic ----
 class Clock {
-public:
+  public:
     virtual ~Clock() = default;
     virtual int weekday() const = 0;  // 1 = Monday … 7 = Sunday
 };
 
 class CustomerRepository {
-public:
+  public:
     virtual ~CustomerRepository() = default;
     virtual std::optional<Customer> find(const std::string& id) const = 0;
     virtual void save(const Customer& customer) = 0;
 };
 
 class Mailer {
-public:
+  public:
     virtual ~Mailer() = default;
     virtual void send(const std::string& to, const std::string& subject) = 0;
 };
 
 /// The unit under test. It owns no infrastructure: everything arrives through the constructor.
 class LoyaltyService {
-public:
+  public:
     LoyaltyService(const Clock& clock, CustomerRepository& customers, Mailer& mailer)
         : clock_(clock), customers_(customers), mailer_(mailer) {}
 
@@ -102,7 +102,7 @@ public:
         return points;
     }
 
-private:
+  private:
     const Clock& clock_;
     CustomerRepository& customers_;
     Mailer& mailer_;
@@ -112,18 +112,18 @@ private:
 
 /// Stub: returns a canned answer, nothing more.
 class FixedClock : public Clock {
-public:
+  public:
     explicit FixedClock(int weekday) : weekday_(weekday) {}
     int weekday() const override { return weekday_; }
     void set(int weekday) { weekday_ = weekday; }
 
-private:
+  private:
     int weekday_;
 };
 
 /// Fake: a working but simplified implementation – a map instead of a database.
 class InMemoryRepository : public CustomerRepository {
-public:
+  public:
     std::optional<Customer> find(const std::string& id) const override {
         const auto it = rows_.find(id);
         return it == rows_.end() ? std::nullopt : std::optional<Customer>(it->second);
@@ -134,14 +134,14 @@ public:
     }
     int saves() const { return saves_; }
 
-private:
+  private:
     std::map<std::string, Customer> rows_;
     int saves_ = 0;
 };
 
 /// Mock: records every interaction so a test can verify *how* the dependency was used.
 class RecordingMailer : public Mailer {
-public:
+  public:
     struct Call {
         std::string to;
         std::string subject;
@@ -159,7 +159,7 @@ public:
     /// Verification helper: exactly one email, to this address.
     bool sent_once_to(const std::string& to) const { return calls_.size() == 1 && calls_[0].to == to; }
 
-private:
+  private:
     std::vector<Call> calls_;
     bool fail_next_ = false;
 };
@@ -182,8 +182,8 @@ inline int run(std::istream& in, std::ostream& out) {
         clock.set(day);
         try {
             const int points = service.award(id, cents);
-            out << "  +" << points << " -> " << customers.find(id)->points << " (" << tier_name(tier_for(customers.find(id)->points))
-                << ")\n";
+            out << "  +" << points << " -> " << customers.find(id)->points << " ("
+                << tier_name(tier_for(customers.find(id)->points)) << ")\n";
         } catch (const std::exception& error) {
             out << "  " << error.what() << '\n';
         }

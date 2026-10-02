@@ -48,7 +48,9 @@ struct Version {
     int minor = 0;
     int patch = 0;
     auto operator<=>(const Version&) const = default;
-    std::string str() const { return std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(patch); }
+    std::string str() const {
+        return std::to_string(major) + "." + std::to_string(minor) + "." + std::to_string(patch);
+    }
 };
 
 /// "2.1.0" or "2.1" (patch 0). Leading zeros and extra parts are rejected.
@@ -62,7 +64,8 @@ inline Version parse_version(const std::string& text) {
         }
         parts.push_back(std::stoi(piece));
     }
-    if (parts.size() < 2 || parts.size() > 3 || text.back() == '.') throw std::invalid_argument("bad version '" + text + "'");
+    if (parts.size() < 2 || parts.size() > 3 || text.back() == '.')
+        throw std::invalid_argument("bad version '" + text + "'");
     return {parts[0], parts[1], parts.size() == 3 ? parts[2] : 0};
 }
 
@@ -78,7 +81,7 @@ inline std::vector<std::string> build_order(const std::map<std::string, std::vec
     std::vector<std::string> order;
     std::map<std::string, int> state;  // 0 unvisited, 1 visiting, 2 done
     std::function<void(const std::string&, std::vector<std::string>&)> visit = [&](const std::string& target,
-                                                                                    std::vector<std::string>& path) {
+                                                                                   std::vector<std::string>& path) {
         if (state[target] == 2) return;
         path.push_back(target);
         if (state[target] == 1) {
@@ -142,14 +145,17 @@ inline std::set<std::string> effective_includes(const std::map<std::string, Targ
 /// CPACK_PACKAGE_FILE_NAME defaults to <name>-<version>-<system>, plus the generator's extension.
 inline std::string package_file_name(const std::string& name, const Version& version, const std::string& system,
                                      const std::string& generator) {
-    const std::map<std::string, std::string> extensions{{"TGZ", ".tar.gz"}, {"ZIP", ".zip"}, {"DEB", ".deb"}, {"NSIS", ".exe"}};
+    const std::map<std::string, std::string> extensions{
+        {"TGZ", ".tar.gz"}, {"ZIP", ".zip"}, {"DEB", ".deb"}, {"NSIS", ".exe"}};
     const auto it = extensions.find(generator);
     if (it == extensions.end()) throw std::invalid_argument("unknown CPack generator " + generator);
     return name + "-" + version.str() + "-" + system + it->second;
 }
 
 /// The version this program was compiled against (from the generated header).
-inline Version header_version() { return {UNITCONV_VERSION_MAJOR, UNITCONV_VERSION_MINOR, UNITCONV_VERSION_PATCH}; }
+inline Version header_version() {
+    return {UNITCONV_VERSION_MAJOR, UNITCONV_VERSION_MINOR, UNITCONV_VERSION_PATCH};
+}
 
 /// The interactive demo: "value from to" conversions, or "need <version>" to check compatibility.
 inline int run(std::istream& in, std::ostream& out) {
@@ -164,8 +170,9 @@ inline int run(std::istream& in, std::ostream& out) {
             if (first == "need") {
                 std::string wanted;
                 words >> wanted;
-                out << "  find_package(unitconv " << wanted << "): "
-                    << (compatible(parse_version(wanted), header_version()) ? "found" : "not compatible") << '\n';
+                out << "  find_package(unitconv " << wanted
+                    << "): " << (compatible(parse_version(wanted), header_version()) ? "found" : "not compatible")
+                    << '\n';
                 continue;
             }
             std::string from;

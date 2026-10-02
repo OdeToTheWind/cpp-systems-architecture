@@ -80,7 +80,9 @@ inline Image make_thumbnail(const Image& image, int max_side) {
     if (max_side <= 0) throw std::invalid_argument("max side must be positive");
     const int longer = std::max(image.width, image.height);
     if (longer <= max_side) return {image.name + "@" + std::to_string(max_side), image.width, image.height};
-    const auto scale = [&](int side) { return std::max(1, static_cast<int>((static_cast<long long>(side) * max_side + longer / 2) / longer)); };
+    const auto scale = [&](int side) {
+        return std::max(1, static_cast<int>((static_cast<long long>(side) * max_side + longer / 2) / longer));
+    };
     return {image.name + "@" + std::to_string(max_side), scale(image.width), scale(image.height)};
 }
 
@@ -103,7 +105,7 @@ inline std::future<std::string> fetch_metadata(const Image& image) {
 /// N worker threads take tasks from one queue. submit() wraps any callable in a packaged_task
 /// and returns its future; the destructor finishes queued work and joins every worker.
 class ThreadPool {
-public:
+  public:
     explicit ThreadPool(std::size_t threads) {
         if (threads == 0) throw std::invalid_argument("a pool needs at least one thread");
         for (std::size_t i = 0; i < threads; ++i) workers_.emplace_back([this] { work(); });
@@ -139,7 +141,7 @@ public:
         return completed_;
     }
 
-private:
+  private:
     void work() {
         while (true) {
             std::function<void()> task;
@@ -173,7 +175,8 @@ struct UploadResult {
 inline UploadResult process_uploads(ThreadPool& pool, const std::vector<Image>& images, const std::vector<int>& sizes) {
     std::vector<std::future<Image>> futures;
     for (const auto& image : images) {
-        for (const int size : sizes) futures.push_back(pool.submit([image, size] { return make_thumbnail(image, size); }));
+        for (const int size : sizes)
+            futures.push_back(pool.submit([image, size] { return make_thumbnail(image, size); }));
     }
     UploadResult result;
     for (auto& f : futures) {

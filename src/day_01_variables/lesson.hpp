@@ -37,17 +37,17 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// A member's profile card: one field per fundamental type, every field initialised.
 struct MemberCard {
-    std::string name;         // text of any length
-    int age{0};               // whole number
-    double height_m{0.0};     // real number
-    char tier{'B'};           // one character: 'B'asic or 'P'ro
-    bool newsletter{false};   // yes / no
+    std::string name;        // text of any length
+    int age{0};              // whole number
+    double height_m{0.0};    // real number
+    char tier{'B'};          // one character: 'B'asic or 'P'ro
+    bool newsletter{false};  // yes / no
 };
 
 /// One `(declaration, value)` row per variable, showing brace initialisation, auto and const.
 inline std::vector<std::pair<std::string, std::string>> type_tour() {
-    const int members{42};           // const: can never change after initialisation
-    auto fee = 12.5;                 // auto deduces double from the literal
+    const int members{42};  // const: can never change after initialisation
+    auto fee = 12.5;        // auto deduces double from the literal
     const char tier{'P'};
     bool open{true};
     auto club = std::string{"cpp-club"};
@@ -133,19 +133,15 @@ inline std::string format_card(const MemberCard& card) {
 /// The mini calculator: `a op b` for + - * /. Throws instead of returning a magic value.
 inline double calculate(double a, char op, double b) {
     switch (op) {
-        case '+':
-            return a + b;
-        case '-':
-            return a - b;
-        case '*':
-            return a * b;
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
         case '/':
             if (b == 0.0) {
                 throw std::domain_error("division by zero");
             }
             return a / b;
-        default:
-            throw std::invalid_argument(std::string("unknown operator '") + op + "'");
+        default: throw std::invalid_argument(std::string("unknown operator '") + op + "'");
     }
 }
 

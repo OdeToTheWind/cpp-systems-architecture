@@ -17,7 +17,7 @@
 namespace cppm {
 
 class TempDir {
-public:
+  public:
     explicit TempDir(std::string_view prefix = "cppm") {
         static std::atomic<unsigned> counter{0};
         const auto stamp = std::chrono::steady_clock::now().time_since_epoch().count();
@@ -42,7 +42,7 @@ public:
         return target;
     }
 
-private:
+  private:
     std::filesystem::path path_;
 };
 

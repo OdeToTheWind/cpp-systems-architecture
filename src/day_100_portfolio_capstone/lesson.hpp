@@ -58,12 +58,12 @@ struct UsageError : std::runtime_error {
 
 /// Appends "LEVEL message" lines to the configured log file, if any.
 class Log {
-public:
+  public:
     explicit Log(std::string path) : path_(std::move(path)) {}
     void info(const std::string& m) const { write("INFO", m); }
     void error(const std::string& m) const { write("ERROR", m); }
 
-private:
+  private:
     void write(const char* level, const std::string& m) const {
         if (!path_.empty()) std::ofstream(path_, std::ios::app) << level << ' ' << m << '\n';
     }
@@ -79,7 +79,8 @@ inline std::string read_text(const std::string& path) {
 }
 
 /// The whole program. Exit codes: 0 ok, 1 error (bad data, I/O), 2 usage.
-inline int run_cli(std::vector<std::string> args, const std::map<std::string, std::string>& env, std::ostream& out, std::ostream& err) {
+inline int run_cli(std::vector<std::string> args, const std::map<std::string, std::string>& env, std::ostream& out,
+                   std::ostream& err) {
     try {
         if (!args.empty() && args[0] == "--version") {
             out << "budget " << BUDGET_VERSION << '\n';
@@ -102,10 +103,14 @@ inline int run_cli(std::vector<std::string> args, const std::map<std::string, st
             std::string note;
             for (std::size_t k = 4; k < args.size(); ++k) note += (note.empty() ? "" : " ") + args[k];
             Ledger ledger(settings.data_file);
-            if (ledger.recovered_bytes() > 0) log.error("discarded " + std::to_string(ledger.recovered_bytes()) + " damaged byte(s) at the end of the ledger");
+            if (ledger.recovered_bytes() > 0)
+                log.error("discarded " + std::to_string(ledger.recovered_bytes()) +
+                          " damaged byte(s) at the end of the ledger");
             const Entry e = ledger.add({0, args[1], cents, args[3], note});
-            log.info(command + " #" + std::to_string(e.id) + " " + format_money(cents, settings.symbol) + " " + e.category);
-            out << "#" << e.id << ' ' << e.date << ' ' << format_money(e.cents, settings.symbol) << ' ' << e.category << '\n';
+            log.info(command + " #" + std::to_string(e.id) + " " + format_money(cents, settings.symbol) + " " +
+                     e.category);
+            out << "#" << e.id << ' ' << e.date << ' ' << format_money(e.cents, settings.symbol) << ' ' << e.category
+                << '\n';
             return 0;
         }
         if (command == "list") {
@@ -115,17 +120,19 @@ inline int run_cli(std::vector<std::string> args, const std::map<std::string, st
             const Ledger ledger(settings.data_file);
             for (const auto& e : ledger.entries()) {
                 if (month.empty() || e.month() == month) {
-                    out << "#" << e.id << ' ' << e.date << ' ' << format_money(e.cents, settings.symbol) << ' ' << e.category
-                        << (e.note.empty() ? "" : " – " + e.note) << '\n';
+                    out << "#" << e.id << ' ' << e.date << ' ' << format_money(e.cents, settings.symbol) << ' '
+                        << e.category << (e.note.empty() ? "" : " – " + e.note) << '\n';
                 }
             }
             return 0;
         }
         if (command == "report") {
-            if (args.size() < 2 || args[1].size() != 7 || !valid_date(args[1] + "-01")) throw UsageError("report needs <YYYY-MM>");
+            if (args.size() < 2 || args[1].size() != 7 || !valid_date(args[1] + "-01"))
+                throw UsageError("report needs <YYYY-MM>");
             const Ledger ledger(settings.data_file);
             const bool csv = args.size() > 2 && args[2] == "--csv";
-            out << (csv ? render_csv(ledger.entries(), args[1]) : render_text(build_month(ledger.entries(), args[1], settings), settings));
+            out << (csv ? render_csv(ledger.entries(), args[1])
+                        : render_text(build_month(ledger.entries(), args[1], settings), settings));
             log.info("report " + args[1] + (csv ? " (csv)" : ""));
             return 0;
         }
@@ -147,12 +154,14 @@ inline std::vector<std::string> split_words(const std::string& line) {
 }
 
 /// The interactive demo: type budget command lines; data lives in @p dir.
-inline int run(std::istream& in, std::ostream& out, const std::filesystem::path& dir = std::filesystem::temp_directory_path() / "cppm-budget") {
+inline int run(std::istream& in, std::ostream& out,
+               const std::filesystem::path& dir = std::filesystem::temp_directory_path() / "cppm-budget") {
     out << "Day 100 – Capstone: Portfolio Project (budget " << BUDGET_VERSION << ")\n" << USAGE;
     std::filesystem::create_directories(dir);
     const auto config = dir / "budget.ini";
     if (!std::filesystem::exists(config)) std::ofstream(config) << "[limits]\ngroceries = 400\nfun = 100\n";
-    const std::map<std::string, std::string> env{{"BUDGET_DATA_FILE", (dir / "budget.ledger").string()}, {"BUDGET_LOG_FILE", (dir / "budget.log").string()}};
+    const std::map<std::string, std::string> env{{"BUDGET_DATA_FILE", (dir / "budget.ledger").string()},
+                                                 {"BUDGET_LOG_FILE", (dir / "budget.log").string()}};
     while (auto line = prompt_line(in, out, "budget ")) {
         auto args = split_words(*line);
         if (args.empty()) break;

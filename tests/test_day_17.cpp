@@ -82,8 +82,9 @@ TEST_CASE("operator[] on a missing key inserts it") {
 }
 
 TEST_CASE("run executes inventory and waitlist commands") {
-    std::istringstream in("add drill 2\nlend drill\nlend drill\nlend drill\nwait Ana\nwait Ana\nnext\nnext\n"
-                          "list\ntop\nremove saw\nfly\n\n");
+    std::istringstream in(
+        "add drill 2\nlend drill\nlend drill\nlend drill\nwait Ana\nwait Ana\nnext\nnext\n"
+        "list\ntop\nremove saw\nfly\n\n");
     std::ostringstream out;
     CHECK_EQ(run(in, out), 0);
     const auto text = out.str();

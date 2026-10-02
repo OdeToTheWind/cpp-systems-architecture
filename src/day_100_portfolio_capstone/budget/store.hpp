@@ -32,7 +32,8 @@ inline bool valid_date(const std::string& d) {
     const int y = std::stoi(d.substr(0, 4));
     const int m = std::stoi(d.substr(5, 2));
     const int day = std::stoi(d.substr(8, 2));
-    const int days[] = {31, (y % 4 == 0 && y % 100 != 0) || y % 400 == 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    const int days[] = {31, (y % 4 == 0 && y % 100 != 0) || y % 400 == 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,
+                        31};
     return m >= 1 && m <= 12 && day >= 1 && day <= days[m - 1];
 }
 
@@ -43,18 +44,20 @@ inline std::uint32_t checksum(const std::string& s) {
 }
 
 class Ledger {
-public:
+  public:
     explicit Ledger(std::filesystem::path path) : path_(std::move(path)) { load(); }
 
     Entry add(Entry e) {
         if (!valid_date(e.date)) throw std::invalid_argument("not a date: '" + e.date + "' (use YYYY-MM-DD)");
         if (e.cents == 0) throw std::invalid_argument("amount must not be zero");
-        if (e.category.empty() || e.category.find_first_of("|\n") != std::string::npos) throw std::invalid_argument("bad category");
+        if (e.category.empty() || e.category.find_first_of("|\n") != std::string::npos)
+            throw std::invalid_argument("bad category");
         for (auto& c : e.note) {
             if (c == '|' || c == '\n') c = ' ';
         }
         e.id = next_id_++;
-        const std::string payload = std::to_string(e.id) + "|" + e.date + "|" + std::to_string(e.cents) + "|" + e.category + "|" + e.note;
+        const std::string payload =
+            std::to_string(e.id) + "|" + e.date + "|" + std::to_string(e.cents) + "|" + e.category + "|" + e.note;
         char crc[9];
         std::snprintf(crc, sizeof crc, "%08x", static_cast<unsigned>(checksum(payload)));
         std::ofstream out(path_, std::ios::binary | std::ios::app);
@@ -66,7 +69,7 @@ public:
     const std::vector<Entry>& entries() const { return entries_; }
     std::size_t recovered_bytes() const { return dropped_; }
 
-private:
+  private:
     void load() {
         std::ifstream in(path_, std::ios::binary);
         std::uintmax_t good = 0;

@@ -15,7 +15,8 @@ std::vector<Release> changelog_from(const std::string& text) {
     std::istringstream in(text);
     return parse_changelog(in);
 }
-const std::string good_log = "## [Unreleased]\n\n## [1.3.0] - 2026-06-16\n### Added\n- count\n\n## [1.2.1] - 2026-05-02\n- fix\n";
+const std::string good_log =
+    "## [Unreleased]\n\n## [1.3.0] - 2026-06-16\n### Added\n- count\n\n## [1.2.1] - 2026-05-02\n- fix\n";
 }  // namespace
 
 TEST_CASE("the version comes from the build system") {
@@ -55,22 +56,28 @@ TEST_CASE("only single semantic-version steps are valid bumps") {
 
 TEST_CASE("pre-flight lists every blocker") {
     CHECK(preflight("1.3.0", changelog_from(good_log), markdown_docs()).empty());
-    const auto bad = preflight("1.4.0", changelog_from("## [Unreleased]\n- wip\n## [1.3.0] - 2026-06-16\n## [1.1.0] - 2026-07-01\n- x\n"), "old docs");
-    CHECK(bad == std::vector<std::string>{"changelog has unreleased entries – move them under 1.4.0", "newest changelog entry is 1.3.0, binary is 1.4.0",
-                                          "release 1.3.0 lists no changes", "1.1.0 -> 1.3.0 is not a single semantic-version step",
+    const auto bad = preflight(
+        "1.4.0", changelog_from("## [Unreleased]\n- wip\n## [1.3.0] - 2026-06-16\n## [1.1.0] - 2026-07-01\n- x\n"),
+        "old docs");
+    CHECK(bad == std::vector<std::string>{"changelog has unreleased entries – move them under 1.4.0",
+                                          "newest changelog entry is 1.3.0, binary is 1.4.0",
+                                          "release 1.3.0 lists no changes",
+                                          "1.1.0 -> 1.3.0 is not a single semantic-version step",
                                           "dates go backwards at 1.3.0", "USAGE.md is out of date – regenerate it"});
 }
 
 TEST_CASE("the real release files pass pre-flight") {
     std::ifstream changelog(std::string(LOGSLICE_SOURCE_DIR) + "/release/CHANGELOG.md");
     CHECK(changelog.good());
-    const auto problems = preflight(LOGSLICE_VERSION, parse_changelog(changelog), read_file(std::string(LOGSLICE_SOURCE_DIR) + "/release/USAGE.md"));
+    const auto problems = preflight(LOGSLICE_VERSION, parse_changelog(changelog),
+                                    read_file(std::string(LOGSLICE_SOURCE_DIR) + "/release/USAGE.md"));
     for (const auto& p : problems) CHECK_EQ(p, "");  // print each blocker if any
     CHECK(problems.empty());
 }
 
 TEST_CASE("the tool slices by time and level, with exit codes") {
-    const std::string log = "09:58:01 INFO start\n10:00:05 ERROR disk full\n  at write()\n10:02:00 INFO ok\n10:07:30 ERROR timeout\n";
+    const std::string log =
+        "09:58:01 INFO start\n10:00:05 ERROR disk full\n  at write()\n10:02:00 INFO ok\n10:07:30 ERROR timeout\n";
     std::istringstream in1(log);
     std::ostringstream out;
     std::ostringstream err;

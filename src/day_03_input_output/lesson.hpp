@@ -56,8 +56,7 @@ inline bool recover_stream(std::istream& in) {
 }
 
 /// Read an int in [low, high] with `>>`, re-asking on bad input; std::nullopt at end of input.
-inline std::optional<int> ask_int(std::istream& in, std::ostream& out, std::string_view prompt, int low,
-                                  int high) {
+inline std::optional<int> ask_int(std::istream& in, std::ostream& out, std::string_view prompt, int low, int high) {
     while (true) {
         out << prompt;
         int value{};

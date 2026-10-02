@@ -68,7 +68,8 @@ std::string format_value(T value) {
     std::string digits = std::to_string(value);
     const bool negative = digits.front() == '-';
     if (negative) digits.erase(0, 1);
-    for (auto i = static_cast<std::ptrdiff_t>(digits.size()) - 3; i > 0; i -= 3) digits.insert(static_cast<std::size_t>(i), ",");
+    for (auto i = static_cast<std::ptrdiff_t>(digits.size()) - 3; i > 0; i -= 3)
+        digits.insert(static_cast<std::size_t>(i), ",");
     return (negative ? "-" : "") + digits;
 }
 
@@ -99,7 +100,8 @@ std::string sparkline(const R& values) {
     std::string out;
     for (const auto& v : values) {
         const double span = static_cast<double>(hi) - static_cast<double>(lo);
-        const auto level = span == 0 ? 3 : static_cast<int>((static_cast<double>(v) - static_cast<double>(lo)) / span * 7.0 + 0.5);
+        const auto level =
+            span == 0 ? 3 : static_cast<int>((static_cast<double>(v) - static_cast<double>(lo)) / span * 7.0 + 0.5);
         out += bars[clamp_to(level, 0, 7)];
     }
     return out;
@@ -124,8 +126,8 @@ struct Server {
 /// The interactive demo: type response times in ms on one line; a sparkline and summary are drawn.
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 65 – Concepts & Constraints\n";
-    out << "orders today: " << format_value(1234567) << ", queue: " << format_value(42u) << ", cpu: " << format_value(73.44)
-        << "%, host: " << format_value(Server{"web-1", 3}) << '\n';
+    out << "orders today: " << format_value(1234567) << ", queue: " << format_value(42u)
+        << ", cpu: " << format_value(73.44) << "%, host: " << format_value(Server{"web-1", 3}) << '\n';
     while (auto line = prompt_line(in, out, "response times (ms)> ")) {
         std::istringstream words(*line);
         const std::vector<int> times{std::istream_iterator<int>(words), std::istream_iterator<int>()};

@@ -50,10 +50,10 @@ TEST_CASE("book_flight validates the options and applies the flexible surcharge"
 
 TEST_CASE("the builder chains named setters to the same result") {
     const Booking built = BookingBuilder("LHR", "JFK", 5'540).cabin(Cabin::premium).bags(1).window().book();
-    const Booking direct =
-        book_flight("LHR", "JFK", 5'540, {.cabin = Cabin::premium, .bags = 1, .window = true});
+    const Booking direct = book_flight("LHR", "JFK", 5'540, {.cabin = Cabin::premium, .bags = 1, .window = true});
     CHECK_EQ(built.total_cents, direct.total_cents);
-    CHECK_EQ(BookingBuilder("AMS", "OSL", 900).meal("fish").flexible().book().summary, "0 bag(s), meal: fish, flexible");
+    CHECK_EQ(BookingBuilder("AMS", "OSL", 900).meal("fish").flexible().book().summary,
+             "0 bag(s), meal: fish, flexible");
 }
 
 TEST_CASE("run books flights and explains bad input") {

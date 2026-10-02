@@ -51,8 +51,8 @@ inline void print_bill_badly(std::ostream& out, const std::string& flat, int pre
     const int kwh = current_reading - previous_reading;
     long long total = energy_charge_cents(kwh) + 900;  // standing charge
     total += total * 5 / 100;                          // VAT
-    out << "Flat " << flat << ": " << kwh << " kWh, total " << total / 100 << '.' << std::setw(2)
-        << std::setfill('0') << total % 100 << std::setfill(' ') << '\n';
+    out << "Flat " << flat << ": " << kwh << " kWh, total " << total / 100 << '.' << std::setw(2) << std::setfill('0')
+        << total % 100 << std::setfill(' ') << '\n';
 }
 
 /// Everything a bill contains, as data.

@@ -2,12 +2,15 @@
 Language: Cpp
 BasedOnStyle: Google
 IndentWidth: 4
-ColumnLimit: 110
+ColumnLimit: 120
 AccessModifierOffset: -2
 AllowShortFunctionsOnASingleLine: Inline
-AllowShortIfStatementsOnASingleLine: Never
-AllowShortLoopsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortLambdasOnASingleLine: All
 DerivePointerAlignment: false
 PointerAlignment: Left
 IncludeBlocks: Preserve
+ReflowComments: false
 ...

@@ -74,7 +74,9 @@ TEST_CASE("load_zones reads typed, validated settings") {
 }
 
 TEST_CASE("run prints a pretty status report or a precise error") {
-    std::istringstream good("{\"zones\": [{\"name\": \"Roses\", \"minutes\": 15},\n{\"name\": \"Lawn\", \"minutes\": 30, \"enabled\": false}]}\nEND\n");
+    std::istringstream good(
+        "{\"zones\": [{\"name\": \"Roses\", \"minutes\": 15},\n{\"name\": \"Lawn\", \"minutes\": 30, \"enabled\": "
+        "false}]}\nEND\n");
     std::ostringstream out;
     CHECK_EQ(run(good, out), 0);
     CHECK(out.str().find("\"total_minutes\": 15") != std::string::npos);

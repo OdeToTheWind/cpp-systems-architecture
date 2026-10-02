@@ -51,8 +51,9 @@ TEST_CASE("an inner declaration hides the outer one only inside its block") {
 TEST_CASE("automatic, dynamic and static objects die at different times") {
     const auto first = lifetime_demo();
     const std::vector<std::string> expected_first{
-        "construct automatic", "construct dynamic", "construct static (lives until exit)", "touch_static called",
-        "touch_static called", "destroy dynamic",   "end of block",                        "destroy automatic"};
+        "construct automatic", "construct dynamic",   "construct static (lives until exit)",
+        "touch_static called", "touch_static called", "destroy dynamic",
+        "end of block",        "destroy automatic"};
     CHECK(first == expected_first);
     const auto second = lifetime_demo();
     CHECK_EQ(second.size(), expected_first.size() - 1);  // the static is not constructed again

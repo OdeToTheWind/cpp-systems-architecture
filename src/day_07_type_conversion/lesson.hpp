@@ -51,8 +51,8 @@ inline std::vector<std::string> promotion_report() {
     const int negative = -1;
     const bool surprising = negative < static_cast<int>(u);  // compare as int on purpose
     return {
-        std::string("uint8_t + uint8_t is ") + (std::is_same_v<decltype(sum), const int> ? "int" : "?") +
-            " = " + std::to_string(sum),
+        std::string("uint8_t + uint8_t is ") + (std::is_same_v<decltype(sum), const int> ? "int" : "?") + " = " +
+            std::to_string(sum),
         std::string("short * double is ") + (std::is_same_v<decltype(doubled), const double> ? "double" : "?"),
         std::string("-1 < 1u as int: ") + (surprising ? "true" : "false") +
             " (without the cast -1 converts to UINT_MAX and the answer is false)",
@@ -110,30 +110,32 @@ inline std::array<unsigned char, 4> wire_bytes(std::uint32_t value) {
 }
 
 /// True on little-endian machines (x86, ARM in its usual mode).
-inline bool is_little_endian() { return wire_bytes(1u)[0] == 1; }
+inline bool is_little_endian() {
+    return wire_bytes(1u)[0] == 1;
+}
 
 /// A message from the terminal. Polymorphic (virtual destructor) so dynamic_cast works.
 class Message {
-public:
+  public:
     explicit Message(long long amount_cents) : amount_cents_(amount_cents) {}
     virtual ~Message() = default;
     long long amount_cents() const { return amount_cents_; }
 
-private:
+  private:
     long long amount_cents_;
 };
 
 class Payment : public Message {
-public:
+  public:
     using Message::Message;
 };
 
 class Refund : public Message {
-public:
+  public:
     Refund(long long amount_cents, std::string reason) : Message(amount_cents), reason_(std::move(reason)) {}
     const std::string& reason() const { return reason_; }
 
-private:
+  private:
     std::string reason_;
 };
 

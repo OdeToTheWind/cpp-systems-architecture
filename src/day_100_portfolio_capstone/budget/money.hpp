@@ -17,8 +17,9 @@ inline Cents parse_money(const std::string& text) {
     const auto dot = t.find('.');
     const std::string whole = t.substr(0, dot);
     std::string frac = dot == std::string::npos ? "" : t.substr(dot + 1);
-    if (whole.empty() || whole.size() > 12 || whole.find_first_not_of("0123456789") != std::string::npos || frac.size() > 2 ||
-        frac.find_first_not_of("0123456789") != std::string::npos || (dot != std::string::npos && frac.empty())) {
+    if (whole.empty() || whole.size() > 12 || whole.find_first_not_of("0123456789") != std::string::npos ||
+        frac.size() > 2 || frac.find_first_not_of("0123456789") != std::string::npos ||
+        (dot != std::string::npos && frac.empty())) {
         throw std::invalid_argument("not an amount: '" + text + "'");
     }
     frac.resize(2, '0');
@@ -29,7 +30,8 @@ inline Cents parse_money(const std::string& text) {
 inline std::string format_money(Cents cents, const std::string& symbol) {
     const Cents abs = cents < 0 ? -cents : cents;
     std::string whole = std::to_string(abs / 100);
-    for (auto i = static_cast<std::ptrdiff_t>(whole.size()) - 3; i > 0; i -= 3) whole.insert(static_cast<std::size_t>(i), ",");
+    for (auto i = static_cast<std::ptrdiff_t>(whole.size()) - 3; i > 0; i -= 3)
+        whole.insert(static_cast<std::size_t>(i), ",");
     return (cents < 0 ? "-" : "") + symbol + whole + "." + (abs % 100 < 10 ? "0" : "") + std::to_string(abs % 100);
 }
 

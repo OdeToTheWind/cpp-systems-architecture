@@ -136,7 +136,7 @@ inline Booking book_flight(const std::string& from, const std::string& to, int d
 
 /// The classic Named Parameter Idiom: each setter returns *this, so calls chain by name.
 class BookingBuilder {
-public:
+  public:
     BookingBuilder(std::string from, std::string to, int distance_km)
         : from_(std::move(from)), to_(std::move(to)), distance_km_(distance_km) {}
     BookingBuilder& cabin(Cabin value) {
@@ -161,7 +161,7 @@ public:
     }
     Booking book() const { return book_flight(from_, to_, distance_km_, options_); }
 
-private:
+  private:
     std::string from_;
     std::string to_;
     int distance_km_;

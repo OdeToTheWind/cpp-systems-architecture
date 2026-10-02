@@ -92,14 +92,16 @@ struct Alert {
 
 /// {"text": "...", "level": "...", "check": "..."} – the shape most chat webhooks accept.
 inline std::string webhook_payload(const Alert& alert) {
-    const std::string emoji = alert.level == Level::ok ? ":white_check_mark:" : alert.level == Level::warning ? ":warning:" : ":rotating_light:";
-    return R"({"text":")" + json_escape(emoji + " " + alert.message) + R"(","level":")" + std::string(to_string(alert.level)) +
-           R"(","check":")" + json_escape(alert.check) + "\"}";
+    const std::string emoji = alert.level == Level::ok        ? ":white_check_mark:"
+                              : alert.level == Level::warning ? ":warning:"
+                                                              : ":rotating_light:";
+    return R"({"text":")" + json_escape(emoji + " " + alert.message) + R"(","level":")" +
+           std::string(to_string(alert.level)) + R"(","check":")" + json_escape(alert.check) + "\"}";
 }
 
 /// Allows at most one notification per key per cooldown period.
 class Cooldown {
-public:
+  public:
     explicit Cooldown(std::chrono::seconds period) : period_(period) {}
     bool allow(const std::string& key, std::chrono::seconds now) {
         const auto it = last_.find(key);
@@ -109,7 +111,7 @@ public:
     }
     void reset(const std::string& key) { last_.erase(key); }
 
-private:
+  private:
     std::chrono::seconds period_;
     std::map<std::string, std::chrono::seconds> last_;
 };
@@ -122,7 +124,7 @@ inline Sink dry_run_sink(std::ostream& out) {
 }
 
 class Notifier {
-public:
+  public:
     Notifier(std::map<std::string, Threshold> thresholds, Sink sink, std::chrono::seconds cooldown)
         : thresholds_(std::move(thresholds)), sink_(std::move(sink)), cooldown_(cooldown) {}
 
@@ -161,7 +163,7 @@ public:
     int sent() const { return sent_; }
     int suppressed() const { return suppressed_; }
 
-private:
+  private:
     std::map<std::string, Threshold> thresholds_;
     Sink sink_;
     Cooldown cooldown_;
@@ -173,8 +175,8 @@ private:
 /// The interactive demo: "<minute> <check> <value>" lines; delivery is always a dry run here.
 inline int run(std::istream& in, std::ostream& out) {
     out << "Day 61 – Notification Automation\n";
-    Notifier notifier({{"disk_pct", {80, 95}}, {"latency_ms", {300, 1000}}, {"queue_depth", {100, 500}}}, dry_run_sink(out),
-                      std::chrono::minutes{15});
+    Notifier notifier({{"disk_pct", {80, 95}}, {"latency_ms", {300, 1000}}, {"queue_depth", {100, 500}}},
+                      dry_run_sink(out), std::chrono::minutes{15});
     while (auto line = prompt_line(in, out, "minute check value> ")) {
         std::istringstream words(*line);
         long long minute = 0;

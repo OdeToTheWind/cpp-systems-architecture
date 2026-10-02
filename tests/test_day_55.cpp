@@ -26,7 +26,8 @@ TEST_CASE("query strings are split and percent-decoded") {
 }
 
 TEST_CASE("the request comes from CGI variables with sensible defaults") {
-    const Request request = request_from_cgi({{"REQUEST_METHOD", "POST"}, {"PATH_INFO", "/word"}, {"QUERY_STRING", "a=1"}});
+    const Request request =
+        request_from_cgi({{"REQUEST_METHOD", "POST"}, {"PATH_INFO", "/word"}, {"QUERY_STRING", "a=1"}});
     CHECK_EQ(request.method, "POST");
     CHECK_EQ(request.path, "/word");
     CHECK_EQ(request.query.at("a"), "1");

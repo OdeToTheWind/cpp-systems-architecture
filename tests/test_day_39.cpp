@@ -56,9 +56,7 @@ TEST_CASE("dynamic_cast discovers optional capabilities") {
 TEST_CASE("deleting through a base pointer runs every destructor") {
     const int base_before = DestructionLog::base;
     const int derived_before = DestructionLog::derived;
-    {
-        std::unique_ptr<Charger> charger = std::make_unique<DcFastCharger>("D");
-    }
+    { std::unique_ptr<Charger> charger = std::make_unique<DcFastCharger>("D"); }
     CHECK_EQ(DestructionLog::base, base_before + 1);
     CHECK_EQ(DestructionLog::derived, derived_before + 1);
 }

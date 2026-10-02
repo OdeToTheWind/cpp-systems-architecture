@@ -40,7 +40,7 @@ inline constexpr Deliverable DELIVERABLES[] = {
 
 /// Tool stock keyed by name. std::map keeps keys sorted and gives O(log n) lookup.
 class Inventory {
-public:
+  public:
     /// Insert a new tool or add to an existing one; operator[] value-initialises missing keys to 0.
     void add(const std::string& tool, int count) {
         if (count <= 0) {
@@ -84,14 +84,14 @@ public:
     const std::map<std::string, int>& borrow_counts() const { return borrowed_; }
     std::size_t distinct_tools() const { return stock_.size(); }
 
-private:
+  private:
     std::map<std::string, int> stock_;
     std::map<std::string, int> borrowed_;
 };
 
 /// First come, first served: a vector keeps insertion order.
 class Waitlist {
-public:
+  public:
     /// Joins the end of the list; a person already waiting is not added twice.
     bool join(const std::string& person) {
         if (std::find(people_.begin(), people_.end(), person) != people_.end()) {
@@ -113,16 +113,14 @@ public:
     }
     const std::vector<std::string>& people() const { return people_; }
 
-private:
+  private:
     std::vector<std::string> people_;
 };
 
 /// The @p n most borrowed tools. A map is ordered by key, so to order by value copy into a vector.
-inline std::vector<std::pair<std::string, int>> most_borrowed(const std::map<std::string, int>& counts,
-                                                              std::size_t n) {
+inline std::vector<std::pair<std::string, int>> most_borrowed(const std::map<std::string, int>& counts, std::size_t n) {
     std::vector<std::pair<std::string, int>> ranking(counts.begin(), counts.end());
-    std::stable_sort(ranking.begin(), ranking.end(),
-                     [](const auto& a, const auto& b) { return a.second > b.second; });
+    std::stable_sort(ranking.begin(), ranking.end(), [](const auto& a, const auto& b) { return a.second > b.second; });
     if (ranking.size() > n) {
         ranking.resize(n);
     }

@@ -84,14 +84,15 @@ inline bool transfer(Account& from, Account& to, long cents) {
 /// returns nullopt once the queue is closed and drained.
 template <typename T>
 class BoundedQueue {
-public:
+  public:
     explicit BoundedQueue(std::size_t capacity) : capacity_(capacity) {
         if (capacity == 0) throw std::invalid_argument("capacity must be positive");
     }
     /// Returns false if the queue was closed (the item is not added).
     bool push(T item) {
         std::unique_lock lock(mutex_);
-        not_full_.wait(lock, [this] { return items_.size() < capacity_ || closed_; });  // predicate handles spurious wake-ups
+        not_full_.wait(lock,
+                       [this] { return items_.size() < capacity_ || closed_; });  // predicate handles spurious wake-ups
         if (closed_) return false;
         items_.push_back(std::move(item));
         high_water_ = std::max(high_water_, items_.size());
@@ -123,7 +124,7 @@ public:
         return high_water_;
     }
 
-private:
+  private:
     mutable std::mutex mutex_;
     std::condition_variable not_full_;
     std::condition_variable not_empty_;
@@ -165,7 +166,8 @@ inline ShopReport run_print_shop(const std::vector<Job>& jobs, int desks, int pr
     std::vector<std::thread> producers;
     for (int d = 0; d < desks; ++d) {
         producers.emplace_back([&, d] {
-            for (std::size_t i = static_cast<std::size_t>(d); i < jobs.size(); i += static_cast<std::size_t>(desks)) queue.push(jobs[i]);
+            for (std::size_t i = static_cast<std::size_t>(d); i < jobs.size(); i += static_cast<std::size_t>(desks))
+                queue.push(jobs[i]);
         });
     }
     for (auto& t : producers) t.join();
@@ -188,8 +190,8 @@ inline int run(std::istream& in, std::ostream& out) {
         for (int i = 0; i < count; ++i) jobs.push_back({i + 1, i % 10 + 1});
         try {
             const auto report = run_print_shop(jobs, desks, printers, 4);
-            out << "  printed " << report.jobs_printed << " job(s), " << report.total_pages << " page(s); queue never above "
-                << report.max_queue << '\n';
+            out << "  printed " << report.jobs_printed << " job(s), " << report.total_pages
+                << " page(s); queue never above " << report.max_queue << '\n';
         } catch (const std::invalid_argument& error) {
             out << "  " << error.what() << '\n';
         }

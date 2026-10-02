@@ -47,12 +47,16 @@ struct Stats {
 inline Stats stats;
 
 /// Overloads that report the value category of their argument.
-inline std::string_view category(const std::string&) { return "lvalue"; }
-inline std::string_view category(std::string&&) { return "rvalue"; }
+inline std::string_view category(const std::string&) {
+    return "lvalue";
+}
+inline std::string_view category(std::string&&) {
+    return "rvalue";
+}
 
 /// A heap buffer of 16-bit samples, managed by hand to show what the rule of five means.
 class AudioBuffer {
-public:
+  public:
     AudioBuffer() = default;
     explicit AudioBuffer(std::size_t size, short fill = 0) : size_(size), data_(size ? new short[size] : nullptr) {
         std::fill_n(data_, size_, fill);
@@ -94,13 +98,13 @@ public:
     short& operator[](std::size_t i) { return data_[i]; }
     short operator[](std::size_t i) const { return data_[i]; }
 
-private:
+  private:
     std::size_t size_ = 0;
     short* data_ = nullptr;
 };
 
 class Track {
-public:
+  public:
     /// Sink parameter: take by value, then move into place. Callers that pass an rvalue pay
     /// for no copy at all; callers that pass an lvalue pay for exactly one.
     void set_samples(AudioBuffer samples) { samples_ = std::move(samples); }
@@ -108,7 +112,7 @@ public:
     /// Hand the samples to the caller, leaving the track empty.
     AudioBuffer release() { return std::exchange(samples_, AudioBuffer{}); }
 
-private:
+  private:
     AudioBuffer samples_;
 };
 

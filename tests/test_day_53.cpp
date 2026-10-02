@@ -13,7 +13,7 @@ using namespace cppm::day53;
 namespace {
 /// A scripted server: replies come from a queue, every line the client sends is recorded.
 class FakeServer final : public Transport {
-public:
+  public:
     explicit FakeServer(std::deque<std::string> replies) : replies_(std::move(replies)) {}
     void send_line(const std::string& line) override { sent.push_back(line); }
     std::string read_reply() override {
@@ -23,7 +23,7 @@ public:
     }
     std::vector<std::string> sent;
 
-private:
+  private:
     std::deque<std::string> replies_;
 };
 }  // namespace

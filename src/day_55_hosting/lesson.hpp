@@ -107,7 +107,7 @@ inline Request request_from_cgi(const Environment& env) {
 
 /// Exact (method, path) routing with 404 and 405 answers.
 class Router {
-public:
+  public:
     using Handler = std::function<Response(const Request&)>;
     void add(const std::string& method, const std::string& path, Handler handler) {
         routes_[path][method] = std::move(handler);
@@ -124,7 +124,7 @@ public:
         }
     }
 
-private:
+  private:
     std::map<std::string, std::map<std::string, Handler>> routes_;
 };
 
@@ -141,8 +141,8 @@ inline std::string reason_phrase(int status) {
 /// CGI output: a Status header, a Content-Type header, a blank line, then the body.
 inline std::string render_cgi(const Response& response) {
     return "Status: " + std::to_string(response.status) + " " + reason_phrase(response.status) +
-           "\r\nContent-Type: " + response.content_type + "\r\nContent-Length: " + std::to_string(response.body.size()) +
-           "\r\n\r\n" + response.body;
+           "\r\nContent-Type: " + response.content_type +
+           "\r\nContent-Length: " + std::to_string(response.body.size()) + "\r\n\r\n" + response.body;
 }
 
 struct Config {
@@ -174,7 +174,8 @@ inline Router make_app(const Config& config) {
     };
     Router router;
     router.add("GET", "/", [config](const Request&) {
-        return Response{200, "text/html; charset=utf-8", "<h1>" + config.school_name + "</h1><p>Try /word?lang=es&day=1</p>"};
+        return Response{200, "text/html; charset=utf-8",
+                        "<h1>" + config.school_name + "</h1><p>Try /word?lang=es&day=1</p>"};
     });
     router.add("GET", "/word", [config](const Request& request) {
         const auto lang_it = request.query.find("lang");

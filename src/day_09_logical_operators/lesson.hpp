@@ -55,7 +55,9 @@ struct Context {
 };
 
 /// `b != nullptr && b->active`: the right side runs only when the left is true, so no null dereference.
-inline bool badge_is_active(const Badge* badge) { return badge != nullptr && badge->active; }
+inline bool badge_is_active(const Badge* badge) {
+    return badge != nullptr && badge->active;
+}
 
 /// Each rule gets a name; the final expression then reads like the security policy.
 inline bool can_enter(const Badge* badge, const Door& door, const Context& ctx) {
@@ -90,7 +92,7 @@ inline std::vector<std::string> denial_reasons(const Badge* badge, const Door& d
 
 /// Records which named operands were actually evaluated.
 class EvaluationTrace {
-public:
+  public:
     /// Returns @p value unchanged and remembers that this operand ran.
     bool check(std::string_view name, bool value) {
         evaluated_.emplace_back(name);
@@ -105,7 +107,7 @@ public:
         return text;
     }
 
-private:
+  private:
     std::vector<std::string> evaluated_;
 };
 

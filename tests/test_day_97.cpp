@@ -47,15 +47,23 @@ TEST_CASE("the wishlist API response is parsed") {
 TEST_CASE("transient failures are retried with doubling delays") {
     int calls = 0;
     std::vector<std::chrono::milliseconds> sleeps;
-    const auto result = with_retries([&] {
-        if (++calls < 3) throw TransientError("503");
-        return 42;
-    }, 3, 100ms, [&](auto d) { sleeps.push_back(d); });
+    const auto result = with_retries(
+        [&] {
+            if (++calls < 3) throw TransientError("503");
+            return 42;
+        },
+        3, 100ms, [&](auto d) { sleeps.push_back(d); });
     CHECK_EQ(result, 42);
     CHECK(sleeps == std::vector<std::chrono::milliseconds>{100ms, 200ms});
     CHECK_THROWS_AS(with_retries([]() -> int { throw TransientError("down"); }, 2, 1ms, [](auto) {}), TransientError);
     int permanent = 0;
-    CHECK_THROWS_AS(with_retries([&]() -> int { ++permanent; throw std::runtime_error("404"); }, 5, 1ms, [](auto) {}), std::runtime_error);
+    CHECK_THROWS_AS(with_retries(
+                        [&]() -> int {
+                            ++permanent;
+                            throw std::runtime_error("404");
+                        },
+                        5, 1ms, [](auto) {}),
+                    std::runtime_error);
     CHECK_EQ(permanent, 1);  // permanent errors are not retried
 }
 
@@ -78,7 +86,7 @@ TEST_CASE("products are checked on schedule and drops are notified once") {
     CHECK_EQ(w.sent[0].first, "cy");
     CHECK_EQ(w.sent[0].second, "/p/kettle is now €44.00 (your target €45.00)");
     CHECK_EQ(w.bot.stats().duplicates_suppressed, 1);  // the 90-minute check saw the same price
-    w.shop.prices["/p/kettle"] = 3500;  // below both targets
+    w.shop.prices["/p/kettle"] = 3500;                 // below both targets
     w.run_minutes(120, 150);
     CHECK_EQ(w.sent.size(), 3u);
 }
