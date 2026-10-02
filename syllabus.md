@@ -146,10 +146,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 
 | Day | Topic | Key Learnings / Deliverables | Level | Status |
 |----:|-------|------------------------------|-------|--------|
-| 83 | Robust CLI Application | Subcommands, configuration files with overrides, verbosity flags, JSON output and exit codes | Capstone | Planned |
-| 84 | Data Pipeline / ETL | Extract, transform and load stages, validation with quarantine, run summaries | Capstone | Planned |
-| 85 | Concurrent File Processor | Work distribution over a thread pool, checksums, per-item error reporting | Capstone | Planned |
-| 86 | Custom Logging & Monitoring Tool | Structured JSON logs, log rotation, metrics in Prometheus text format, alert thresholds | Capstone | Planned |
+| 83 | Robust CLI Application | Subcommands, configuration files with overrides, verbosity flags, JSON output and exit codes | Capstone | Covered |
+| 84 | Data Pipeline / ETL | Extract, transform and load stages, validation with quarantine, run summaries | Capstone | Covered |
+| 85 | Concurrent File Processor | Work distribution over a thread pool, checksums, per-item error reporting | Capstone | Covered |
+| 86 | Custom Logging & Monitoring Tool | Structured JSON logs, log rotation, metrics in Prometheus text format, alert thresholds | Capstone | Covered |
 | 87 | Plugin-style Architecture | Plugin interfaces, self-registration, factories, versioned compatibility checks | Capstone | Planned |
 | 88 | Automated Report Generator | Aggregation with exact integer money, templated HTML, CSV export, escaping | Capstone | Planned |
 | 89 | Background Task Scheduler | Schedule specifications, an injectable clock, timeouts, no overlapping runs | Capstone | Planned |

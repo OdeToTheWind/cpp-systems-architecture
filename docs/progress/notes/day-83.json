@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-04",
+  "learnings": [
+    "Global options before the subcommand and subcommand arguments after it keep a growing CLI predictable, like git or docker.",
+    "Validating every -c key=value override before doing any work turns typos into clear usage errors instead of half-done runs.",
+    "Results go to standard output and diagnostics to standard error, so `shelf --json list | jq` stays clean at any verbosity.",
+    "Exit codes are a contract with scripts: 0 success, 1 failure, 2 usage, 3 not found."
+  ],
+  "pitfalls": [
+    "An unknown setting was silently ignored at first; it is now a usage error with the help text.",
+    "A crash while saving could leave half a store file; the store is written to a temporary file and renamed.",
+    "Quiet mode first suppressed JSON output too; -q now only removes chatter, never requested results."
+  ],
+  "next": "Day 84 builds a data pipeline that survives bad input."
+}

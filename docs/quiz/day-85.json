@@ -1,0 +1,37 @@
+{
+  "day": 85,
+  "mcq": [
+    {
+      "question": "How do the workers in `checksum_all` avoid processing a file twice without a mutex?",
+      "options": {
+        "A": "Files are split into equal blocks in advance",
+        "B": "Each one claims the next index with an atomic `fetch_add`",
+        "C": "Each worker checks a shared set of done files",
+        "D": "The OS prevents two threads opening one file"
+      },
+      "answer": "B",
+      "explanation": "`fetch_add` returns every index exactly once, and faster workers simply claim more."
+    },
+    {
+      "question": "Why are results written to `results[i]` instead of pushed onto a shared vector?",
+      "options": {
+        "A": "`push_back` cannot store structs",
+        "B": "Vectors cannot be shared between threads at all",
+        "C": "It uses less memory",
+        "D": "Each slot has one writer, so no lock is needed and the order stays deterministic"
+      },
+      "answer": "D",
+      "explanation": "Pre-sizing the vector gives each thread its own memory. The output order then matches the input order."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "On a spinning hard disk, is more threads always faster for checksumming? What about an SSD or a network share?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a progress callback that is called (from any thread, thread-safely) every 100 files with the count done so far."
+    }
+  ]
+}

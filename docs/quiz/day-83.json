@@ -1,0 +1,37 @@
+{
+  "day": 83,
+  "mcq": [
+    {
+      "question": "Why does `shelf` write error messages to standard error?",
+      "options": {
+        "A": "Standard error is faster",
+        "B": "Standard output cannot show errors",
+        "C": "So output piped to another program, such as JSON into `jq`, never contains diagnostics",
+        "D": "Exit codes only work with standard error"
+      },
+      "answer": "C",
+      "explanation": "Separating results from diagnostics keeps pipelines reliable at any verbosity."
+    },
+    {
+      "question": "A script runs `shelf done 42` and gets exit code 3. What does it know?",
+      "options": {
+        "A": "The arguments were malformed",
+        "B": "The store file is corrupt",
+        "C": "The command succeeded with a warning",
+        "D": "The command was valid but book 42 does not exist"
+      },
+      "answer": "D",
+      "explanation": "Distinct exit codes let scripts react differently to \"not found\" (3) and \"bad usage\" (2)."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Which settings belong in a config file, which in environment variables, and which only as flags?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `remove <id>` subcommand with exit code 3 for a missing id and a `--dry-run` global flag that reports without saving."
+    }
+  ]
+}

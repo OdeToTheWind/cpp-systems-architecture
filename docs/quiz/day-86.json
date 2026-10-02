@@ -1,0 +1,37 @@
+{
+  "day": 86,
+  "mcq": [
+    {
+      "question": "Three observations of 20, 80 and 400 ms with buckets 50 and 100. What is `le=\"100\"`?",
+      "options": {
+        "A": "1",
+        "B": "3",
+        "C": "2",
+        "D": "0"
+      },
+      "answer": "C",
+      "explanation": "Prometheus buckets are cumulative: `le=\"100\"` counts every observation up to 100 ms, so 20 and 80."
+    },
+    {
+      "question": "Why must an alert's condition hold for several evaluations before it fires?",
+      "options": {
+        "A": "So a brief blip does not page anyone",
+        "B": "Prometheus cannot evaluate faster",
+        "C": "To save memory",
+        "D": "Alerts cannot fire on the first evaluation by design of C++"
+      },
+      "answer": "A",
+      "explanation": "The pending state filters out noise. Only problems that persist become firing alerts."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Logs, metrics and traces overlap. Which would you reach for first when the shortener gets slow?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `summary` of the last N latencies to the registry that exposes the 0.5 and 0.99 quantiles."
+    }
+  ]
+}

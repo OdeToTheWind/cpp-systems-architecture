@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-06",
+  "learnings": [
+    "recursive_directory_iterator walks a tree; relative generic paths make manifests portable between systems.",
+    "Streaming a file through the checksum in fixed-size chunks keeps memory flat for files of any size.",
+    "Workers that claim the next index with fetch_add balance the load automatically, and writing into pre-sized slots needs no lock.",
+    "Comparing against a manifest finds modified, missing and added files in one pass."
+  ],
+  "pitfalls": [
+    "Results came back in a different order on every run until each file wrote to its own slot instead of push_back under a lock.",
+    "One unreadable file aborted the whole scan; errors are now recorded per file.",
+    "The manifest listed itself and was always \"modified\"; it is skipped when listing files."
+  ],
+  "next": "Day 86 adds observability: logs, metrics and alerts."
+}

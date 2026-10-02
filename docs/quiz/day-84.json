@@ -1,0 +1,37 @@
+{
+  "day": 84,
+  "mcq": [
+    {
+      "question": "Why does the pipeline quarantine bad rows instead of throwing?",
+      "options": {
+        "A": "Exceptions cannot cross pipeline stages",
+        "B": "Throwing would delete the input file",
+        "C": "One broken line should not stop thousands of good orders from loading",
+        "D": "Quarantine makes the import faster"
+      },
+      "answer": "C",
+      "explanation": "The run summary lists every rejected line with its reason, so it can be fixed and re-imported."
+    },
+    {
+      "question": "What makes re-running yesterday's file safe?",
+      "options": {
+        "A": "The warehouse is emptied before every run",
+        "B": "Loads are keyed by (source, order id), so identical rows are recognised as unchanged",
+        "C": "Files are renamed after import",
+        "D": "Rows are loaded in random order"
+      },
+      "answer": "B",
+      "explanation": "An idempotent load can be repeated after a crash without creating duplicates."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should a run fail completely if more than, say, 20% of rows are quarantined? What would you consider?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `max_reject_ratio` setting to `run_pipeline`; above it, roll back the run's loads and return an error summary."
+    }
+  ]
+}

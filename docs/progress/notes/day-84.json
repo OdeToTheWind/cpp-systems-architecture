@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-05",
+  "learnings": [
+    "Separating extract, transform and load keeps each stage small and testable on its own.",
+    "Bad rows go to a quarantine with their line number and reason, so one broken line never stops the import.",
+    "Money is parsed straight into integer cents and converted with integer arithmetic and explicit rounding.",
+    "Keying the load on (source, order id) makes re-running a file idempotent, and corrected re-exports update rows instead of duplicating them."
+  ],
+  "pitfalls": [
+    "Columns were read by position until one marketplace reordered its export; headers now map fields by name.",
+    "\"2026-02-30\" passed a regex-style check; dates are now validated against the real calendar, including leap years.",
+    "A quoted comma split a field in two until the CSV parser handled quotes and doubled quotes."
+  ],
+  "next": "Day 85 processes many files in parallel."
+}

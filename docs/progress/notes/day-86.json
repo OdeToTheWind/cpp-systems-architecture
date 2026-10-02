@@ -1,0 +1,15 @@
+{
+  "date": "2026-06-07",
+  "learnings": [
+    "One JSON object per line is the easiest log format for machines while staying readable for people.",
+    "Size-based rotation renames app.log to app.log.1 and so on, deleting the oldest, so logs never fill the disk.",
+    "Prometheus exposes counters, gauges and cumulative histograms as plain text with # HELP and # TYPE lines.",
+    "Alert rules with a \"for\" duration fire only when a problem persists, and report a single RESOLVED when it clears."
+  ],
+  "pitfalls": [
+    "Histogram buckets came out as 100 before 50 because map keys sort as text; they are now sorted by numeric bound.",
+    "A rotation in the middle of a write split a line between two files; rotation now happens before a line that would not fit.",
+    "An alert computed on all-time totals stayed firing long after errors stopped; the rule now looks at the latest interval."
+  ],
+  "next": "Day 87 makes an application extensible with plugins."
+}

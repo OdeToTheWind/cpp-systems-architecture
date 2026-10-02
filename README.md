@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 82 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 618 `TEST_CASE`s across 82 test executables.
-- **Deliverables mapped to code:** 450 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 14,845 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 164 multiple-choice questions with explanations, plus 164 open bonus questions (82 hands-on, test-first tasks).
+- **Curriculum completion:** 86 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 646 `TEST_CASE`s across 86 test executables.
+- **Deliverables mapped to code:** 470 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 15,839 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 172 multiple-choice questions with explanations, plus 172 open bonus questions (86 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -104,10 +104,10 @@
 | 80 | Profiling & Performance | 🟠 | The nightly *delivery-route analytics* job of a courier company has grown from minutes to hours. Before changing anything, it gets a benchmark harness that reports medians rather than single noisy runs. Then three classic wins are measured: a better algorithm (duplicate parcel IDs), a better data layout (structure of arrays) and a cache-friendly loop order. | [code](src/day_80_performance/lesson.hpp) · [tests](tests/test_day_80.cpp) · [notes](docs/progress/day-80-reflection.md) |
 | 81 | Regular Expressions | 🟠 | A *support-ticket scrubber*. Before customer messages are copied into the bug tracker, personal data has to go: e-mail addresses, phone numbers, payment-card numbers and IP addresses are found with regular expressions and masked, while ticket IDs and log timestamps are parsed with capture groups. | [code](src/day_81_regex/lesson.hpp) · [tests](tests/test_day_81.cpp) · [notes](docs/progress/day-81-reflection.md) |
 | 82 | Building a Storage Engine | 🟠 | The *session store* of a ticket-booking site – a small key-value database that must not lose a booking when the server crashes mid-write. Like Bitcask or a database's write-ahead log, it only ever appends records to a file, keeps an in-memory index from each key to the offset of its latest record, recovers from a torn final write, groups changes into all-or-nothing transactions, and compacts the log when it fills with stale records. | [code](src/day_82_storage_engine/lesson.hpp) · [tests](tests/test_day_82.cpp) · [notes](docs/progress/day-82-reflection.md) |
-| 83 | Robust CLI Application | 🔴 | _planned_ | – |
-| 84 | Data Pipeline / ETL | 🔴 | _planned_ | – |
-| 85 | Concurrent File Processor | 🔴 | _planned_ | – |
-| 86 | Custom Logging & Monitoring Tool | 🔴 | _planned_ | – |
+| 83 | Robust CLI Application | 🔴 | `shelf`, a *reading-list tool* used from the terminal and from scripts. It has subcommands (add, list, done, stats), global options for verbosity and JSON output, `-c key=value` configuration overrides, a file-backed store, and documented exit codes so shell scripts can react to "not found" differently from "bad usage". | [code](src/day_83_robust_cli/lesson.hpp) · [tests](tests/test_day_83.cpp) · [notes](docs/progress/day-83-reflection.md) |
+| 84 | Data Pipeline / ETL | 🔴 | The *nightly order import* of an online shop that sells through three marketplaces. Each marketplace exports a CSV in its own quirks; the pipeline extracts rows, transforms them into one clean order format (dates checked, money in integer cents, everything converted to EUR), loads them into the warehouse table without duplicates, and puts every bad row into a quarantine with the reason – so one broken line never stops the whole import. | [code](src/day_84_etl/lesson.hpp) · [tests](tests/test_day_84.cpp) · [notes](docs/progress/day-84-reflection.md) |
+| 85 | Concurrent File Processor | 🔴 | An *integrity checker for a photo archive*. Thousands of files sit on a NAS; once a week every file is checksummed in parallel and compared with the manifest from last time, so silent corruption, deleted files and unexpected new files are reported before the backups rotate. Results are deterministic – sorted by path – however the threads were scheduled. | [code](src/day_85_concurrent_files/lesson.hpp) · [tests](tests/test_day_85.cpp) · [notes](docs/progress/day-85-reflection.md) |
+| 86 | Custom Logging & Monitoring Tool | 🔴 | The *observability layer of a URL shortener*. Every request is logged as one JSON line (easy for log shippers), log files rotate by size so the disk never fills, request counts and latencies are exposed in the Prometheus text format, and alert rules fire only after a problem persists for several evaluations – and resolve on their own when it goes away. | [code](src/day_86_monitoring/lesson.hpp) · [tests](tests/test_day_86.cpp) · [notes](docs/progress/day-86-reflection.md) |
 | 87 | Plugin-style Architecture | 🔴 | _planned_ | – |
 | 88 | Automated Report Generator | 🔴 | _planned_ | – |
 | 89 | Background Task Scheduler | 🔴 | _planned_ | – |
