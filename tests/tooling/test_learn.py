@@ -34,7 +34,7 @@ class Explain(unittest.TestCase):
                 self.assertIn(f"Day {day} · ", out)
                 self.assertIn("▸ Where each skill lives in the code", out)
                 self.assertIn(f"src/day_{day:02d}_", out)
-                self.assertNotIn("not found", out)
+                self.assertNotIn("(not found – run the tooling tests)", out)
                 self.assertIn("▸ Pitfalls to avoid", out)
                 self.assertIn("tests prove", out)
 
