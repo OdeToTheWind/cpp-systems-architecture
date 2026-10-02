@@ -1,0 +1,37 @@
+{
+  "day": 69,
+  "mcq": [
+    {
+      "question": "Why is `operator+` written as a non-member (hidden friend) instead of a member?",
+      "options": {
+        "A": "Members cannot return objects",
+        "B": "So `2 * r` works as well as `r * 2`, with implicit conversion on either side",
+        "C": "Non-members are always faster",
+        "D": "The standard forbids member `operator+`"
+      },
+      "answer": "B",
+      "explanation": "A member operator only converts its right operand. A non-member allows conversion of both."
+    },
+    {
+      "question": "Why can `operator==` be defaulted for `Rational`?",
+      "options": {
+        "A": "Defaulted `==` compares values with cross-multiplication",
+        "B": "Integers are always comparable",
+        "C": "`<=>` makes `==` unnecessary",
+        "D": "The invariant keeps fractions reduced, so equal values have equal members"
+      },
+      "answer": "D",
+      "explanation": "A defaulted `==` compares members. That only works because 2/4 is always stored as 1/2."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Which operators should *not* be overloaded for a type like `Rational`, and why?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add overflow detection to `operator*=` (e.g. with `__builtin_mul_overflow` or by checking before multiplying) and test it with large numerators."
+    }
+  ]
+}

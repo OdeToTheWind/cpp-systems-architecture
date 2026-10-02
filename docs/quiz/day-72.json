@@ -1,0 +1,37 @@
+{
+  "day": 72,
+  "mcq": [
+    {
+      "question": "Which pattern lets undo restore a deleted line?",
+      "options": {
+        "A": "Strategy",
+        "B": "Factory",
+        "C": "Command, because the delete object remembers the line it removed",
+        "D": "Decorator"
+      },
+      "answer": "C",
+      "explanation": "Each command keeps the state it needs to reverse itself, and a history stack replays undo in reverse order."
+    },
+    {
+      "question": "Why do the decorators take a `std::unique_ptr<Exporter>`?",
+      "options": {
+        "A": "Decorators must be allocated on the heap",
+        "B": "The decorator owns the exporter it wraps, so stacks are freed automatically",
+        "C": "`unique_ptr` makes rendering faster",
+        "D": "It stops two decorators being stacked"
+      },
+      "answer": "B",
+      "explanation": "Each layer owns the next one. Destroying the outer decorator destroys the whole chain."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Patterns can be overused. When is a plain function or a `switch` better than a strategy class hierarchy?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `WithTitle(std::string)` decorator that inserts a title line before rendering, and test its order relative to `WithLineNumbers`."
+    }
+  ]
+}

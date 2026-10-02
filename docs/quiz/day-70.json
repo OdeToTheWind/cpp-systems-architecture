@@ -1,0 +1,37 @@
+{
+  "day": 70,
+  "mcq": [
+    {
+      "question": "What happens when `checked_baud(38401)` is used to initialise a constexpr variable?",
+      "options": {
+        "A": "An exception is thrown at run time",
+        "B": "The value is silently set to 0",
+        "C": "A warning is printed and 38400 is used",
+        "D": "Compilation fails, because the consteval call hits a `throw`"
+      },
+      "answer": "D",
+      "explanation": "A consteval function must produce a constant. Reaching `throw` makes the call not a constant expression."
+    },
+    {
+      "question": "Why does `serialise` use `if constexpr` rather than `if`?",
+      "options": {
+        "A": "`if constexpr` runs faster at run time",
+        "B": "Plain `if` cannot test type traits",
+        "C": "It allows exceptions to be thrown",
+        "D": "Branches that do not apply to T are discarded and never compiled for it"
+      },
+      "answer": "D",
+      "explanation": "With plain `if`, `text.size()` would have to compile for an `int`, which fails."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Moving work to compile time speeds up start-up but slows down builds. Where is the balance for firmware compared with a desktop app?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a constexpr `crc8` overload for `std::span<const std::uint8_t>` and a `static_assert` that checks a known packet's CRC."
+    }
+  ]
+}

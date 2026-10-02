@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-23",
+  "learnings": [
+    "Lambdas capture by value (a snapshot) or by reference (a live view); returning a lambda requires value captures.",
+    "Init-captures such as `[next = first]` with `mutable` give a lambda private state that changes between calls.",
+    "std::invoke calls data-member pointers, member-function pointers and ordinary callables uniformly, which makes projections easy.",
+    "Memoisation trades memory for time: a map from arguments to results makes repeated expensive calls free."
+  ],
+  "pitfalls": [
+    "A rule that captured a local by reference read a dead variable after the function returned.",
+    "`std::bind_front` copies its bound arguments, so a later change to the tax table did not affect existing rules – intended here, but surprising at first.",
+    "Memoising a function with side effects would skip them; only pure functions should be cached."
+  ],
+  "next": "Day 72 collects these tools into classic design patterns."
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-24",
+  "learnings": [
+    "Strategy: one interface, several interchangeable algorithms chosen at run time.",
+    "Factory: callers ask for an object by name; a registry of creator functions makes new formats pluggable.",
+    "Decorator: a wrapper that implements the same interface adds behaviour and can be stacked in any order.",
+    "Command: an edit as an object with execute and undo makes undo/redo stacks straightforward."
+  ],
+  "pitfalls": [
+    "Replacing \"a\" with \"aa\" looped forever until the search continued after the inserted text.",
+    "A redo after a fresh edit replayed stale commands; a new command now clears the redo stack.",
+    "A command that threw was still pushed onto the history; it is now recorded only after it succeeds."
+  ],
+  "next": "Day 73 starts concurrency with threads and mutexes."
+}

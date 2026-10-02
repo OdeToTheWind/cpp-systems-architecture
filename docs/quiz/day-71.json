@@ -1,0 +1,37 @@
+{
+  "day": 71,
+  "mcq": [
+    {
+      "question": "A function returns `[&rate](double p) { return p * rate; }` where `rate` is its local variable. What is wrong?",
+      "options": {
+        "A": "Lambdas cannot capture doubles",
+        "B": "The lambda refers to a local that is destroyed when the function returns",
+        "C": "Nothing; references extend lifetimes",
+        "D": "It copies `rate` twice"
+      },
+      "answer": "B",
+      "explanation": "Reference captures do not extend lifetimes. Capture by value when the lambda outlives its scope."
+    },
+    {
+      "question": "What does `std::invoke(&Item::price, item)` return?",
+      "options": {
+        "A": "A pointer to `item.price`",
+        "B": "A function that returns the price",
+        "C": "`item.price`",
+        "D": "It does not compile because `price` is not a function"
+      },
+      "answer": "C",
+      "explanation": "std::invoke treats a data-member pointer as \"read this member\". That is why projections can be member pointers."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "`std::function` is convenient but allocates and adds an indirect call. When would you use a template parameter for a callable instead?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add an `expires_after(n)` rule wrapper that applies a rule only to the first n prices, using a mutable init-capture."
+    }
+  ]
+}

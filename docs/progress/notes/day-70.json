@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-22",
+  "learnings": [
+    "constexpr functions can run at compile time or run time; a constexpr variable forces compile time, as with the CRC table.",
+    "consteval functions must run at compile time, so an invalid constant becomes a build error.",
+    "static_assert documents assumptions – packet sizes, check values – and fails the build when they stop holding.",
+    "`if constexpr` discards the branches that do not apply, so one template can call `.size()` for strings and shifts for integers."
+  ],
+  "pitfalls": [
+    "A plain `if` instead of `if constexpr` failed to compile, because every branch was instantiated for every type.",
+    "Shifting a negative signed integer is easy to get wrong; values are converted to the unsigned type first.",
+    "Truncating 21.456 to centi-units gave 2145; the float is now rounded to 2146."
+  ],
+  "next": "Day 71 treats functions as values."
+}

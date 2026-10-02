@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 68 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 520 `TEST_CASE`s across 68 test executables.
-- **Deliverables mapped to code:** 377 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 12,154 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 136 multiple-choice questions with explanations, plus 136 open bonus questions (68 hands-on, test-first tasks).
+- **Curriculum completion:** 72 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 548 `TEST_CASE`s across 72 test executables.
+- **Deliverables mapped to code:** 398 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 12,867 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 144 multiple-choice questions with explanations, plus 144 open bonus questions (72 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -90,10 +90,10 @@
 | 66 | Ranges & Views | 🟠 | *order analytics for a small online shop*. Questions such as "what did paid orders over €50 earn?", "who are the top three customers?" or "which tags appear most?" are answered with range algorithms and lazy view pipelines instead of hand-written loops and temporary vectors. | [code](src/day_66_ranges/lesson.hpp) · [tests](tests/test_day_66.cpp) · [notes](docs/progress/day-66-reflection.md) |
 | 67 | Smart Pointers & Ownership | 🟠 | The object model of a *slide-deck editor*. A deck owns its slides outright, slides share image assets that are freed when no slide uses them, and grouped shapes point back to their parent group without keeping it alive. Every object counts itself, so tests can prove that nothing leaks and nothing is freed too early. | [code](src/day_67_smart_pointers/lesson.hpp) · [tests](tests/test_day_67.cpp) · [notes](docs/progress/day-67-reflection.md) |
 | 68 | Move Semantics | 🟠 | The sample buffers of a *podcast audio editor*. An hour of stereo audio is hundreds of megabytes, so whether a buffer is copied or moved decides whether an edit is instant or slow. The buffer manages its own memory with the rule of five and counts every allocation, copy and move, so each claim about move semantics can be checked by a test. | [code](src/day_68_move_semantics/lesson.hpp) · [tests](tests/test_day_68.cpp) · [notes](docs/progress/day-68-reflection.md) |
-| 69 | Operator Overloading | 🟠 | _planned_ | – |
-| 70 | Compile-time Programming | 🟠 | _planned_ | – |
-| 71 | Functional Tools | 🟠 | _planned_ | – |
-| 72 | Design Patterns | 🟠 | _planned_ | – |
+| 69 | Operator Overloading | 🟠 | A *recipe scaler* for a bakery. Quantities such as "1 1/2 cups" or "3/4 tsp" must be scaled by 2/3 or 5/2 without rounding errors, so they are stored as exact fractions. With overloaded operators the fraction type reads like a built-in number: arithmetic, comparisons with the spaceship operator, and reading and writing with streams. | [code](src/day_69_operator_overloading/lesson.hpp) · [tests](tests/test_day_69.cpp) · [notes](docs/progress/day-69-reflection.md) |
+| 70 | Compile-time Programming | 🟠 | The telemetry firmware of a *soil-moisture sensor board*. Packets are sent over a slow radio link, so the CRC lookup table is computed by the compiler instead of at boot, configuration constants are validated at compile time, and one serialise function handles every field type, choosing its encoding with type traits and `if constexpr`. | [code](src/day_70_compile_time/lesson.hpp) · [tests](tests/test_day_70.cpp) · [notes](docs/progress/day-70-reflection.md) |
+| 71 | Functional Tools | 🟠 | The *pricing rules engine* of an online shop. Discounts, taxes and rounding are small functions that marketing can combine per campaign: rules are lambdas that capture their settings, pipelines are built by composing functions, member pointers are called through std::invoke, regional tax uses std::bind_front, and an expensive shipping-rate lookup is memoised. | [code](src/day_71_functional/lesson.hpp) · [tests](tests/test_day_71.cpp) · [notes](docs/progress/day-71-reflection.md) |
+| 72 | Design Patterns | 🟠 | A *note-taking editor*. Notes are lists of lines that can be exported as plain text, Markdown or HTML (strategy), with exporters created by name from a registry (factory), extra behaviour such as line numbers or a word-count footer stacked on top (decorator), and every edit recorded as an object that can be undone and redone (command). | [code](src/day_72_design_patterns/lesson.hpp) · [tests](tests/test_day_72.cpp) · [notes](docs/progress/day-72-reflection.md) |
 | 73 | Concurrency: Threads & Mutexes | 🟠 | _planned_ | – |
 | 74 | Concurrency: Futures & Thread Pools | 🟠 | _planned_ | – |
 | 75 | Coroutines | 🟠 | _planned_ | – |

@@ -125,10 +125,10 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 | 66 | Ranges & Views | Range algorithms, lazy views, composing pipelines, projections | Advanced | Covered |
 | 67 | Smart Pointers & Ownership | unique_ptr, shared_ptr and weak_ptr, ownership transfer, breaking reference cycles | Advanced | Covered |
 | 68 | Move Semantics | Lvalues and rvalues, move constructors and assignment, the rule of five, std::move vs copy | Advanced | Covered |
-| 69 | Operator Overloading | Arithmetic and comparison operators, the spaceship operator, stream operators, invariants | Advanced | Planned |
-| 70 | Compile-time Programming | constexpr and consteval functions, static_assert, type traits, if constexpr | Advanced | Planned |
-| 71 | Functional Tools | Lambdas and captures, std::invoke, std::bind_front, higher-order functions, memoisation | Advanced | Planned |
-| 72 | Design Patterns | Strategy, factory, decorator and command patterns in modern C++ | Advanced | Planned |
+| 69 | Operator Overloading | Arithmetic and comparison operators, the spaceship operator, stream operators, invariants | Advanced | Covered |
+| 70 | Compile-time Programming | constexpr and consteval functions, static_assert, type traits, if constexpr | Advanced | Covered |
+| 71 | Functional Tools | Lambdas and captures, std::invoke, std::bind_front, higher-order functions, memoisation | Advanced | Covered |
+| 72 | Design Patterns | Strategy, factory, decorator and command patterns in modern C++ | Advanced | Covered |
 | 73 | Concurrency: Threads & Mutexes | std::thread, mutex and lock_guard, condition variables, producer-consumer queues | Advanced | Planned |
 | 74 | Concurrency: Futures & Thread Pools | std::async, promises and futures, exception propagation, a fixed-size thread pool | Advanced | Planned |
 | 75 | Coroutines | co_yield generators, co_await basics, promise types, lazy sequences | Advanced | Planned |

@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-21",
+  "learnings": [
+    "Operators should do what users expect: implement `+=` as a member and build `+` on top of it as a non-member, so `2 * r` and `r * 2` both work.",
+    "A class invariant (reduced fraction, positive denominator) checked in the constructor lets `==` be defaulted.",
+    "One `operator<=>` returning `std::strong_ordering` gives all of <, <=, > and >=.",
+    "Stream operators should behave like the built-in ones: on bad input set failbit and leave the target unchanged."
+  ],
+  "pitfalls": [
+    "Without normalisation 1/2 and 2/4 compared unequal under a defaulted `==`.",
+    "Reading \"2 cups\" swallowed \"cups\" while looking for a mixed number; the stream is now rolled back with seekg.",
+    "An implicit conversion to double silently lost exactness, so the conversion is explicit."
+  ],
+  "next": "Day 70 moves work from run time to compile time."
+}
