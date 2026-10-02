@@ -3,7 +3,7 @@
 - **Curriculum completion:** 72 / 100 days covered, each with code, tests and a reflection.
 - **Test cases:** 548 `TEST_CASE`s across 72 test executables.
 - **Deliverables mapped to code:** 398 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 12,867 non-blank lines of C++ in `src/`.
+- **Source size:** 12,868 non-blank lines of C++ in `src/`.
 - **Self-check questions:** 144 multiple-choice questions with explanations, plus 144 open bonus questions (72 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.

@@ -60,7 +60,9 @@ inline Rule round_to_cents() {
 
 /// Each call returns the next ticket number. `next = first` is an init-capture, and `mutable`
 /// lets the lambda change its own copy.
-inline std::function<int()> make_ticket_counter(int first) {
+using Counter = std::function<int()>;
+
+inline Counter make_ticket_counter(int first) {
     return [next = first]() mutable { return next++; };
 }
 
