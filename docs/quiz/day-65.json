@@ -1,0 +1,37 @@
+{
+  "day": 65,
+  "mcq": [
+    {
+      "question": "`format_value(5u)` matches both a `std::integral` overload and a `std::unsigned_integral` overload. Which is called?",
+      "options": {
+        "A": "The call is ambiguous and does not compile",
+        "B": "The `std::integral` one, because it was declared first",
+        "C": "The `std::unsigned_integral` one, because it is more constrained",
+        "D": "Whichever is defined in the header last"
+      },
+      "answer": "C",
+      "explanation": "`std::unsigned_integral` is defined in terms of `std::integral`, so it subsumes it and wins."
+    },
+    {
+      "question": "What does `{ t.label() } -> std::convertible_to<std::string>;` require?",
+      "options": {
+        "A": "That `label` is a data member of type `std::string`",
+        "B": "That `t` can be converted to `std::string`",
+        "C": "That `t.label()` compiles and its result converts to `std::string`",
+        "D": "That `label()` is `noexcept`"
+      },
+      "answer": "C",
+      "explanation": "A compound requirement checks that the expression is valid and that its type satisfies the concept."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Should every template parameter be constrained? When would an unconstrained `typename T` still be the best choice?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Write a `Currency` concept (has `cents()` returning an integral and `code()` returning a string) and a `format_value` overload for it."
+    }
+  ]
+}

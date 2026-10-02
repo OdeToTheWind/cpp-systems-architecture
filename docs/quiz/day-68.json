@@ -1,0 +1,37 @@
+{
+  "day": 68,
+  "mcq": [
+    {
+      "question": "Inside `void f(std::string&& s)`, which overload does `category(s)` call?",
+      "options": {
+        "A": "The lvalue overload: a named rvalue reference is an lvalue",
+        "B": "The rvalue overload",
+        "C": "It does not compile",
+        "D": "It depends on the caller"
+      },
+      "answer": "A",
+      "explanation": "Anything with a name is an lvalue. Use `std::move(s)` to pass it on as an rvalue."
+    },
+    {
+      "question": "Why should a move constructor be `noexcept`?",
+      "options": {
+        "A": "Otherwise `std::vector` copies elements when it grows, to keep its exception guarantee",
+        "B": "The compiler rejects moves that can throw",
+        "C": "`noexcept` makes the move skip the destructor",
+        "D": "It makes moved-from objects reusable"
+      },
+      "answer": "A",
+      "explanation": "`std::move_if_noexcept` only moves when that cannot throw. Otherwise reallocation copies."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "With the rule of zero, classes use members that already manage resources and write none of the five. When is that not possible?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `Track::append(AudioBuffer)` overload pair (`const&` and `&&`) and test which one each call picks with the copy counter."
+    }
+  ]
+}

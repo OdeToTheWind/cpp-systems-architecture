@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-20",
+  "learnings": [
+    "An lvalue has a name and an address; an rvalue is a temporary. `std::move` does not move anything – it casts to an rvalue so a move overload can be chosen.",
+    "A move constructor steals the source's resources and leaves it valid but empty; it should be noexcept.",
+    "The rule of five: a class that manages a resource needs a destructor, copy and move constructors, and copy and move assignment.",
+    "Sink parameters taken by value and moved into place cost one copy for lvalues and none for rvalues."
+  ],
+  "pitfalls": [
+    "Without `noexcept` on the move constructor, `std::vector` copied every buffer when it grew, to keep its strong exception guarantee.",
+    "`std::move` on a const object quietly called the copy constructor.",
+    "Using a buffer after moving from it read an empty buffer; moved-from objects should only be assigned to or destroyed."
+  ],
+  "next": "Day 69 makes types feel built-in with operator overloading."
+}

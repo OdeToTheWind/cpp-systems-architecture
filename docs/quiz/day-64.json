@@ -1,0 +1,37 @@
+{
+  "day": 64,
+  "mcq": [
+    {
+      "question": "Why does `typename Container::value_type` need the `typename` keyword inside a template?",
+      "options": {
+        "A": "`typename` makes the code faster",
+        "B": "It is a dependent name, and the compiler assumes it is a value unless told it is a type",
+        "C": "It is required for every member access",
+        "D": "It turns the template into a concept"
+      },
+      "answer": "B",
+      "explanation": "Until `Container` is known, `Container::value_type` could be a static member or a type. `typename` tells the compiler which one."
+    },
+    {
+      "question": "What does `template <typename T> struct TypeName<std::vector<T>>` define?",
+      "options": {
+        "A": "A full specialisation for `std::vector<int>` only",
+        "B": "A new primary template",
+        "C": "A concept that checks for vectors",
+        "D": "A partial specialisation used for every vector, whatever its element type"
+      },
+      "answer": "D",
+      "explanation": "It still has a template parameter (T), so it is partial. It matches every `std::vector<T>`."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Templates live in headers and are compiled for every type used. What does that mean for build times and binary size?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `RingBuffer::begin()`/`end()` iterator pair so the buffer works in a range-for loop and with `std::accumulate`."
+    }
+  ]
+}

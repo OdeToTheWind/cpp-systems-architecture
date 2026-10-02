@@ -1,10 +1,10 @@
 # placeholder
 <!-- kpis:start -->
-- **Curriculum completion:** 63 / 100 days covered, each with code, tests and a reflection.
-- **Test cases:** 485 `TEST_CASE`s across 63 test executables.
-- **Deliverables mapped to code:** 352 `DELIVERABLES` entries, each checked to resolve to a definition.
-- **Source size:** 11,374 non-blank lines of C++ in `src/`.
-- **Self-check questions:** 126 multiple-choice questions with explanations, plus 126 open bonus questions (63 hands-on, test-first tasks).
+- **Curriculum completion:** 68 / 100 days covered, each with code, tests and a reflection.
+- **Test cases:** 520 `TEST_CASE`s across 68 test executables.
+- **Deliverables mapped to code:** 377 `DELIVERABLES` entries, each checked to resolve to a definition.
+- **Source size:** 12,154 non-blank lines of C++ in `src/`.
+- **Self-check questions:** 136 multiple-choice questions with explanations, plus 136 open bonus questions (68 hands-on, test-first tasks).
 - **Coverage gate:** CI fails below ? % line coverage of `src/`.
 - **Compilers in CI:** ?.
 - **Operating systems in CI:** ?.
@@ -85,11 +85,11 @@
 | 61 | Notification Automation | 🟠 | An *on-call alert bot* for a small web shop. Health readings (disk usage, response latency, queue depth) are compared with warning and critical thresholds; a state change produces a chat-webhook JSON payload, repeats are rate-limited per check, and recoveries are announced. Delivery goes through an injected sink, so a dry run prints what would be posted. | [code](src/day_61_notifications/lesson.hpp) · [tests](tests/test_day_61.cpp) · [notes](docs/progress/day-61-reflection.md) |
 | 62 | Web Scraping | 🟠 | A *second-hand bookshop price watcher*. Catalogue pages are tokenised into tags and text, book cards are extracted by tag and class, robots.txt is honoured, and a polite crawler follows pagination links on one host with a delay between requests. Pages come from an injected fetch function, so the whole crawl runs offline against saved HTML. | [code](src/day_62_web_scraping/lesson.hpp) · [tests](tests/test_day_62.cpp) · [notes](docs/progress/day-62-reflection.md) |
 | 63 | Browser Automation | 🟠 | A *checkout smoke test* for an online shop, run before every release. The test logs in, adds a book to the cart and checks the order confirmation. A real run would drive a browser through the W3C WebDriver protocol; here a fake browser with delayed elements stands in for it, so locators, explicit waits and page objects can be practised – and tested – offline. | [code](src/day_63_browser_automation/lesson.hpp) · [tests](tests/test_day_63.cpp) · [notes](docs/progress/day-63-reflection.md) |
-| 64 | Templates & Generic Programming | 🟠 | _planned_ | – |
-| 65 | Concepts & Constraints | 🟠 | _planned_ | – |
-| 66 | Ranges & Views | 🟠 | _planned_ | – |
-| 67 | Smart Pointers & Ownership | 🟠 | _planned_ | – |
-| 68 | Move Semantics | 🟠 | _planned_ | – |
+| 64 | Templates & Generic Programming | 🟠 | The firmware library of a *weather station*. Temperature, wind-speed and status sensors all keep their recent readings, and all need the same "latest N values, min/max/mean" logic. Instead of three copies, one set of templates works for every value type, with specialisations where a type needs different treatment. | [code](src/day_64_templates/lesson.hpp) · [tests](tests/test_day_64.cpp) · [notes](docs/progress/day-64-reflection.md) |
+| 65 | Concepts & Constraints | 🟠 | A *dashboard widget library*. A widget shows a value or a series of values – an order count, a CPU percentage, a sequence of response times, or a domain object such as a server that knows its own label. Concepts state exactly which types each widget accepts, so a wrong type is rejected with a readable message, and constrained overloads pick the right formatting automatically. | [code](src/day_65_concepts/lesson.hpp) · [tests](tests/test_day_65.cpp) · [notes](docs/progress/day-65-reflection.md) |
+| 66 | Ranges & Views | 🟠 | *order analytics for a small online shop*. Questions such as "what did paid orders over €50 earn?", "who are the top three customers?" or "which tags appear most?" are answered with range algorithms and lazy view pipelines instead of hand-written loops and temporary vectors. | [code](src/day_66_ranges/lesson.hpp) · [tests](tests/test_day_66.cpp) · [notes](docs/progress/day-66-reflection.md) |
+| 67 | Smart Pointers & Ownership | 🟠 | The object model of a *slide-deck editor*. A deck owns its slides outright, slides share image assets that are freed when no slide uses them, and grouped shapes point back to their parent group without keeping it alive. Every object counts itself, so tests can prove that nothing leaks and nothing is freed too early. | [code](src/day_67_smart_pointers/lesson.hpp) · [tests](tests/test_day_67.cpp) · [notes](docs/progress/day-67-reflection.md) |
+| 68 | Move Semantics | 🟠 | The sample buffers of a *podcast audio editor*. An hour of stereo audio is hundreds of megabytes, so whether a buffer is copied or moved decides whether an edit is instant or slow. The buffer manages its own memory with the rule of five and counts every allocation, copy and move, so each claim about move semantics can be checked by a test. | [code](src/day_68_move_semantics/lesson.hpp) · [tests](tests/test_day_68.cpp) · [notes](docs/progress/day-68-reflection.md) |
 | 69 | Operator Overloading | 🟠 | _planned_ | – |
 | 70 | Compile-time Programming | 🟠 | _planned_ | – |
 | 71 | Functional Tools | 🟠 | _planned_ | – |

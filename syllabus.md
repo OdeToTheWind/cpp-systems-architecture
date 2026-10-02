@@ -120,11 +120,11 @@ Every day is a self-contained mini-project with its own code, tests and reflecti
 
 | Day | Topic | Key Learnings / Deliverables | Level | Status |
 |----:|-------|------------------------------|-------|--------|
-| 64 | Templates & Generic Programming | Function and class templates, template argument deduction, specialisation, dependent names | Advanced | Planned |
-| 65 | Concepts & Constraints | Standard concepts, writing custom concepts, requires clauses, constrained overloads | Advanced | Planned |
-| 66 | Ranges & Views | Range algorithms, lazy views, composing pipelines, projections | Advanced | Planned |
-| 67 | Smart Pointers & Ownership | unique_ptr, shared_ptr and weak_ptr, ownership transfer, breaking reference cycles | Advanced | Planned |
-| 68 | Move Semantics | Lvalues and rvalues, move constructors and assignment, the rule of five, std::move vs copy | Advanced | Planned |
+| 64 | Templates & Generic Programming | Function and class templates, template argument deduction, specialisation, dependent names | Advanced | Covered |
+| 65 | Concepts & Constraints | Standard concepts, writing custom concepts, requires clauses, constrained overloads | Advanced | Covered |
+| 66 | Ranges & Views | Range algorithms, lazy views, composing pipelines, projections | Advanced | Covered |
+| 67 | Smart Pointers & Ownership | unique_ptr, shared_ptr and weak_ptr, ownership transfer, breaking reference cycles | Advanced | Covered |
+| 68 | Move Semantics | Lvalues and rvalues, move constructors and assignment, the rule of five, std::move vs copy | Advanced | Covered |
 | 69 | Operator Overloading | Arithmetic and comparison operators, the spaceship operator, stream operators, invariants | Advanced | Planned |
 | 70 | Compile-time Programming | constexpr and consteval functions, static_assert, type traits, if constexpr | Advanced | Planned |
 | 71 | Functional Tools | Lambdas and captures, std::invoke, std::bind_front, higher-order functions, memoisation | Advanced | Planned |

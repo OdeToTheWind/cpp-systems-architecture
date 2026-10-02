@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-19",
+  "learnings": [
+    "`std::unique_ptr` is the default for owned heap objects: one owner, no overhead, and ownership moves explicitly with `std::move`.",
+    "`std::shared_ptr` is for genuinely shared lifetimes; `std::make_shared` allocates the object and its control block together.",
+    "`std::weak_ptr` observes without owning – ideal for caches and back-references – and `lock()` safely checks whether the object still exists.",
+    "Raw pointers and references remain fine for *viewing* an object someone else owns."
+  ],
+  "pitfalls": [
+    "Parent and child holding shared_ptrs to each other were never freed; the parent link is now a weak_ptr.",
+    "A cache of shared_ptrs kept every image alive forever; it now stores weak_ptrs.",
+    "`std::is_copy_constructible` reports true for a class holding `vector<unique_ptr>`, so the deck deletes its copy operations explicitly."
+  ],
+  "next": "Day 68 explains the moves that make unique_ptr work."
+}

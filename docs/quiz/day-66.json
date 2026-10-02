@@ -1,0 +1,37 @@
+{
+  "day": 66,
+  "mcq": [
+    {
+      "question": "How many times does the transform run in `iota(1) | transform(f) | take(3)` when all three results are read?",
+      "options": {
+        "A": "Infinitely many",
+        "B": "3",
+        "C": "4, because take peeks one ahead",
+        "D": "It depends on the size of the int type"
+      },
+      "answer": "B",
+      "explanation": "Views are lazy. Only the elements actually read are computed, so an infinite iota is fine."
+    },
+    {
+      "question": "What does the projection in `std::ranges::sort(orders, std::ranges::greater{}, &Order::cents)` do?",
+      "options": {
+        "A": "It sorts only the `cents` values and drops the orders",
+        "B": "It removes orders without cents",
+        "C": "It converts orders to cents permanently",
+        "D": "It compares orders by their `cents` member, largest first"
+      },
+      "answer": "D",
+      "explanation": "The projection is applied before each comparison. The whole orders are still what gets sorted."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Views make code shorter but can be harder to debug. Where would you still write a plain loop?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add `revenue_by_customer` that uses `views::filter` and a projection to sum paid orders per customer, with a test."
+    }
+  ]
+}

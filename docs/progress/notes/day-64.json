@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-16",
+  "learnings": [
+    "A function template is a recipe: the compiler deduces T from the arguments and generates one function per type actually used.",
+    "Class templates can take values as parameters too – `RingBuffer<double, 5>` fixes its capacity at compile time with no heap allocation.",
+    "Specialisation gives one type its own implementation; partial specialisation does it for a whole family such as every `std::vector<T>`.",
+    "Inside a template, `Container::value_type` is a dependent name and needs `typename` to be read as a type."
+  ],
+  "pitfalls": [
+    "`add(1, 2.5)` returned int in a first version with one template parameter; two parameters and `decltype(a + b)` fixed it.",
+    "Leaving the primary `TypeName` template undefined is deliberate: an unsupported type fails to compile instead of printing a wrong name.",
+    "A ring buffer with capacity 0 divided by zero; a static_assert now rejects it at compile time."
+  ],
+  "next": "Day 65 states template requirements explicitly with concepts."
+}

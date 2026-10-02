@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-18",
+  "learnings": [
+    "Range algorithms take the whole container (`std::ranges::sort(v)`), so begin/end mismatches cannot happen.",
+    "Projections say what to compare – `&Order::cents` – so most custom comparators disappear.",
+    "Views are lazy: a pipeline of filter, transform and take does work only for the elements actually read, so even an infinite `iota` is fine.",
+    "`views::split` and `views::join` turn text processing into pipelines without temporary vectors."
+  ],
+  "pitfalls": [
+    "A filter placed after a transform calls the transform twice per accepted element – once to test and once to read – which surprised a call counter.",
+    "Views hold references to their source; returning a view over a local vector would dangle, so results are copied into a vector before returning.",
+    "`std::ranges::to` is C++23, so pipelines are materialised with the iterator-pair constructor instead."
+  ],
+  "next": "Day 67 looks at who owns objects: smart pointers."
+}

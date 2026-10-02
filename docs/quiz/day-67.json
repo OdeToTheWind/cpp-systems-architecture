@@ -1,0 +1,37 @@
+{
+  "day": 67,
+  "mcq": [
+    {
+      "question": "A parent holds `shared_ptr` children and each child holds a `shared_ptr` to its parent. What happens when the last outside pointer goes?",
+      "options": {
+        "A": "Nothing is freed: the cycle keeps every use count above zero",
+        "B": "Everything is freed normally",
+        "C": "The program crashes",
+        "D": "Only the children are freed"
+      },
+      "answer": "A",
+      "explanation": "Reference counting cannot see cycles. Making the back link a `weak_ptr` fixes it."
+    },
+    {
+      "question": "Why does the asset cache store `weak_ptr<Image>` instead of `shared_ptr<Image>`?",
+      "options": {
+        "A": "`weak_ptr` is faster to copy",
+        "B": "`shared_ptr` cannot be stored in a map",
+        "C": "So the cache never keeps an image alive that no slide uses",
+        "D": "`weak_ptr` makes the image thread-safe"
+      },
+      "answer": "C",
+      "explanation": "The cache only observes. When the last slide drops an image it is freed, and `lock()` returns null."
+    }
+  ],
+  "bonus": [
+    {
+      "type": "discuss",
+      "question": "Many style guides say \"prefer unique_ptr, use shared_ptr sparingly\". Why is shared ownership harder to reason about?"
+    },
+    {
+      "type": "hands-on",
+      "question": "Add a `Deck::duplicate_slide(i)` that deep-copies a slide but shares its images, and check `use_count()` in a test."
+    }
+  ]
+}

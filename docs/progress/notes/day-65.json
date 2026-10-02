@@ -1,0 +1,15 @@
+{
+  "date": "2026-05-17",
+  "learnings": [
+    "Concepts name the requirements of a template, so a wrong type fails at the call with a short message instead of deep inside the body.",
+    "Standard concepts such as `std::integral`, `std::floating_point` and `std::totally_ordered` cover most needs; custom ones combine them with `requires` expressions.",
+    "A requires expression can check the return type of a call: `{ t.label() } -> std::convertible_to<std::string>`.",
+    "When several constrained overloads match, the more constrained one wins – `std::unsigned_integral` subsumes `std::integral`."
+  ],
+  "pitfalls": [
+    "`bool` and `char` count as integral, so the Numeric concept excludes them explicitly.",
+    "Writing the same constraint as two unrelated custom concepts made the overload ambiguous; subsumption only works through the same named concepts.",
+    "Printing exact halves such as 2.25 with one decimal rounds differently between C libraries, so tests use values that are not exact halves."
+  ],
+  "next": "Day 66 replaces hand-written loops with ranges and views."
+}
